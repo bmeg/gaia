@@ -12,6 +12,7 @@ libraryDependencies ++= Seq(
   "org.http4s"              %% "http4s-blaze-server" % "0.12.4",
   "org.http4s"              %% "http4s-dsl"          % "0.12.4",
   "org.http4s"              %% "http4s-argonaut"     % "0.12.4",
+  "com.trueaccord.scalapb"  %% "scalapb-json4s"      % "0.1.1",
   "com.thinkaurelius.titan" %  "titan-core"          % "1.1.0-SNAPSHOT",
   "com.thinkaurelius.titan" %  "titan-cassandra"     % "1.1.0-SNAPSHOT",
   "com.thinkaurelius.titan" %  "titan-es"            % "1.1.0-SNAPSHOT",

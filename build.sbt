@@ -1,2 +1,1 @@
-lazy val server = project.in( file("server") )
-
+lazy val server = project.in(file("server"))
