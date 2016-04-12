@@ -4,16 +4,16 @@ package bmeg.gaea.schema;
 
 // import "google/protobuf/struct.proto";
 
-// Indicates the associated DNA strand for some data item.
-enum Strand {
-    STRAND_UNSPECIFIED = 0;
+// // Indicates the associated DNA strand for some data item.
+// enum Strand {
+//     STRAND_UNSPECIFIED = 0;
 
-    // The negative (-) strand.
-    NEG_STRAND = 1;
+//     // The negative (-) strand.
+//     NEG_STRAND = 1;
 
-    // The postive (+) strand.
-    POS_STRAND = 2;
-}
+//     // The postive (+) strand.
+//     POS_STRAND = 2;
+// }
 
 // A `Position` is one or more (consecutive***) bases in some `Reference`. A `Position` is
 // represented by a `Reference` name, and a base number on that `Reference`
@@ -41,8 +41,8 @@ message Position {
     // For Variantcalls: This is typically calculated by `start + referenceBases.length`.
     int64 end = 3;
 
-    // Strand the position is associated with.
-    Strand strand = 4;
+    // // Strand the position is associated with.
+    // Strand strand = 4;
 }
 
 // Annotation of a contiguous region of a sequence.

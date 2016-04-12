@@ -1,17 +1,23 @@
 package bmeg.gaea
 
+import bmeg.gaea.schema.Variant
+import bmeg.gaea.schema.gene.Gene
+import bmeg.gaea.convoy.Convoy
+
+// import bmeg.gaea.schema.variant._
+// import bmeg.gaea.titan.Titan
+// import bmeg.gaea.message.ProtobufferMessage
+
 import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
 
 import _root_.argonaut._, Argonaut._
 import org.http4s.argonaut._
+import com.google.protobuf.util.JsonFormat
 
-import com.trueaccord.scalapb.json.JsonFormat
-
-import bmeg.gaea.schema.gene.Gene
-import bmeg.gaea.schema.variant._
-import bmeg.gaea.titan.Titan
+// import scodec.bits.ByteVector
+// import com.trueaccord.scalapb.json.JsonFormat
 
 object HelloWorld {
   val service = HttpService {
@@ -20,25 +26,48 @@ object HelloWorld {
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
 
     case GET -> Root / "gene" / name =>
-      val graph = Titan.connect(Titan.configuration())
+      // val graph = Titan.connect(Titan.configuration())
       val gene = Gene(name = name)
       Ok(jSingleObject("message", jString(s"Gene ${gene.name}")))
 
-    case request @ POST -> Root / "gene-test" =>
-      request.as[String].flatMap { raw =>
-        val gene: Gene = JsonFormat.fromJsonString[Gene](raw)
-        val geneName:String = gene.name
-        val yellow: Gene = gene.update(_.name := geneName + "yellow")
-        val format: String = JsonFormat.toJsonString(yellow)
-        val response: Option[Json] = Parse.parseOption(format)
-        Ok(response.getOrElse(Json()))
-      }
-
     case request @ POST -> Root / "individual-list" =>
       request.as[String].flatMap { raw =>
-        val data: IndividualList = JsonFormat.fromJsonString[IndividualList](raw)
-        val individuals: Seq[Individual] = data.individuals
-        Ok(jNumber(individuals.length))
+        val individualList: Variant.IndividualList.Builder = Variant.IndividualList.newBuilder()
+        JsonFormat.parser().merge(raw, individualList)
+        val size = Convoy.ingestIndividualList(individualList.build())
+        Ok(jNumber(size))
       }
+
+    // case request @ POST -> Root / "individual-list" =>
+    //   request.as[String].flatMap { raw =>
+    //     val individualList = ProtobufferMessage.parse(raw, Variant.IndividualList.newBuilder())
+    //     val individuals = individualList.getIndividualsList()
+    //     Ok(jNumber(individuals.length))
+    //   }
+
+    // case request @ POST -> Root / "gene-test" =>
+    //   request.as[String].flatMap { raw =>
+    //     val gene: Gene = JsonFormat.fromJsonString[Gene](raw)
+    //     val geneName: String = gene.name
+    //     val yellow: Gene = gene.update(_.name := geneName + "yellow")
+    //     val format: String = JsonFormat.toJsonString(yellow)
+    //     val response: Option[Json] = Parse.parseOption(format)
+    //     Ok(response.getOrElse(Json()))
+    //   }
+
+    // case request @ POST -> Root / "individual-list-json" =>
+    //   request.as[String].flatMap { raw =>
+    //     val data: IndividualList = JsonFormat.fromJsonString[IndividualList](raw)
+    //     val individuals: Seq[Individual] = data.individuals
+    //     Ok(jNumber(individuals.length))
+    //   }
+
+    // case request @ POST -> Root / "individual-list" =>
+    //   request.as[ByteVector].flatMap { raw =>
+    //     val data = Variant.IndividualList.parseFrom(raw.toArray)
+    //     val individuals = data.getIndividualsList()
+    //     Ok(jNumber(individuals.length))
+    //   }
+
   }
 }
