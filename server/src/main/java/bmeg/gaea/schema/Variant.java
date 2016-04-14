@@ -13,16 +13,16 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string referenceName = 1;</code>
+     * <code>optional string reference = 1;</code>
      *
      * <pre>
      * The name of the `Reference` on which the `Position` is located.
      * (e.g. `chr20` or `X`)
      * </pre>
      */
-    java.lang.String getReferenceName();
+    java.lang.String getReference();
     /**
-     * <code>optional string referenceName = 1;</code>
+     * <code>optional string reference = 1;</code>
      *
      * <pre>
      * The name of the `Reference` on which the `Position` is located.
@@ -30,7 +30,7 @@ public final class Variant {
      * </pre>
      */
     com.google.protobuf.ByteString
-        getReferenceNameBytes();
+        getReferenceBytes();
 
     /**
      * <code>optional int64 start = 2;</code>
@@ -58,6 +58,26 @@ public final class Variant {
      * </pre>
      */
     long getEnd();
+
+    /**
+     * <code>optional string strand = 4;</code>
+     *
+     * <pre>
+     * // Strand the position is associated with.
+     * Strand strand = 4;
+     * </pre>
+     */
+    java.lang.String getStrand();
+    /**
+     * <code>optional string strand = 4;</code>
+     *
+     * <pre>
+     * // Strand the position is associated with.
+     * Strand strand = 4;
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getStrandBytes();
   }
   /**
    * Protobuf type {@code bmeg.gaea.schema.Position}
@@ -78,9 +98,10 @@ public final class Variant {
       super(builder);
     }
     private Position() {
-      referenceName_ = "";
+      reference_ = "";
       start_ = 0L;
       end_ = 0L;
+      strand_ = "";
     }
 
     @java.lang.Override
@@ -110,7 +131,7 @@ public final class Variant {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              referenceName_ = s;
+              reference_ = s;
               break;
             }
             case 16: {
@@ -121,6 +142,12 @@ public final class Variant {
             case 24: {
 
               end_ = input.readInt64();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              strand_ = s;
               break;
             }
           }
@@ -147,30 +174,30 @@ public final class Variant {
               bmeg.gaea.schema.Variant.Position.class, bmeg.gaea.schema.Variant.Position.Builder.class);
     }
 
-    public static final int REFERENCENAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object referenceName_;
+    public static final int REFERENCE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object reference_;
     /**
-     * <code>optional string referenceName = 1;</code>
+     * <code>optional string reference = 1;</code>
      *
      * <pre>
      * The name of the `Reference` on which the `Position` is located.
      * (e.g. `chr20` or `X`)
      * </pre>
      */
-    public java.lang.String getReferenceName() {
-      java.lang.Object ref = referenceName_;
+    public java.lang.String getReference() {
+      java.lang.Object ref = reference_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        referenceName_ = s;
+        reference_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string referenceName = 1;</code>
+     * <code>optional string reference = 1;</code>
      *
      * <pre>
      * The name of the `Reference` on which the `Position` is located.
@@ -178,13 +205,13 @@ public final class Variant {
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getReferenceNameBytes() {
-      java.lang.Object ref = referenceName_;
+        getReferenceBytes() {
+      java.lang.Object ref = reference_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        referenceName_ = b;
+        reference_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -226,6 +253,50 @@ public final class Variant {
       return end_;
     }
 
+    public static final int STRAND_FIELD_NUMBER = 4;
+    private volatile java.lang.Object strand_;
+    /**
+     * <code>optional string strand = 4;</code>
+     *
+     * <pre>
+     * // Strand the position is associated with.
+     * Strand strand = 4;
+     * </pre>
+     */
+    public java.lang.String getStrand() {
+      java.lang.Object ref = strand_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        strand_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string strand = 4;</code>
+     *
+     * <pre>
+     * // Strand the position is associated with.
+     * Strand strand = 4;
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getStrandBytes() {
+      java.lang.Object ref = strand_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        strand_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -238,14 +309,17 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getReferenceNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, referenceName_);
+      if (!getReferenceBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, reference_);
       }
       if (start_ != 0L) {
         output.writeInt64(2, start_);
       }
       if (end_ != 0L) {
         output.writeInt64(3, end_);
+      }
+      if (!getStrandBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, strand_);
       }
     }
 
@@ -254,8 +328,8 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getReferenceNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, referenceName_);
+      if (!getReferenceBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, reference_);
       }
       if (start_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
@@ -264,6 +338,9 @@ public final class Variant {
       if (end_ != 0L) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(3, end_);
+      }
+      if (!getStrandBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, strand_);
       }
       memoizedSize = size;
       return size;
@@ -383,11 +460,13 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        referenceName_ = "";
+        reference_ = "";
 
         start_ = 0L;
 
         end_ = 0L;
+
+        strand_ = "";
 
         return this;
       }
@@ -411,9 +490,10 @@ public final class Variant {
 
       public bmeg.gaea.schema.Variant.Position buildPartial() {
         bmeg.gaea.schema.Variant.Position result = new bmeg.gaea.schema.Variant.Position(this);
-        result.referenceName_ = referenceName_;
+        result.reference_ = reference_;
         result.start_ = start_;
         result.end_ = end_;
+        result.strand_ = strand_;
         onBuilt();
         return result;
       }
@@ -429,8 +509,8 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.Position other) {
         if (other == bmeg.gaea.schema.Variant.Position.getDefaultInstance()) return this;
-        if (!other.getReferenceName().isEmpty()) {
-          referenceName_ = other.referenceName_;
+        if (!other.getReference().isEmpty()) {
+          reference_ = other.reference_;
           onChanged();
         }
         if (other.getStart() != 0L) {
@@ -438,6 +518,10 @@ public final class Variant {
         }
         if (other.getEnd() != 0L) {
           setEnd(other.getEnd());
+        }
+        if (!other.getStrand().isEmpty()) {
+          strand_ = other.strand_;
+          onChanged();
         }
         onChanged();
         return this;
@@ -465,29 +549,29 @@ public final class Variant {
         return this;
       }
 
-      private java.lang.Object referenceName_ = "";
+      private java.lang.Object reference_ = "";
       /**
-       * <code>optional string referenceName = 1;</code>
+       * <code>optional string reference = 1;</code>
        *
        * <pre>
        * The name of the `Reference` on which the `Position` is located.
        * (e.g. `chr20` or `X`)
        * </pre>
        */
-      public java.lang.String getReferenceName() {
-        java.lang.Object ref = referenceName_;
+      public java.lang.String getReference() {
+        java.lang.Object ref = reference_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          referenceName_ = s;
+          reference_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string referenceName = 1;</code>
+       * <code>optional string reference = 1;</code>
        *
        * <pre>
        * The name of the `Reference` on which the `Position` is located.
@@ -495,66 +579,66 @@ public final class Variant {
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getReferenceNameBytes() {
-        java.lang.Object ref = referenceName_;
+          getReferenceBytes() {
+        java.lang.Object ref = reference_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          referenceName_ = b;
+          reference_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string referenceName = 1;</code>
+       * <code>optional string reference = 1;</code>
        *
        * <pre>
        * The name of the `Reference` on which the `Position` is located.
        * (e.g. `chr20` or `X`)
        * </pre>
        */
-      public Builder setReferenceName(
+      public Builder setReference(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        referenceName_ = value;
+        reference_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string referenceName = 1;</code>
+       * <code>optional string reference = 1;</code>
        *
        * <pre>
        * The name of the `Reference` on which the `Position` is located.
        * (e.g. `chr20` or `X`)
        * </pre>
        */
-      public Builder clearReferenceName() {
+      public Builder clearReference() {
         
-        referenceName_ = getDefaultInstance().getReferenceName();
+        reference_ = getDefaultInstance().getReference();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string referenceName = 1;</code>
+       * <code>optional string reference = 1;</code>
        *
        * <pre>
        * The name of the `Reference` on which the `Position` is located.
        * (e.g. `chr20` or `X`)
        * </pre>
        */
-      public Builder setReferenceNameBytes(
+      public Builder setReferenceBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        referenceName_ = value;
+        reference_ = value;
         onChanged();
         return this;
       }
@@ -661,6 +745,100 @@ public final class Variant {
         onChanged();
         return this;
       }
+
+      private java.lang.Object strand_ = "";
+      /**
+       * <code>optional string strand = 4;</code>
+       *
+       * <pre>
+       * // Strand the position is associated with.
+       * Strand strand = 4;
+       * </pre>
+       */
+      public java.lang.String getStrand() {
+        java.lang.Object ref = strand_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          strand_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string strand = 4;</code>
+       *
+       * <pre>
+       * // Strand the position is associated with.
+       * Strand strand = 4;
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getStrandBytes() {
+        java.lang.Object ref = strand_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          strand_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string strand = 4;</code>
+       *
+       * <pre>
+       * // Strand the position is associated with.
+       * Strand strand = 4;
+       * </pre>
+       */
+      public Builder setStrand(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        strand_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string strand = 4;</code>
+       *
+       * <pre>
+       * // Strand the position is associated with.
+       * Strand strand = 4;
+       * </pre>
+       */
+      public Builder clearStrand() {
+        
+        strand_ = getDefaultInstance().getStrand();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string strand = 4;</code>
+       *
+       * <pre>
+       * // Strand the position is associated with.
+       * Strand strand = 4;
+       * </pre>
+       */
+      public Builder setStrandBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        strand_ = value;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -724,25 +902,7 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * Id of this annotation node.
-     * </pre>
-     */
-    java.lang.String getId();
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * Id of this annotation node.
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
-
-    /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -752,7 +912,7 @@ public final class Variant {
      */
     boolean hasPosition();
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -762,7 +922,7 @@ public final class Variant {
      */
     bmeg.gaea.schema.Variant.Position getPosition();
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -773,7 +933,7 @@ public final class Variant {
     bmeg.gaea.schema.Variant.PositionOrBuilder getPositionOrBuilder();
 
     /**
-     * <code>optional string featureType = 3;</code>
+     * <code>optional string featureType = 2;</code>
      *
      * <pre>
      * Feature that is annotated by this region.  Normally, this will be a term in
@@ -784,7 +944,7 @@ public final class Variant {
      */
     java.lang.String getFeatureType();
     /**
-     * <code>optional string featureType = 3;</code>
+     * <code>optional string featureType = 2;</code>
      *
      * <pre>
      * Feature that is annotated by this region.  Normally, this will be a term in
@@ -797,7 +957,7 @@ public final class Variant {
         getFeatureTypeBytes();
 
     /**
-     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     * <code>map&lt;string, string&gt; attributes = 3;</code>
      *
      * <pre>
      * Data dump/placeholder field.
@@ -832,7 +992,6 @@ public final class Variant {
       super(builder);
     }
     private Feature() {
-      id_ = "";
       featureType_ = "";
     }
 
@@ -861,12 +1020,6 @@ public final class Variant {
               break;
             }
             case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              id_ = s;
-              break;
-            }
-            case 18: {
               bmeg.gaea.schema.Variant.Position.Builder subBuilder = null;
               if (position_ != null) {
                 subBuilder = position_.toBuilder();
@@ -879,17 +1032,17 @@ public final class Variant {
 
               break;
             }
-            case 26: {
+            case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
               featureType_ = s;
               break;
             }
-            case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 attributes_ = com.google.protobuf.MapField.newMapField(
                     AttributesDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000004;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               attributes = input.readMessage(
@@ -918,7 +1071,7 @@ public final class Variant {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 4:
+        case 3:
           return internalGetAttributes();
         default:
           throw new RuntimeException(
@@ -933,52 +1086,10 @@ public final class Variant {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * Id of this annotation node.
-     * </pre>
-     */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * Id of this annotation node.
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int POSITION_FIELD_NUMBER = 2;
+    public static final int POSITION_FIELD_NUMBER = 1;
     private bmeg.gaea.schema.Variant.Position position_;
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -990,7 +1101,7 @@ public final class Variant {
       return position_ != null;
     }
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -1002,7 +1113,7 @@ public final class Variant {
       return position_ == null ? bmeg.gaea.schema.Variant.Position.getDefaultInstance() : position_;
     }
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
      *
      * <pre>
      * position at which this feature occurs (0-based).
@@ -1014,10 +1125,10 @@ public final class Variant {
       return getPosition();
     }
 
-    public static final int FEATURETYPE_FIELD_NUMBER = 3;
+    public static final int FEATURETYPE_FIELD_NUMBER = 2;
     private volatile java.lang.Object featureType_;
     /**
-     * <code>optional string featureType = 3;</code>
+     * <code>optional string featureType = 2;</code>
      *
      * <pre>
      * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1039,7 +1150,7 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string featureType = 3;</code>
+     * <code>optional string featureType = 2;</code>
      *
      * <pre>
      * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1062,7 +1173,7 @@ public final class Variant {
       }
     }
 
-    public static final int ATTRIBUTES_FIELD_NUMBER = 4;
+    public static final int ATTRIBUTES_FIELD_NUMBER = 3;
     private static final class AttributesDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -1085,7 +1196,7 @@ public final class Variant {
       return attributes_;
     }
     /**
-     * <code>map&lt;string, string&gt; attributes = 4;</code>
+     * <code>map&lt;string, string&gt; attributes = 3;</code>
      *
      * <pre>
      * Data dump/placeholder field.
@@ -1116,14 +1227,11 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, id_);
-      }
       if (position_ != null) {
-        output.writeMessage(2, getPosition());
+        output.writeMessage(1, getPosition());
       }
       if (!getFeatureTypeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, featureType_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, featureType_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetAttributes().getMap().entrySet()) {
@@ -1132,7 +1240,7 @@ public final class Variant {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(4, attributes);
+        output.writeMessage(3, attributes);
       }
     }
 
@@ -1141,15 +1249,12 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, id_);
-      }
       if (position_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getPosition());
+          .computeMessageSize(1, getPosition());
       }
       if (!getFeatureTypeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, featureType_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, featureType_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetAttributes().getMap().entrySet()) {
@@ -1159,7 +1264,7 @@ public final class Variant {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(4, attributes);
+            .computeMessageSize(3, attributes);
       }
       memoizedSize = size;
       return size;
@@ -1259,7 +1364,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetAttributes();
           default:
             throw new RuntimeException(
@@ -1270,7 +1375,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetMutableAttributes();
           default:
             throw new RuntimeException(
@@ -1300,8 +1405,6 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
-
         if (positionBuilder_ == null) {
           position_ = null;
         } else {
@@ -1335,7 +1438,6 @@ public final class Variant {
         bmeg.gaea.schema.Variant.Feature result = new bmeg.gaea.schema.Variant.Feature(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
         if (positionBuilder_ == null) {
           result.position_ = position_;
         } else {
@@ -1360,10 +1462,6 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.Feature other) {
         if (other == bmeg.gaea.schema.Variant.Feature.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
         if (other.hasPosition()) {
           mergePosition(other.getPosition());
         }
@@ -1400,100 +1498,11 @@ public final class Variant {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * Id of this annotation node.
-       * </pre>
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * Id of this annotation node.
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * Id of this annotation node.
-       * </pre>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * Id of this annotation node.
-       * </pre>
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * Id of this annotation node.
-       * </pre>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
       private bmeg.gaea.schema.Variant.Position position_ = null;
       private com.google.protobuf.SingleFieldBuilder<
           bmeg.gaea.schema.Variant.Position, bmeg.gaea.schema.Variant.Position.Builder, bmeg.gaea.schema.Variant.PositionOrBuilder> positionBuilder_;
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1505,7 +1514,7 @@ public final class Variant {
         return positionBuilder_ != null || position_ != null;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1521,7 +1530,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1543,7 +1552,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1563,7 +1572,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1587,7 +1596,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1607,7 +1616,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1621,7 +1630,7 @@ public final class Variant {
         return getPositionFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1638,7 +1647,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 1;</code>
        *
        * <pre>
        * position at which this feature occurs (0-based).
@@ -1662,7 +1671,7 @@ public final class Variant {
 
       private java.lang.Object featureType_ = "";
       /**
-       * <code>optional string featureType = 3;</code>
+       * <code>optional string featureType = 2;</code>
        *
        * <pre>
        * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1684,7 +1693,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string featureType = 3;</code>
+       * <code>optional string featureType = 2;</code>
        *
        * <pre>
        * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1707,7 +1716,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string featureType = 3;</code>
+       * <code>optional string featureType = 2;</code>
        *
        * <pre>
        * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1727,7 +1736,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string featureType = 3;</code>
+       * <code>optional string featureType = 2;</code>
        *
        * <pre>
        * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1743,7 +1752,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string featureType = 3;</code>
+       * <code>optional string featureType = 2;</code>
        *
        * <pre>
        * Feature that is annotated by this region.  Normally, this will be a term in
@@ -1787,7 +1796,7 @@ public final class Variant {
         return attributes_;
       }
       /**
-       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       * <code>map&lt;string, string&gt; attributes = 3;</code>
        *
        * <pre>
        * Data dump/placeholder field.
@@ -1805,7 +1814,7 @@ public final class Variant {
         return internalGetAttributes().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       * <code>map&lt;string, string&gt; attributes = 3;</code>
        *
        * <pre>
        * Data dump/placeholder field.
@@ -1824,7 +1833,7 @@ public final class Variant {
         return internalGetMutableAttributes().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; attributes = 4;</code>
+       * <code>map&lt;string, string&gt; attributes = 3;</code>
        *
        * <pre>
        * Data dump/placeholder field.
@@ -1906,55 +1915,144 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string id = 1;</code>
-     */
-    java.lang.String getId();
-    /**
-     * <code>optional string id = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
-
-    /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      */
     java.lang.String getSource();
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      */
     com.google.protobuf.ByteString
         getSourceBytes();
 
     /**
-     * <code>optional string variantCallId = 3;</code>
-     */
-    java.lang.String getVariantCallId();
-    /**
-     * <code>optional string variantCallId = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getVariantCallIdBytes();
-
-    /**
-     * <code>optional string feature = 4;</code>
+     * <code>optional string feature = 2;</code>
      *
      * <pre>
-     * Associated Features
+     * The feature can mean either the gene or the protein this variant is associated with.
      * </pre>
      */
     java.lang.String getFeature();
     /**
-     * <code>optional string feature = 4;</code>
+     * <code>optional string feature = 2;</code>
      *
      * <pre>
-     * Associated Features
+     * The feature can mean either the gene or the protein this variant is associated with.
      * </pre>
      */
     com.google.protobuf.ByteString
         getFeatureBytes();
 
     /**
-     * <code>map&lt;string, string&gt; info = 5;</code>
+     * <code>repeated string domains = 3;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+        getDomainsList();
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    int getDomainsCount();
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    java.lang.String getDomains(int index);
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getDomainsBytes(int index);
+
+    /**
+     * <code>optional string variantType = 4;</code>
+     */
+    java.lang.String getVariantType();
+    /**
+     * <code>optional string variantType = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getVariantTypeBytes();
+
+    /**
+     * <code>optional string transcriptSpecies = 5;</code>
+     */
+    java.lang.String getTranscriptSpecies();
+    /**
+     * <code>optional string transcriptSpecies = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getTranscriptSpeciesBytes();
+
+    /**
+     * <code>optional string transcriptName = 6;</code>
+     */
+    java.lang.String getTranscriptName();
+    /**
+     * <code>optional string transcriptName = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getTranscriptNameBytes();
+
+    /**
+     * <code>optional string transcriptSource = 7;</code>
+     */
+    java.lang.String getTranscriptSource();
+    /**
+     * <code>optional string transcriptSource = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getTranscriptSourceBytes();
+
+    /**
+     * <code>optional string transcriptStatus = 8;</code>
+     */
+    java.lang.String getTranscriptStatus();
+    /**
+     * <code>optional string transcriptStatus = 8;</code>
+     */
+    com.google.protobuf.ByteString
+        getTranscriptStatusBytes();
+
+    /**
+     * <code>optional string transcriptVersion = 9;</code>
+     */
+    java.lang.String getTranscriptVersion();
+    /**
+     * <code>optional string transcriptVersion = 9;</code>
+     */
+    com.google.protobuf.ByteString
+        getTranscriptVersionBytes();
+
+    /**
+     * <code>optional string cPosition = 10;</code>
+     */
+    java.lang.String getCPosition();
+    /**
+     * <code>optional string cPosition = 10;</code>
+     */
+    com.google.protobuf.ByteString
+        getCPositionBytes();
+
+    /**
+     * <code>optional string aminoAcidChange = 11;</code>
+     */
+    java.lang.String getAminoAcidChange();
+    /**
+     * <code>optional string aminoAcidChange = 11;</code>
+     */
+    com.google.protobuf.ByteString
+        getAminoAcidChangeBytes();
+
+    /**
+     * <code>optional string strand = 12;</code>
+     */
+    java.lang.String getStrand();
+    /**
+     * <code>optional string strand = 12;</code>
+     */
+    com.google.protobuf.ByteString
+        getStrandBytes();
+
+    /**
+     * <code>map&lt;string, string&gt; info = 13;</code>
      *
      * <pre>
      * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -1985,10 +2083,18 @@ public final class Variant {
       super(builder);
     }
     private VariantCallEffect() {
-      id_ = "";
       source_ = "";
-      variantCallId_ = "";
       feature_ = "";
+      domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      variantType_ = "";
+      transcriptSpecies_ = "";
+      transcriptName_ = "";
+      transcriptSource_ = "";
+      transcriptStatus_ = "";
+      transcriptVersion_ = "";
+      cPosition_ = "";
+      aminoAcidChange_ = "";
+      strand_ = "";
     }
 
     @java.lang.Override
@@ -2018,32 +2124,83 @@ public final class Variant {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              id_ = s;
+              source_ = s;
               break;
             }
             case 18: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              source_ = s;
+              feature_ = s;
               break;
             }
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
-
-              variantCallId_ = s;
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                domains_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              domains_.add(s);
               break;
             }
             case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              feature_ = s;
+              variantType_ = s;
               break;
             }
             case 42: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transcriptSpecies_ = s;
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transcriptName_ = s;
+              break;
+            }
+            case 58: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transcriptSource_ = s;
+              break;
+            }
+            case 66: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transcriptStatus_ = s;
+              break;
+            }
+            case 74: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              transcriptVersion_ = s;
+              break;
+            }
+            case 82: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              cPosition_ = s;
+              break;
+            }
+            case 90: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              aminoAcidChange_ = s;
+              break;
+            }
+            case 98: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              strand_ = s;
+              break;
+            }
+            case 106: {
+              if (!((mutable_bitField0_ & 0x00001000) == 0x00001000)) {
                 info_ = com.google.protobuf.MapField.newMapField(
                     InfoDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00001000;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               info = input.readMessage(
@@ -2060,6 +2217,9 @@ public final class Variant {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          domains_ = domains_.getUnmodifiableView();
+        }
         makeExtensionsImmutable();
       }
     }
@@ -2072,7 +2232,7 @@ public final class Variant {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 5:
+        case 13:
           return internalGetInfo();
         default:
           throw new RuntimeException(
@@ -2087,44 +2247,10 @@ public final class Variant {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <code>optional string id = 1;</code>
-     */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string id = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SOURCE_FIELD_NUMBER = 2;
+    public static final int SOURCE_FIELD_NUMBER = 1;
     private volatile java.lang.Object source_;
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      */
     public java.lang.String getSource() {
       java.lang.Object ref = source_;
@@ -2139,7 +2265,7 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      */
     public com.google.protobuf.ByteString
         getSourceBytes() {
@@ -2155,47 +2281,13 @@ public final class Variant {
       }
     }
 
-    public static final int VARIANTCALLID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object variantCallId_;
-    /**
-     * <code>optional string variantCallId = 3;</code>
-     */
-    public java.lang.String getVariantCallId() {
-      java.lang.Object ref = variantCallId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        variantCallId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string variantCallId = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getVariantCallIdBytes() {
-      java.lang.Object ref = variantCallId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        variantCallId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int FEATURE_FIELD_NUMBER = 4;
+    public static final int FEATURE_FIELD_NUMBER = 2;
     private volatile java.lang.Object feature_;
     /**
-     * <code>optional string feature = 4;</code>
+     * <code>optional string feature = 2;</code>
      *
      * <pre>
-     * Associated Features
+     * The feature can mean either the gene or the protein this variant is associated with.
      * </pre>
      */
     public java.lang.String getFeature() {
@@ -2211,10 +2303,10 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string feature = 4;</code>
+     * <code>optional string feature = 2;</code>
      *
      * <pre>
-     * Associated Features
+     * The feature can mean either the gene or the protein this variant is associated with.
      * </pre>
      */
     public com.google.protobuf.ByteString
@@ -2231,7 +2323,342 @@ public final class Variant {
       }
     }
 
-    public static final int INFO_FIELD_NUMBER = 5;
+    public static final int DOMAINS_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList domains_;
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getDomainsList() {
+      return domains_;
+    }
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    public int getDomainsCount() {
+      return domains_.size();
+    }
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    public java.lang.String getDomains(int index) {
+      return domains_.get(index);
+    }
+    /**
+     * <code>repeated string domains = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDomainsBytes(int index) {
+      return domains_.getByteString(index);
+    }
+
+    public static final int VARIANTTYPE_FIELD_NUMBER = 4;
+    private volatile java.lang.Object variantType_;
+    /**
+     * <code>optional string variantType = 4;</code>
+     */
+    public java.lang.String getVariantType() {
+      java.lang.Object ref = variantType_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        variantType_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string variantType = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getVariantTypeBytes() {
+      java.lang.Object ref = variantType_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        variantType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TRANSCRIPTSPECIES_FIELD_NUMBER = 5;
+    private volatile java.lang.Object transcriptSpecies_;
+    /**
+     * <code>optional string transcriptSpecies = 5;</code>
+     */
+    public java.lang.String getTranscriptSpecies() {
+      java.lang.Object ref = transcriptSpecies_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transcriptSpecies_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string transcriptSpecies = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranscriptSpeciesBytes() {
+      java.lang.Object ref = transcriptSpecies_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transcriptSpecies_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TRANSCRIPTNAME_FIELD_NUMBER = 6;
+    private volatile java.lang.Object transcriptName_;
+    /**
+     * <code>optional string transcriptName = 6;</code>
+     */
+    public java.lang.String getTranscriptName() {
+      java.lang.Object ref = transcriptName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transcriptName_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string transcriptName = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranscriptNameBytes() {
+      java.lang.Object ref = transcriptName_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transcriptName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TRANSCRIPTSOURCE_FIELD_NUMBER = 7;
+    private volatile java.lang.Object transcriptSource_;
+    /**
+     * <code>optional string transcriptSource = 7;</code>
+     */
+    public java.lang.String getTranscriptSource() {
+      java.lang.Object ref = transcriptSource_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transcriptSource_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string transcriptSource = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranscriptSourceBytes() {
+      java.lang.Object ref = transcriptSource_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transcriptSource_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TRANSCRIPTSTATUS_FIELD_NUMBER = 8;
+    private volatile java.lang.Object transcriptStatus_;
+    /**
+     * <code>optional string transcriptStatus = 8;</code>
+     */
+    public java.lang.String getTranscriptStatus() {
+      java.lang.Object ref = transcriptStatus_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transcriptStatus_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string transcriptStatus = 8;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranscriptStatusBytes() {
+      java.lang.Object ref = transcriptStatus_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transcriptStatus_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TRANSCRIPTVERSION_FIELD_NUMBER = 9;
+    private volatile java.lang.Object transcriptVersion_;
+    /**
+     * <code>optional string transcriptVersion = 9;</code>
+     */
+    public java.lang.String getTranscriptVersion() {
+      java.lang.Object ref = transcriptVersion_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        transcriptVersion_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string transcriptVersion = 9;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTranscriptVersionBytes() {
+      java.lang.Object ref = transcriptVersion_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        transcriptVersion_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int CPOSITION_FIELD_NUMBER = 10;
+    private volatile java.lang.Object cPosition_;
+    /**
+     * <code>optional string cPosition = 10;</code>
+     */
+    public java.lang.String getCPosition() {
+      java.lang.Object ref = cPosition_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        cPosition_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string cPosition = 10;</code>
+     */
+    public com.google.protobuf.ByteString
+        getCPositionBytes() {
+      java.lang.Object ref = cPosition_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        cPosition_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int AMINOACIDCHANGE_FIELD_NUMBER = 11;
+    private volatile java.lang.Object aminoAcidChange_;
+    /**
+     * <code>optional string aminoAcidChange = 11;</code>
+     */
+    public java.lang.String getAminoAcidChange() {
+      java.lang.Object ref = aminoAcidChange_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        aminoAcidChange_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string aminoAcidChange = 11;</code>
+     */
+    public com.google.protobuf.ByteString
+        getAminoAcidChangeBytes() {
+      java.lang.Object ref = aminoAcidChange_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        aminoAcidChange_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int STRAND_FIELD_NUMBER = 12;
+    private volatile java.lang.Object strand_;
+    /**
+     * <code>optional string strand = 12;</code>
+     */
+    public java.lang.String getStrand() {
+      java.lang.Object ref = strand_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        strand_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string strand = 12;</code>
+     */
+    public com.google.protobuf.ByteString
+        getStrandBytes() {
+      java.lang.Object ref = strand_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        strand_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int INFO_FIELD_NUMBER = 13;
     private static final class InfoDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -2254,7 +2681,7 @@ public final class Variant {
       return info_;
     }
     /**
-     * <code>map&lt;string, string&gt; info = 5;</code>
+     * <code>map&lt;string, string&gt; info = 13;</code>
      *
      * <pre>
      * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -2278,17 +2705,41 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, id_);
-      }
       if (!getSourceBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
-      }
-      if (!getVariantCallIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, variantCallId_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, source_);
       }
       if (!getFeatureBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, feature_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, feature_);
+      }
+      for (int i = 0; i < domains_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, domains_.getRaw(i));
+      }
+      if (!getVariantTypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, variantType_);
+      }
+      if (!getTranscriptSpeciesBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, transcriptSpecies_);
+      }
+      if (!getTranscriptNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 6, transcriptName_);
+      }
+      if (!getTranscriptSourceBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 7, transcriptSource_);
+      }
+      if (!getTranscriptStatusBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 8, transcriptStatus_);
+      }
+      if (!getTranscriptVersionBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 9, transcriptVersion_);
+      }
+      if (!getCPositionBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 10, cPosition_);
+      }
+      if (!getAminoAcidChangeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 11, aminoAcidChange_);
+      }
+      if (!getStrandBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 12, strand_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -2297,7 +2748,7 @@ public final class Variant {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(5, info);
+        output.writeMessage(13, info);
       }
     }
 
@@ -2306,17 +2757,46 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, id_);
-      }
       if (!getSourceBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
-      }
-      if (!getVariantCallIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, variantCallId_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, source_);
       }
       if (!getFeatureBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, feature_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, feature_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < domains_.size(); i++) {
+          dataSize += computeStringSizeNoTag(domains_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getDomainsList().size();
+      }
+      if (!getVariantTypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, variantType_);
+      }
+      if (!getTranscriptSpeciesBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, transcriptSpecies_);
+      }
+      if (!getTranscriptNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(6, transcriptName_);
+      }
+      if (!getTranscriptSourceBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(7, transcriptSource_);
+      }
+      if (!getTranscriptStatusBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(8, transcriptStatus_);
+      }
+      if (!getTranscriptVersionBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(9, transcriptVersion_);
+      }
+      if (!getCPositionBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, cPosition_);
+      }
+      if (!getAminoAcidChangeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(11, aminoAcidChange_);
+      }
+      if (!getStrandBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(12, strand_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -2326,7 +2806,7 @@ public final class Variant {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(5, info);
+            .computeMessageSize(13, info);
       }
       memoizedSize = size;
       return size;
@@ -2429,7 +2909,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 5:
+          case 13:
             return internalGetInfo();
           default:
             throw new RuntimeException(
@@ -2440,7 +2920,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 5:
+          case 13:
             return internalGetMutableInfo();
           default:
             throw new RuntimeException(
@@ -2470,13 +2950,29 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
-
         source_ = "";
 
-        variantCallId_ = "";
-
         feature_ = "";
+
+        domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        variantType_ = "";
+
+        transcriptSpecies_ = "";
+
+        transcriptName_ = "";
+
+        transcriptSource_ = "";
+
+        transcriptStatus_ = "";
+
+        transcriptVersion_ = "";
+
+        cPosition_ = "";
+
+        aminoAcidChange_ = "";
+
+        strand_ = "";
 
         internalGetMutableInfo().clear();
         return this;
@@ -2503,10 +2999,22 @@ public final class Variant {
         bmeg.gaea.schema.Variant.VariantCallEffect result = new bmeg.gaea.schema.Variant.VariantCallEffect(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
         result.source_ = source_;
-        result.variantCallId_ = variantCallId_;
         result.feature_ = feature_;
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          domains_ = domains_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.domains_ = domains_;
+        result.variantType_ = variantType_;
+        result.transcriptSpecies_ = transcriptSpecies_;
+        result.transcriptName_ = transcriptName_;
+        result.transcriptSource_ = transcriptSource_;
+        result.transcriptStatus_ = transcriptStatus_;
+        result.transcriptVersion_ = transcriptVersion_;
+        result.cPosition_ = cPosition_;
+        result.aminoAcidChange_ = aminoAcidChange_;
+        result.strand_ = strand_;
         result.info_ = internalGetInfo();
         result.info_.makeImmutable();
         result.bitField0_ = to_bitField0_;
@@ -2525,20 +3033,58 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.VariantCallEffect other) {
         if (other == bmeg.gaea.schema.Variant.VariantCallEffect.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
         if (!other.getSource().isEmpty()) {
           source_ = other.source_;
           onChanged();
         }
-        if (!other.getVariantCallId().isEmpty()) {
-          variantCallId_ = other.variantCallId_;
-          onChanged();
-        }
         if (!other.getFeature().isEmpty()) {
           feature_ = other.feature_;
+          onChanged();
+        }
+        if (!other.domains_.isEmpty()) {
+          if (domains_.isEmpty()) {
+            domains_ = other.domains_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureDomainsIsMutable();
+            domains_.addAll(other.domains_);
+          }
+          onChanged();
+        }
+        if (!other.getVariantType().isEmpty()) {
+          variantType_ = other.variantType_;
+          onChanged();
+        }
+        if (!other.getTranscriptSpecies().isEmpty()) {
+          transcriptSpecies_ = other.transcriptSpecies_;
+          onChanged();
+        }
+        if (!other.getTranscriptName().isEmpty()) {
+          transcriptName_ = other.transcriptName_;
+          onChanged();
+        }
+        if (!other.getTranscriptSource().isEmpty()) {
+          transcriptSource_ = other.transcriptSource_;
+          onChanged();
+        }
+        if (!other.getTranscriptStatus().isEmpty()) {
+          transcriptStatus_ = other.transcriptStatus_;
+          onChanged();
+        }
+        if (!other.getTranscriptVersion().isEmpty()) {
+          transcriptVersion_ = other.transcriptVersion_;
+          onChanged();
+        }
+        if (!other.getCPosition().isEmpty()) {
+          cPosition_ = other.cPosition_;
+          onChanged();
+        }
+        if (!other.getAminoAcidChange().isEmpty()) {
+          aminoAcidChange_ = other.aminoAcidChange_;
+          onChanged();
+        }
+        if (!other.getStrand().isEmpty()) {
+          strand_ = other.strand_;
           onChanged();
         }
         internalGetMutableInfo().mergeFrom(
@@ -2570,78 +3116,9 @@ public final class Variant {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
-      /**
-       * <code>optional string id = 1;</code>
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object source_ = "";
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        */
       public java.lang.String getSource() {
         java.lang.Object ref = source_;
@@ -2656,7 +3133,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        */
       public com.google.protobuf.ByteString
           getSourceBytes() {
@@ -2672,7 +3149,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        */
       public Builder setSource(
           java.lang.String value) {
@@ -2685,7 +3162,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        */
       public Builder clearSource() {
         
@@ -2694,7 +3171,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        */
       public Builder setSourceBytes(
           com.google.protobuf.ByteString value) {
@@ -2708,81 +3185,12 @@ public final class Variant {
         return this;
       }
 
-      private java.lang.Object variantCallId_ = "";
-      /**
-       * <code>optional string variantCallId = 3;</code>
-       */
-      public java.lang.String getVariantCallId() {
-        java.lang.Object ref = variantCallId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          variantCallId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string variantCallId = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getVariantCallIdBytes() {
-        java.lang.Object ref = variantCallId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          variantCallId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string variantCallId = 3;</code>
-       */
-      public Builder setVariantCallId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        variantCallId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string variantCallId = 3;</code>
-       */
-      public Builder clearVariantCallId() {
-        
-        variantCallId_ = getDefaultInstance().getVariantCallId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string variantCallId = 3;</code>
-       */
-      public Builder setVariantCallIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        variantCallId_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object feature_ = "";
       /**
-       * <code>optional string feature = 4;</code>
+       * <code>optional string feature = 2;</code>
        *
        * <pre>
-       * Associated Features
+       * The feature can mean either the gene or the protein this variant is associated with.
        * </pre>
        */
       public java.lang.String getFeature() {
@@ -2798,10 +3206,10 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string feature = 4;</code>
+       * <code>optional string feature = 2;</code>
        *
        * <pre>
-       * Associated Features
+       * The feature can mean either the gene or the protein this variant is associated with.
        * </pre>
        */
       public com.google.protobuf.ByteString
@@ -2818,10 +3226,10 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string feature = 4;</code>
+       * <code>optional string feature = 2;</code>
        *
        * <pre>
-       * Associated Features
+       * The feature can mean either the gene or the protein this variant is associated with.
        * </pre>
        */
       public Builder setFeature(
@@ -2835,10 +3243,10 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string feature = 4;</code>
+       * <code>optional string feature = 2;</code>
        *
        * <pre>
-       * Associated Features
+       * The feature can mean either the gene or the protein this variant is associated with.
        * </pre>
        */
       public Builder clearFeature() {
@@ -2848,10 +3256,10 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string feature = 4;</code>
+       * <code>optional string feature = 2;</code>
        *
        * <pre>
-       * Associated Features
+       * The feature can mean either the gene or the protein this variant is associated with.
        * </pre>
        */
       public Builder setFeatureBytes(
@@ -2862,6 +3270,721 @@ public final class Variant {
   checkByteStringIsUtf8(value);
         
         feature_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureDomainsIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          domains_ = new com.google.protobuf.LazyStringArrayList(domains_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getDomainsList() {
+        return domains_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public int getDomainsCount() {
+        return domains_.size();
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public java.lang.String getDomains(int index) {
+        return domains_.get(index);
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDomainsBytes(int index) {
+        return domains_.getByteString(index);
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public Builder setDomains(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureDomainsIsMutable();
+        domains_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public Builder addDomains(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureDomainsIsMutable();
+        domains_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public Builder addAllDomains(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureDomainsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, domains_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public Builder clearDomains() {
+        domains_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string domains = 3;</code>
+       */
+      public Builder addDomainsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureDomainsIsMutable();
+        domains_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object variantType_ = "";
+      /**
+       * <code>optional string variantType = 4;</code>
+       */
+      public java.lang.String getVariantType() {
+        java.lang.Object ref = variantType_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          variantType_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string variantType = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getVariantTypeBytes() {
+        java.lang.Object ref = variantType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          variantType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string variantType = 4;</code>
+       */
+      public Builder setVariantType(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        variantType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string variantType = 4;</code>
+       */
+      public Builder clearVariantType() {
+        
+        variantType_ = getDefaultInstance().getVariantType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string variantType = 4;</code>
+       */
+      public Builder setVariantTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        variantType_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transcriptSpecies_ = "";
+      /**
+       * <code>optional string transcriptSpecies = 5;</code>
+       */
+      public java.lang.String getTranscriptSpecies() {
+        java.lang.Object ref = transcriptSpecies_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transcriptSpecies_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptSpecies = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTranscriptSpeciesBytes() {
+        java.lang.Object ref = transcriptSpecies_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transcriptSpecies_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptSpecies = 5;</code>
+       */
+      public Builder setTranscriptSpecies(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transcriptSpecies_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptSpecies = 5;</code>
+       */
+      public Builder clearTranscriptSpecies() {
+        
+        transcriptSpecies_ = getDefaultInstance().getTranscriptSpecies();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptSpecies = 5;</code>
+       */
+      public Builder setTranscriptSpeciesBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transcriptSpecies_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transcriptName_ = "";
+      /**
+       * <code>optional string transcriptName = 6;</code>
+       */
+      public java.lang.String getTranscriptName() {
+        java.lang.Object ref = transcriptName_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transcriptName_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptName = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTranscriptNameBytes() {
+        java.lang.Object ref = transcriptName_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transcriptName_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptName = 6;</code>
+       */
+      public Builder setTranscriptName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transcriptName_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptName = 6;</code>
+       */
+      public Builder clearTranscriptName() {
+        
+        transcriptName_ = getDefaultInstance().getTranscriptName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptName = 6;</code>
+       */
+      public Builder setTranscriptNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transcriptName_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transcriptSource_ = "";
+      /**
+       * <code>optional string transcriptSource = 7;</code>
+       */
+      public java.lang.String getTranscriptSource() {
+        java.lang.Object ref = transcriptSource_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transcriptSource_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptSource = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTranscriptSourceBytes() {
+        java.lang.Object ref = transcriptSource_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transcriptSource_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptSource = 7;</code>
+       */
+      public Builder setTranscriptSource(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transcriptSource_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptSource = 7;</code>
+       */
+      public Builder clearTranscriptSource() {
+        
+        transcriptSource_ = getDefaultInstance().getTranscriptSource();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptSource = 7;</code>
+       */
+      public Builder setTranscriptSourceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transcriptSource_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transcriptStatus_ = "";
+      /**
+       * <code>optional string transcriptStatus = 8;</code>
+       */
+      public java.lang.String getTranscriptStatus() {
+        java.lang.Object ref = transcriptStatus_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transcriptStatus_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptStatus = 8;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTranscriptStatusBytes() {
+        java.lang.Object ref = transcriptStatus_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transcriptStatus_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptStatus = 8;</code>
+       */
+      public Builder setTranscriptStatus(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transcriptStatus_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptStatus = 8;</code>
+       */
+      public Builder clearTranscriptStatus() {
+        
+        transcriptStatus_ = getDefaultInstance().getTranscriptStatus();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptStatus = 8;</code>
+       */
+      public Builder setTranscriptStatusBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transcriptStatus_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object transcriptVersion_ = "";
+      /**
+       * <code>optional string transcriptVersion = 9;</code>
+       */
+      public java.lang.String getTranscriptVersion() {
+        java.lang.Object ref = transcriptVersion_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          transcriptVersion_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptVersion = 9;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTranscriptVersionBytes() {
+        java.lang.Object ref = transcriptVersion_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          transcriptVersion_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string transcriptVersion = 9;</code>
+       */
+      public Builder setTranscriptVersion(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        transcriptVersion_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptVersion = 9;</code>
+       */
+      public Builder clearTranscriptVersion() {
+        
+        transcriptVersion_ = getDefaultInstance().getTranscriptVersion();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string transcriptVersion = 9;</code>
+       */
+      public Builder setTranscriptVersionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        transcriptVersion_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object cPosition_ = "";
+      /**
+       * <code>optional string cPosition = 10;</code>
+       */
+      public java.lang.String getCPosition() {
+        java.lang.Object ref = cPosition_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          cPosition_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string cPosition = 10;</code>
+       */
+      public com.google.protobuf.ByteString
+          getCPositionBytes() {
+        java.lang.Object ref = cPosition_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          cPosition_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string cPosition = 10;</code>
+       */
+      public Builder setCPosition(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        cPosition_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string cPosition = 10;</code>
+       */
+      public Builder clearCPosition() {
+        
+        cPosition_ = getDefaultInstance().getCPosition();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string cPosition = 10;</code>
+       */
+      public Builder setCPositionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        cPosition_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object aminoAcidChange_ = "";
+      /**
+       * <code>optional string aminoAcidChange = 11;</code>
+       */
+      public java.lang.String getAminoAcidChange() {
+        java.lang.Object ref = aminoAcidChange_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          aminoAcidChange_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string aminoAcidChange = 11;</code>
+       */
+      public com.google.protobuf.ByteString
+          getAminoAcidChangeBytes() {
+        java.lang.Object ref = aminoAcidChange_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          aminoAcidChange_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string aminoAcidChange = 11;</code>
+       */
+      public Builder setAminoAcidChange(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        aminoAcidChange_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string aminoAcidChange = 11;</code>
+       */
+      public Builder clearAminoAcidChange() {
+        
+        aminoAcidChange_ = getDefaultInstance().getAminoAcidChange();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string aminoAcidChange = 11;</code>
+       */
+      public Builder setAminoAcidChangeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        aminoAcidChange_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object strand_ = "";
+      /**
+       * <code>optional string strand = 12;</code>
+       */
+      public java.lang.String getStrand() {
+        java.lang.Object ref = strand_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          strand_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string strand = 12;</code>
+       */
+      public com.google.protobuf.ByteString
+          getStrandBytes() {
+        java.lang.Object ref = strand_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          strand_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string strand = 12;</code>
+       */
+      public Builder setStrand(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        strand_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string strand = 12;</code>
+       */
+      public Builder clearStrand() {
+        
+        strand_ = getDefaultInstance().getStrand();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string strand = 12;</code>
+       */
+      public Builder setStrandBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        strand_ = value;
         onChanged();
         return this;
       }
@@ -2889,7 +4012,7 @@ public final class Variant {
         return info_;
       }
       /**
-       * <code>map&lt;string, string&gt; info = 5;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -2900,7 +4023,7 @@ public final class Variant {
         return internalGetInfo().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 5;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -2912,7 +4035,7 @@ public final class Variant {
         return internalGetMutableInfo().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 5;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -2987,25 +4110,7 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * The call ID.
-     * </pre>
-     */
-    java.lang.String getId();
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * The call ID.
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
-
-    /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      *
      * <pre>
      * The source of this data
@@ -3013,7 +4118,7 @@ public final class Variant {
      */
     java.lang.String getSource();
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      *
      * <pre>
      * The source of this data
@@ -3023,55 +4128,41 @@ public final class Variant {
         getSourceBytes();
 
     /**
-     * <code>optional string bioSampleId = 3;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
      *
      * <pre>
-     * The sample this call set's data was generated from.
-     * Note: the current API does not have a rigorous definition of sample.
-     * Therefore, this field actually contains an arbitrary string, typically
-     * corresponding to the sampleId field in the read groups used to generate
-     * this call set.
+     * where on the genome this variant occurred 
      * </pre>
-     */
-    java.lang.String getBioSampleId();
-    /**
-     * <code>optional string bioSampleId = 3;</code>
-     *
-     * <pre>
-     * The sample this call set's data was generated from.
-     * Note: the current API does not have a rigorous definition of sample.
-     * Therefore, this field actually contains an arbitrary string, typically
-     * corresponding to the sampleId field in the read groups used to generate
-     * this call set.
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getBioSampleIdBytes();
-
-    /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
      */
     boolean hasPosition();
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     *
+     * <pre>
+     * where on the genome this variant occurred 
+     * </pre>
      */
     bmeg.gaea.schema.Variant.Position getPosition();
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     *
+     * <pre>
+     * where on the genome this variant occurred 
+     * </pre>
      */
     bmeg.gaea.schema.Variant.PositionOrBuilder getPositionOrBuilder();
 
     /**
-     * <code>optional string referenceBases = 5;</code>
+     * <code>optional string referenceAllele = 3;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
      * position. e.g. "T"
      * </pre>
      */
-    java.lang.String getReferenceBases();
+    java.lang.String getReferenceAllele();
     /**
-     * <code>optional string referenceBases = 5;</code>
+     * <code>optional string referenceAllele = 3;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -3079,105 +4170,100 @@ public final class Variant {
      * </pre>
      */
     com.google.protobuf.ByteString
-        getReferenceBasesBytes();
+        getReferenceAlleleBytes();
 
     /**
-     * <code>repeated string genotype = 6;</code>
+     * <code>optional string normalAllele1 = 4;</code>
      *
      * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
+     * The normal alleles for this sample
      * </pre>
      */
-    com.google.protobuf.ProtocolStringList
-        getGenotypeList();
+    java.lang.String getNormalAllele1();
     /**
-     * <code>repeated string genotype = 6;</code>
+     * <code>optional string normalAllele1 = 4;</code>
      *
      * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
-     * </pre>
-     */
-    int getGenotypeCount();
-    /**
-     * <code>repeated string genotype = 6;</code>
-     *
-     * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
-     * </pre>
-     */
-    java.lang.String getGenotype(int index);
-    /**
-     * <code>repeated string genotype = 6;</code>
-     *
-     * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
+     * The normal alleles for this sample
      * </pre>
      */
     com.google.protobuf.ByteString
-        getGenotypeBytes(int index);
+        getNormalAllele1Bytes();
 
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>optional string normalAllele2 = 5;</code>
+     */
+    java.lang.String getNormalAllele2();
+    /**
+     * <code>optional string normalAllele2 = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getNormalAllele2Bytes();
+
+    /**
+     * <code>optional string tumorAllele1 = 6;</code>
+     *
+     * <pre>
+     * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+     * </pre>
+     */
+    java.lang.String getTumorAllele1();
+    /**
+     * <code>optional string tumorAllele1 = 6;</code>
+     *
+     * <pre>
+     * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getTumorAllele1Bytes();
+
+    /**
+     * <code>optional string tumorAllele2 = 7;</code>
+     */
+    java.lang.String getTumorAllele2();
+    /**
+     * <code>optional string tumorAllele2 = 7;</code>
+     */
+    com.google.protobuf.ByteString
+        getTumorAllele2Bytes();
+
+    /**
+     * <code>optional string variantClassification = 8;</code>
+     */
+    java.lang.String getVariantClassification();
+    /**
+     * <code>optional string variantClassification = 8;</code>
+     */
+    com.google.protobuf.ByteString
+        getVariantClassificationBytes();
+
+    /**
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect> 
         getVariantCallEffectsList();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     bmeg.gaea.schema.Variant.VariantCallEffect getVariantCallEffects(int index);
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     int getVariantCallEffectsCount();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     java.util.List<? extends bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder> 
         getVariantCallEffectsOrBuilderList();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder getVariantCallEffectsOrBuilder(
         int index);
 
     /**
-     * <code>map&lt;string, string&gt; info = 8;</code>
+     * <code>map&lt;string, string&gt; info = 10;</code>
      *
      * <pre>
      * A map of additional variant call information, including a Feature Id for now...
@@ -3207,11 +4293,13 @@ public final class Variant {
       super(builder);
     }
     private VariantCall() {
-      id_ = "";
       source_ = "";
-      bioSampleId_ = "";
-      referenceBases_ = "";
-      genotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      referenceAllele_ = "";
+      normalAllele1_ = "";
+      normalAllele2_ = "";
+      tumorAllele1_ = "";
+      tumorAllele2_ = "";
+      variantClassification_ = "";
       variantCallEffects_ = java.util.Collections.emptyList();
     }
 
@@ -3242,22 +4330,10 @@ public final class Variant {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              id_ = s;
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
               source_ = s;
               break;
             }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              bioSampleId_ = s;
-              break;
-            }
-            case 34: {
+            case 18: {
               bmeg.gaea.schema.Variant.Position.Builder subBuilder = null;
               if (position_ != null) {
                 subBuilder = position_.toBuilder();
@@ -3270,34 +4346,55 @@ public final class Variant {
 
               break;
             }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              referenceAllele_ = s;
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              normalAllele1_ = s;
+              break;
+            }
             case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              referenceBases_ = s;
+              normalAllele2_ = s;
               break;
             }
             case 50: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-                genotype_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000020;
-              }
-              genotype_.add(s);
+
+              tumorAllele1_ = s;
               break;
             }
             case 58: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              tumorAllele2_ = s;
+              break;
+            }
+            case 66: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              variantClassification_ = s;
+              break;
+            }
+            case 74: {
+              if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
                 variantCallEffects_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.VariantCallEffect>();
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000100;
               }
               variantCallEffects_.add(input.readMessage(bmeg.gaea.schema.Variant.VariantCallEffect.parser(), extensionRegistry));
               break;
             }
-            case 66: {
-              if (!((mutable_bitField0_ & 0x00000080) == 0x00000080)) {
+            case 82: {
+              if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
                 info_ = com.google.protobuf.MapField.newMapField(
                     InfoDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000080;
+                mutable_bitField0_ |= 0x00000200;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               info = input.readMessage(
@@ -3314,10 +4411,7 @@ public final class Variant {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
-          genotype_ = genotype_.getUnmodifiableView();
-        }
-        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+        if (((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
           variantCallEffects_ = java.util.Collections.unmodifiableList(variantCallEffects_);
         }
         makeExtensionsImmutable();
@@ -3332,7 +4426,7 @@ public final class Variant {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 8:
+        case 10:
           return internalGetInfo();
         default:
           throw new RuntimeException(
@@ -3347,52 +4441,10 @@ public final class Variant {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * The call ID.
-     * </pre>
-     */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * The call ID.
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SOURCE_FIELD_NUMBER = 2;
+    public static final int SOURCE_FIELD_NUMBER = 1;
     private volatile java.lang.Object source_;
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      *
      * <pre>
      * The source of this data
@@ -3411,7 +4463,7 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string source = 2;</code>
+     * <code>optional string source = 1;</code>
      *
      * <pre>
      * The source of this data
@@ -3431,101 +4483,63 @@ public final class Variant {
       }
     }
 
-    public static final int BIOSAMPLEID_FIELD_NUMBER = 3;
-    private volatile java.lang.Object bioSampleId_;
-    /**
-     * <code>optional string bioSampleId = 3;</code>
-     *
-     * <pre>
-     * The sample this call set's data was generated from.
-     * Note: the current API does not have a rigorous definition of sample.
-     * Therefore, this field actually contains an arbitrary string, typically
-     * corresponding to the sampleId field in the read groups used to generate
-     * this call set.
-     * </pre>
-     */
-    public java.lang.String getBioSampleId() {
-      java.lang.Object ref = bioSampleId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        bioSampleId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string bioSampleId = 3;</code>
-     *
-     * <pre>
-     * The sample this call set's data was generated from.
-     * Note: the current API does not have a rigorous definition of sample.
-     * Therefore, this field actually contains an arbitrary string, typically
-     * corresponding to the sampleId field in the read groups used to generate
-     * this call set.
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getBioSampleIdBytes() {
-      java.lang.Object ref = bioSampleId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        bioSampleId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int POSITION_FIELD_NUMBER = 4;
+    public static final int POSITION_FIELD_NUMBER = 2;
     private bmeg.gaea.schema.Variant.Position position_;
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     *
+     * <pre>
+     * where on the genome this variant occurred 
+     * </pre>
      */
     public boolean hasPosition() {
       return position_ != null;
     }
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     *
+     * <pre>
+     * where on the genome this variant occurred 
+     * </pre>
      */
     public bmeg.gaea.schema.Variant.Position getPosition() {
       return position_ == null ? bmeg.gaea.schema.Variant.Position.getDefaultInstance() : position_;
     }
     /**
-     * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+     * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+     *
+     * <pre>
+     * where on the genome this variant occurred 
+     * </pre>
      */
     public bmeg.gaea.schema.Variant.PositionOrBuilder getPositionOrBuilder() {
       return getPosition();
     }
 
-    public static final int REFERENCEBASES_FIELD_NUMBER = 5;
-    private volatile java.lang.Object referenceBases_;
+    public static final int REFERENCEALLELE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object referenceAllele_;
     /**
-     * <code>optional string referenceBases = 5;</code>
+     * <code>optional string referenceAllele = 3;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
      * position. e.g. "T"
      * </pre>
      */
-    public java.lang.String getReferenceBases() {
-      java.lang.Object ref = referenceBases_;
+    public java.lang.String getReferenceAllele() {
+      java.lang.Object ref = referenceAllele_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        referenceBases_ = s;
+        referenceAllele_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string referenceBases = 5;</code>
+     * <code>optional string referenceAllele = 3;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -3533,136 +4547,241 @@ public final class Variant {
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getReferenceBasesBytes() {
-      java.lang.Object ref = referenceBases_;
+        getReferenceAlleleBytes() {
+      java.lang.Object ref = referenceAllele_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        referenceBases_ = b;
+        referenceAllele_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
 
-    public static final int GENOTYPE_FIELD_NUMBER = 6;
-    private com.google.protobuf.LazyStringList genotype_;
+    public static final int NORMALALLELE1_FIELD_NUMBER = 4;
+    private volatile java.lang.Object normalAllele1_;
     /**
-     * <code>repeated string genotype = 6;</code>
+     * <code>optional string normalAllele1 = 4;</code>
      *
      * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
+     * The normal alleles for this sample
      * </pre>
      */
-    public com.google.protobuf.ProtocolStringList
-        getGenotypeList() {
-      return genotype_;
+    public java.lang.String getNormalAllele1() {
+      java.lang.Object ref = normalAllele1_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        normalAllele1_ = s;
+        return s;
+      }
     }
     /**
-     * <code>repeated string genotype = 6;</code>
+     * <code>optional string normalAllele1 = 4;</code>
      *
      * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
-     * </pre>
-     */
-    public int getGenotypeCount() {
-      return genotype_.size();
-    }
-    /**
-     * <code>repeated string genotype = 6;</code>
-     *
-     * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
-     * </pre>
-     */
-    public java.lang.String getGenotype(int index) {
-      return genotype_.get(index);
-    }
-    /**
-     * <code>repeated string genotype = 6;</code>
-     *
-     * <pre>
-     * The genotype of this variant call. GA4GH uses int32. Here it is string.
-     * A 0 value represents the reference allele of the associated `Variant`. Any
-     * other value is a 1-based index into the alternate alleles of the associated
-     * `Variant`.
-     * If a variant had a referenceBases field of "T", an alternateBases
-     * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-     * represented the heterozygous value "CA" for this variant. If the genotype
-     * was instead [0, 1] the represented value would be "TA". Ordering of the
-     * genotype values is important if the phaseset field is present.
-     * GA4GH uses int32. Here it is string.
+     * The normal alleles for this sample
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getGenotypeBytes(int index) {
-      return genotype_.getByteString(index);
+        getNormalAllele1Bytes() {
+      java.lang.Object ref = normalAllele1_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        normalAllele1_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
     }
 
-    public static final int VARIANTCALLEFFECTS_FIELD_NUMBER = 7;
+    public static final int NORMALALLELE2_FIELD_NUMBER = 5;
+    private volatile java.lang.Object normalAllele2_;
+    /**
+     * <code>optional string normalAllele2 = 5;</code>
+     */
+    public java.lang.String getNormalAllele2() {
+      java.lang.Object ref = normalAllele2_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        normalAllele2_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string normalAllele2 = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNormalAllele2Bytes() {
+      java.lang.Object ref = normalAllele2_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        normalAllele2_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TUMORALLELE1_FIELD_NUMBER = 6;
+    private volatile java.lang.Object tumorAllele1_;
+    /**
+     * <code>optional string tumorAllele1 = 6;</code>
+     *
+     * <pre>
+     * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+     * </pre>
+     */
+    public java.lang.String getTumorAllele1() {
+      java.lang.Object ref = tumorAllele1_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        tumorAllele1_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string tumorAllele1 = 6;</code>
+     *
+     * <pre>
+     * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getTumorAllele1Bytes() {
+      java.lang.Object ref = tumorAllele1_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        tumorAllele1_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TUMORALLELE2_FIELD_NUMBER = 7;
+    private volatile java.lang.Object tumorAllele2_;
+    /**
+     * <code>optional string tumorAllele2 = 7;</code>
+     */
+    public java.lang.String getTumorAllele2() {
+      java.lang.Object ref = tumorAllele2_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        tumorAllele2_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string tumorAllele2 = 7;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTumorAllele2Bytes() {
+      java.lang.Object ref = tumorAllele2_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        tumorAllele2_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int VARIANTCLASSIFICATION_FIELD_NUMBER = 8;
+    private volatile java.lang.Object variantClassification_;
+    /**
+     * <code>optional string variantClassification = 8;</code>
+     */
+    public java.lang.String getVariantClassification() {
+      java.lang.Object ref = variantClassification_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        variantClassification_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string variantClassification = 8;</code>
+     */
+    public com.google.protobuf.ByteString
+        getVariantClassificationBytes() {
+      java.lang.Object ref = variantClassification_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        variantClassification_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int VARIANTCALLEFFECTS_FIELD_NUMBER = 9;
     private java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect> variantCallEffects_;
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     public java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect> getVariantCallEffectsList() {
       return variantCallEffects_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     public java.util.List<? extends bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder> 
         getVariantCallEffectsOrBuilderList() {
       return variantCallEffects_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     public int getVariantCallEffectsCount() {
       return variantCallEffects_.size();
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     public bmeg.gaea.schema.Variant.VariantCallEffect getVariantCallEffects(int index) {
       return variantCallEffects_.get(index);
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
      */
     public bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder getVariantCallEffectsOrBuilder(
         int index) {
       return variantCallEffects_.get(index);
     }
 
-    public static final int INFO_FIELD_NUMBER = 8;
+    public static final int INFO_FIELD_NUMBER = 10;
     private static final class InfoDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -3685,7 +4804,7 @@ public final class Variant {
       return info_;
     }
     /**
-     * <code>map&lt;string, string&gt; info = 8;</code>
+     * <code>map&lt;string, string&gt; info = 10;</code>
      *
      * <pre>
      * A map of additional variant call information, including a Feature Id for now...
@@ -3708,26 +4827,32 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, id_);
-      }
       if (!getSourceBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
-      }
-      if (!getBioSampleIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, bioSampleId_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, source_);
       }
       if (position_ != null) {
-        output.writeMessage(4, getPosition());
+        output.writeMessage(2, getPosition());
       }
-      if (!getReferenceBasesBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 5, referenceBases_);
+      if (!getReferenceAlleleBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, referenceAllele_);
       }
-      for (int i = 0; i < genotype_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 6, genotype_.getRaw(i));
+      if (!getNormalAllele1Bytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, normalAllele1_);
+      }
+      if (!getNormalAllele2Bytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, normalAllele2_);
+      }
+      if (!getTumorAllele1Bytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 6, tumorAllele1_);
+      }
+      if (!getTumorAllele2Bytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 7, tumorAllele2_);
+      }
+      if (!getVariantClassificationBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 8, variantClassification_);
       }
       for (int i = 0; i < variantCallEffects_.size(); i++) {
-        output.writeMessage(7, variantCallEffects_.get(i));
+        output.writeMessage(9, variantCallEffects_.get(i));
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -3736,7 +4861,7 @@ public final class Variant {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(8, info);
+        output.writeMessage(10, info);
       }
     }
 
@@ -3745,33 +4870,34 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, id_);
-      }
       if (!getSourceBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
-      }
-      if (!getBioSampleIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, bioSampleId_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, source_);
       }
       if (position_ != null) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getPosition());
+          .computeMessageSize(2, getPosition());
       }
-      if (!getReferenceBasesBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, referenceBases_);
+      if (!getReferenceAlleleBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, referenceAllele_);
       }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < genotype_.size(); i++) {
-          dataSize += computeStringSizeNoTag(genotype_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getGenotypeList().size();
+      if (!getNormalAllele1Bytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, normalAllele1_);
+      }
+      if (!getNormalAllele2Bytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, normalAllele2_);
+      }
+      if (!getTumorAllele1Bytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(6, tumorAllele1_);
+      }
+      if (!getTumorAllele2Bytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(7, tumorAllele2_);
+      }
+      if (!getVariantClassificationBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(8, variantClassification_);
       }
       for (int i = 0; i < variantCallEffects_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(7, variantCallEffects_.get(i));
+          .computeMessageSize(9, variantCallEffects_.get(i));
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -3781,7 +4907,7 @@ public final class Variant {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(8, info);
+            .computeMessageSize(10, info);
       }
       memoizedSize = size;
       return size;
@@ -3884,7 +5010,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 8:
+          case 10:
             return internalGetInfo();
           default:
             throw new RuntimeException(
@@ -3895,7 +5021,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 8:
+          case 10:
             return internalGetMutableInfo();
           default:
             throw new RuntimeException(
@@ -3926,11 +5052,7 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
-
         source_ = "";
-
-        bioSampleId_ = "";
 
         if (positionBuilder_ == null) {
           position_ = null;
@@ -3938,13 +5060,21 @@ public final class Variant {
           position_ = null;
           positionBuilder_ = null;
         }
-        referenceBases_ = "";
+        referenceAllele_ = "";
 
-        genotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000020);
+        normalAllele1_ = "";
+
+        normalAllele2_ = "";
+
+        tumorAllele1_ = "";
+
+        tumorAllele2_ = "";
+
+        variantClassification_ = "";
+
         if (variantCallEffectsBuilder_ == null) {
           variantCallEffects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000100);
         } else {
           variantCallEffectsBuilder_.clear();
         }
@@ -3973,24 +5103,22 @@ public final class Variant {
         bmeg.gaea.schema.Variant.VariantCall result = new bmeg.gaea.schema.Variant.VariantCall(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
         result.source_ = source_;
-        result.bioSampleId_ = bioSampleId_;
         if (positionBuilder_ == null) {
           result.position_ = position_;
         } else {
           result.position_ = positionBuilder_.build();
         }
-        result.referenceBases_ = referenceBases_;
-        if (((bitField0_ & 0x00000020) == 0x00000020)) {
-          genotype_ = genotype_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000020);
-        }
-        result.genotype_ = genotype_;
+        result.referenceAllele_ = referenceAllele_;
+        result.normalAllele1_ = normalAllele1_;
+        result.normalAllele2_ = normalAllele2_;
+        result.tumorAllele1_ = tumorAllele1_;
+        result.tumorAllele2_ = tumorAllele2_;
+        result.variantClassification_ = variantClassification_;
         if (variantCallEffectsBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) == 0x00000040)) {
+          if (((bitField0_ & 0x00000100) == 0x00000100)) {
             variantCallEffects_ = java.util.Collections.unmodifiableList(variantCallEffects_);
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000100);
           }
           result.variantCallEffects_ = variantCallEffects_;
         } else {
@@ -4014,40 +5142,42 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.VariantCall other) {
         if (other == bmeg.gaea.schema.Variant.VariantCall.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
         if (!other.getSource().isEmpty()) {
           source_ = other.source_;
-          onChanged();
-        }
-        if (!other.getBioSampleId().isEmpty()) {
-          bioSampleId_ = other.bioSampleId_;
           onChanged();
         }
         if (other.hasPosition()) {
           mergePosition(other.getPosition());
         }
-        if (!other.getReferenceBases().isEmpty()) {
-          referenceBases_ = other.referenceBases_;
+        if (!other.getReferenceAllele().isEmpty()) {
+          referenceAllele_ = other.referenceAllele_;
           onChanged();
         }
-        if (!other.genotype_.isEmpty()) {
-          if (genotype_.isEmpty()) {
-            genotype_ = other.genotype_;
-            bitField0_ = (bitField0_ & ~0x00000020);
-          } else {
-            ensureGenotypeIsMutable();
-            genotype_.addAll(other.genotype_);
-          }
+        if (!other.getNormalAllele1().isEmpty()) {
+          normalAllele1_ = other.normalAllele1_;
+          onChanged();
+        }
+        if (!other.getNormalAllele2().isEmpty()) {
+          normalAllele2_ = other.normalAllele2_;
+          onChanged();
+        }
+        if (!other.getTumorAllele1().isEmpty()) {
+          tumorAllele1_ = other.tumorAllele1_;
+          onChanged();
+        }
+        if (!other.getTumorAllele2().isEmpty()) {
+          tumorAllele2_ = other.tumorAllele2_;
+          onChanged();
+        }
+        if (!other.getVariantClassification().isEmpty()) {
+          variantClassification_ = other.variantClassification_;
           onChanged();
         }
         if (variantCallEffectsBuilder_ == null) {
           if (!other.variantCallEffects_.isEmpty()) {
             if (variantCallEffects_.isEmpty()) {
               variantCallEffects_ = other.variantCallEffects_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000100);
             } else {
               ensureVariantCallEffectsIsMutable();
               variantCallEffects_.addAll(other.variantCallEffects_);
@@ -4060,7 +5190,7 @@ public final class Variant {
               variantCallEffectsBuilder_.dispose();
               variantCallEffectsBuilder_ = null;
               variantCallEffects_ = other.variantCallEffects_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000100);
               variantCallEffectsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getVariantCallEffectsFieldBuilder() : null;
@@ -4098,98 +5228,9 @@ public final class Variant {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * The call ID.
-       * </pre>
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * The call ID.
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * The call ID.
-       * </pre>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * The call ID.
-       * </pre>
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * The call ID.
-       * </pre>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object source_ = "";
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        *
        * <pre>
        * The source of this data
@@ -4208,7 +5249,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        *
        * <pre>
        * The source of this data
@@ -4228,7 +5269,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        *
        * <pre>
        * The source of this data
@@ -4245,7 +5286,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        *
        * <pre>
        * The source of this data
@@ -4258,7 +5299,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string source = 2;</code>
+       * <code>optional string source = 1;</code>
        *
        * <pre>
        * The source of this data
@@ -4276,126 +5317,25 @@ public final class Variant {
         return this;
       }
 
-      private java.lang.Object bioSampleId_ = "";
-      /**
-       * <code>optional string bioSampleId = 3;</code>
-       *
-       * <pre>
-       * The sample this call set's data was generated from.
-       * Note: the current API does not have a rigorous definition of sample.
-       * Therefore, this field actually contains an arbitrary string, typically
-       * corresponding to the sampleId field in the read groups used to generate
-       * this call set.
-       * </pre>
-       */
-      public java.lang.String getBioSampleId() {
-        java.lang.Object ref = bioSampleId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          bioSampleId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string bioSampleId = 3;</code>
-       *
-       * <pre>
-       * The sample this call set's data was generated from.
-       * Note: the current API does not have a rigorous definition of sample.
-       * Therefore, this field actually contains an arbitrary string, typically
-       * corresponding to the sampleId field in the read groups used to generate
-       * this call set.
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getBioSampleIdBytes() {
-        java.lang.Object ref = bioSampleId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          bioSampleId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string bioSampleId = 3;</code>
-       *
-       * <pre>
-       * The sample this call set's data was generated from.
-       * Note: the current API does not have a rigorous definition of sample.
-       * Therefore, this field actually contains an arbitrary string, typically
-       * corresponding to the sampleId field in the read groups used to generate
-       * this call set.
-       * </pre>
-       */
-      public Builder setBioSampleId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        bioSampleId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string bioSampleId = 3;</code>
-       *
-       * <pre>
-       * The sample this call set's data was generated from.
-       * Note: the current API does not have a rigorous definition of sample.
-       * Therefore, this field actually contains an arbitrary string, typically
-       * corresponding to the sampleId field in the read groups used to generate
-       * this call set.
-       * </pre>
-       */
-      public Builder clearBioSampleId() {
-        
-        bioSampleId_ = getDefaultInstance().getBioSampleId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string bioSampleId = 3;</code>
-       *
-       * <pre>
-       * The sample this call set's data was generated from.
-       * Note: the current API does not have a rigorous definition of sample.
-       * Therefore, this field actually contains an arbitrary string, typically
-       * corresponding to the sampleId field in the read groups used to generate
-       * this call set.
-       * </pre>
-       */
-      public Builder setBioSampleIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        bioSampleId_ = value;
-        onChanged();
-        return this;
-      }
-
       private bmeg.gaea.schema.Variant.Position position_ = null;
       private com.google.protobuf.SingleFieldBuilder<
           bmeg.gaea.schema.Variant.Position, bmeg.gaea.schema.Variant.Position.Builder, bmeg.gaea.schema.Variant.PositionOrBuilder> positionBuilder_;
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public boolean hasPosition() {
         return positionBuilder_ != null || position_ != null;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public bmeg.gaea.schema.Variant.Position getPosition() {
         if (positionBuilder_ == null) {
@@ -4405,7 +5345,11 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public Builder setPosition(bmeg.gaea.schema.Variant.Position value) {
         if (positionBuilder_ == null) {
@@ -4421,7 +5365,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public Builder setPosition(
           bmeg.gaea.schema.Variant.Position.Builder builderForValue) {
@@ -4435,7 +5383,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public Builder mergePosition(bmeg.gaea.schema.Variant.Position value) {
         if (positionBuilder_ == null) {
@@ -4453,7 +5405,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public Builder clearPosition() {
         if (positionBuilder_ == null) {
@@ -4467,7 +5423,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public bmeg.gaea.schema.Variant.Position.Builder getPositionBuilder() {
         
@@ -4475,7 +5435,11 @@ public final class Variant {
         return getPositionFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       public bmeg.gaea.schema.Variant.PositionOrBuilder getPositionOrBuilder() {
         if (positionBuilder_ != null) {
@@ -4486,7 +5450,11 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional .bmeg.gaea.schema.Position position = 4;</code>
+       * <code>optional .bmeg.gaea.schema.Position position = 2;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * </pre>
        */
       private com.google.protobuf.SingleFieldBuilder<
           bmeg.gaea.schema.Variant.Position, bmeg.gaea.schema.Variant.Position.Builder, bmeg.gaea.schema.Variant.PositionOrBuilder> 
@@ -4502,29 +5470,29 @@ public final class Variant {
         return positionBuilder_;
       }
 
-      private java.lang.Object referenceBases_ = "";
+      private java.lang.Object referenceAllele_ = "";
       /**
-       * <code>optional string referenceBases = 5;</code>
+       * <code>optional string referenceAllele = 3;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
        * position. e.g. "T"
        * </pre>
        */
-      public java.lang.String getReferenceBases() {
-        java.lang.Object ref = referenceBases_;
+      public java.lang.String getReferenceAllele() {
+        java.lang.Object ref = referenceAllele_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          referenceBases_ = s;
+          referenceAllele_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string referenceBases = 5;</code>
+       * <code>optional string referenceAllele = 3;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -4532,277 +5500,451 @@ public final class Variant {
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getReferenceBasesBytes() {
-        java.lang.Object ref = referenceBases_;
+          getReferenceAlleleBytes() {
+        java.lang.Object ref = referenceAllele_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          referenceBases_ = b;
+          referenceAllele_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string referenceBases = 5;</code>
+       * <code>optional string referenceAllele = 3;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
        * position. e.g. "T"
        * </pre>
        */
-      public Builder setReferenceBases(
+      public Builder setReferenceAllele(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        referenceBases_ = value;
+        referenceAllele_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string referenceBases = 5;</code>
+       * <code>optional string referenceAllele = 3;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
        * position. e.g. "T"
        * </pre>
        */
-      public Builder clearReferenceBases() {
+      public Builder clearReferenceAllele() {
         
-        referenceBases_ = getDefaultInstance().getReferenceBases();
+        referenceAllele_ = getDefaultInstance().getReferenceAllele();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string referenceBases = 5;</code>
+       * <code>optional string referenceAllele = 3;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
        * position. e.g. "T"
        * </pre>
        */
-      public Builder setReferenceBasesBytes(
+      public Builder setReferenceAlleleBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        referenceBases_ = value;
+        referenceAllele_ = value;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.LazyStringList genotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureGenotypeIsMutable() {
-        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
-          genotype_ = new com.google.protobuf.LazyStringArrayList(genotype_);
-          bitField0_ |= 0x00000020;
-         }
-      }
+      private java.lang.Object normalAllele1_ = "";
       /**
-       * <code>repeated string genotype = 6;</code>
+       * <code>optional string normalAllele1 = 4;</code>
        *
        * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
+       * The normal alleles for this sample
        * </pre>
        */
-      public com.google.protobuf.ProtocolStringList
-          getGenotypeList() {
-        return genotype_.getUnmodifiableView();
+      public java.lang.String getNormalAllele1() {
+        java.lang.Object ref = normalAllele1_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          normalAllele1_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
       }
       /**
-       * <code>repeated string genotype = 6;</code>
+       * <code>optional string normalAllele1 = 4;</code>
        *
        * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
-       * </pre>
-       */
-      public int getGenotypeCount() {
-        return genotype_.size();
-      }
-      /**
-       * <code>repeated string genotype = 6;</code>
-       *
-       * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
-       * </pre>
-       */
-      public java.lang.String getGenotype(int index) {
-        return genotype_.get(index);
-      }
-      /**
-       * <code>repeated string genotype = 6;</code>
-       *
-       * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
+       * The normal alleles for this sample
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getGenotypeBytes(int index) {
-        return genotype_.getByteString(index);
+          getNormalAllele1Bytes() {
+        java.lang.Object ref = normalAllele1_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          normalAllele1_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
       }
       /**
-       * <code>repeated string genotype = 6;</code>
+       * <code>optional string normalAllele1 = 4;</code>
        *
        * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
+       * The normal alleles for this sample
        * </pre>
        */
-      public Builder setGenotype(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureGenotypeIsMutable();
-        genotype_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string genotype = 6;</code>
-       *
-       * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
-       * </pre>
-       */
-      public Builder addGenotype(
+      public Builder setNormalAllele1(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureGenotypeIsMutable();
-        genotype_.add(value);
+  
+        normalAllele1_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string genotype = 6;</code>
+       * <code>optional string normalAllele1 = 4;</code>
        *
        * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
+       * The normal alleles for this sample
        * </pre>
        */
-      public Builder addAllGenotype(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureGenotypeIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, genotype_);
+      public Builder clearNormalAllele1() {
+        
+        normalAllele1_ = getDefaultInstance().getNormalAllele1();
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string genotype = 6;</code>
+       * <code>optional string normalAllele1 = 4;</code>
        *
        * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
+       * The normal alleles for this sample
        * </pre>
        */
-      public Builder clearGenotype() {
-        genotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000020);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string genotype = 6;</code>
-       *
-       * <pre>
-       * The genotype of this variant call. GA4GH uses int32. Here it is string.
-       * A 0 value represents the reference allele of the associated `Variant`. Any
-       * other value is a 1-based index into the alternate alleles of the associated
-       * `Variant`.
-       * If a variant had a referenceBases field of "T", an alternateBases
-       * value of ["A", "C"], and the genotype was [2, 1], that would mean the call
-       * represented the heterozygous value "CA" for this variant. If the genotype
-       * was instead [0, 1] the represented value would be "TA". Ordering of the
-       * genotype values is important if the phaseset field is present.
-       * GA4GH uses int32. Here it is string.
-       * </pre>
-       */
-      public Builder addGenotypeBytes(
+      public Builder setNormalAllele1Bytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureGenotypeIsMutable();
-        genotype_.add(value);
+        
+        normalAllele1_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object normalAllele2_ = "";
+      /**
+       * <code>optional string normalAllele2 = 5;</code>
+       */
+      public java.lang.String getNormalAllele2() {
+        java.lang.Object ref = normalAllele2_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          normalAllele2_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string normalAllele2 = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNormalAllele2Bytes() {
+        java.lang.Object ref = normalAllele2_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          normalAllele2_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string normalAllele2 = 5;</code>
+       */
+      public Builder setNormalAllele2(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        normalAllele2_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string normalAllele2 = 5;</code>
+       */
+      public Builder clearNormalAllele2() {
+        
+        normalAllele2_ = getDefaultInstance().getNormalAllele2();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string normalAllele2 = 5;</code>
+       */
+      public Builder setNormalAllele2Bytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        normalAllele2_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object tumorAllele1_ = "";
+      /**
+       * <code>optional string tumorAllele1 = 6;</code>
+       *
+       * <pre>
+       * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+       * </pre>
+       */
+      public java.lang.String getTumorAllele1() {
+        java.lang.Object ref = tumorAllele1_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          tumorAllele1_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string tumorAllele1 = 6;</code>
+       *
+       * <pre>
+       * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getTumorAllele1Bytes() {
+        java.lang.Object ref = tumorAllele1_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          tumorAllele1_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string tumorAllele1 = 6;</code>
+       *
+       * <pre>
+       * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+       * </pre>
+       */
+      public Builder setTumorAllele1(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tumorAllele1_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string tumorAllele1 = 6;</code>
+       *
+       * <pre>
+       * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+       * </pre>
+       */
+      public Builder clearTumorAllele1() {
+        
+        tumorAllele1_ = getDefaultInstance().getTumorAllele1();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string tumorAllele1 = 6;</code>
+       *
+       * <pre>
+       * The genotype of this variant call. GA4GH uses int32. Here it is a string.
+       * </pre>
+       */
+      public Builder setTumorAllele1Bytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        tumorAllele1_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object tumorAllele2_ = "";
+      /**
+       * <code>optional string tumorAllele2 = 7;</code>
+       */
+      public java.lang.String getTumorAllele2() {
+        java.lang.Object ref = tumorAllele2_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          tumorAllele2_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string tumorAllele2 = 7;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTumorAllele2Bytes() {
+        java.lang.Object ref = tumorAllele2_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          tumorAllele2_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string tumorAllele2 = 7;</code>
+       */
+      public Builder setTumorAllele2(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        tumorAllele2_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string tumorAllele2 = 7;</code>
+       */
+      public Builder clearTumorAllele2() {
+        
+        tumorAllele2_ = getDefaultInstance().getTumorAllele2();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string tumorAllele2 = 7;</code>
+       */
+      public Builder setTumorAllele2Bytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        tumorAllele2_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object variantClassification_ = "";
+      /**
+       * <code>optional string variantClassification = 8;</code>
+       */
+      public java.lang.String getVariantClassification() {
+        java.lang.Object ref = variantClassification_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          variantClassification_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string variantClassification = 8;</code>
+       */
+      public com.google.protobuf.ByteString
+          getVariantClassificationBytes() {
+        java.lang.Object ref = variantClassification_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          variantClassification_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string variantClassification = 8;</code>
+       */
+      public Builder setVariantClassification(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        variantClassification_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string variantClassification = 8;</code>
+       */
+      public Builder clearVariantClassification() {
+        
+        variantClassification_ = getDefaultInstance().getVariantClassification();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string variantClassification = 8;</code>
+       */
+      public Builder setVariantClassificationBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        variantClassification_ = value;
         onChanged();
         return this;
       }
@@ -4810,9 +5952,9 @@ public final class Variant {
       private java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect> variantCallEffects_ =
         java.util.Collections.emptyList();
       private void ensureVariantCallEffectsIsMutable() {
-        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
+        if (!((bitField0_ & 0x00000100) == 0x00000100)) {
           variantCallEffects_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.VariantCallEffect>(variantCallEffects_);
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000100;
          }
       }
 
@@ -4820,7 +5962,7 @@ public final class Variant {
           bmeg.gaea.schema.Variant.VariantCallEffect, bmeg.gaea.schema.Variant.VariantCallEffect.Builder, bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder> variantCallEffectsBuilder_;
 
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect> getVariantCallEffectsList() {
         if (variantCallEffectsBuilder_ == null) {
@@ -4830,7 +5972,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public int getVariantCallEffectsCount() {
         if (variantCallEffectsBuilder_ == null) {
@@ -4840,7 +5982,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public bmeg.gaea.schema.Variant.VariantCallEffect getVariantCallEffects(int index) {
         if (variantCallEffectsBuilder_ == null) {
@@ -4850,7 +5992,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder setVariantCallEffects(
           int index, bmeg.gaea.schema.Variant.VariantCallEffect value) {
@@ -4867,7 +6009,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder setVariantCallEffects(
           int index, bmeg.gaea.schema.Variant.VariantCallEffect.Builder builderForValue) {
@@ -4881,7 +6023,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder addVariantCallEffects(bmeg.gaea.schema.Variant.VariantCallEffect value) {
         if (variantCallEffectsBuilder_ == null) {
@@ -4897,7 +6039,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder addVariantCallEffects(
           int index, bmeg.gaea.schema.Variant.VariantCallEffect value) {
@@ -4914,7 +6056,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder addVariantCallEffects(
           bmeg.gaea.schema.Variant.VariantCallEffect.Builder builderForValue) {
@@ -4928,7 +6070,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder addVariantCallEffects(
           int index, bmeg.gaea.schema.Variant.VariantCallEffect.Builder builderForValue) {
@@ -4942,7 +6084,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder addAllVariantCallEffects(
           java.lang.Iterable<? extends bmeg.gaea.schema.Variant.VariantCallEffect> values) {
@@ -4957,12 +6099,12 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder clearVariantCallEffects() {
         if (variantCallEffectsBuilder_ == null) {
           variantCallEffects_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000100);
           onChanged();
         } else {
           variantCallEffectsBuilder_.clear();
@@ -4970,7 +6112,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public Builder removeVariantCallEffects(int index) {
         if (variantCallEffectsBuilder_ == null) {
@@ -4983,14 +6125,14 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public bmeg.gaea.schema.Variant.VariantCallEffect.Builder getVariantCallEffectsBuilder(
           int index) {
         return getVariantCallEffectsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder getVariantCallEffectsOrBuilder(
           int index) {
@@ -5000,7 +6142,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public java.util.List<? extends bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder> 
            getVariantCallEffectsOrBuilderList() {
@@ -5011,14 +6153,14 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public bmeg.gaea.schema.Variant.VariantCallEffect.Builder addVariantCallEffectsBuilder() {
         return getVariantCallEffectsFieldBuilder().addBuilder(
             bmeg.gaea.schema.Variant.VariantCallEffect.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public bmeg.gaea.schema.Variant.VariantCallEffect.Builder addVariantCallEffectsBuilder(
           int index) {
@@ -5026,7 +6168,7 @@ public final class Variant {
             index, bmeg.gaea.schema.Variant.VariantCallEffect.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 7;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCallEffect variantCallEffects = 9;</code>
        */
       public java.util.List<bmeg.gaea.schema.Variant.VariantCallEffect.Builder> 
            getVariantCallEffectsBuilderList() {
@@ -5039,7 +6181,7 @@ public final class Variant {
           variantCallEffectsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               bmeg.gaea.schema.Variant.VariantCallEffect, bmeg.gaea.schema.Variant.VariantCallEffect.Builder, bmeg.gaea.schema.Variant.VariantCallEffectOrBuilder>(
                   variantCallEffects_,
-                  ((bitField0_ & 0x00000040) == 0x00000040),
+                  ((bitField0_ & 0x00000100) == 0x00000100),
                   getParentForChildren(),
                   isClean());
           variantCallEffects_ = null;
@@ -5070,7 +6212,7 @@ public final class Variant {
         return info_;
       }
       /**
-       * <code>map&lt;string, string&gt; info = 8;</code>
+       * <code>map&lt;string, string&gt; info = 10;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -5080,7 +6222,7 @@ public final class Variant {
         return internalGetInfo().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 8;</code>
+       * <code>map&lt;string, string&gt; info = 10;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -5091,7 +6233,7 @@ public final class Variant {
         return internalGetMutableInfo().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 8;</code>
+       * <code>map&lt;string, string&gt; info = 10;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -5165,22 +6307,30 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string id = 1;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * unique in context of server
+     * label or symbolic identifier for the biosample, from the original datasource
+     * 
+     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+     * one BioSample (bad practice).
      * </pre>
      */
-    java.lang.String getId();
+    java.lang.String getName();
     /**
-     * <code>optional string id = 1;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * unique in context of server
+     * label or symbolic identifier for the biosample, from the original datasource
+     * 
+     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+     * one BioSample (bad practice).
      * </pre>
      */
     com.google.protobuf.ByteString
-        getIdBytes();
+        getNameBytes();
 
     /**
      * <code>optional string source = 2;</code>
@@ -5201,61 +6351,25 @@ public final class Variant {
         getSourceBytes();
 
     /**
-     * <code>optional string name = 3;</code>
+     * <code>optional string individualName = 3;</code>
      *
      * <pre>
-     * label or symbolic identifier for the biosample, from the original datasource
-     * 
-     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-     * one BioSample (bad practice).
+     * The name of the individual this biosample was derived from.
      * </pre>
-     */
-    java.lang.String getName();
-    /**
-     * <code>optional string name = 3;</code>
-     *
-     * <pre>
-     * label or symbolic identifier for the biosample, from the original datasource
-     * 
-     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-     * one BioSample (bad practice).
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getNameBytes();
-
-    /**
-     * <code>optional string individualId = 4;</code>
-     *
-     * <pre>
-     * The id of the individual this biosample was derived from.
-     * </pre>
-     */
-    java.lang.String getIndividualId();
-    /**
-     * <code>optional string individualId = 4;</code>
-     *
-     * <pre>
-     * The id of the individual this biosample was derived from.
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getIndividualIdBytes();
-
-    /**
-     * <code>optional string individualName = 5;</code>
      */
     java.lang.String getIndividualName();
     /**
-     * <code>optional string individualName = 5;</code>
+     * <code>optional string individualName = 3;</code>
+     *
+     * <pre>
+     * The name of the individual this biosample was derived from.
+     * </pre>
      */
     com.google.protobuf.ByteString
         getIndividualNameBytes();
 
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5264,7 +6378,7 @@ public final class Variant {
     java.util.List<bmeg.gaea.schema.Variant.VariantCall> 
         getVariantCallsList();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5272,7 +6386,7 @@ public final class Variant {
      */
     bmeg.gaea.schema.Variant.VariantCall getVariantCalls(int index);
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5280,7 +6394,7 @@ public final class Variant {
      */
     int getVariantCallsCount();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5289,7 +6403,7 @@ public final class Variant {
     java.util.List<? extends bmeg.gaea.schema.Variant.VariantCallOrBuilder> 
         getVariantCallsOrBuilderList();
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5325,10 +6439,8 @@ public final class Variant {
       super(builder);
     }
     private BioSample() {
-      id_ = "";
-      source_ = "";
       name_ = "";
-      individualId_ = "";
+      source_ = "";
       individualName_ = "";
       variantCalls_ = java.util.Collections.emptyList();
     }
@@ -5360,7 +6472,7 @@ public final class Variant {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              id_ = s;
+              name_ = s;
               break;
             }
             case 18: {
@@ -5372,25 +6484,13 @@ public final class Variant {
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              name_ = s;
-              break;
-            }
-            case 34: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              individualId_ = s;
-              break;
-            }
-            case 42: {
-              java.lang.String s = input.readStringRequireUtf8();
-
               individualName_ = s;
               break;
             }
-            case 50: {
-              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 variantCalls_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.VariantCall>();
-                mutable_bitField0_ |= 0x00000020;
+                mutable_bitField0_ |= 0x00000008;
               }
               variantCalls_.add(input.readMessage(bmeg.gaea.schema.Variant.VariantCall.parser(), extensionRegistry));
               break;
@@ -5404,7 +6504,7 @@ public final class Variant {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
           variantCalls_ = java.util.Collections.unmodifiableList(variantCalls_);
         }
         makeExtensionsImmutable();
@@ -5423,42 +6523,50 @@ public final class Variant {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
     /**
-     * <code>optional string id = 1;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * unique in context of server
+     * label or symbolic identifier for the biosample, from the original datasource
+     * 
+     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+     * one BioSample (bad practice).
      * </pre>
      */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        id_ = s;
+        name_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string id = 1;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * unique in context of server
+     * label or symbolic identifier for the biosample, from the original datasource
+     * 
+     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+     * one BioSample (bad practice).
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
+        getNameBytes() {
+      java.lang.Object ref = name_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        id_ = b;
+        name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -5507,102 +6615,14 @@ public final class Variant {
       }
     }
 
-    public static final int NAME_FIELD_NUMBER = 3;
-    private volatile java.lang.Object name_;
-    /**
-     * <code>optional string name = 3;</code>
-     *
-     * <pre>
-     * label or symbolic identifier for the biosample, from the original datasource
-     * 
-     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-     * one BioSample (bad practice).
-     * </pre>
-     */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string name = 3;</code>
-     *
-     * <pre>
-     * label or symbolic identifier for the biosample, from the original datasource
-     * 
-     * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-     * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-     * one BioSample (bad practice).
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int INDIVIDUALID_FIELD_NUMBER = 4;
-    private volatile java.lang.Object individualId_;
-    /**
-     * <code>optional string individualId = 4;</code>
-     *
-     * <pre>
-     * The id of the individual this biosample was derived from.
-     * </pre>
-     */
-    public java.lang.String getIndividualId() {
-      java.lang.Object ref = individualId_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        individualId_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string individualId = 4;</code>
-     *
-     * <pre>
-     * The id of the individual this biosample was derived from.
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getIndividualIdBytes() {
-      java.lang.Object ref = individualId_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        individualId_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int INDIVIDUALNAME_FIELD_NUMBER = 5;
+    public static final int INDIVIDUALNAME_FIELD_NUMBER = 3;
     private volatile java.lang.Object individualName_;
     /**
-     * <code>optional string individualName = 5;</code>
+     * <code>optional string individualName = 3;</code>
+     *
+     * <pre>
+     * The name of the individual this biosample was derived from.
+     * </pre>
      */
     public java.lang.String getIndividualName() {
       java.lang.Object ref = individualName_;
@@ -5617,7 +6637,11 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string individualName = 5;</code>
+     * <code>optional string individualName = 3;</code>
+     *
+     * <pre>
+     * The name of the individual this biosample was derived from.
+     * </pre>
      */
     public com.google.protobuf.ByteString
         getIndividualNameBytes() {
@@ -5633,10 +6657,10 @@ public final class Variant {
       }
     }
 
-    public static final int VARIANTCALLS_FIELD_NUMBER = 6;
+    public static final int VARIANTCALLS_FIELD_NUMBER = 4;
     private java.util.List<bmeg.gaea.schema.Variant.VariantCall> variantCalls_;
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5646,7 +6670,7 @@ public final class Variant {
       return variantCalls_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5657,7 +6681,7 @@ public final class Variant {
       return variantCalls_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5667,7 +6691,7 @@ public final class Variant {
       return variantCalls_.size();
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5677,7 +6701,7 @@ public final class Variant {
       return variantCalls_.get(index);
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+     * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
      *
      * <pre>
      * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -5700,23 +6724,17 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, id_);
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
       }
       if (!getSourceBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
       }
-      if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, name_);
-      }
-      if (!getIndividualIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, individualId_);
-      }
       if (!getIndividualNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 5, individualName_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, individualName_);
       }
       for (int i = 0; i < variantCalls_.size(); i++) {
-        output.writeMessage(6, variantCalls_.get(i));
+        output.writeMessage(4, variantCalls_.get(i));
       }
     }
 
@@ -5725,24 +6743,18 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, id_);
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
       }
       if (!getSourceBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
       }
-      if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, name_);
-      }
-      if (!getIndividualIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, individualId_);
-      }
       if (!getIndividualNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, individualName_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, individualName_);
       }
       for (int i = 0; i < variantCalls_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(6, variantCalls_.get(i));
+          .computeMessageSize(4, variantCalls_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -5871,19 +6883,15 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
-
-        source_ = "";
-
         name_ = "";
 
-        individualId_ = "";
+        source_ = "";
 
         individualName_ = "";
 
         if (variantCallsBuilder_ == null) {
           variantCalls_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000008);
         } else {
           variantCallsBuilder_.clear();
         }
@@ -5911,15 +6919,13 @@ public final class Variant {
         bmeg.gaea.schema.Variant.BioSample result = new bmeg.gaea.schema.Variant.BioSample(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
-        result.source_ = source_;
         result.name_ = name_;
-        result.individualId_ = individualId_;
+        result.source_ = source_;
         result.individualName_ = individualName_;
         if (variantCallsBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          if (((bitField0_ & 0x00000008) == 0x00000008)) {
             variantCalls_ = java.util.Collections.unmodifiableList(variantCalls_);
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000008);
           }
           result.variantCalls_ = variantCalls_;
         } else {
@@ -5941,20 +6947,12 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.BioSample other) {
         if (other == bmeg.gaea.schema.Variant.BioSample.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
-          onChanged();
-        }
-        if (!other.getSource().isEmpty()) {
-          source_ = other.source_;
-          onChanged();
-        }
         if (!other.getName().isEmpty()) {
           name_ = other.name_;
           onChanged();
         }
-        if (!other.getIndividualId().isEmpty()) {
-          individualId_ = other.individualId_;
+        if (!other.getSource().isEmpty()) {
+          source_ = other.source_;
           onChanged();
         }
         if (!other.getIndividualName().isEmpty()) {
@@ -5965,7 +6963,7 @@ public final class Variant {
           if (!other.variantCalls_.isEmpty()) {
             if (variantCalls_.isEmpty()) {
               variantCalls_ = other.variantCalls_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000008);
             } else {
               ensureVariantCallsIsMutable();
               variantCalls_.addAll(other.variantCalls_);
@@ -5978,7 +6976,7 @@ public final class Variant {
               variantCallsBuilder_.dispose();
               variantCallsBuilder_ = null;
               variantCalls_ = other.variantCalls_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000008);
               variantCallsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getVariantCallsFieldBuilder() : null;
@@ -6014,91 +7012,111 @@ public final class Variant {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
+      private java.lang.Object name_ = "";
       /**
-       * <code>optional string id = 1;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * unique in context of server
+       * label or symbolic identifier for the biosample, from the original datasource
+       * 
+       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+       * one BioSample (bad practice).
        * </pre>
        */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          id_ = s;
+          name_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string id = 1;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * unique in context of server
+       * label or symbolic identifier for the biosample, from the original datasource
+       * 
+       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+       * one BioSample (bad practice).
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
+          getNameBytes() {
+        java.lang.Object ref = name_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          id_ = b;
+          name_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string id = 1;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * unique in context of server
+       * label or symbolic identifier for the biosample, from the original datasource
+       * 
+       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+       * one BioSample (bad practice).
        * </pre>
        */
-      public Builder setId(
+      public Builder setName(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        id_ = value;
+        name_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string id = 1;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * unique in context of server
+       * label or symbolic identifier for the biosample, from the original datasource
+       * 
+       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+       * one BioSample (bad practice).
        * </pre>
        */
-      public Builder clearId() {
+      public Builder clearName() {
         
-        id_ = getDefaultInstance().getId();
+        name_ = getDefaultInstance().getName();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string id = 1;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * unique in context of server
+       * label or symbolic identifier for the biosample, from the original datasource
+       * 
+       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
+       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
+       * one BioSample (bad practice).
        * </pre>
        */
-      public Builder setIdBytes(
+      public Builder setNameBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        id_ = value;
+        name_ = value;
         onChanged();
         return this;
       }
@@ -6192,207 +7210,13 @@ public final class Variant {
         return this;
       }
 
-      private java.lang.Object name_ = "";
-      /**
-       * <code>optional string name = 3;</code>
-       *
-       * <pre>
-       * label or symbolic identifier for the biosample, from the original datasource
-       * 
-       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-       * one BioSample (bad practice).
-       * </pre>
-       */
-      public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string name = 3;</code>
-       *
-       * <pre>
-       * label or symbolic identifier for the biosample, from the original datasource
-       * 
-       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-       * one BioSample (bad practice).
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string name = 3;</code>
-       *
-       * <pre>
-       * label or symbolic identifier for the biosample, from the original datasource
-       * 
-       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-       * one BioSample (bad practice).
-       * </pre>
-       */
-      public Builder setName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        name_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string name = 3;</code>
-       *
-       * <pre>
-       * label or symbolic identifier for the biosample, from the original datasource
-       * 
-       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-       * one BioSample (bad practice).
-       * </pre>
-       */
-      public Builder clearName() {
-        
-        name_ = getDefaultInstance().getName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string name = 3;</code>
-       *
-       * <pre>
-       * label or symbolic identifier for the biosample, from the original datasource
-       * 
-       * In the context of TCGA, might be TCGA-A1-A0SB-01A-11D-A142-09_TCGA-A1-A0SB-10B-01D-A142-09
-       * this is a tumor and normal id concatenated together....assuming a VariantCall only involves
-       * one BioSample (bad practice).
-       * </pre>
-       */
-      public Builder setNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        name_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object individualId_ = "";
-      /**
-       * <code>optional string individualId = 4;</code>
-       *
-       * <pre>
-       * The id of the individual this biosample was derived from.
-       * </pre>
-       */
-      public java.lang.String getIndividualId() {
-        java.lang.Object ref = individualId_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          individualId_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string individualId = 4;</code>
-       *
-       * <pre>
-       * The id of the individual this biosample was derived from.
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getIndividualIdBytes() {
-        java.lang.Object ref = individualId_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          individualId_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string individualId = 4;</code>
-       *
-       * <pre>
-       * The id of the individual this biosample was derived from.
-       * </pre>
-       */
-      public Builder setIndividualId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        individualId_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string individualId = 4;</code>
-       *
-       * <pre>
-       * The id of the individual this biosample was derived from.
-       * </pre>
-       */
-      public Builder clearIndividualId() {
-        
-        individualId_ = getDefaultInstance().getIndividualId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string individualId = 4;</code>
-       *
-       * <pre>
-       * The id of the individual this biosample was derived from.
-       * </pre>
-       */
-      public Builder setIndividualIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        individualId_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object individualName_ = "";
       /**
-       * <code>optional string individualName = 5;</code>
+       * <code>optional string individualName = 3;</code>
+       *
+       * <pre>
+       * The name of the individual this biosample was derived from.
+       * </pre>
        */
       public java.lang.String getIndividualName() {
         java.lang.Object ref = individualName_;
@@ -6407,7 +7231,11 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string individualName = 5;</code>
+       * <code>optional string individualName = 3;</code>
+       *
+       * <pre>
+       * The name of the individual this biosample was derived from.
+       * </pre>
        */
       public com.google.protobuf.ByteString
           getIndividualNameBytes() {
@@ -6423,7 +7251,11 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string individualName = 5;</code>
+       * <code>optional string individualName = 3;</code>
+       *
+       * <pre>
+       * The name of the individual this biosample was derived from.
+       * </pre>
        */
       public Builder setIndividualName(
           java.lang.String value) {
@@ -6436,7 +7268,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string individualName = 5;</code>
+       * <code>optional string individualName = 3;</code>
+       *
+       * <pre>
+       * The name of the individual this biosample was derived from.
+       * </pre>
        */
       public Builder clearIndividualName() {
         
@@ -6445,7 +7281,11 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string individualName = 5;</code>
+       * <code>optional string individualName = 3;</code>
+       *
+       * <pre>
+       * The name of the individual this biosample was derived from.
+       * </pre>
        */
       public Builder setIndividualNameBytes(
           com.google.protobuf.ByteString value) {
@@ -6462,9 +7302,9 @@ public final class Variant {
       private java.util.List<bmeg.gaea.schema.Variant.VariantCall> variantCalls_ =
         java.util.Collections.emptyList();
       private void ensureVariantCallsIsMutable() {
-        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
           variantCalls_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.VariantCall>(variantCalls_);
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000008;
          }
       }
 
@@ -6472,7 +7312,7 @@ public final class Variant {
           bmeg.gaea.schema.Variant.VariantCall, bmeg.gaea.schema.Variant.VariantCall.Builder, bmeg.gaea.schema.Variant.VariantCallOrBuilder> variantCallsBuilder_;
 
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6486,7 +7326,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6500,7 +7340,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6514,7 +7354,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6535,7 +7375,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6553,7 +7393,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6573,7 +7413,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6594,7 +7434,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6612,7 +7452,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6630,7 +7470,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6649,7 +7489,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6658,7 +7498,7 @@ public final class Variant {
       public Builder clearVariantCalls() {
         if (variantCallsBuilder_ == null) {
           variantCalls_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000008);
           onChanged();
         } else {
           variantCallsBuilder_.clear();
@@ -6666,7 +7506,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6683,7 +7523,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6694,7 +7534,7 @@ public final class Variant {
         return getVariantCallsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6708,7 +7548,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6723,7 +7563,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6734,7 +7574,7 @@ public final class Variant {
             bmeg.gaea.schema.Variant.VariantCall.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6746,7 +7586,7 @@ public final class Variant {
             index, bmeg.gaea.schema.Variant.VariantCall.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 6;</code>
+       * <code>repeated .bmeg.gaea.schema.VariantCall variantCalls = 4;</code>
        *
        * <pre>
        * When necessary, some way to add BioSample observations might be nice, like: map&lt;string, sring&gt; observations = 4;
@@ -6763,7 +7603,7 @@ public final class Variant {
           variantCallsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               bmeg.gaea.schema.Variant.VariantCall, bmeg.gaea.schema.Variant.VariantCall.Builder, bmeg.gaea.schema.Variant.VariantCallOrBuilder>(
                   variantCalls_,
-                  ((bitField0_ & 0x00000020) == 0x00000020),
+                  ((bitField0_ & 0x00000008) == 0x00000008),
                   getParentForChildren(),
                   isClean());
           variantCalls_ = null;
@@ -6833,47 +7673,19 @@ public final class Variant {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string id = 1;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * unique in context of server
-     * </pre>
-     */
-    java.lang.String getId();
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * unique in context of server
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getIdBytes();
-
-    /**
-     * <code>optional string source = 2;</code>
-     */
-    java.lang.String getSource();
-    /**
-     * <code>optional string source = 2;</code>
-     */
-    com.google.protobuf.ByteString
-        getSourceBytes();
-
-    /**
-     * <code>optional string name = 3;</code>
-     *
-     * <pre>
-     * label or symboli cidentifier for Individual, from original database.
+     * label or symbolic identifier for Individual, from original database.
      * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
      * </pre>
      */
     java.lang.String getName();
     /**
-     * <code>optional string name = 3;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * label or symboli cidentifier for Individual, from original database.
+     * label or symbolic identifier for Individual, from original database.
      * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
      * </pre>
      */
@@ -6881,31 +7693,49 @@ public final class Variant {
         getNameBytes();
 
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>optional string source = 2;</code>
+     *
+     * <pre>
+     * the source of this data
+     * </pre>
+     */
+    java.lang.String getSource();
+    /**
+     * <code>optional string source = 2;</code>
+     *
+     * <pre>
+     * the source of this data
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getSourceBytes();
+
+    /**
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     java.util.List<bmeg.gaea.schema.Variant.BioSample> 
         getBioSamplesList();
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     bmeg.gaea.schema.Variant.BioSample getBioSamples(int index);
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     int getBioSamplesCount();
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     java.util.List<? extends bmeg.gaea.schema.Variant.BioSampleOrBuilder> 
         getBioSamplesOrBuilderList();
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     bmeg.gaea.schema.Variant.BioSampleOrBuilder getBioSamplesOrBuilder(
         int index);
 
     /**
-     * <code>map&lt;string, string&gt; observations = 5;</code>
+     * <code>map&lt;string, string&gt; observations = 4;</code>
      *
      * <pre>
      * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -6926,9 +7756,8 @@ public final class Variant {
       super(builder);
     }
     private Individual() {
-      id_ = "";
-      source_ = "";
       name_ = "";
+      source_ = "";
       bioSamples_ = java.util.Collections.emptyList();
     }
 
@@ -6959,7 +7788,7 @@ public final class Variant {
             case 10: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              id_ = s;
+              name_ = s;
               break;
             }
             case 18: {
@@ -6969,24 +7798,18 @@ public final class Variant {
               break;
             }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              name_ = s;
-              break;
-            }
-            case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 bioSamples_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.BioSample>();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000004;
               }
               bioSamples_.add(input.readMessage(bmeg.gaea.schema.Variant.BioSample.parser(), extensionRegistry));
               break;
             }
-            case 42: {
-              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+            case 34: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 observations_ = com.google.protobuf.MapField.newMapField(
                     ObservationsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000010;
+                mutable_bitField0_ |= 0x00000008;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               observations = input.readMessage(
@@ -7003,7 +7826,7 @@ public final class Variant {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           bioSamples_ = java.util.Collections.unmodifiableList(bioSamples_);
         }
         makeExtensionsImmutable();
@@ -7018,7 +7841,7 @@ public final class Variant {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 5:
+        case 4:
           return internalGetObservations();
         default:
           throw new RuntimeException(
@@ -7033,89 +7856,13 @@ public final class Variant {
     }
 
     private int bitField0_;
-    public static final int ID_FIELD_NUMBER = 1;
-    private volatile java.lang.Object id_;
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * unique in context of server
-     * </pre>
-     */
-    public java.lang.String getId() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        id_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string id = 1;</code>
-     *
-     * <pre>
-     * unique in context of server
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getIdBytes() {
-      java.lang.Object ref = id_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        id_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int SOURCE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object source_;
-    /**
-     * <code>optional string source = 2;</code>
-     */
-    public java.lang.String getSource() {
-      java.lang.Object ref = source_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        source_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string source = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getSourceBytes() {
-      java.lang.Object ref = source_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        source_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int NAME_FIELD_NUMBER = 3;
+    public static final int NAME_FIELD_NUMBER = 1;
     private volatile java.lang.Object name_;
     /**
-     * <code>optional string name = 3;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * label or symboli cidentifier for Individual, from original database.
+     * label or symbolic identifier for Individual, from original database.
      * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
      * </pre>
      */
@@ -7132,10 +7879,10 @@ public final class Variant {
       }
     }
     /**
-     * <code>optional string name = 3;</code>
+     * <code>optional string name = 1;</code>
      *
      * <pre>
-     * label or symboli cidentifier for Individual, from original database.
+     * label or symbolic identifier for Individual, from original database.
      * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
      * </pre>
      */
@@ -7153,42 +7900,84 @@ public final class Variant {
       }
     }
 
-    public static final int BIOSAMPLES_FIELD_NUMBER = 4;
+    public static final int SOURCE_FIELD_NUMBER = 2;
+    private volatile java.lang.Object source_;
+    /**
+     * <code>optional string source = 2;</code>
+     *
+     * <pre>
+     * the source of this data
+     * </pre>
+     */
+    public java.lang.String getSource() {
+      java.lang.Object ref = source_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        source_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string source = 2;</code>
+     *
+     * <pre>
+     * the source of this data
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getSourceBytes() {
+      java.lang.Object ref = source_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        source_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int BIOSAMPLES_FIELD_NUMBER = 3;
     private java.util.List<bmeg.gaea.schema.Variant.BioSample> bioSamples_;
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     public java.util.List<bmeg.gaea.schema.Variant.BioSample> getBioSamplesList() {
       return bioSamples_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     public java.util.List<? extends bmeg.gaea.schema.Variant.BioSampleOrBuilder> 
         getBioSamplesOrBuilderList() {
       return bioSamples_;
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     public int getBioSamplesCount() {
       return bioSamples_.size();
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     public bmeg.gaea.schema.Variant.BioSample getBioSamples(int index) {
       return bioSamples_.get(index);
     }
     /**
-     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+     * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
      */
     public bmeg.gaea.schema.Variant.BioSampleOrBuilder getBioSamplesOrBuilder(
         int index) {
       return bioSamples_.get(index);
     }
 
-    public static final int OBSERVATIONS_FIELD_NUMBER = 5;
+    public static final int OBSERVATIONS_FIELD_NUMBER = 4;
     private static final class ObservationsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -7211,7 +8000,7 @@ public final class Variant {
       return observations_;
     }
     /**
-     * <code>map&lt;string, string&gt; observations = 5;</code>
+     * <code>map&lt;string, string&gt; observations = 4;</code>
      *
      * <pre>
      * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -7234,17 +8023,14 @@ public final class Variant {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getIdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, id_);
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
       }
       if (!getSourceBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
       }
-      if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, name_);
-      }
       for (int i = 0; i < bioSamples_.size(); i++) {
-        output.writeMessage(4, bioSamples_.get(i));
+        output.writeMessage(3, bioSamples_.get(i));
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetObservations().getMap().entrySet()) {
@@ -7253,7 +8039,7 @@ public final class Variant {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(5, observations);
+        output.writeMessage(4, observations);
       }
     }
 
@@ -7262,18 +8048,15 @@ public final class Variant {
       if (size != -1) return size;
 
       size = 0;
-      if (!getIdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, id_);
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
       }
       if (!getSourceBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
       }
-      if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, name_);
-      }
       for (int i = 0; i < bioSamples_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, bioSamples_.get(i));
+          .computeMessageSize(3, bioSamples_.get(i));
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetObservations().getMap().entrySet()) {
@@ -7283,7 +8066,7 @@ public final class Variant {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(5, observations);
+            .computeMessageSize(4, observations);
       }
       memoizedSize = size;
       return size;
@@ -7377,7 +8160,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 5:
+          case 4:
             return internalGetObservations();
           default:
             throw new RuntimeException(
@@ -7388,7 +8171,7 @@ public final class Variant {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 5:
+          case 4:
             return internalGetMutableObservations();
           default:
             throw new RuntimeException(
@@ -7419,15 +8202,13 @@ public final class Variant {
       }
       public Builder clear() {
         super.clear();
-        id_ = "";
+        name_ = "";
 
         source_ = "";
 
-        name_ = "";
-
         if (bioSamplesBuilder_ == null) {
           bioSamples_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           bioSamplesBuilder_.clear();
         }
@@ -7456,13 +8237,12 @@ public final class Variant {
         bmeg.gaea.schema.Variant.Individual result = new bmeg.gaea.schema.Variant.Individual(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        result.id_ = id_;
-        result.source_ = source_;
         result.name_ = name_;
+        result.source_ = source_;
         if (bioSamplesBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
             bioSamples_ = java.util.Collections.unmodifiableList(bioSamples_);
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
           result.bioSamples_ = bioSamples_;
         } else {
@@ -7486,23 +8266,19 @@ public final class Variant {
 
       public Builder mergeFrom(bmeg.gaea.schema.Variant.Individual other) {
         if (other == bmeg.gaea.schema.Variant.Individual.getDefaultInstance()) return this;
-        if (!other.getId().isEmpty()) {
-          id_ = other.id_;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
           onChanged();
         }
         if (!other.getSource().isEmpty()) {
           source_ = other.source_;
           onChanged();
         }
-        if (!other.getName().isEmpty()) {
-          name_ = other.name_;
-          onChanged();
-        }
         if (bioSamplesBuilder_ == null) {
           if (!other.bioSamples_.isEmpty()) {
             if (bioSamples_.isEmpty()) {
               bioSamples_ = other.bioSamples_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
               ensureBioSamplesIsMutable();
               bioSamples_.addAll(other.bioSamples_);
@@ -7515,7 +8291,7 @@ public final class Variant {
               bioSamplesBuilder_.dispose();
               bioSamplesBuilder_ = null;
               bioSamples_ = other.bioSamples_;
-              bitField0_ = (bitField0_ & ~0x00000008);
+              bitField0_ = (bitField0_ & ~0x00000004);
               bioSamplesBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getBioSamplesFieldBuilder() : null;
@@ -7553,170 +8329,12 @@ public final class Variant {
       }
       private int bitField0_;
 
-      private java.lang.Object id_ = "";
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * unique in context of server
-       * </pre>
-       */
-      public java.lang.String getId() {
-        java.lang.Object ref = id_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          id_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * unique in context of server
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getIdBytes() {
-        java.lang.Object ref = id_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          id_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * unique in context of server
-       * </pre>
-       */
-      public Builder setId(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        id_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * unique in context of server
-       * </pre>
-       */
-      public Builder clearId() {
-        
-        id_ = getDefaultInstance().getId();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string id = 1;</code>
-       *
-       * <pre>
-       * unique in context of server
-       * </pre>
-       */
-      public Builder setIdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        id_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object source_ = "";
-      /**
-       * <code>optional string source = 2;</code>
-       */
-      public java.lang.String getSource() {
-        java.lang.Object ref = source_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          source_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string source = 2;</code>
-       */
-      public com.google.protobuf.ByteString
-          getSourceBytes() {
-        java.lang.Object ref = source_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          source_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string source = 2;</code>
-       */
-      public Builder setSource(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        source_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string source = 2;</code>
-       */
-      public Builder clearSource() {
-        
-        source_ = getDefaultInstance().getSource();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string source = 2;</code>
-       */
-      public Builder setSourceBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        source_ = value;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object name_ = "";
       /**
-       * <code>optional string name = 3;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * label or symboli cidentifier for Individual, from original database.
+       * label or symbolic identifier for Individual, from original database.
        * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
        * </pre>
        */
@@ -7733,10 +8351,10 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string name = 3;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * label or symboli cidentifier for Individual, from original database.
+       * label or symbolic identifier for Individual, from original database.
        * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
        * </pre>
        */
@@ -7754,10 +8372,10 @@ public final class Variant {
         }
       }
       /**
-       * <code>optional string name = 3;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * label or symboli cidentifier for Individual, from original database.
+       * label or symbolic identifier for Individual, from original database.
        * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
        * </pre>
        */
@@ -7772,10 +8390,10 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string name = 3;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * label or symboli cidentifier for Individual, from original database.
+       * label or symbolic identifier for Individual, from original database.
        * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
        * </pre>
        */
@@ -7786,10 +8404,10 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>optional string name = 3;</code>
+       * <code>optional string name = 1;</code>
        *
        * <pre>
-       * label or symboli cidentifier for Individual, from original database.
+       * label or symbolic identifier for Individual, from original database.
        * In the context of TCGA, might be "TCGA-AG-3582" from "barcode" column in summary_patient_metadata_pancan.tsv
        * </pre>
        */
@@ -7805,12 +8423,101 @@ public final class Variant {
         return this;
       }
 
+      private java.lang.Object source_ = "";
+      /**
+       * <code>optional string source = 2;</code>
+       *
+       * <pre>
+       * the source of this data
+       * </pre>
+       */
+      public java.lang.String getSource() {
+        java.lang.Object ref = source_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          source_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string source = 2;</code>
+       *
+       * <pre>
+       * the source of this data
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getSourceBytes() {
+        java.lang.Object ref = source_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          source_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string source = 2;</code>
+       *
+       * <pre>
+       * the source of this data
+       * </pre>
+       */
+      public Builder setSource(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        source_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string source = 2;</code>
+       *
+       * <pre>
+       * the source of this data
+       * </pre>
+       */
+      public Builder clearSource() {
+        
+        source_ = getDefaultInstance().getSource();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string source = 2;</code>
+       *
+       * <pre>
+       * the source of this data
+       * </pre>
+       */
+      public Builder setSourceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        source_ = value;
+        onChanged();
+        return this;
+      }
+
       private java.util.List<bmeg.gaea.schema.Variant.BioSample> bioSamples_ =
         java.util.Collections.emptyList();
       private void ensureBioSamplesIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           bioSamples_ = new java.util.ArrayList<bmeg.gaea.schema.Variant.BioSample>(bioSamples_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000004;
          }
       }
 
@@ -7818,7 +8525,7 @@ public final class Variant {
           bmeg.gaea.schema.Variant.BioSample, bmeg.gaea.schema.Variant.BioSample.Builder, bmeg.gaea.schema.Variant.BioSampleOrBuilder> bioSamplesBuilder_;
 
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public java.util.List<bmeg.gaea.schema.Variant.BioSample> getBioSamplesList() {
         if (bioSamplesBuilder_ == null) {
@@ -7828,7 +8535,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public int getBioSamplesCount() {
         if (bioSamplesBuilder_ == null) {
@@ -7838,7 +8545,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public bmeg.gaea.schema.Variant.BioSample getBioSamples(int index) {
         if (bioSamplesBuilder_ == null) {
@@ -7848,7 +8555,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder setBioSamples(
           int index, bmeg.gaea.schema.Variant.BioSample value) {
@@ -7865,7 +8572,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder setBioSamples(
           int index, bmeg.gaea.schema.Variant.BioSample.Builder builderForValue) {
@@ -7879,7 +8586,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder addBioSamples(bmeg.gaea.schema.Variant.BioSample value) {
         if (bioSamplesBuilder_ == null) {
@@ -7895,7 +8602,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder addBioSamples(
           int index, bmeg.gaea.schema.Variant.BioSample value) {
@@ -7912,7 +8619,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder addBioSamples(
           bmeg.gaea.schema.Variant.BioSample.Builder builderForValue) {
@@ -7926,7 +8633,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder addBioSamples(
           int index, bmeg.gaea.schema.Variant.BioSample.Builder builderForValue) {
@@ -7940,7 +8647,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder addAllBioSamples(
           java.lang.Iterable<? extends bmeg.gaea.schema.Variant.BioSample> values) {
@@ -7955,12 +8662,12 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder clearBioSamples() {
         if (bioSamplesBuilder_ == null) {
           bioSamples_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
           bioSamplesBuilder_.clear();
@@ -7968,7 +8675,7 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public Builder removeBioSamples(int index) {
         if (bioSamplesBuilder_ == null) {
@@ -7981,14 +8688,14 @@ public final class Variant {
         return this;
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public bmeg.gaea.schema.Variant.BioSample.Builder getBioSamplesBuilder(
           int index) {
         return getBioSamplesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public bmeg.gaea.schema.Variant.BioSampleOrBuilder getBioSamplesOrBuilder(
           int index) {
@@ -7998,7 +8705,7 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public java.util.List<? extends bmeg.gaea.schema.Variant.BioSampleOrBuilder> 
            getBioSamplesOrBuilderList() {
@@ -8009,14 +8716,14 @@ public final class Variant {
         }
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public bmeg.gaea.schema.Variant.BioSample.Builder addBioSamplesBuilder() {
         return getBioSamplesFieldBuilder().addBuilder(
             bmeg.gaea.schema.Variant.BioSample.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public bmeg.gaea.schema.Variant.BioSample.Builder addBioSamplesBuilder(
           int index) {
@@ -8024,7 +8731,7 @@ public final class Variant {
             index, bmeg.gaea.schema.Variant.BioSample.getDefaultInstance());
       }
       /**
-       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 4;</code>
+       * <code>repeated .bmeg.gaea.schema.BioSample bioSamples = 3;</code>
        */
       public java.util.List<bmeg.gaea.schema.Variant.BioSample.Builder> 
            getBioSamplesBuilderList() {
@@ -8037,7 +8744,7 @@ public final class Variant {
           bioSamplesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               bmeg.gaea.schema.Variant.BioSample, bmeg.gaea.schema.Variant.BioSample.Builder, bmeg.gaea.schema.Variant.BioSampleOrBuilder>(
                   bioSamples_,
-                  ((bitField0_ & 0x00000008) == 0x00000008),
+                  ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
           bioSamples_ = null;
@@ -8068,7 +8775,7 @@ public final class Variant {
         return observations_;
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 5;</code>
+       * <code>map&lt;string, string&gt; observations = 4;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -8078,7 +8785,7 @@ public final class Variant {
         return internalGetObservations().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 5;</code>
+       * <code>map&lt;string, string&gt; observations = 4;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -8089,7 +8796,7 @@ public final class Variant {
         return internalGetMutableObservations().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 5;</code>
+       * <code>map&lt;string, string&gt; observations = 4;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -8901,38 +9608,44 @@ public final class Variant {
   static {
     java.lang.String[] descriptorData = {
       "\n7server/src/main/protobuf/bmeg/gaea/sch" +
-      "ema/variant.proto\022\020bmeg.gaea.schema\"=\n\010P" +
-      "osition\022\025\n\rreferenceName\030\001 \001(\t\022\r\n\005start\030" +
-      "\002 \001(\003\022\013\n\003end\030\003 \001(\003\"\312\001\n\007Feature\022\n\n\002id\030\001 \001" +
-      "(\t\022,\n\010position\030\002 \001(\0132\032.bmeg.gaea.schema." +
-      "Position\022\023\n\013featureType\030\003 \001(\t\022=\n\nattribu" +
-      "tes\030\004 \003(\0132).bmeg.gaea.schema.Feature.Att" +
+      "ema/variant.proto\022\020bmeg.gaea.schema\"I\n\010P" +
+      "osition\022\021\n\treference\030\001 \001(\t\022\r\n\005start\030\002 \001(" +
+      "\003\022\013\n\003end\030\003 \001(\003\022\016\n\006strand\030\004 \001(\t\"\276\001\n\007Featu" +
+      "re\022,\n\010position\030\001 \001(\0132\032.bmeg.gaea.schema." +
+      "Position\022\023\n\013featureType\030\002 \001(\t\022=\n\nattribu" +
+      "tes\030\003 \003(\0132).bmeg.gaea.schema.Feature.Att" +
       "ributesEntry\0321\n\017AttributesEntry\022\013\n\003key\030\001" +
-      " \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\301\001\n\021VariantCallE" +
-      "ffect\022\n\n\002id\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\025\n\rvar",
-      "iantCallId\030\003 \001(\t\022\017\n\007feature\030\004 \001(\t\022;\n\004inf" +
-      "o\030\005 \003(\0132-.bmeg.gaea.schema.VariantCallEf" +
-      "fect.InfoEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t" +
-      "\022\r\n\005value\030\002 \001(\t:\0028\001\"\273\002\n\013VariantCall\022\n\n\002i" +
-      "d\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\023\n\013bioSampleId\030\003" +
-      " \001(\t\022,\n\010position\030\004 \001(\0132\032.bmeg.gaea.schem" +
-      "a.Position\022\026\n\016referenceBases\030\005 \001(\t\022\020\n\010ge" +
-      "notype\030\006 \003(\t\022?\n\022variantCallEffects\030\007 \003(\013" +
-      "2#.bmeg.gaea.schema.VariantCallEffect\0225\n" +
-      "\004info\030\010 \003(\0132\'.bmeg.gaea.schema.VariantCa",
-      "ll.InfoEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r" +
-      "\n\005value\030\002 \001(\t:\0028\001\"\230\001\n\tBioSample\022\n\n\002id\030\001 " +
-      "\001(\t\022\016\n\006source\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022\024\n\014ind" +
-      "ividualId\030\004 \001(\t\022\026\n\016individualName\030\005 \001(\t\022" +
-      "3\n\014variantCalls\030\006 \003(\0132\035.bmeg.gaea.schema" +
-      ".VariantCall\"\342\001\n\nIndividual\022\n\n\002id\030\001 \001(\t\022" +
-      "\016\n\006source\030\002 \001(\t\022\014\n\004name\030\003 \001(\t\022/\n\nbioSamp" +
-      "les\030\004 \003(\0132\033.bmeg.gaea.schema.BioSample\022D" +
-      "\n\014observations\030\005 \003(\0132..bmeg.gaea.schema." +
-      "Individual.ObservationsEntry\0323\n\021Observat",
-      "ionsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028" +
-      "\001\"C\n\016IndividualList\0221\n\013individuals\030\001 \003(\013" +
-      "2\034.bmeg.gaea.schema.Individualb\006proto3"
+      " \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\202\003\n\021VariantCallE" +
+      "ffect\022\016\n\006source\030\001 \001(\t\022\017\n\007feature\030\002 \001(\t\022\017",
+      "\n\007domains\030\003 \003(\t\022\023\n\013variantType\030\004 \001(\t\022\031\n\021" +
+      "transcriptSpecies\030\005 \001(\t\022\026\n\016transcriptNam" +
+      "e\030\006 \001(\t\022\030\n\020transcriptSource\030\007 \001(\t\022\030\n\020tra" +
+      "nscriptStatus\030\010 \001(\t\022\031\n\021transcriptVersion" +
+      "\030\t \001(\t\022\021\n\tcPosition\030\n \001(\t\022\027\n\017aminoAcidCh" +
+      "ange\030\013 \001(\t\022\016\n\006strand\030\014 \001(\t\022;\n\004info\030\r \003(\013" +
+      "2-.bmeg.gaea.schema.VariantCallEffect.In" +
+      "foEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val" +
+      "ue\030\002 \001(\t:\0028\001\"\202\003\n\013VariantCall\022\016\n\006source\030\001" +
+      " \001(\t\022,\n\010position\030\002 \001(\0132\032.bmeg.gaea.schem",
+      "a.Position\022\027\n\017referenceAllele\030\003 \001(\t\022\025\n\rn" +
+      "ormalAllele1\030\004 \001(\t\022\025\n\rnormalAllele2\030\005 \001(" +
+      "\t\022\024\n\014tumorAllele1\030\006 \001(\t\022\024\n\014tumorAllele2\030" +
+      "\007 \001(\t\022\035\n\025variantClassification\030\010 \001(\t\022?\n\022" +
+      "variantCallEffects\030\t \003(\0132#.bmeg.gaea.sch" +
+      "ema.VariantCallEffect\0225\n\004info\030\n \003(\0132\'.bm" +
+      "eg.gaea.schema.VariantCall.InfoEntry\032+\n\t" +
+      "InfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028" +
+      "\001\"v\n\tBioSample\022\014\n\004name\030\001 \001(\t\022\016\n\006source\030\002" +
+      " \001(\t\022\026\n\016individualName\030\003 \001(\t\0223\n\014variantC",
+      "alls\030\004 \003(\0132\035.bmeg.gaea.schema.VariantCal" +
+      "l\"\326\001\n\nIndividual\022\014\n\004name\030\001 \001(\t\022\016\n\006source" +
+      "\030\002 \001(\t\022/\n\nbioSamples\030\003 \003(\0132\033.bmeg.gaea.s" +
+      "chema.BioSample\022D\n\014observations\030\004 \003(\0132.." +
+      "bmeg.gaea.schema.Individual.Observations" +
+      "Entry\0323\n\021ObservationsEntry\022\013\n\003key\030\001 \001(\t\022" +
+      "\r\n\005value\030\002 \001(\t:\0028\001\"C\n\016IndividualList\0221\n\013" +
+      "individuals\030\001 \003(\0132\034.bmeg.gaea.schema.Ind" +
+      "ividualb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -8951,13 +9664,13 @@ public final class Variant {
     internal_static_bmeg_gaea_schema_Position_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Position_descriptor,
-        new java.lang.String[] { "ReferenceName", "Start", "End", });
+        new java.lang.String[] { "Reference", "Start", "End", "Strand", });
     internal_static_bmeg_gaea_schema_Feature_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_bmeg_gaea_schema_Feature_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Feature_descriptor,
-        new java.lang.String[] { "Id", "Position", "FeatureType", "Attributes", });
+        new java.lang.String[] { "Position", "FeatureType", "Attributes", });
     internal_static_bmeg_gaea_schema_Feature_AttributesEntry_descriptor =
       internal_static_bmeg_gaea_schema_Feature_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_Feature_AttributesEntry_fieldAccessorTable = new
@@ -8969,7 +9682,7 @@ public final class Variant {
     internal_static_bmeg_gaea_schema_VariantCallEffect_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_VariantCallEffect_descriptor,
-        new java.lang.String[] { "Id", "Source", "VariantCallId", "Feature", "Info", });
+        new java.lang.String[] { "Source", "Feature", "Domains", "VariantType", "TranscriptSpecies", "TranscriptName", "TranscriptSource", "TranscriptStatus", "TranscriptVersion", "CPosition", "AminoAcidChange", "Strand", "Info", });
     internal_static_bmeg_gaea_schema_VariantCallEffect_InfoEntry_descriptor =
       internal_static_bmeg_gaea_schema_VariantCallEffect_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_VariantCallEffect_InfoEntry_fieldAccessorTable = new
@@ -8981,7 +9694,7 @@ public final class Variant {
     internal_static_bmeg_gaea_schema_VariantCall_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_VariantCall_descriptor,
-        new java.lang.String[] { "Id", "Source", "BioSampleId", "Position", "ReferenceBases", "Genotype", "VariantCallEffects", "Info", });
+        new java.lang.String[] { "Source", "Position", "ReferenceAllele", "NormalAllele1", "NormalAllele2", "TumorAllele1", "TumorAllele2", "VariantClassification", "VariantCallEffects", "Info", });
     internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_descriptor =
       internal_static_bmeg_gaea_schema_VariantCall_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_fieldAccessorTable = new
@@ -8993,13 +9706,13 @@ public final class Variant {
     internal_static_bmeg_gaea_schema_BioSample_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_BioSample_descriptor,
-        new java.lang.String[] { "Id", "Source", "Name", "IndividualId", "IndividualName", "VariantCalls", });
+        new java.lang.String[] { "Name", "Source", "IndividualName", "VariantCalls", });
     internal_static_bmeg_gaea_schema_Individual_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_bmeg_gaea_schema_Individual_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Individual_descriptor,
-        new java.lang.String[] { "Id", "Source", "Name", "BioSamples", "Observations", });
+        new java.lang.String[] { "Name", "Source", "BioSamples", "Observations", });
     internal_static_bmeg_gaea_schema_Individual_ObservationsEntry_descriptor =
       internal_static_bmeg_gaea_schema_Individual_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_Individual_ObservationsEntry_fieldAccessorTable = new
