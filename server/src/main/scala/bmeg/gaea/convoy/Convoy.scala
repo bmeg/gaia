@@ -63,7 +63,7 @@ object Convoy {
     val domains = callEffect.getDomainsList().asScala.toList
     val domainVertexes = domains.map(ingestDomain(graph))
     for (domainVertex <- domainVertexes) {
-      domainVertex --- ("hasEffect") --> callEffectVertex
+      domainVertex <-- ("inDomain") --- callEffectVertex
     }
 
     callEffectVertex
@@ -82,6 +82,10 @@ object Convoy {
 
     val callEffects = variantCall.getVariantCallEffectsList().asScala.toList
     val callEffectVertexes = callEffects.map(ingestVariantCallEffect(graph))
+    for (callEffectVertex <- callEffectVertexes) {
+      variantCallVertex <-- ("inCall") --- callEffectVertex
+    }
+
     variantCallVertex
   }
 
@@ -96,7 +100,7 @@ object Convoy {
     val variantCalls = bioSample.getVariantCallsList().asScala.toList
     val variantCallVertexes = variantCalls.map(ingestVariantCall(graph) (source))
     for (variantCallVertex <- variantCallVertexes) {
-      bioSampleVertex --- ("hasVariantCall") --> variantCallVertex
+      bioSampleVertex --- ("hasVariant") --> variantCallVertex
     }
 
     bioSampleVertex
