@@ -8,7 +8,7 @@ import gremlin.scala._
 import scala.collection.JavaConverters._
 
 object Convoy {
-  val protobufferKeys = List(
+  val protobufferStringKeys = List(
     "name",
     "source",
 
@@ -27,11 +27,44 @@ object Convoy {
     "transcriptVersion",
     "cPosition",
     "aminoAcidChange",
-    "strand"
+    "strand",
+    "reference"
   )
 
-  val keys = protobufferKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
+  val protobufferLongKeys = List(
+    "start",
+    "end"
+  )
+
+  val keys = protobufferStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
     m + (s -> Key[String](s))
+  }
+
+  val nkeys = protobufferLongKeys.foldLeft(Map[String, Key[Long]]()) {(m, s) =>
+    m + (s -> Key[Long](s))
+  }
+
+  def makeIndexes(graph: TitanGraph) = {
+    Titan.makeIndex(graph) ("positionIndex") (Map(
+      "reference" -> classOf[String],
+      "strand" -> classOf[String],
+      "start" -> classOf[Long],
+      "end" -> classOf[Long]))
+  }
+
+  def ingestPosition(graph: TitanGraph) (position: Variant.Position): Vertex = {
+    graph.V.hasLabel("position")
+      .has(keys("reference"), position.getReference())
+      .has(keys("strand"), position.getStrand())
+      .has(nkeys("start"), position.getStart())
+      .has(nkeys("end"), position.getEnd())
+      .headOption.getOrElse {
+      graph + ("position",
+        keys("reference") -> position.getReference(),
+        keys("strand") -> position.getStrand(),
+        nkeys("start") -> position.getStart(),
+        nkeys("end") -> position.getEnd())
+    }
   }
 
   def ingestDomain(graph: TitanGraph) (domain: String): Vertex = {
@@ -70,6 +103,7 @@ object Convoy {
   }
 
   def ingestVariantCall(graph: TitanGraph) (source: String) (variantCall: Variant.VariantCall): Vertex = {
+    val positionVertex = ingestPosition(graph) (variantCall.getPosition())
     val variantCallVertex = graph + ("variantCall",
       keys("source") -> source,
       keys("variantClassification") -> variantCall.getVariantClassification(),
@@ -83,7 +117,7 @@ object Convoy {
     val callEffects = variantCall.getVariantCallEffectsList().asScala.toList
     val callEffectVertexes = callEffects.map(ingestVariantCallEffect(graph))
     for (callEffectVertex <- callEffectVertexes) {
-      variantCallVertex <-- ("inCall") --- callEffectVertex
+      callEffectVertex --- ("inCall") --> variantCallVertex
     }
 
     variantCallVertex

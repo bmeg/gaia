@@ -17,7 +17,26 @@ object Titan {
     TitanFactory.open(conf)
   }
 
-  def findVertex[A](graph: TitanGraph) (label: String) (key: Key[A]) (value: A): Option[Vertex] = {
-    graph.V.has(label, key, value).toList.headOption
+  def findVertex[A](graph: TitanGraph) (label: String) (keys: Map[Key[A], A]): Option[Vertex] = {
+    val prequery = graph.V.hasLabel(label)
+    val query = keys.foldLeft(prequery) {(query, kv) =>
+      val (key, value) = kv
+      query.has(key, value)
+    }
+
+    query.toList.headOption
+  }
+
+  def makeIndex(graph: TitanGraph) (name: String) (keys: Map[String, Class[_]]) = {
+    val mg = graph.openManagement()
+    val preindex = mg.buildIndex(name, classOf[Vertex])
+    val index = keys.foldLeft(preindex) {(index, kv) =>
+      val (s, c) = kv
+      val property = mg.makePropertyKey(s).dataType(c).make()
+      index.addKey(property)
+    }
+
+    index.buildCompositeIndex()
+    mg.commit()
   }
 }
