@@ -36,20 +36,21 @@ object Convoy {
     "end"
   )
 
+  val indexSpec = Map(
+    "positionIndex" -> Map(
+      "reference" -> classOf[String],
+      "strand" -> classOf[String],
+      "start" -> classOf[Long],
+      "end" -> classOf[Long]),
+    "nameIndex" -> Map("name" -> classOf[String])
+  )
+
   val keys = protobufferStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
     m + (s -> Key[String](s))
   }
 
   val nkeys = protobufferLongKeys.foldLeft(Map[String, Key[Long]]()) {(m, s) =>
     m + (s -> Key[Long](s))
-  }
-
-  def makeIndexes(graph: TitanGraph) = {
-    Titan.makeIndex(graph) ("positionIndex") (Map(
-      "reference" -> classOf[String],
-      "strand" -> classOf[String],
-      "start" -> classOf[Long],
-      "end" -> classOf[Long]))
   }
 
   def ingestPosition(graph: TitanGraph) (position: Variant.Position): Vertex = {
@@ -120,6 +121,7 @@ object Convoy {
       callEffectVertex --- ("inCall") --> variantCallVertex
     }
 
+    variantCallVertex --- ("atPosition") --> positionVertex
     variantCallVertex
   }
 

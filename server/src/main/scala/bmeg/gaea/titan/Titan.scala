@@ -39,4 +39,11 @@ object Titan {
     index.buildCompositeIndex()
     mg.commit()
   }
+
+  def makeIndexes(graph: TitanGraph) (spec: Map[String, Map[String, Class[_]]]): Unit = {
+    for (kv <- spec) {
+      val (name, properties) = kv
+      Titan.makeIndex(graph) (name) (properties)
+    }
+  }
 }
