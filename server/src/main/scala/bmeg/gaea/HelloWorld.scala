@@ -1,12 +1,9 @@
 package bmeg.gaea
 
+import bmeg.gaea.titan.Titan
 import bmeg.gaea.schema.Variant
-import bmeg.gaea.schema.gene.Gene
 import bmeg.gaea.convoy.Convoy
-
-// import bmeg.gaea.schema.variant._
-// import bmeg.gaea.titan.Titan
-// import bmeg.gaea.message.ProtobufferMessage
+import bmeg.gaea.feature.Feature
 
 import org.http4s._
 import org.http4s.server._
@@ -20,15 +17,17 @@ import com.google.protobuf.util.JsonFormat
 // import com.trueaccord.scalapb.json.JsonFormat
 
 object HelloWorld {
-  val service = HttpService {
+  val graph = Titan.connect(Titan.configuration())
 
+  val service = HttpService {
     case GET -> Root / "hello" / name =>
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
 
     case GET -> Root / "gene" / name =>
-      // val graph = Titan.connect(Titan.configuration())
-      val gene = Gene(name = name)
-      Ok(jSingleObject("message", jString(s"Gene ${gene.name}")))
+      val synonym = Feature.findSynonym(graph) (name).getOrElse {
+        "no synonym found"
+      }
+      Ok(jSingleObject(name, jString(synonym)))
 
     case request @ POST -> Root / "individual-list" =>
       request.as[String].flatMap { raw =>
