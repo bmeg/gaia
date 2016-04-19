@@ -2,6 +2,7 @@ package bmeg.gaea.convoy
 
 import bmeg.gaea.titan.Titan
 import bmeg.gaea.schema.Variant
+import bmeg.gaea.feature.Feature
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
@@ -11,6 +12,7 @@ object Convoy {
   val protobufferStringKeys = List(
     "name",
     "source",
+    "symbol",
 
     "variantClassification",
     "referenceAllele",
@@ -31,7 +33,7 @@ object Convoy {
     "reference"
   )
 
-  val protobufferLongKeys = List(
+  val protobufferIntegerKeys = List(
     "start",
     "end"
   )
@@ -40,31 +42,32 @@ object Convoy {
     "positionIndex" -> Map(
       "reference" -> classOf[String],
       "strand" -> classOf[String],
-      "start" -> classOf[Long],
-      "end" -> classOf[Long]),
-    "nameIndex" -> Map("name" -> classOf[String])
+      "start" -> classOf[Integer],
+      "end" -> classOf[Integer]),
+    "nameIndex" -> Map("name" -> classOf[String]),
+    "symbolIndex" -> Map("symbol" -> classOf[String])
   )
 
-  val keys = protobufferStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
+  val keys: Map[String, Key[String]] = protobufferStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
     m + (s -> Key[String](s))
   }
 
-  val nkeys = protobufferLongKeys.foldLeft(Map[String, Key[Long]]()) {(m, s) =>
-    m + (s -> Key[Long](s))
+  val nkeys: Map[String, Key[Integer]] = protobufferIntegerKeys.foldLeft(Map[String, Key[Integer]]()) {(m, s) =>
+    m + (s -> Key[Integer](s))
   }
 
   def ingestPosition(graph: TitanGraph) (position: Variant.Position): Vertex = {
     graph.V.hasLabel("position")
       .has(keys("reference"), position.getReference())
       .has(keys("strand"), position.getStrand())
-      .has(nkeys("start"), position.getStart())
-      .has(nkeys("end"), position.getEnd())
+      .has(nkeys("start"), position.getStart().asInstanceOf[Integer])
+      .has(nkeys("end"), position.getEnd().asInstanceOf[Integer])
       .headOption.getOrElse {
       graph + ("position",
         keys("reference") -> position.getReference(),
         keys("strand") -> position.getStrand(),
-        nkeys("start") -> position.getStart(),
-        nkeys("end") -> position.getEnd())
+        nkeys("start") -> position.getStart().asInstanceOf[Integer],
+        nkeys("end") -> position.getEnd().asInstanceOf[Integer])
     }
   }
 
@@ -88,9 +91,7 @@ object Convoy {
     )
 
     val feature = callEffect.getFeature()
-    val featureVertex = graph.V.hasLabel("feature").has(keys("name"), feature).headOption.getOrElse {
-      graph + ("feature", keys("name") -> feature)
-    }
+    val featureVertex = Feature.findFeature(graph) (feature)
 
     featureVertex --- ("hasEffect") --> callEffectVertex
 
