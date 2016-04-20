@@ -55,13 +55,16 @@ class TitanReader(graph: TitanGraph) extends Iterator[Graph.ElementRecord] {
 
   def vertexConvert(vin: Vertex) : Graph.ElementRecord = {
     var v = Graph.VertexRecord.newBuilder()
-    v.setBase(elementConvert(vin))
+    v.setBase(elementConvert(vin)).setName(vin.label())
     return Graph.ElementRecord.newBuilder().setVertex(v).build()
   }
 
   def edgeConvert(ein: Edge) : Graph.ElementRecord = {
     var e = Graph.EdgeRecord.newBuilder()
-    e.setBase(elementConvert(ein))
+    e.setBase(elementConvert(ein)).
+      setSrc(ein.outVertex().id().asInstanceOf[Long]).
+      setDest(ein.inVertex().id().asInstanceOf[Long]).
+      setLabel(ein.label())
     return Graph.ElementRecord.newBuilder().setEdge(e).build()
 
   }
