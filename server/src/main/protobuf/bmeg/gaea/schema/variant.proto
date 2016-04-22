@@ -164,7 +164,7 @@ message BioSample {
     string source = 2;
 
     // The name of the individual this biosample was derived from.
-    string individualName = 3;
+    string individualName = 3; ///EDGE_LINK: Individual.name
 
     repeated VariantCall variantCalls = 4;
     // When necessary, some way to add BioSample observations might be nice, like: map<string, sring> observations = 4;
