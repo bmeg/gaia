@@ -8,12 +8,17 @@ import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import scala.collection.JavaConverters._
 
+// RNASeq.geneExp
+// *.maf
+// .patient.tsv
+
 object Convoy {
-  val protobufferStringKeys = List(
+  val titanStringKeys = List(
     "name",
     "source",
     "symbol",
 
+    // variant keys
     "variantClassification",
     "referenceAllele",
     "normalAllele1",
@@ -21,6 +26,7 @@ object Convoy {
     "tumorAllele1",
     "tumorAllele2",
 
+    // variant effect keys
     "variantType",
     "transcriptSpecies",
     "transcriptName",
@@ -30,44 +36,132 @@ object Convoy {
     "cPosition",
     "aminoAcidChange",
     "strand",
-    "reference"
+    "reference",
+
+    // patient keys
+    "cancer",
+    "icd10",
+    "residualTumor",
+    "tumorStage",
+    "icdO3Site",
+    "bcrAliquotUuid",
+    "personNeoplasmCancerStatus",
+    "bcrPatientUuid",
+    "distantMetastasisPathologicSpread",
+    "vitalStatus",
+    "ajccCancerStagingHandbookEdition",
+    "primaryTumorPathologicSpread",
+    "histologicalType",
+    "icdO3Histology",
+    "barcode",
+    "lymphnodePathologicSpread",
+    "gender",
+    "anatomicSiteColorectal",
+    "patientId",
+    "mononucleotideAndDinucleotideMarkerPanelAnalysisStatus",
+    "bcrPatientBarcode",
+    "tumorTissueSite",
+    "tissueSourceSite",
+    "KRAS:mutation",
+    "EGFR:mutation",
+    "BRAF:mutation",
+    "ALK:mutation",
+    "NRAS:mutation",
+    "ERBB2:mutation"
   )
 
-  val protobufferIntegerKeys = List(
+  val titanBooleanKeys = List(
+    // patient keys
+    "primaryLymphNodePresentationAssessment",
+    "pretreatmentHistory",
+    "krasGeneAnalysisPerformed",
+    "informedConsentVerified",
+    "lossExpressionOfMismatchRepairProteinsByIhc",
+    "priorDiagnosis",
+    "historyOfColonPolyps",
+    "lymphaticInvasion",
+    "brafGeneAnalysisPerformed",
+    "venousInvasion",
+    "microsatelliteInstability",
+    "synchronousColonCancerPresent",
+    "perineuralInvasionPresent",
+    "nonNodalTumorDeposits",
+    "colonPolypsPresent"
+  )
+
+  val titanLongKeys = List(
+    // position keys
     "start",
-    "end"
+    "end",
+
+    // patient keys
+    "yearOfFormCompletion",
+    "monthOfFormCompletion",
+    "dayOfFormCompletion",
+    "daysToBirth",
+    "yearOfInitialPathologicDiagnosis",
+    "daysToInitialPathologicDiagnosis",
+    "daysToLastFollowup",
+    "daysToLastKnownAlive",
+    "ageAtInitialPathologicDiagnosis",
+    "numberOfFirstDegreeRelativesWithCancerDiagnosis",
+    "lymphNodeExaminedCount",
+    "numberOfLymphnodesPositiveByHe",
+    "circumferentialResectionMargin",
+    "height",
+    "weight"
+  )
+
+  val titanDoubleKeys = List(
+    "preoperativePretreatmentCeaLevel"
   )
 
   val indexSpec = Map(
     "positionIndex" -> Map(
       "reference" -> classOf[String],
       "strand" -> classOf[String],
-      "start" -> classOf[Integer],
-      "end" -> classOf[Integer]),
+      "start" -> classOf[Long],
+      "end" -> classOf[Long]),
     "nameIndex" -> Map("name" -> classOf[String]),
-    "symbolIndex" -> Map("symbol" -> classOf[String])
+    "symbolIndex" -> Map("symbol" -> classOf[String]),
+    "genderIndex" -> Map("gender" -> classOf[String]),
+    "cancerIndex" -> Map("cancer" -> classOf[String])
   )
 
-  val keys: Map[String, Key[String]] = protobufferStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
+  val keys: Map[String, Key[String]] = titanStringKeys.foldLeft(Map[String, Key[String]]()) {(m, s) =>
     m + (s -> Key[String](s))
   }
 
-  val nkeys: Map[String, Key[Integer]] = protobufferIntegerKeys.foldLeft(Map[String, Key[Integer]]()) {(m, s) =>
-    m + (s -> Key[Integer](s))
+  val nkeys: Map[String, Key[Long]] = titanLongKeys.foldLeft(Map[String, Key[Long]]()) {(m, s) =>
+    m + (s -> Key[Long](s))
+  }
+
+  val bkeys: Map[String, Key[Boolean]] = titanBooleanKeys.foldLeft(Map[String, Key[Boolean]]()) {(m, s) =>
+    m + (s -> Key[Boolean](s))
+  }
+
+  val dkeys: Map[String, Key[Double]] = titanDoubleKeys.foldLeft(Map[String, Key[Double]]()) {(m, s) =>
+    m + (s -> Key[Double](s))
+  }
+
+  def camelize(s: String): String = {
+    val break = s.split("_")
+    val upper = break.head +: break.tail.map(_.capitalize)
+    upper.mkString("")
   }
 
   def ingestPosition(graph: TitanGraph) (position: Variant.Position): Vertex = {
     graph.V.hasLabel("position")
       .has(keys("reference"), position.getReference())
       .has(keys("strand"), position.getStrand())
-      .has(nkeys("start"), position.getStart().asInstanceOf[Integer])
-      .has(nkeys("end"), position.getEnd().asInstanceOf[Integer])
+      .has(nkeys("start"), position.getStart().asInstanceOf[Long])
+      .has(nkeys("end"), position.getEnd().asInstanceOf[Long])
       .headOption.getOrElse {
       graph + ("position",
         keys("reference") -> position.getReference(),
         keys("strand") -> position.getStrand(),
-        nkeys("start") -> position.getStart().asInstanceOf[Integer],
-        nkeys("end") -> position.getEnd().asInstanceOf[Integer])
+        nkeys("start") -> position.getStart().asInstanceOf[Long],
+        nkeys("end") -> position.getEnd().asInstanceOf[Long])
     }
   }
 
@@ -150,6 +244,27 @@ object Convoy {
         keys("name") -> individual.getName(),
         keys("source") -> source
       )
+    }
+
+    val observations = individual.getObservations().asScala
+    for ((key, observation) <- observations) {
+      val observationKey = camelize(key)
+      println(observationKey)
+      if (nkeys.contains(observationKey)) {
+        val raw: String = observation.split("\\.").head
+        val n: Long = java.lang.Long.parseLong(raw)
+        individualVertex.setProperty(nkeys(observationKey), n)
+      } else if (dkeys.contains(observationKey)) {
+        val n: Double = java.lang.Double.parseDouble(observation)
+        individualVertex.setProperty(dkeys(observationKey), n)
+      } else if (bkeys.contains(observationKey)) {
+        val bool: Boolean = observation == "YES"
+        individualVertex.setProperty(bkeys(observationKey), bool)
+      } else {
+        individualVertex.setProperty(keys.get(observationKey).getOrElse {
+          Key[String](observationKey)
+        }, observation)
+      }
     }
 
     val bioSamples = individual.getBioSamplesList().asScala.toList
