@@ -86,24 +86,15 @@ message VariantCallEffect {
 
     // The feature can mean either the gene or the protein this variant is associated with.
     string feature = 2;
+    string variantClassification = 3;
+    repeated string domains = 4;
 
-    repeated string domains = 3;
-
-    string variantType = 4;
-
-    string transcriptSpecies = 5;
-    string transcriptName = 6;
-    string transcriptSource = 7;
-    string transcriptStatus = 8;
-    string transcriptVersion = 9;
-
-    string cPosition = 10;
-    string aminoAcidChange = 11;
-    string strand = 12;
+    string dbsnpRS = 5;
+    string dbsnpValStatus = 6;
 
     // For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
     // (Might want to consider stealing HGVS annotation data structure from GA4GH for latter two)
-    map<string, string> info = 13;
+    map<string, string> info = 7;
 }
 
 // Here, a VariantCall is a combination of the 'Variant' and 'Call'
@@ -112,32 +103,34 @@ message VariantCallEffect {
 // location (reserved for `Call` in GA4GH). Sample-id in
 // GA4GH is contained within 'CallSet'. Here it is a VariantCall field.
 // Genomic location has been replaced by a 'Position' object.
-//
 message VariantCall {
     // The source of this data
     string source = 1;
 
     // where on the genome this variant occurred 
     Position position = 2;
+    string variantType = 3;
 
     // The reference bases for this variant. They start at the given start
     // position. e.g. "T"
-    string referenceAllele = 3;
+    string referenceAllele = 4;
 
     // The normal alleles for this sample
-    string normalAllele1 = 4;
-    string normalAllele2 = 5;
+    string normalAllele1 = 5;
+    string normalAllele2 = 6;
 
     // The genotype of this variant call. GA4GH uses int32. Here it is a string.
-    string tumorAllele1 = 6;
-    string tumorAllele2 = 7;
+    string tumorAllele1 = 7;
+    string tumorAllele2 = 8;
 
-    string variantClassification = 8;
+    string sequencer = 9;
+    string tumorSampleUUID = 10;
+    string matchedNormSampleUUID = 11;
 
-    repeated VariantCallEffect variantCallEffects = 9;
+    repeated VariantCallEffect variantCallEffects = 12;
 
     // A map of additional variant call information, including a Feature Id for now...
-    map<string, string> info = 10;
+    map<string, string> info = 13;
 }
 
 // From GA4GH:

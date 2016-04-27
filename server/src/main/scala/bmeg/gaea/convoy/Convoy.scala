@@ -7,6 +7,8 @@ import bmeg.gaea.feature.Feature
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import scala.collection.JavaConverters._
+import com.google.protobuf.util.JsonFormat
+import java.lang.{Long => Llong}
 
 // RNASeq.geneExp
 // *.maf
@@ -19,22 +21,20 @@ object Convoy {
     "symbol",
 
     // variant keys
-    "variantClassification",
+    "variantType",
     "referenceAllele",
     "normalAllele1",
     "normalAllele2",
     "tumorAllele1",
     "tumorAllele2",
+    "sequencer",
+    "tumorSampleUUID",
+    "matchedNormSampleUUID",
 
     // variant effect keys
-    "variantType",
-    "transcriptSpecies",
-    "transcriptName",
-    "transcriptSource",
-    "transcriptStatus",
-    "transcriptVersion",
-    "cPosition",
-    "aminoAcidChange",
+    "variantClassification",
+    "dbsnpRS",
+    "dbsnpValStatus",
     "strand",
     "reference",
 
@@ -120,8 +120,8 @@ object Convoy {
     "positionIndex" -> Map(
       "reference" -> classOf[String],
       "strand" -> classOf[String],
-      "start" -> classOf[Long],
-      "end" -> classOf[Long]),
+      "start" -> classOf[Llong],
+      "end" -> classOf[Llong]),
     "nameIndex" -> Map("name" -> classOf[String]),
     "symbolIndex" -> Map("symbol" -> classOf[String]),
     "genderIndex" -> Map("gender" -> classOf[String]),
@@ -132,8 +132,8 @@ object Convoy {
     m + (s -> Key[String](s))
   }
 
-  val nkeys: Map[String, Key[Long]] = titanLongKeys.foldLeft(Map[String, Key[Long]]()) {(m, s) =>
-    m + (s -> Key[Long](s))
+  val nkeys: Map[String, Key[Llong]] = titanLongKeys.foldLeft(Map[String, Key[Llong]]()) {(m, s) =>
+    m + (s -> Key[Llong](s))
   }
 
   val bkeys: Map[String, Key[Boolean]] = titanBooleanKeys.foldLeft(Map[String, Key[Boolean]]()) {(m, s) =>
@@ -154,14 +154,14 @@ object Convoy {
     graph.V.hasLabel("position")
       .has(keys("reference"), position.getReference())
       .has(keys("strand"), position.getStrand())
-      .has(nkeys("start"), position.getStart().asInstanceOf[Long])
-      .has(nkeys("end"), position.getEnd().asInstanceOf[Long])
+      .has(nkeys("start"), position.getStart().asInstanceOf[Llong])
+      .has(nkeys("end"), position.getEnd().asInstanceOf[Llong])
       .headOption.getOrElse {
       graph + ("position",
         keys("reference") -> position.getReference(),
         keys("strand") -> position.getStrand(),
-        nkeys("start") -> position.getStart().asInstanceOf[Long],
-        nkeys("end") -> position.getEnd().asInstanceOf[Long])
+        nkeys("start") -> position.getStart().asInstanceOf[Llong],
+        nkeys("end") -> position.getEnd().asInstanceOf[Llong])
     }
   }
 
@@ -173,15 +173,9 @@ object Convoy {
 
   def ingestVariantCallEffect(graph: TitanGraph) (callEffect: Variant.VariantCallEffect): Vertex = {
     val callEffectVertex = graph + ("variantCallEffect",
-      keys("variantType") -> callEffect.getVariantType(),
-      keys("transcriptSpecies") -> callEffect.getTranscriptSpecies(),
-      keys("transcriptName") -> callEffect.getTranscriptName(),
-      keys("transcriptSource") -> callEffect.getTranscriptSource(),
-      keys("transcriptStatus") -> callEffect.getTranscriptStatus(),
-      keys("transcriptVersion") -> callEffect.getTranscriptVersion(),
-      keys("cPosition") -> callEffect.getCPosition(),
-      keys("aminoAcidChange") -> callEffect.getAminoAcidChange(),
-      keys("strand") -> callEffect.getStrand()
+      keys("variantClassification") -> callEffect.getVariantClassification(),
+      keys("dbsnpRS") -> callEffect.getDbsnpRS(),
+      keys("dbsnpValStatus") -> callEffect.getDbsnpValStatus()
     )
 
     val feature = callEffect.getFeature()
@@ -202,12 +196,15 @@ object Convoy {
     val positionVertex = ingestPosition(graph) (variantCall.getPosition())
     val variantCallVertex = graph + ("variantCall",
       keys("source") -> source,
-      keys("variantClassification") -> variantCall.getVariantClassification(),
+      keys("variantType") -> variantCall.getVariantType(),
       keys("referenceAllele") -> variantCall.getReferenceAllele(),
       keys("normalAllele1") -> variantCall.getNormalAllele1(),
       keys("normalAllele2") -> variantCall.getNormalAllele2(),
       keys("tumorAllele1") -> variantCall.getTumorAllele1(),
-      keys("tumorAllele2") -> variantCall.getTumorAllele2()
+      keys("tumorAllele2") -> variantCall.getTumorAllele2(),
+      keys("sequencer") -> variantCall.getSequencer(),
+      keys("tumorSampleUUID") -> variantCall.getTumorSampleUUID(),
+      keys("matchedNormSampleUUID") -> variantCall.getMatchedNormSampleUUID()
     )
 
     val callEffects = variantCall.getVariantCallEffectsList().asScala.toList
@@ -252,7 +249,7 @@ object Convoy {
       println(observationKey)
       if (nkeys.contains(observationKey)) {
         val raw: String = observation.split("\\.").head
-        val n: Long = java.lang.Long.parseLong(raw)
+        val n: Llong = Llong.parseLong(raw)
         individualVertex.setProperty(nkeys(observationKey), n)
       } else if (dkeys.contains(observationKey)) {
         val n: Double = java.lang.Double.parseDouble(observation)
@@ -284,5 +281,11 @@ object Convoy {
     val individualVertexes = individuals.map(ingestIndividual(graph))
     graph.tx.commit()
     individualVertexes.length
+  }
+
+  def parseIndividualList(raw: String): Variant.IndividualList = {
+    val individualList: Variant.IndividualList.Builder = Variant.IndividualList.newBuilder()
+    JsonFormat.parser().merge(raw, individualList)
+    individualList.build()
   }
 }

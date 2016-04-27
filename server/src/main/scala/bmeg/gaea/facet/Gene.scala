@@ -11,7 +11,6 @@ import org.http4s.dsl._
 
 import _root_.argonaut._, Argonaut._
 import org.http4s.argonaut._
-import com.google.protobuf.util.JsonFormat
 
 object GeneFacet {
   val graph = Titan.connect(Titan.configuration())
@@ -28,9 +27,8 @@ object GeneFacet {
 
     case request @ POST -> Root / "individual-list" =>
       request.as[String].flatMap { raw =>
-        val individualList: Variant.IndividualList.Builder = Variant.IndividualList.newBuilder()
-        JsonFormat.parser().merge(raw, individualList)
-        val size = Convoy.ingestIndividualList(individualList.build())
+        val individualList = Convoy.parseIndividualList(raw)
+        val size = Convoy.ingestIndividualList(individualList)
         Ok(jNumber(size))
       }
   }
