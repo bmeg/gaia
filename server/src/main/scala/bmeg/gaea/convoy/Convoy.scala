@@ -38,40 +38,59 @@ object Convoy {
     "strand",
     "reference",
 
-    // patient keys
-    "cancer",
-    "icd10",
-    "residualTumor",
-    "tumorStage",
-    "icdO3Site",
-    "bcrAliquotUuid",
-    "personNeoplasmCancerStatus",
-    "bcrPatientUuid",
-    "distantMetastasisPathologicSpread",
+    // intersection of patient fields
     "vitalStatus",
-    "ajccCancerStagingHandbookEdition",
-    "primaryTumorPathologicSpread",
-    "histologicalType",
-    "icdO3Histology",
-    "barcode",
-    "lymphnodePathologicSpread",
-    "gender",
-    "anatomicSiteColorectal",
-    "patientId",
-    "mononucleotideAndDinucleotideMarkerPanelAnalysisStatus",
-    "bcrPatientBarcode",
-    "tumorTissueSite",
+    "icdO3Site",
     "tissueSourceSite",
-    "KRAS:mutation",
-    "EGFR:mutation",
-    "BRAF:mutation",
-    "ALK:mutation",
-    "NRAS:mutation",
-    "ERBB2:mutation"
+    "ethnicity",
+    "race",
+    "bcrPatientUuid",
+    "tumorStatus",
+    "icd10",
+    "gender",
+    "patientId",
+    "bcrPatientBarcode",
+    "icdO3Histology",
+    "sample"
+
+    // // patient keys
+    // "cancer",
+    // "icd10",
+    // "residualTumor",
+    // "tumorStage",
+    // "icdO3Site",
+    // "bcrAliquotUuid",
+    // "personNeoplasmCancerStatus",
+    // "bcrPatientUuid",
+    // "distantMetastasisPathologicSpread",
+    // "vitalStatus",
+    // "ajccCancerStagingHandbookEdition",
+    // "primaryTumorPathologicSpread",
+    // "histologicalType",
+    // "icdO3Histology",
+    // "barcode",
+    // "lymphnodePathologicSpread",
+    // "gender",
+    // "anatomicSiteColorectal",
+    // "patientId",
+    // "mononucleotideAndDinucleotideMarkerPanelAnalysisStatus",
+    // "bcrPatientBarcode",
+    // "tumorTissueSite",
+    // "tissueSourceSite",
+    // "KRAS:mutation",
+    // "EGFR:mutation",
+    // "BRAF:mutation",
+    // "ALK:mutation",
+    // "NRAS:mutation",
+    // "ERBB2:mutation"
   )
 
   val titanBooleanKeys = List(
     // patient keys
+    "prospectiveCollection",
+    "retrospectiveCollection",
+    "historyOtherMalignancy",
+    "historyNeoadjuvantTreatment",
     "primaryLymphNodePresentationAssessment",
     "pretreatmentHistory",
     "krasGeneAnalysisPerformed",
@@ -103,6 +122,10 @@ object Convoy {
     "daysToInitialPathologicDiagnosis",
     "daysToLastFollowup",
     "daysToLastKnownAlive",
+    "daysToIndex",
+    "birthDaysTo",
+    "deathDaysTo",
+    "lastContactDaysTo",
     "ageAtInitialPathologicDiagnosis",
     "numberOfFirstDegreeRelativesWithCancerDiagnosis",
     "lymphNodeExaminedCount",
@@ -193,6 +216,7 @@ object Convoy {
   }
 
   def ingestVariantCall(graph: TitanGraph) (source: String) (variantCall: Variant.VariantCall): Vertex = {
+    // println("ingesting variant call", variantCall.getTumorAllele1())
     val positionVertex = ingestPosition(graph) (variantCall.getPosition())
     val variantCallVertex = graph + ("variantCall",
       keys("source") -> source,
@@ -218,6 +242,7 @@ object Convoy {
   }
 
   def ingestBioSample(graph: TitanGraph) (source: String) (bioSample: Variant.BioSample): Vertex = {
+    println("ingesting biosample", bioSample.getName())
     val bioSampleVertex = graph.V.hasLabel("bioSample").has(keys("name"), bioSample.getName()).headOption.getOrElse {
       graph + ("bioSample",
         keys("name") -> bioSample.getName(),
@@ -235,6 +260,7 @@ object Convoy {
   }
 
   def ingestIndividual(graph: TitanGraph) (individual: Variant.Individual): Vertex = {
+    println("ingesting individual", individual.getName())
     val source = individual.getSource()
     val individualVertex = graph.V.hasLabel("individual").has(keys("name"), individual.getName()).headOption.getOrElse {
       graph + ("individual",
@@ -255,7 +281,7 @@ object Convoy {
         val n: Double = java.lang.Double.parseDouble(observation)
         individualVertex.setProperty(dkeys(observationKey), n)
       } else if (bkeys.contains(observationKey)) {
-        val bool: Boolean = observation == "YES"
+        val bool: Boolean = observation.toLowerCase == "yes"
         individualVertex.setProperty(bkeys(observationKey), bool)
       } else {
         individualVertex.setProperty(keys.get(observationKey).getOrElse {
@@ -280,6 +306,8 @@ object Convoy {
 
     val individualVertexes = individuals.map(ingestIndividual(graph))
     graph.tx.commit()
+
+    println(s"Ingested ${individualVertexes.length} individuals")
     individualVertexes.length
   }
 
