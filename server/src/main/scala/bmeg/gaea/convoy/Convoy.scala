@@ -299,8 +299,7 @@ object Convoy {
     individualVertex
   }
 
-  def ingestIndividualList(individualList: Variant.IndividualList): Int = {
-    val individuals = individualList.getIndividualsList().asScala.toList
+  def ingestIndividuals(individuals: List[Variant.Individual]): Int = {
     val graph = Titan.connect(Titan.configuration())
     println(s"Ingesting ${individuals.length} individuals")
 
@@ -309,6 +308,17 @@ object Convoy {
 
     println(s"Ingested ${individualVertexes.length} individuals")
     individualVertexes.length
+  }
+
+  def ingestIndividualList(individualList: Variant.IndividualList): Int = {
+    val individuals = individualList.getIndividualsList().asScala.toList
+    ingestIndividuals(individuals)
+  }
+
+  def parseIndividual(raw: String): Variant.Individual = {
+    val individual: Variant.Individual.Builder = Variant.Individual.newBuilder()
+    JsonFormat.parser().merge(raw, individual)
+    individual.build()
   }
 
   def parseIndividualList(raw: String): Variant.IndividualList = {

@@ -18,9 +18,9 @@ libraryDependencies ++= Seq(
   "org.http4s"              %% "http4s-blaze-server" % "0.12.4",
   "org.http4s"              %% "http4s-dsl"          % "0.12.4",
   "org.http4s"              %% "http4s-argonaut"     % "0.12.4",
-  // "com.trueaccord.scalapb"  %% "scalapb-json4s"      % "0.1.1",
   "com.michaelpollmeier"    %% "gremlin-scala"       % "3.1.1-incubating.2",
   "org.scala-debugger"      %% "scala-debugger-api"  % "1.0.0"
+  // "com.trueaccord.scalapb"  %% "scalapb-json4s"      % "0.1.1",
 )
 
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
