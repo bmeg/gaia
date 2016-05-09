@@ -1,7 +1,11 @@
 language: scala
 scala:
    - 2.10.4
+jdk:
+  - oraclejdk8
+env:
+  - CI_HOME=`pwd`
 
 script:
   - cd titan && git checkout titan11 && mvn clean install -DskipTests=true -Paurelius-release -Dgpg.skip=true
-  - sbt compile
+  - cd $CI_HOME && sbt compile
