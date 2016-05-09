@@ -1,6 +1,6 @@
 organization  := "bmeg"
 
-name := "bmeg-graph"
+name := "gaea-graph"
 
 version := "1.0"
 
