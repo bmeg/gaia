@@ -3,4 +3,5 @@ scala:
    - 2.10.4
 
 script:
+  - cd titan && git co titan11 && mvn clean install -DskipTests=true -Paurelius-release -Dgpg.skip=true
   - sbt compile
