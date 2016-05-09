@@ -1,6 +1,6 @@
 [submodule "titan"]
 	path = titan
 	url = https://github.com/thinkaurelius/titan.git
-[submodule "bmeg-schemas"]
-	path = bmeg-schemas
-	url = https://github.com/bmeg/bmeg-schemas.git
+[submodule "server/src/main/protobuf"]
+	path = server/src/main/protobuf
+	url = git@github.com:bmeg/bmeg-schemas.git
