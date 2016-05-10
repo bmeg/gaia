@@ -7,5 +7,5 @@ env:
   - CI_HOME=`pwd`
 
 script:
-  - cd titan && git checkout titan11 && mvn clean install -DskipTests=true -Paurelius-release -Dgpg.skip=true
+  - cd titan && git checkout titan11 && mvn clean install -DskipTests=true -Paurelius-release -Dgpg.skip=true 2> build.log
   - cd $CI_HOME && sbt compile
