@@ -7,7 +7,8 @@ import com.thinkaurelius.titan.core.TitanGraph
 
 object TitanMigration {
   def migrate(): TitanGraph = {
-    val graph = Titan.connect(Titan.configuration)
+    val config = Titan.configuration(Map[String, String]())
+    val graph = Titan.connect(config)
     Titan.makeIndexes(graph) (Convoy.indexSpec)
     Hugo.hugoMigration(graph) ("resources/hugo-names")
     graph

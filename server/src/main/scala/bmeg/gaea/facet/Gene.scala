@@ -45,7 +45,7 @@ object GeneFacet {
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
 
     case GET -> Root / "gene" / name =>
-      val graph = Titan.connect(Titan.configuration())
+      val graph = Titan.connect(Titan.configuration(Map[String, String]()))
       val synonym = Feature.findSynonym(graph) (name).getOrElse {
         "no synonym found"
       }
@@ -59,7 +59,7 @@ object GeneFacet {
       }
 
     case request @ POST -> Root / "individuals" =>
-      val graph = Titan.connect(Titan.configuration())
+      val graph = Titan.connect(Titan.configuration(Map[String, String]()))
       val individuals = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
         Process eval ingest(graph) (line) 
       } onComplete commit(graph)

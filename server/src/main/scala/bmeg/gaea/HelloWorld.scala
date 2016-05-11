@@ -17,7 +17,7 @@ import com.google.protobuf.util.JsonFormat
 // import com.trueaccord.scalapb.json.JsonFormat
 
 object HelloWorld {
-  val graph = Titan.connect(Titan.configuration())
+  val graph = Titan.connect(Titan.configuration(Map[String, String]()))
 
   val service = HttpService {
     case GET -> Root / "hello" / name =>

@@ -325,7 +325,7 @@ object Convoy {
   }
 
   def ingestIndividuals(individuals: List[Variant.Individual]): Int = {
-    val graph = Titan.connect(Titan.configuration())
+    val graph = Titan.connect(Titan.configuration(Map[String, String]()))
     println(s"Ingesting ${individuals.length} individuals")
 
     val individualVertexes = individuals.map(ingestIndividual(graph))

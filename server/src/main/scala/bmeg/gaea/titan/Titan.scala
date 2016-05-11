@@ -6,10 +6,16 @@ import com.thinkaurelius.titan.core.util.TitanCleanup
 import gremlin.scala._
 
 object Titan {
-  def configuration(): BaseConfiguration = {
+  def configuration(properties: Map[String, String]): BaseConfiguration = {
     val config = new BaseConfiguration()
     config.setProperty("storage.backend", "cassandra")
     config.setProperty("storage.hostname", "localhost")
+
+    for (property <- properties) {
+      val (key, value) = property
+      config.setProperty(key, value)
+    }
+
     config
   }
 
