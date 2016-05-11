@@ -20,6 +20,10 @@ object Convoy {
     "source",
     "symbol",
 
+    // sample keys
+    "tumor",
+    "normal",
+
     // variant keys
     "variantType",
     "referenceAllele",
@@ -145,7 +149,16 @@ object Convoy {
       "strand" -> classOf[String],
       "start" -> classOf[Llong],
       "end" -> classOf[Llong]),
+
     "nameIndex" -> Map("name" -> classOf[String]),
+
+    "tumorIndex" -> Map("tumor" -> classOf[String]),
+    "normalIndex" -> Map("normal" -> classOf[String]),
+
+    // "tumorNormalIndex" -> Map(
+    //   "tumor" -> classOf[String],
+    //   "normal" -> classOf[String]),
+
     "symbolIndex" -> Map("symbol" -> classOf[String]),
     "genderIndex" -> Map("gender" -> classOf[String]),
     "cancerIndex" -> Map("cancer" -> classOf[String])
@@ -242,10 +255,16 @@ object Convoy {
   }
 
   def ingestBioSample(graph: TitanGraph) (source: String) (bioSample: Variant.BioSample): Vertex = {
-    println("ingesting biosample", bioSample.getName())
-    val bioSampleVertex = graph.V.hasLabel("bioSample").has(keys("name"), bioSample.getName()).headOption.getOrElse {
+    val tumor = bioSample.getTumor()
+    val normal = bioSample.getNormal()
+    println("ingesting biosample" + tumor + " " + normal)
+    val bioSampleVertex = graph.V.hasLabel("bioSample")
+      .has(keys("tumor"), tumor)
+      .has(keys("normal"), normal)
+      .headOption.getOrElse {
       graph + ("bioSample",
-        keys("name") -> bioSample.getName(),
+        keys("tumor") -> tumor,
+        keys("normal") -> normal,
         keys("source") -> source
       )
     }
@@ -260,7 +279,7 @@ object Convoy {
   }
 
   def ingestIndividual(graph: TitanGraph) (individual: Variant.Individual): Vertex = {
-    println("ingesting individual", individual.getName())
+    println("ingesting individual" + individual.getName())
     val source = individual.getSource()
     val individualVertex = graph.V.hasLabel("individual").has(keys("name"), individual.getName()).headOption.getOrElse {
       graph + ("individual",
