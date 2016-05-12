@@ -56,37 +56,6 @@ object Convoy {
     "bcrPatientBarcode",
     "icdO3Histology",
     "sample"
-
-    // // patient keys
-    // "cancer",
-    // "icd10",
-    // "residualTumor",
-    // "tumorStage",
-    // "icdO3Site",
-    // "bcrAliquotUuid",
-    // "personNeoplasmCancerStatus",
-    // "bcrPatientUuid",
-    // "distantMetastasisPathologicSpread",
-    // "vitalStatus",
-    // "ajccCancerStagingHandbookEdition",
-    // "primaryTumorPathologicSpread",
-    // "histologicalType",
-    // "icdO3Histology",
-    // "barcode",
-    // "lymphnodePathologicSpread",
-    // "gender",
-    // "anatomicSiteColorectal",
-    // "patientId",
-    // "mononucleotideAndDinucleotideMarkerPanelAnalysisStatus",
-    // "bcrPatientBarcode",
-    // "tumorTissueSite",
-    // "tissueSourceSite",
-    // "KRAS:mutation",
-    // "EGFR:mutation",
-    // "BRAF:mutation",
-    // "ALK:mutation",
-    // "NRAS:mutation",
-    // "ERBB2:mutation"
   )
 
   val titanBooleanKeys = List(
@@ -151,13 +120,6 @@ object Convoy {
       "end" -> classOf[Llong]),
 
     "nameIndex" -> Map("name" -> classOf[String]),
-
-    "tumorIndex" -> Map("tumor" -> classOf[String]),
-    "normalIndex" -> Map("normal" -> classOf[String]),
-
-    // "tumorNormalIndex" -> Map(
-    //   "tumor" -> classOf[String],
-    //   "normal" -> classOf[String]),
 
     "symbolIndex" -> Map("symbol" -> classOf[String]),
     "genderIndex" -> Map("gender" -> classOf[String]),
@@ -254,28 +216,25 @@ object Convoy {
     variantCallVertex
   }
 
-  def ingestBioSample(graph: TitanGraph) (source: String) (bioSample: Variant.BioSample): Vertex = {
-    val tumor = bioSample.getTumor()
-    val normal = bioSample.getNormal()
-    println("ingesting biosample" + tumor + " " + normal)
-    val bioSampleVertex = graph.V.hasLabel("bioSample")
-      .has(keys("tumor"), tumor)
-      .has(keys("normal"), normal)
+  def ingestBiosample(graph: TitanGraph) (source: String) (biosample: Variant.BioSample): Vertex = {
+    val name = biosample.getName()
+    println("ingesting biosample" + name)
+    val biosampleVertex = graph.V.hasLabel("biosample")
+      .has(keys("name"), name)
       .headOption.getOrElse {
-      graph + ("bioSample",
-        keys("tumor") -> tumor,
-        keys("normal") -> normal,
+      graph + ("biosample",
+        keys("name") -> name,
         keys("source") -> source
       )
     }
 
-    val variantCalls = bioSample.getVariantCallsList().asScala.toList
+    val variantCalls = biosample.getVariantCallsList().asScala.toList
     val variantCallVertexes = variantCalls.map(ingestVariantCall(graph) (source))
     for (variantCallVertex <- variantCallVertexes) {
-      bioSampleVertex --- ("hasVariant") --> variantCallVertex
+      biosampleVertex --- ("hasVariant") --> variantCallVertex
     }
 
-    bioSampleVertex
+    biosampleVertex
   }
 
   def ingestIndividual(graph: TitanGraph) (individual: Variant.Individual): Vertex = {
@@ -309,10 +268,10 @@ object Convoy {
       }
     }
 
-    val bioSamples = individual.getBioSamplesList().asScala.toList
-    val bioSampleVertexes = bioSamples.map(ingestBioSample(graph) (source))
-    for (bioSampleVertex <- bioSampleVertexes) {
-      individualVertex --- ("hasSample") --> bioSampleVertex
+    val biosamples = individual.getBioSamplesList().asScala.toList
+    val biosampleVertexes = biosamples.map(ingestBiosample(graph) (source))
+    for (biosampleVertex <- biosampleVertexes) {
+      individualVertex --- ("hasSample") --> biosampleVertex
     }
 
     individualVertex
@@ -323,6 +282,12 @@ object Convoy {
     JsonFormat.parser().merge(raw, individual)
     individual.build()
   }
+
+  // def parseMessage[T: com.google.protobuf.GeneratedMessage](raw: String): T = {
+  //   val message = T.newBuilder()
+  //   JsonFormat.parser().merge(raw, message)
+  //   message.build()
+  // }
 
   def ingestIndividuals(individuals: List[Variant.Individual]): Int = {
     val graph = Titan.connect(Titan.configuration(Map[String, String]()))
