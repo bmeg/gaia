@@ -1045,68 +1045,6 @@ public final class Sample {
         getNameBytes();
 
     /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    com.google.protobuf.ProtocolStringList
-        getAtPositionEdgesList();
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    int getAtPositionEdgesCount();
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    java.lang.String getAtPositionEdges(int index);
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getAtPositionEdgesBytes(int index);
-
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    com.google.protobuf.ProtocolStringList
-        getHasEffectEdgesList();
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    int getHasEffectEdgesCount();
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    java.lang.String getHasEffectEdges(int index);
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getHasEffectEdgesBytes(int index);
-
-    /**
      * <code>map&lt;string, string&gt; attributes = 4;</code>
      *
      * <pre>
@@ -1143,8 +1081,6 @@ public final class Sample {
     }
     private Feature() {
       name_ = "";
-      atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -1177,29 +1113,11 @@ public final class Sample {
               name_ = s;
               break;
             }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-                atPositionEdges_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000002;
-              }
-              atPositionEdges_.add(s);
-              break;
-            }
-            case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                hasEffectEdges_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000004;
-              }
-              hasEffectEdges_.add(s);
-              break;
-            }
             case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 attributes_ = com.google.protobuf.MapField.newMapField(
                     AttributesDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000002;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               attributes = input.readMessage(
@@ -1216,12 +1134,6 @@ public final class Sample {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
-          atPositionEdges_ = atPositionEdges_.getUnmodifiableView();
-        }
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          hasEffectEdges_ = hasEffectEdges_.getUnmodifiableView();
-        }
         makeExtensionsImmutable();
       }
     }
@@ -1283,88 +1195,6 @@ public final class Sample {
       }
     }
 
-    public static final int ATPOSITIONEDGES_FIELD_NUMBER = 2;
-    private com.google.protobuf.LazyStringList atPositionEdges_;
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getAtPositionEdgesList() {
-      return atPositionEdges_;
-    }
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    public int getAtPositionEdgesCount() {
-      return atPositionEdges_.size();
-    }
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    public java.lang.String getAtPositionEdges(int index) {
-      return atPositionEdges_.get(index);
-    }
-    /**
-     * <code>repeated string atPositionEdges = 2;</code>
-     *
-     * <pre>
-     * position at which this feature occurs (0-based).
-     * Features spanning the join of circular genomes are represented as
-     * two features one on each side of the join (position 0).
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getAtPositionEdgesBytes(int index) {
-      return atPositionEdges_.getByteString(index);
-    }
-
-    public static final int HASEFFECTEDGES_FIELD_NUMBER = 3;
-    private com.google.protobuf.LazyStringList hasEffectEdges_;
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getHasEffectEdgesList() {
-      return hasEffectEdges_;
-    }
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    public int getHasEffectEdgesCount() {
-      return hasEffectEdges_.size();
-    }
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    public java.lang.String getHasEffectEdges(int index) {
-      return hasEffectEdges_.get(index);
-    }
-    /**
-     * <code>repeated string hasEffectEdges = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getHasEffectEdgesBytes(int index) {
-      return hasEffectEdges_.getByteString(index);
-    }
-
     public static final int ATTRIBUTES_FIELD_NUMBER = 4;
     private static final class AttributesDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
@@ -1422,12 +1252,6 @@ public final class Sample {
       if (!getNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
       }
-      for (int i = 0; i < atPositionEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 2, atPositionEdges_.getRaw(i));
-      }
-      for (int i = 0; i < hasEffectEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, hasEffectEdges_.getRaw(i));
-      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetAttributes().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -1446,22 +1270,6 @@ public final class Sample {
       size = 0;
       if (!getNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < atPositionEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(atPositionEdges_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getAtPositionEdgesList().size();
-      }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < hasEffectEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(hasEffectEdges_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getHasEffectEdgesList().size();
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetAttributes().getMap().entrySet()) {
@@ -1614,10 +1422,6 @@ public final class Sample {
         super.clear();
         name_ = "";
 
-        atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
         internalGetMutableAttributes().clear();
         return this;
       }
@@ -1644,16 +1448,6 @@ public final class Sample {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.name_ = name_;
-        if (((bitField0_ & 0x00000002) == 0x00000002)) {
-          atPositionEdges_ = atPositionEdges_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.atPositionEdges_ = atPositionEdges_;
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          hasEffectEdges_ = hasEffectEdges_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.hasEffectEdges_ = hasEffectEdges_;
         result.attributes_ = internalGetAttributes();
         result.attributes_.makeImmutable();
         result.bitField0_ = to_bitField0_;
@@ -1674,26 +1468,6 @@ public final class Sample {
         if (other == bmeg.gaea.schema.Sample.Feature.getDefaultInstance()) return this;
         if (!other.getName().isEmpty()) {
           name_ = other.name_;
-          onChanged();
-        }
-        if (!other.atPositionEdges_.isEmpty()) {
-          if (atPositionEdges_.isEmpty()) {
-            atPositionEdges_ = other.atPositionEdges_;
-            bitField0_ = (bitField0_ & ~0x00000002);
-          } else {
-            ensureAtPositionEdgesIsMutable();
-            atPositionEdges_.addAll(other.atPositionEdges_);
-          }
-          onChanged();
-        }
-        if (!other.hasEffectEdges_.isEmpty()) {
-          if (hasEffectEdges_.isEmpty()) {
-            hasEffectEdges_ = other.hasEffectEdges_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureHasEffectEdgesIsMutable();
-            hasEffectEdges_.addAll(other.hasEffectEdges_);
-          }
           onChanged();
         }
         internalGetMutableAttributes().mergeFrom(
@@ -1790,248 +1564,6 @@ public final class Sample {
   checkByteStringIsUtf8(value);
         
         name_ = value;
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.LazyStringList atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureAtPositionEdgesIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
-          atPositionEdges_ = new com.google.protobuf.LazyStringArrayList(atPositionEdges_);
-          bitField0_ |= 0x00000002;
-         }
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getAtPositionEdgesList() {
-        return atPositionEdges_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public int getAtPositionEdgesCount() {
-        return atPositionEdges_.size();
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public java.lang.String getAtPositionEdges(int index) {
-        return atPositionEdges_.get(index);
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getAtPositionEdgesBytes(int index) {
-        return atPositionEdges_.getByteString(index);
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public Builder setAtPositionEdges(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public Builder addAtPositionEdges(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public Builder addAllAtPositionEdges(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureAtPositionEdgesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, atPositionEdges_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public Builder clearAtPositionEdges() {
-        atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 2;</code>
-       *
-       * <pre>
-       * position at which this feature occurs (0-based).
-       * Features spanning the join of circular genomes are represented as
-       * two features one on each side of the join (position 0).
-       * </pre>
-       */
-      public Builder addAtPositionEdgesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.add(value);
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.LazyStringList hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureHasEffectEdgesIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          hasEffectEdges_ = new com.google.protobuf.LazyStringArrayList(hasEffectEdges_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getHasEffectEdgesList() {
-        return hasEffectEdges_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public int getHasEffectEdgesCount() {
-        return hasEffectEdges_.size();
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public java.lang.String getHasEffectEdges(int index) {
-        return hasEffectEdges_.get(index);
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getHasEffectEdgesBytes(int index) {
-        return hasEffectEdges_.getByteString(index);
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public Builder setHasEffectEdges(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public Builder addHasEffectEdges(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public Builder addAllHasEffectEdges(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureHasEffectEdgesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, hasEffectEdges_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public Builder clearHasEffectEdges() {
-        hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasEffectEdges = 3;</code>
-       */
-      public Builder addHasEffectEdgesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.add(value);
         onChanged();
         return this;
       }
@@ -2665,62 +2197,116 @@ public final class Sample {
         getVariantClassificationBytes();
 
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
     com.google.protobuf.ProtocolStringList
-        getInDomainEdgesList();
+        getInDomainEdgesDomainList();
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
-    int getInDomainEdgesCount();
+    int getInDomainEdgesDomainCount();
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
-    java.lang.String getInDomainEdges(int index);
+    java.lang.String getInDomainEdgesDomain(int index);
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
     com.google.protobuf.ByteString
-        getInDomainEdgesBytes(int index);
+        getInDomainEdgesDomainBytes(int index);
 
     /**
-     * <code>optional string dbsnpRS = 5;</code>
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+        getInFeatureEdgesFeatureList();
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    int getInFeatureEdgesFeatureCount();
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    java.lang.String getInFeatureEdgesFeature(int index);
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getInFeatureEdgesFeatureBytes(int index);
+
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getEffectOfEdgesVariantCallList();
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    int getEffectOfEdgesVariantCallCount();
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    java.lang.String getEffectOfEdgesVariantCall(int index);
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getEffectOfEdgesVariantCallBytes(int index);
+
+    /**
+     * <code>optional string dbsnpRS = 7;</code>
      */
     java.lang.String getDbsnpRS();
     /**
-     * <code>optional string dbsnpRS = 5;</code>
+     * <code>optional string dbsnpRS = 7;</code>
      */
     com.google.protobuf.ByteString
         getDbsnpRSBytes();
 
     /**
-     * <code>optional string dbsnpValStatus = 6;</code>
+     * <code>optional string dbsnpValStatus = 8;</code>
      */
     java.lang.String getDbsnpValStatus();
     /**
-     * <code>optional string dbsnpValStatus = 6;</code>
+     * <code>optional string dbsnpValStatus = 8;</code>
      */
     com.google.protobuf.ByteString
         getDbsnpValStatusBytes();
 
     /**
-     * <code>map&lt;string, string&gt; info = 7;</code>
+     * <code>map&lt;string, string&gt; info = 9;</code>
      *
      * <pre>
      * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -2754,7 +2340,9 @@ public final class Sample {
       name_ = "";
       source_ = "";
       variantClassification_ = "";
-      inDomainEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      inDomainEdgesDomain_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      inFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      effectOfEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       dbsnpRS_ = "";
       dbsnpValStatus_ = "";
     }
@@ -2804,29 +2392,47 @@ public final class Sample {
             case 34: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-                inDomainEdges_ = new com.google.protobuf.LazyStringArrayList();
+                inDomainEdgesDomain_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000008;
               }
-              inDomainEdges_.add(s);
+              inDomainEdgesDomain_.add(s);
               break;
             }
             case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                inFeatureEdgesFeature_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              inFeatureEdgesFeature_.add(s);
+              break;
+            }
+            case 50: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+                effectOfEdgesVariantCall_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000020;
+              }
+              effectOfEdgesVariantCall_.add(s);
+              break;
+            }
+            case 58: {
               java.lang.String s = input.readStringRequireUtf8();
 
               dbsnpRS_ = s;
               break;
             }
-            case 50: {
+            case 66: {
               java.lang.String s = input.readStringRequireUtf8();
 
               dbsnpValStatus_ = s;
               break;
             }
-            case 58: {
-              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
+            case 74: {
+              if (!((mutable_bitField0_ & 0x00000100) == 0x00000100)) {
                 info_ = com.google.protobuf.MapField.newMapField(
                     InfoDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000040;
+                mutable_bitField0_ |= 0x00000100;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               info = input.readMessage(
@@ -2844,7 +2450,13 @@ public final class Sample {
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
-          inDomainEdges_ = inDomainEdges_.getUnmodifiableView();
+          inDomainEdgesDomain_ = inDomainEdgesDomain_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          inFeatureEdgesFeature_ = inFeatureEdgesFeature_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
+          effectOfEdgesVariantCall_ = effectOfEdgesVariantCall_.getUnmodifiableView();
         }
         makeExtensionsImmutable();
       }
@@ -2858,7 +2470,7 @@ public final class Sample {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 7:
+        case 9:
           return internalGetInfo();
         default:
           throw new RuntimeException(
@@ -2983,55 +2595,129 @@ public final class Sample {
       }
     }
 
-    public static final int INDOMAINEDGES_FIELD_NUMBER = 4;
-    private com.google.protobuf.LazyStringList inDomainEdges_;
+    public static final int INDOMAINEDGESDOMAIN_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList inDomainEdgesDomain_;
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
     public com.google.protobuf.ProtocolStringList
-        getInDomainEdgesList() {
-      return inDomainEdges_;
+        getInDomainEdgesDomainList() {
+      return inDomainEdgesDomain_;
     }
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
-    public int getInDomainEdgesCount() {
-      return inDomainEdges_.size();
+    public int getInDomainEdgesDomainCount() {
+      return inDomainEdgesDomain_.size();
     }
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
-    public java.lang.String getInDomainEdges(int index) {
-      return inDomainEdges_.get(index);
+    public java.lang.String getInDomainEdgesDomain(int index) {
+      return inDomainEdgesDomain_.get(index);
     }
     /**
-     * <code>repeated string inDomainEdges = 4;</code>
+     * <code>repeated string inDomainEdgesDomain = 4;</code>
      *
      * <pre>
      * edges to Domain
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getInDomainEdgesBytes(int index) {
-      return inDomainEdges_.getByteString(index);
+        getInDomainEdgesDomainBytes(int index) {
+      return inDomainEdgesDomain_.getByteString(index);
     }
 
-    public static final int DBSNPRS_FIELD_NUMBER = 5;
+    public static final int INFEATUREEDGESFEATURE_FIELD_NUMBER = 5;
+    private com.google.protobuf.LazyStringList inFeatureEdgesFeature_;
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getInFeatureEdgesFeatureList() {
+      return inFeatureEdgesFeature_;
+    }
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    public int getInFeatureEdgesFeatureCount() {
+      return inFeatureEdgesFeature_.size();
+    }
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    public java.lang.String getInFeatureEdgesFeature(int index) {
+      return inFeatureEdgesFeature_.get(index);
+    }
+    /**
+     * <code>repeated string inFeatureEdgesFeature = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getInFeatureEdgesFeatureBytes(int index) {
+      return inFeatureEdgesFeature_.getByteString(index);
+    }
+
+    public static final int EFFECTOFEDGESVARIANTCALL_FIELD_NUMBER = 6;
+    private com.google.protobuf.LazyStringList effectOfEdgesVariantCall_;
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getEffectOfEdgesVariantCallList() {
+      return effectOfEdgesVariantCall_;
+    }
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    public int getEffectOfEdgesVariantCallCount() {
+      return effectOfEdgesVariantCall_.size();
+    }
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    public java.lang.String getEffectOfEdgesVariantCall(int index) {
+      return effectOfEdgesVariantCall_.get(index);
+    }
+    /**
+     * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+     *
+     * <pre>
+     * edges to VariantEffect
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getEffectOfEdgesVariantCallBytes(int index) {
+      return effectOfEdgesVariantCall_.getByteString(index);
+    }
+
+    public static final int DBSNPRS_FIELD_NUMBER = 7;
     private volatile java.lang.Object dbsnpRS_;
     /**
-     * <code>optional string dbsnpRS = 5;</code>
+     * <code>optional string dbsnpRS = 7;</code>
      */
     public java.lang.String getDbsnpRS() {
       java.lang.Object ref = dbsnpRS_;
@@ -3046,7 +2732,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string dbsnpRS = 5;</code>
+     * <code>optional string dbsnpRS = 7;</code>
      */
     public com.google.protobuf.ByteString
         getDbsnpRSBytes() {
@@ -3062,10 +2748,10 @@ public final class Sample {
       }
     }
 
-    public static final int DBSNPVALSTATUS_FIELD_NUMBER = 6;
+    public static final int DBSNPVALSTATUS_FIELD_NUMBER = 8;
     private volatile java.lang.Object dbsnpValStatus_;
     /**
-     * <code>optional string dbsnpValStatus = 6;</code>
+     * <code>optional string dbsnpValStatus = 8;</code>
      */
     public java.lang.String getDbsnpValStatus() {
       java.lang.Object ref = dbsnpValStatus_;
@@ -3080,7 +2766,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string dbsnpValStatus = 6;</code>
+     * <code>optional string dbsnpValStatus = 8;</code>
      */
     public com.google.protobuf.ByteString
         getDbsnpValStatusBytes() {
@@ -3096,7 +2782,7 @@ public final class Sample {
       }
     }
 
-    public static final int INFO_FIELD_NUMBER = 7;
+    public static final int INFO_FIELD_NUMBER = 9;
     private static final class InfoDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -3119,7 +2805,7 @@ public final class Sample {
       return info_;
     }
     /**
-     * <code>map&lt;string, string&gt; info = 7;</code>
+     * <code>map&lt;string, string&gt; info = 9;</code>
      *
      * <pre>
      * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -3152,14 +2838,20 @@ public final class Sample {
       if (!getVariantClassificationBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 3, variantClassification_);
       }
-      for (int i = 0; i < inDomainEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, inDomainEdges_.getRaw(i));
+      for (int i = 0; i < inDomainEdgesDomain_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, inDomainEdgesDomain_.getRaw(i));
+      }
+      for (int i = 0; i < inFeatureEdgesFeature_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, inFeatureEdgesFeature_.getRaw(i));
+      }
+      for (int i = 0; i < effectOfEdgesVariantCall_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 6, effectOfEdgesVariantCall_.getRaw(i));
       }
       if (!getDbsnpRSBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 5, dbsnpRS_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 7, dbsnpRS_);
       }
       if (!getDbsnpValStatusBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 6, dbsnpValStatus_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 8, dbsnpValStatus_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -3168,7 +2860,7 @@ public final class Sample {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(7, info);
+        output.writeMessage(9, info);
       }
     }
 
@@ -3188,17 +2880,33 @@ public final class Sample {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < inDomainEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(inDomainEdges_.getRaw(i));
+        for (int i = 0; i < inDomainEdgesDomain_.size(); i++) {
+          dataSize += computeStringSizeNoTag(inDomainEdgesDomain_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getInDomainEdgesList().size();
+        size += 1 * getInDomainEdgesDomainList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < inFeatureEdgesFeature_.size(); i++) {
+          dataSize += computeStringSizeNoTag(inFeatureEdgesFeature_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getInFeatureEdgesFeatureList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < effectOfEdgesVariantCall_.size(); i++) {
+          dataSize += computeStringSizeNoTag(effectOfEdgesVariantCall_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getEffectOfEdgesVariantCallList().size();
       }
       if (!getDbsnpRSBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, dbsnpRS_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(7, dbsnpRS_);
       }
       if (!getDbsnpValStatusBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(6, dbsnpValStatus_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(8, dbsnpValStatus_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -3208,7 +2916,7 @@ public final class Sample {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(7, info);
+            .computeMessageSize(9, info);
       }
       memoizedSize = size;
       return size;
@@ -3311,7 +3019,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 7:
+          case 9:
             return internalGetInfo();
           default:
             throw new RuntimeException(
@@ -3322,7 +3030,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 7:
+          case 9:
             return internalGetMutableInfo();
           default:
             throw new RuntimeException(
@@ -3358,8 +3066,12 @@ public final class Sample {
 
         variantClassification_ = "";
 
-        inDomainEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        inDomainEdgesDomain_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
+        inFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        effectOfEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000020);
         dbsnpRS_ = "";
 
         dbsnpValStatus_ = "";
@@ -3393,10 +3105,20 @@ public final class Sample {
         result.source_ = source_;
         result.variantClassification_ = variantClassification_;
         if (((bitField0_ & 0x00000008) == 0x00000008)) {
-          inDomainEdges_ = inDomainEdges_.getUnmodifiableView();
+          inDomainEdgesDomain_ = inDomainEdgesDomain_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000008);
         }
-        result.inDomainEdges_ = inDomainEdges_;
+        result.inDomainEdgesDomain_ = inDomainEdgesDomain_;
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          inFeatureEdgesFeature_ = inFeatureEdgesFeature_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.inFeatureEdgesFeature_ = inFeatureEdgesFeature_;
+        if (((bitField0_ & 0x00000020) == 0x00000020)) {
+          effectOfEdgesVariantCall_ = effectOfEdgesVariantCall_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000020);
+        }
+        result.effectOfEdgesVariantCall_ = effectOfEdgesVariantCall_;
         result.dbsnpRS_ = dbsnpRS_;
         result.dbsnpValStatus_ = dbsnpValStatus_;
         result.info_ = internalGetInfo();
@@ -3429,13 +3151,33 @@ public final class Sample {
           variantClassification_ = other.variantClassification_;
           onChanged();
         }
-        if (!other.inDomainEdges_.isEmpty()) {
-          if (inDomainEdges_.isEmpty()) {
-            inDomainEdges_ = other.inDomainEdges_;
+        if (!other.inDomainEdgesDomain_.isEmpty()) {
+          if (inDomainEdgesDomain_.isEmpty()) {
+            inDomainEdgesDomain_ = other.inDomainEdgesDomain_;
             bitField0_ = (bitField0_ & ~0x00000008);
           } else {
-            ensureInDomainEdgesIsMutable();
-            inDomainEdges_.addAll(other.inDomainEdges_);
+            ensureInDomainEdgesDomainIsMutable();
+            inDomainEdgesDomain_.addAll(other.inDomainEdgesDomain_);
+          }
+          onChanged();
+        }
+        if (!other.inFeatureEdgesFeature_.isEmpty()) {
+          if (inFeatureEdgesFeature_.isEmpty()) {
+            inFeatureEdgesFeature_ = other.inFeatureEdgesFeature_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureInFeatureEdgesFeatureIsMutable();
+            inFeatureEdgesFeature_.addAll(other.inFeatureEdgesFeature_);
+          }
+          onChanged();
+        }
+        if (!other.effectOfEdgesVariantCall_.isEmpty()) {
+          if (effectOfEdgesVariantCall_.isEmpty()) {
+            effectOfEdgesVariantCall_ = other.effectOfEdgesVariantCall_;
+            bitField0_ = (bitField0_ & ~0x00000020);
+          } else {
+            ensureEffectOfEdgesVariantCallIsMutable();
+            effectOfEdgesVariantCall_.addAll(other.effectOfEdgesVariantCall_);
           }
           onChanged();
         }
@@ -3703,139 +3445,363 @@ public final class Sample {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList inDomainEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureInDomainEdgesIsMutable() {
+      private com.google.protobuf.LazyStringList inDomainEdgesDomain_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInDomainEdgesDomainIsMutable() {
         if (!((bitField0_ & 0x00000008) == 0x00000008)) {
-          inDomainEdges_ = new com.google.protobuf.LazyStringArrayList(inDomainEdges_);
+          inDomainEdgesDomain_ = new com.google.protobuf.LazyStringArrayList(inDomainEdgesDomain_);
           bitField0_ |= 0x00000008;
          }
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
       public com.google.protobuf.ProtocolStringList
-          getInDomainEdgesList() {
-        return inDomainEdges_.getUnmodifiableView();
+          getInDomainEdgesDomainList() {
+        return inDomainEdgesDomain_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public int getInDomainEdgesCount() {
-        return inDomainEdges_.size();
+      public int getInDomainEdgesDomainCount() {
+        return inDomainEdgesDomain_.size();
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public java.lang.String getInDomainEdges(int index) {
-        return inDomainEdges_.get(index);
+      public java.lang.String getInDomainEdgesDomain(int index) {
+        return inDomainEdgesDomain_.get(index);
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getInDomainEdgesBytes(int index) {
-        return inDomainEdges_.getByteString(index);
+          getInDomainEdgesDomainBytes(int index) {
+        return inDomainEdgesDomain_.getByteString(index);
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public Builder setInDomainEdges(
+      public Builder setInDomainEdgesDomain(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureInDomainEdgesIsMutable();
-        inDomainEdges_.set(index, value);
+  ensureInDomainEdgesDomainIsMutable();
+        inDomainEdgesDomain_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public Builder addInDomainEdges(
+      public Builder addInDomainEdgesDomain(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureInDomainEdgesIsMutable();
-        inDomainEdges_.add(value);
+  ensureInDomainEdgesDomainIsMutable();
+        inDomainEdgesDomain_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public Builder addAllInDomainEdges(
+      public Builder addAllInDomainEdgesDomain(
           java.lang.Iterable<java.lang.String> values) {
-        ensureInDomainEdgesIsMutable();
+        ensureInDomainEdgesDomainIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, inDomainEdges_);
+            values, inDomainEdgesDomain_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public Builder clearInDomainEdges() {
-        inDomainEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearInDomainEdgesDomain() {
+        inDomainEdgesDomain_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000008);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string inDomainEdges = 4;</code>
+       * <code>repeated string inDomainEdgesDomain = 4;</code>
        *
        * <pre>
        * edges to Domain
        * </pre>
        */
-      public Builder addInDomainEdgesBytes(
+      public Builder addInDomainEdgesDomainBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureInDomainEdgesIsMutable();
-        inDomainEdges_.add(value);
+        ensureInDomainEdgesDomainIsMutable();
+        inDomainEdgesDomain_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList inFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInFeatureEdgesFeatureIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          inFeatureEdgesFeature_ = new com.google.protobuf.LazyStringArrayList(inFeatureEdgesFeature_);
+          bitField0_ |= 0x00000010;
+         }
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getInFeatureEdgesFeatureList() {
+        return inFeatureEdgesFeature_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public int getInFeatureEdgesFeatureCount() {
+        return inFeatureEdgesFeature_.size();
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public java.lang.String getInFeatureEdgesFeature(int index) {
+        return inFeatureEdgesFeature_.get(index);
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getInFeatureEdgesFeatureBytes(int index) {
+        return inFeatureEdgesFeature_.getByteString(index);
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public Builder setInFeatureEdgesFeature(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInFeatureEdgesFeatureIsMutable();
+        inFeatureEdgesFeature_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public Builder addInFeatureEdgesFeature(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInFeatureEdgesFeatureIsMutable();
+        inFeatureEdgesFeature_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public Builder addAllInFeatureEdgesFeature(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureInFeatureEdgesFeatureIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, inFeatureEdgesFeature_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public Builder clearInFeatureEdgesFeature() {
+        inFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string inFeatureEdgesFeature = 5;</code>
+       */
+      public Builder addInFeatureEdgesFeatureBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureInFeatureEdgesFeatureIsMutable();
+        inFeatureEdgesFeature_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList effectOfEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureEffectOfEdgesVariantCallIsMutable() {
+        if (!((bitField0_ & 0x00000020) == 0x00000020)) {
+          effectOfEdgesVariantCall_ = new com.google.protobuf.LazyStringArrayList(effectOfEdgesVariantCall_);
+          bitField0_ |= 0x00000020;
+         }
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getEffectOfEdgesVariantCallList() {
+        return effectOfEdgesVariantCall_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public int getEffectOfEdgesVariantCallCount() {
+        return effectOfEdgesVariantCall_.size();
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public java.lang.String getEffectOfEdgesVariantCall(int index) {
+        return effectOfEdgesVariantCall_.get(index);
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getEffectOfEdgesVariantCallBytes(int index) {
+        return effectOfEdgesVariantCall_.getByteString(index);
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public Builder setEffectOfEdgesVariantCall(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEffectOfEdgesVariantCallIsMutable();
+        effectOfEdgesVariantCall_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public Builder addEffectOfEdgesVariantCall(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureEffectOfEdgesVariantCallIsMutable();
+        effectOfEdgesVariantCall_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public Builder addAllEffectOfEdgesVariantCall(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureEffectOfEdgesVariantCallIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, effectOfEdgesVariantCall_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public Builder clearEffectOfEdgesVariantCall() {
+        effectOfEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000020);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string effectOfEdgesVariantCall = 6;</code>
+       *
+       * <pre>
+       * edges to VariantEffect
+       * </pre>
+       */
+      public Builder addEffectOfEdgesVariantCallBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureEffectOfEdgesVariantCallIsMutable();
+        effectOfEdgesVariantCall_.add(value);
         onChanged();
         return this;
       }
 
       private java.lang.Object dbsnpRS_ = "";
       /**
-       * <code>optional string dbsnpRS = 5;</code>
+       * <code>optional string dbsnpRS = 7;</code>
        */
       public java.lang.String getDbsnpRS() {
         java.lang.Object ref = dbsnpRS_;
@@ -3850,7 +3816,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string dbsnpRS = 5;</code>
+       * <code>optional string dbsnpRS = 7;</code>
        */
       public com.google.protobuf.ByteString
           getDbsnpRSBytes() {
@@ -3866,7 +3832,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string dbsnpRS = 5;</code>
+       * <code>optional string dbsnpRS = 7;</code>
        */
       public Builder setDbsnpRS(
           java.lang.String value) {
@@ -3879,7 +3845,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string dbsnpRS = 5;</code>
+       * <code>optional string dbsnpRS = 7;</code>
        */
       public Builder clearDbsnpRS() {
         
@@ -3888,7 +3854,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string dbsnpRS = 5;</code>
+       * <code>optional string dbsnpRS = 7;</code>
        */
       public Builder setDbsnpRSBytes(
           com.google.protobuf.ByteString value) {
@@ -3904,7 +3870,7 @@ public final class Sample {
 
       private java.lang.Object dbsnpValStatus_ = "";
       /**
-       * <code>optional string dbsnpValStatus = 6;</code>
+       * <code>optional string dbsnpValStatus = 8;</code>
        */
       public java.lang.String getDbsnpValStatus() {
         java.lang.Object ref = dbsnpValStatus_;
@@ -3919,7 +3885,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string dbsnpValStatus = 6;</code>
+       * <code>optional string dbsnpValStatus = 8;</code>
        */
       public com.google.protobuf.ByteString
           getDbsnpValStatusBytes() {
@@ -3935,7 +3901,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string dbsnpValStatus = 6;</code>
+       * <code>optional string dbsnpValStatus = 8;</code>
        */
       public Builder setDbsnpValStatus(
           java.lang.String value) {
@@ -3948,7 +3914,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string dbsnpValStatus = 6;</code>
+       * <code>optional string dbsnpValStatus = 8;</code>
        */
       public Builder clearDbsnpValStatus() {
         
@@ -3957,7 +3923,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string dbsnpValStatus = 6;</code>
+       * <code>optional string dbsnpValStatus = 8;</code>
        */
       public Builder setDbsnpValStatusBytes(
           com.google.protobuf.ByteString value) {
@@ -3994,7 +3960,7 @@ public final class Sample {
         return info_;
       }
       /**
-       * <code>map&lt;string, string&gt; info = 7;</code>
+       * <code>map&lt;string, string&gt; info = 9;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -4005,7 +3971,7 @@ public final class Sample {
         return internalGetInfo().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 7;</code>
+       * <code>map&lt;string, string&gt; info = 9;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -4017,7 +3983,7 @@ public final class Sample {
         return internalGetMutableInfo().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 7;</code>
+       * <code>map&lt;string, string&gt; info = 9;</code>
        *
        * <pre>
        * For now, a placeholder field/data dump of maf file fields such as trvType, cPosition, and aminoAcidChange
@@ -4120,56 +4086,17 @@ public final class Sample {
         getSourceBytes();
 
     /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    com.google.protobuf.ProtocolStringList
-        getAtPositionEdgesList();
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    int getAtPositionEdgesCount();
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    java.lang.String getAtPositionEdges(int index);
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getAtPositionEdgesBytes(int index);
-
-    /**
-     * <code>optional string variantType = 4;</code>
+     * <code>optional string variantType = 3;</code>
      */
     java.lang.String getVariantType();
     /**
-     * <code>optional string variantType = 4;</code>
+     * <code>optional string variantType = 3;</code>
      */
     com.google.protobuf.ByteString
         getVariantTypeBytes();
 
     /**
-     * <code>optional string referenceAllele = 5;</code>
+     * <code>optional string referenceAllele = 4;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -4178,7 +4105,7 @@ public final class Sample {
      */
     java.lang.String getReferenceAllele();
     /**
-     * <code>optional string referenceAllele = 5;</code>
+     * <code>optional string referenceAllele = 4;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -4189,7 +4116,7 @@ public final class Sample {
         getReferenceAlleleBytes();
 
     /**
-     * <code>optional string normalAllele1 = 6;</code>
+     * <code>optional string normalAllele1 = 5;</code>
      *
      * <pre>
      * The normal alleles for this sample
@@ -4197,7 +4124,7 @@ public final class Sample {
      */
     java.lang.String getNormalAllele1();
     /**
-     * <code>optional string normalAllele1 = 6;</code>
+     * <code>optional string normalAllele1 = 5;</code>
      *
      * <pre>
      * The normal alleles for this sample
@@ -4207,17 +4134,17 @@ public final class Sample {
         getNormalAllele1Bytes();
 
     /**
-     * <code>optional string normalAllele2 = 7;</code>
+     * <code>optional string normalAllele2 = 6;</code>
      */
     java.lang.String getNormalAllele2();
     /**
-     * <code>optional string normalAllele2 = 7;</code>
+     * <code>optional string normalAllele2 = 6;</code>
      */
     com.google.protobuf.ByteString
         getNormalAllele2Bytes();
 
     /**
-     * <code>optional string tumorAllele1 = 8;</code>
+     * <code>optional string tumorAllele1 = 7;</code>
      *
      * <pre>
      * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -4225,7 +4152,7 @@ public final class Sample {
      */
     java.lang.String getTumorAllele1();
     /**
-     * <code>optional string tumorAllele1 = 8;</code>
+     * <code>optional string tumorAllele1 = 7;</code>
      *
      * <pre>
      * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -4235,116 +4162,120 @@ public final class Sample {
         getTumorAllele1Bytes();
 
     /**
-     * <code>optional string tumorAllele2 = 9;</code>
+     * <code>optional string tumorAllele2 = 8;</code>
      */
     java.lang.String getTumorAllele2();
     /**
-     * <code>optional string tumorAllele2 = 9;</code>
+     * <code>optional string tumorAllele2 = 8;</code>
      */
     com.google.protobuf.ByteString
         getTumorAllele2Bytes();
 
     /**
-     * <code>optional string sequencer = 10;</code>
+     * <code>optional string sequencer = 9;</code>
      */
     java.lang.String getSequencer();
     /**
-     * <code>optional string sequencer = 10;</code>
+     * <code>optional string sequencer = 9;</code>
      */
     com.google.protobuf.ByteString
         getSequencerBytes();
 
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
     com.google.protobuf.ProtocolStringList
-        getHasEffectEdgesList();
+        getAtPositionEdgesPositionList();
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
-    int getHasEffectEdgesCount();
+    int getAtPositionEdgesPositionCount();
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
-    java.lang.String getHasEffectEdges(int index);
+    java.lang.String getAtPositionEdgesPosition(int index);
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
     com.google.protobuf.ByteString
-        getHasEffectEdgesBytes(int index);
+        getAtPositionEdgesPositionBytes(int index);
 
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
     com.google.protobuf.ProtocolStringList
-        getTumorSampleEdgesList();
+        getTumorSampleEdgesBiosampleList();
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
-    int getTumorSampleEdgesCount();
+    int getTumorSampleEdgesBiosampleCount();
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
-    java.lang.String getTumorSampleEdges(int index);
+    java.lang.String getTumorSampleEdgesBiosample(int index);
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
     com.google.protobuf.ByteString
-        getTumorSampleEdgesBytes(int index);
+        getTumorSampleEdgesBiosampleBytes(int index);
 
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
     com.google.protobuf.ProtocolStringList
-        getNormalSampleEdgesList();
+        getNormalSampleEdgesBiosampleList();
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
-    int getNormalSampleEdgesCount();
+    int getNormalSampleEdgesBiosampleCount();
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
-    java.lang.String getNormalSampleEdges(int index);
+    java.lang.String getNormalSampleEdgesBiosample(int index);
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
     com.google.protobuf.ByteString
-        getNormalSampleEdgesBytes(int index);
+        getNormalSampleEdgesBiosampleBytes(int index);
 
     /**
-     * <code>map&lt;string, string&gt; info = 14;</code>
+     * <code>map&lt;string, string&gt; info = 13;</code>
      *
      * <pre>
      * A map of additional variant call information, including a Feature Id for now...
@@ -4376,7 +4307,6 @@ public final class Sample {
     private VariantCall() {
       name_ = "";
       source_ = "";
-      atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       variantType_ = "";
       referenceAllele_ = "";
       normalAllele1_ = "";
@@ -4384,9 +4314,9 @@ public final class Sample {
       tumorAllele1_ = "";
       tumorAllele2_ = "";
       sequencer_ = "";
-      hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      tumorSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      normalSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      atPositionEdgesPosition_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      tumorSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      normalSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -4427,87 +4357,78 @@ public final class Sample {
             }
             case 26: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                atPositionEdges_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000004;
-              }
-              atPositionEdges_.add(s);
+
+              variantType_ = s;
               break;
             }
             case 34: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              variantType_ = s;
+              referenceAllele_ = s;
               break;
             }
             case 42: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              referenceAllele_ = s;
+              normalAllele1_ = s;
               break;
             }
             case 50: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              normalAllele1_ = s;
+              normalAllele2_ = s;
               break;
             }
             case 58: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              normalAllele2_ = s;
+              tumorAllele1_ = s;
               break;
             }
             case 66: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              tumorAllele1_ = s;
+              tumorAllele2_ = s;
               break;
             }
             case 74: {
               java.lang.String s = input.readStringRequireUtf8();
 
-              tumorAllele2_ = s;
+              sequencer_ = s;
               break;
             }
             case 82: {
               java.lang.String s = input.readStringRequireUtf8();
-
-              sequencer_ = s;
+              if (!((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+                atPositionEdgesPosition_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000200;
+              }
+              atPositionEdgesPosition_.add(s);
               break;
             }
             case 90: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
-                hasEffectEdges_ = new com.google.protobuf.LazyStringArrayList();
+                tumorSampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000400;
               }
-              hasEffectEdges_.add(s);
+              tumorSampleEdgesBiosample_.add(s);
               break;
             }
             case 98: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
-                tumorSampleEdges_ = new com.google.protobuf.LazyStringArrayList();
+                normalSampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000800;
               }
-              tumorSampleEdges_.add(s);
+              normalSampleEdgesBiosample_.add(s);
               break;
             }
             case 106: {
-              java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00001000) == 0x00001000)) {
-                normalSampleEdges_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00001000;
-              }
-              normalSampleEdges_.add(s);
-              break;
-            }
-            case 114: {
-              if (!((mutable_bitField0_ & 0x00002000) == 0x00002000)) {
                 info_ = com.google.protobuf.MapField.newMapField(
                     InfoDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00002000;
+                mutable_bitField0_ |= 0x00001000;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               info = input.readMessage(
@@ -4524,17 +4445,14 @@ public final class Sample {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          atPositionEdges_ = atPositionEdges_.getUnmodifiableView();
+        if (((mutable_bitField0_ & 0x00000200) == 0x00000200)) {
+          atPositionEdgesPosition_ = atPositionEdgesPosition_.getUnmodifiableView();
         }
         if (((mutable_bitField0_ & 0x00000400) == 0x00000400)) {
-          hasEffectEdges_ = hasEffectEdges_.getUnmodifiableView();
+          tumorSampleEdgesBiosample_ = tumorSampleEdgesBiosample_.getUnmodifiableView();
         }
         if (((mutable_bitField0_ & 0x00000800) == 0x00000800)) {
-          tumorSampleEdges_ = tumorSampleEdges_.getUnmodifiableView();
-        }
-        if (((mutable_bitField0_ & 0x00001000) == 0x00001000)) {
-          normalSampleEdges_ = normalSampleEdges_.getUnmodifiableView();
+          normalSampleEdgesBiosample_ = normalSampleEdgesBiosample_.getUnmodifiableView();
         }
         makeExtensionsImmutable();
       }
@@ -4548,7 +4466,7 @@ public final class Sample {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 14:
+        case 13:
           return internalGetInfo();
         default:
           throw new RuntimeException(
@@ -4639,59 +4557,10 @@ public final class Sample {
       }
     }
 
-    public static final int ATPOSITIONEDGES_FIELD_NUMBER = 3;
-    private com.google.protobuf.LazyStringList atPositionEdges_;
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getAtPositionEdgesList() {
-      return atPositionEdges_;
-    }
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    public int getAtPositionEdgesCount() {
-      return atPositionEdges_.size();
-    }
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    public java.lang.String getAtPositionEdges(int index) {
-      return atPositionEdges_.get(index);
-    }
-    /**
-     * <code>repeated string atPositionEdges = 3;</code>
-     *
-     * <pre>
-     * where on the genome this variant occurred 
-     * edges to Position
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getAtPositionEdgesBytes(int index) {
-      return atPositionEdges_.getByteString(index);
-    }
-
-    public static final int VARIANTTYPE_FIELD_NUMBER = 4;
+    public static final int VARIANTTYPE_FIELD_NUMBER = 3;
     private volatile java.lang.Object variantType_;
     /**
-     * <code>optional string variantType = 4;</code>
+     * <code>optional string variantType = 3;</code>
      */
     public java.lang.String getVariantType() {
       java.lang.Object ref = variantType_;
@@ -4706,7 +4575,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string variantType = 4;</code>
+     * <code>optional string variantType = 3;</code>
      */
     public com.google.protobuf.ByteString
         getVariantTypeBytes() {
@@ -4722,10 +4591,10 @@ public final class Sample {
       }
     }
 
-    public static final int REFERENCEALLELE_FIELD_NUMBER = 5;
+    public static final int REFERENCEALLELE_FIELD_NUMBER = 4;
     private volatile java.lang.Object referenceAllele_;
     /**
-     * <code>optional string referenceAllele = 5;</code>
+     * <code>optional string referenceAllele = 4;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -4745,7 +4614,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string referenceAllele = 5;</code>
+     * <code>optional string referenceAllele = 4;</code>
      *
      * <pre>
      * The reference bases for this variant. They start at the given start
@@ -4766,10 +4635,10 @@ public final class Sample {
       }
     }
 
-    public static final int NORMALALLELE1_FIELD_NUMBER = 6;
+    public static final int NORMALALLELE1_FIELD_NUMBER = 5;
     private volatile java.lang.Object normalAllele1_;
     /**
-     * <code>optional string normalAllele1 = 6;</code>
+     * <code>optional string normalAllele1 = 5;</code>
      *
      * <pre>
      * The normal alleles for this sample
@@ -4788,7 +4657,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string normalAllele1 = 6;</code>
+     * <code>optional string normalAllele1 = 5;</code>
      *
      * <pre>
      * The normal alleles for this sample
@@ -4808,10 +4677,10 @@ public final class Sample {
       }
     }
 
-    public static final int NORMALALLELE2_FIELD_NUMBER = 7;
+    public static final int NORMALALLELE2_FIELD_NUMBER = 6;
     private volatile java.lang.Object normalAllele2_;
     /**
-     * <code>optional string normalAllele2 = 7;</code>
+     * <code>optional string normalAllele2 = 6;</code>
      */
     public java.lang.String getNormalAllele2() {
       java.lang.Object ref = normalAllele2_;
@@ -4826,7 +4695,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string normalAllele2 = 7;</code>
+     * <code>optional string normalAllele2 = 6;</code>
      */
     public com.google.protobuf.ByteString
         getNormalAllele2Bytes() {
@@ -4842,10 +4711,10 @@ public final class Sample {
       }
     }
 
-    public static final int TUMORALLELE1_FIELD_NUMBER = 8;
+    public static final int TUMORALLELE1_FIELD_NUMBER = 7;
     private volatile java.lang.Object tumorAllele1_;
     /**
-     * <code>optional string tumorAllele1 = 8;</code>
+     * <code>optional string tumorAllele1 = 7;</code>
      *
      * <pre>
      * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -4864,7 +4733,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string tumorAllele1 = 8;</code>
+     * <code>optional string tumorAllele1 = 7;</code>
      *
      * <pre>
      * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -4884,10 +4753,10 @@ public final class Sample {
       }
     }
 
-    public static final int TUMORALLELE2_FIELD_NUMBER = 9;
+    public static final int TUMORALLELE2_FIELD_NUMBER = 8;
     private volatile java.lang.Object tumorAllele2_;
     /**
-     * <code>optional string tumorAllele2 = 9;</code>
+     * <code>optional string tumorAllele2 = 8;</code>
      */
     public java.lang.String getTumorAllele2() {
       java.lang.Object ref = tumorAllele2_;
@@ -4902,7 +4771,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string tumorAllele2 = 9;</code>
+     * <code>optional string tumorAllele2 = 8;</code>
      */
     public com.google.protobuf.ByteString
         getTumorAllele2Bytes() {
@@ -4918,10 +4787,10 @@ public final class Sample {
       }
     }
 
-    public static final int SEQUENCER_FIELD_NUMBER = 10;
+    public static final int SEQUENCER_FIELD_NUMBER = 9;
     private volatile java.lang.Object sequencer_;
     /**
-     * <code>optional string sequencer = 10;</code>
+     * <code>optional string sequencer = 9;</code>
      */
     public java.lang.String getSequencer() {
       java.lang.Object ref = sequencer_;
@@ -4936,7 +4805,7 @@ public final class Sample {
       }
     }
     /**
-     * <code>optional string sequencer = 10;</code>
+     * <code>optional string sequencer = 9;</code>
      */
     public com.google.protobuf.ByteString
         getSequencerBytes() {
@@ -4952,126 +4821,130 @@ public final class Sample {
       }
     }
 
-    public static final int HASEFFECTEDGES_FIELD_NUMBER = 11;
-    private com.google.protobuf.LazyStringList hasEffectEdges_;
+    public static final int ATPOSITIONEDGESPOSITION_FIELD_NUMBER = 10;
+    private com.google.protobuf.LazyStringList atPositionEdgesPosition_;
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
     public com.google.protobuf.ProtocolStringList
-        getHasEffectEdgesList() {
-      return hasEffectEdges_;
+        getAtPositionEdgesPositionList() {
+      return atPositionEdgesPosition_;
     }
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
-    public int getHasEffectEdgesCount() {
-      return hasEffectEdges_.size();
+    public int getAtPositionEdgesPositionCount() {
+      return atPositionEdgesPosition_.size();
     }
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
-    public java.lang.String getHasEffectEdges(int index) {
-      return hasEffectEdges_.get(index);
+    public java.lang.String getAtPositionEdgesPosition(int index) {
+      return atPositionEdgesPosition_.get(index);
     }
     /**
-     * <code>repeated string hasEffectEdges = 11;</code>
+     * <code>repeated string atPositionEdgesPosition = 10;</code>
      *
      * <pre>
-     * edges to VariantEffect
+     * where on the genome this variant occurred 
+     * edges to Position
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getHasEffectEdgesBytes(int index) {
-      return hasEffectEdges_.getByteString(index);
+        getAtPositionEdgesPositionBytes(int index) {
+      return atPositionEdgesPosition_.getByteString(index);
     }
 
-    public static final int TUMORSAMPLEEDGES_FIELD_NUMBER = 12;
-    private com.google.protobuf.LazyStringList tumorSampleEdges_;
+    public static final int TUMORSAMPLEEDGESBIOSAMPLE_FIELD_NUMBER = 11;
+    private com.google.protobuf.LazyStringList tumorSampleEdgesBiosample_;
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
     public com.google.protobuf.ProtocolStringList
-        getTumorSampleEdgesList() {
-      return tumorSampleEdges_;
+        getTumorSampleEdgesBiosampleList() {
+      return tumorSampleEdgesBiosample_;
     }
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
-    public int getTumorSampleEdgesCount() {
-      return tumorSampleEdges_.size();
+    public int getTumorSampleEdgesBiosampleCount() {
+      return tumorSampleEdgesBiosample_.size();
     }
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
-    public java.lang.String getTumorSampleEdges(int index) {
-      return tumorSampleEdges_.get(index);
+    public java.lang.String getTumorSampleEdgesBiosample(int index) {
+      return tumorSampleEdgesBiosample_.get(index);
     }
     /**
-     * <code>repeated string tumorSampleEdges = 12;</code>
+     * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
      *
      * <pre>
-     * edges to BioSample
+     * edges to Biosample
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getTumorSampleEdgesBytes(int index) {
-      return tumorSampleEdges_.getByteString(index);
+        getTumorSampleEdgesBiosampleBytes(int index) {
+      return tumorSampleEdgesBiosample_.getByteString(index);
     }
 
-    public static final int NORMALSAMPLEEDGES_FIELD_NUMBER = 13;
-    private com.google.protobuf.LazyStringList normalSampleEdges_;
+    public static final int NORMALSAMPLEEDGESBIOSAMPLE_FIELD_NUMBER = 12;
+    private com.google.protobuf.LazyStringList normalSampleEdgesBiosample_;
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
     public com.google.protobuf.ProtocolStringList
-        getNormalSampleEdgesList() {
-      return normalSampleEdges_;
+        getNormalSampleEdgesBiosampleList() {
+      return normalSampleEdgesBiosample_;
     }
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
-    public int getNormalSampleEdgesCount() {
-      return normalSampleEdges_.size();
+    public int getNormalSampleEdgesBiosampleCount() {
+      return normalSampleEdgesBiosample_.size();
     }
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
-    public java.lang.String getNormalSampleEdges(int index) {
-      return normalSampleEdges_.get(index);
+    public java.lang.String getNormalSampleEdgesBiosample(int index) {
+      return normalSampleEdgesBiosample_.get(index);
     }
     /**
-     * <code>repeated string normalSampleEdges = 13;</code>
+     * <code>repeated string normalSampleEdgesBiosample = 12;</code>
      */
     public com.google.protobuf.ByteString
-        getNormalSampleEdgesBytes(int index) {
-      return normalSampleEdges_.getByteString(index);
+        getNormalSampleEdgesBiosampleBytes(int index) {
+      return normalSampleEdgesBiosample_.getByteString(index);
     }
 
-    public static final int INFO_FIELD_NUMBER = 14;
+    public static final int INFO_FIELD_NUMBER = 13;
     private static final class InfoDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -5094,7 +4967,7 @@ public final class Sample {
       return info_;
     }
     /**
-     * <code>map&lt;string, string&gt; info = 14;</code>
+     * <code>map&lt;string, string&gt; info = 13;</code>
      *
      * <pre>
      * A map of additional variant call information, including a Feature Id for now...
@@ -5123,38 +4996,35 @@ public final class Sample {
       if (!getSourceBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
       }
-      for (int i = 0; i < atPositionEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, atPositionEdges_.getRaw(i));
-      }
       if (!getVariantTypeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, variantType_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, variantType_);
       }
       if (!getReferenceAlleleBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 5, referenceAllele_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, referenceAllele_);
       }
       if (!getNormalAllele1Bytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 6, normalAllele1_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, normalAllele1_);
       }
       if (!getNormalAllele2Bytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 7, normalAllele2_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 6, normalAllele2_);
       }
       if (!getTumorAllele1Bytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 8, tumorAllele1_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 7, tumorAllele1_);
       }
       if (!getTumorAllele2Bytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 9, tumorAllele2_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 8, tumorAllele2_);
       }
       if (!getSequencerBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 10, sequencer_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 9, sequencer_);
       }
-      for (int i = 0; i < hasEffectEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 11, hasEffectEdges_.getRaw(i));
+      for (int i = 0; i < atPositionEdgesPosition_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 10, atPositionEdgesPosition_.getRaw(i));
       }
-      for (int i = 0; i < tumorSampleEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 12, tumorSampleEdges_.getRaw(i));
+      for (int i = 0; i < tumorSampleEdgesBiosample_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 11, tumorSampleEdgesBiosample_.getRaw(i));
       }
-      for (int i = 0; i < normalSampleEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 13, normalSampleEdges_.getRaw(i));
+      for (int i = 0; i < normalSampleEdgesBiosample_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 12, normalSampleEdgesBiosample_.getRaw(i));
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -5163,7 +5033,7 @@ public final class Sample {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(14, info);
+        output.writeMessage(13, info);
       }
     }
 
@@ -5178,58 +5048,50 @@ public final class Sample {
       if (!getSourceBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
       }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < atPositionEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(atPositionEdges_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getAtPositionEdgesList().size();
-      }
       if (!getVariantTypeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, variantType_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, variantType_);
       }
       if (!getReferenceAlleleBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, referenceAllele_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, referenceAllele_);
       }
       if (!getNormalAllele1Bytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(6, normalAllele1_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(5, normalAllele1_);
       }
       if (!getNormalAllele2Bytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(7, normalAllele2_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(6, normalAllele2_);
       }
       if (!getTumorAllele1Bytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(8, tumorAllele1_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(7, tumorAllele1_);
       }
       if (!getTumorAllele2Bytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(9, tumorAllele2_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(8, tumorAllele2_);
       }
       if (!getSequencerBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, sequencer_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(9, sequencer_);
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < hasEffectEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(hasEffectEdges_.getRaw(i));
+        for (int i = 0; i < atPositionEdgesPosition_.size(); i++) {
+          dataSize += computeStringSizeNoTag(atPositionEdgesPosition_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getHasEffectEdgesList().size();
+        size += 1 * getAtPositionEdgesPositionList().size();
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < tumorSampleEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(tumorSampleEdges_.getRaw(i));
+        for (int i = 0; i < tumorSampleEdgesBiosample_.size(); i++) {
+          dataSize += computeStringSizeNoTag(tumorSampleEdgesBiosample_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getTumorSampleEdgesList().size();
+        size += 1 * getTumorSampleEdgesBiosampleList().size();
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < normalSampleEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(normalSampleEdges_.getRaw(i));
+        for (int i = 0; i < normalSampleEdgesBiosample_.size(); i++) {
+          dataSize += computeStringSizeNoTag(normalSampleEdgesBiosample_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getNormalSampleEdgesList().size();
+        size += 1 * getNormalSampleEdgesBiosampleList().size();
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetInfo().getMap().entrySet()) {
@@ -5239,7 +5101,7 @@ public final class Sample {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(14, info);
+            .computeMessageSize(13, info);
       }
       memoizedSize = size;
       return size;
@@ -5342,7 +5204,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 14:
+          case 13:
             return internalGetInfo();
           default:
             throw new RuntimeException(
@@ -5353,7 +5215,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 14:
+          case 13:
             return internalGetMutableInfo();
           default:
             throw new RuntimeException(
@@ -5387,8 +5249,6 @@ public final class Sample {
 
         source_ = "";
 
-        atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
         variantType_ = "";
 
         referenceAllele_ = "";
@@ -5403,12 +5263,12 @@ public final class Sample {
 
         sequencer_ = "";
 
-        hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        atPositionEdgesPosition_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        tumorSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000400);
-        tumorSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        normalSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000800);
-        normalSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00001000);
         internalGetMutableInfo().clear();
         return this;
       }
@@ -5436,11 +5296,6 @@ public final class Sample {
         int to_bitField0_ = 0;
         result.name_ = name_;
         result.source_ = source_;
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          atPositionEdges_ = atPositionEdges_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.atPositionEdges_ = atPositionEdges_;
         result.variantType_ = variantType_;
         result.referenceAllele_ = referenceAllele_;
         result.normalAllele1_ = normalAllele1_;
@@ -5448,21 +5303,21 @@ public final class Sample {
         result.tumorAllele1_ = tumorAllele1_;
         result.tumorAllele2_ = tumorAllele2_;
         result.sequencer_ = sequencer_;
+        if (((bitField0_ & 0x00000200) == 0x00000200)) {
+          atPositionEdgesPosition_ = atPositionEdgesPosition_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000200);
+        }
+        result.atPositionEdgesPosition_ = atPositionEdgesPosition_;
         if (((bitField0_ & 0x00000400) == 0x00000400)) {
-          hasEffectEdges_ = hasEffectEdges_.getUnmodifiableView();
+          tumorSampleEdgesBiosample_ = tumorSampleEdgesBiosample_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000400);
         }
-        result.hasEffectEdges_ = hasEffectEdges_;
+        result.tumorSampleEdgesBiosample_ = tumorSampleEdgesBiosample_;
         if (((bitField0_ & 0x00000800) == 0x00000800)) {
-          tumorSampleEdges_ = tumorSampleEdges_.getUnmodifiableView();
+          normalSampleEdgesBiosample_ = normalSampleEdgesBiosample_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000800);
         }
-        result.tumorSampleEdges_ = tumorSampleEdges_;
-        if (((bitField0_ & 0x00001000) == 0x00001000)) {
-          normalSampleEdges_ = normalSampleEdges_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00001000);
-        }
-        result.normalSampleEdges_ = normalSampleEdges_;
+        result.normalSampleEdgesBiosample_ = normalSampleEdgesBiosample_;
         result.info_ = internalGetInfo();
         result.info_.makeImmutable();
         result.bitField0_ = to_bitField0_;
@@ -5487,16 +5342,6 @@ public final class Sample {
         }
         if (!other.getSource().isEmpty()) {
           source_ = other.source_;
-          onChanged();
-        }
-        if (!other.atPositionEdges_.isEmpty()) {
-          if (atPositionEdges_.isEmpty()) {
-            atPositionEdges_ = other.atPositionEdges_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureAtPositionEdgesIsMutable();
-            atPositionEdges_.addAll(other.atPositionEdges_);
-          }
           onChanged();
         }
         if (!other.getVariantType().isEmpty()) {
@@ -5527,33 +5372,33 @@ public final class Sample {
           sequencer_ = other.sequencer_;
           onChanged();
         }
-        if (!other.hasEffectEdges_.isEmpty()) {
-          if (hasEffectEdges_.isEmpty()) {
-            hasEffectEdges_ = other.hasEffectEdges_;
+        if (!other.atPositionEdgesPosition_.isEmpty()) {
+          if (atPositionEdgesPosition_.isEmpty()) {
+            atPositionEdgesPosition_ = other.atPositionEdgesPosition_;
+            bitField0_ = (bitField0_ & ~0x00000200);
+          } else {
+            ensureAtPositionEdgesPositionIsMutable();
+            atPositionEdgesPosition_.addAll(other.atPositionEdgesPosition_);
+          }
+          onChanged();
+        }
+        if (!other.tumorSampleEdgesBiosample_.isEmpty()) {
+          if (tumorSampleEdgesBiosample_.isEmpty()) {
+            tumorSampleEdgesBiosample_ = other.tumorSampleEdgesBiosample_;
             bitField0_ = (bitField0_ & ~0x00000400);
           } else {
-            ensureHasEffectEdgesIsMutable();
-            hasEffectEdges_.addAll(other.hasEffectEdges_);
+            ensureTumorSampleEdgesBiosampleIsMutable();
+            tumorSampleEdgesBiosample_.addAll(other.tumorSampleEdgesBiosample_);
           }
           onChanged();
         }
-        if (!other.tumorSampleEdges_.isEmpty()) {
-          if (tumorSampleEdges_.isEmpty()) {
-            tumorSampleEdges_ = other.tumorSampleEdges_;
+        if (!other.normalSampleEdgesBiosample_.isEmpty()) {
+          if (normalSampleEdgesBiosample_.isEmpty()) {
+            normalSampleEdgesBiosample_ = other.normalSampleEdgesBiosample_;
             bitField0_ = (bitField0_ & ~0x00000800);
           } else {
-            ensureTumorSampleEdgesIsMutable();
-            tumorSampleEdges_.addAll(other.tumorSampleEdges_);
-          }
-          onChanged();
-        }
-        if (!other.normalSampleEdges_.isEmpty()) {
-          if (normalSampleEdges_.isEmpty()) {
-            normalSampleEdges_ = other.normalSampleEdges_;
-            bitField0_ = (bitField0_ & ~0x00001000);
-          } else {
-            ensureNormalSampleEdgesIsMutable();
-            normalSampleEdges_.addAll(other.normalSampleEdges_);
+            ensureNormalSampleEdgesBiosampleIsMutable();
+            normalSampleEdgesBiosample_.addAll(other.normalSampleEdgesBiosample_);
           }
           onChanged();
         }
@@ -5744,148 +5589,9 @@ public final class Sample {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureAtPositionEdgesIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          atPositionEdges_ = new com.google.protobuf.LazyStringArrayList(atPositionEdges_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getAtPositionEdgesList() {
-        return atPositionEdges_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public int getAtPositionEdgesCount() {
-        return atPositionEdges_.size();
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public java.lang.String getAtPositionEdges(int index) {
-        return atPositionEdges_.get(index);
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getAtPositionEdgesBytes(int index) {
-        return atPositionEdges_.getByteString(index);
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public Builder setAtPositionEdges(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public Builder addAtPositionEdges(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public Builder addAllAtPositionEdges(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureAtPositionEdgesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, atPositionEdges_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public Builder clearAtPositionEdges() {
-        atPositionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string atPositionEdges = 3;</code>
-       *
-       * <pre>
-       * where on the genome this variant occurred 
-       * edges to Position
-       * </pre>
-       */
-      public Builder addAtPositionEdgesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureAtPositionEdgesIsMutable();
-        atPositionEdges_.add(value);
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object variantType_ = "";
       /**
-       * <code>optional string variantType = 4;</code>
+       * <code>optional string variantType = 3;</code>
        */
       public java.lang.String getVariantType() {
         java.lang.Object ref = variantType_;
@@ -5900,7 +5606,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string variantType = 4;</code>
+       * <code>optional string variantType = 3;</code>
        */
       public com.google.protobuf.ByteString
           getVariantTypeBytes() {
@@ -5916,7 +5622,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string variantType = 4;</code>
+       * <code>optional string variantType = 3;</code>
        */
       public Builder setVariantType(
           java.lang.String value) {
@@ -5929,7 +5635,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string variantType = 4;</code>
+       * <code>optional string variantType = 3;</code>
        */
       public Builder clearVariantType() {
         
@@ -5938,7 +5644,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string variantType = 4;</code>
+       * <code>optional string variantType = 3;</code>
        */
       public Builder setVariantTypeBytes(
           com.google.protobuf.ByteString value) {
@@ -5954,7 +5660,7 @@ public final class Sample {
 
       private java.lang.Object referenceAllele_ = "";
       /**
-       * <code>optional string referenceAllele = 5;</code>
+       * <code>optional string referenceAllele = 4;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -5974,7 +5680,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string referenceAllele = 5;</code>
+       * <code>optional string referenceAllele = 4;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -5995,7 +5701,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string referenceAllele = 5;</code>
+       * <code>optional string referenceAllele = 4;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -6013,7 +5719,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string referenceAllele = 5;</code>
+       * <code>optional string referenceAllele = 4;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -6027,7 +5733,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string referenceAllele = 5;</code>
+       * <code>optional string referenceAllele = 4;</code>
        *
        * <pre>
        * The reference bases for this variant. They start at the given start
@@ -6048,7 +5754,7 @@ public final class Sample {
 
       private java.lang.Object normalAllele1_ = "";
       /**
-       * <code>optional string normalAllele1 = 6;</code>
+       * <code>optional string normalAllele1 = 5;</code>
        *
        * <pre>
        * The normal alleles for this sample
@@ -6067,7 +5773,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string normalAllele1 = 6;</code>
+       * <code>optional string normalAllele1 = 5;</code>
        *
        * <pre>
        * The normal alleles for this sample
@@ -6087,7 +5793,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string normalAllele1 = 6;</code>
+       * <code>optional string normalAllele1 = 5;</code>
        *
        * <pre>
        * The normal alleles for this sample
@@ -6104,7 +5810,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string normalAllele1 = 6;</code>
+       * <code>optional string normalAllele1 = 5;</code>
        *
        * <pre>
        * The normal alleles for this sample
@@ -6117,7 +5823,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string normalAllele1 = 6;</code>
+       * <code>optional string normalAllele1 = 5;</code>
        *
        * <pre>
        * The normal alleles for this sample
@@ -6137,7 +5843,7 @@ public final class Sample {
 
       private java.lang.Object normalAllele2_ = "";
       /**
-       * <code>optional string normalAllele2 = 7;</code>
+       * <code>optional string normalAllele2 = 6;</code>
        */
       public java.lang.String getNormalAllele2() {
         java.lang.Object ref = normalAllele2_;
@@ -6152,7 +5858,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string normalAllele2 = 7;</code>
+       * <code>optional string normalAllele2 = 6;</code>
        */
       public com.google.protobuf.ByteString
           getNormalAllele2Bytes() {
@@ -6168,7 +5874,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string normalAllele2 = 7;</code>
+       * <code>optional string normalAllele2 = 6;</code>
        */
       public Builder setNormalAllele2(
           java.lang.String value) {
@@ -6181,7 +5887,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string normalAllele2 = 7;</code>
+       * <code>optional string normalAllele2 = 6;</code>
        */
       public Builder clearNormalAllele2() {
         
@@ -6190,7 +5896,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string normalAllele2 = 7;</code>
+       * <code>optional string normalAllele2 = 6;</code>
        */
       public Builder setNormalAllele2Bytes(
           com.google.protobuf.ByteString value) {
@@ -6206,7 +5912,7 @@ public final class Sample {
 
       private java.lang.Object tumorAllele1_ = "";
       /**
-       * <code>optional string tumorAllele1 = 8;</code>
+       * <code>optional string tumorAllele1 = 7;</code>
        *
        * <pre>
        * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -6225,7 +5931,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string tumorAllele1 = 8;</code>
+       * <code>optional string tumorAllele1 = 7;</code>
        *
        * <pre>
        * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -6245,7 +5951,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string tumorAllele1 = 8;</code>
+       * <code>optional string tumorAllele1 = 7;</code>
        *
        * <pre>
        * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -6262,7 +5968,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string tumorAllele1 = 8;</code>
+       * <code>optional string tumorAllele1 = 7;</code>
        *
        * <pre>
        * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -6275,7 +5981,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string tumorAllele1 = 8;</code>
+       * <code>optional string tumorAllele1 = 7;</code>
        *
        * <pre>
        * The genotype of this variant call. GA4GH uses int32. Here it is a string.
@@ -6295,7 +6001,7 @@ public final class Sample {
 
       private java.lang.Object tumorAllele2_ = "";
       /**
-       * <code>optional string tumorAllele2 = 9;</code>
+       * <code>optional string tumorAllele2 = 8;</code>
        */
       public java.lang.String getTumorAllele2() {
         java.lang.Object ref = tumorAllele2_;
@@ -6310,7 +6016,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string tumorAllele2 = 9;</code>
+       * <code>optional string tumorAllele2 = 8;</code>
        */
       public com.google.protobuf.ByteString
           getTumorAllele2Bytes() {
@@ -6326,7 +6032,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string tumorAllele2 = 9;</code>
+       * <code>optional string tumorAllele2 = 8;</code>
        */
       public Builder setTumorAllele2(
           java.lang.String value) {
@@ -6339,7 +6045,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string tumorAllele2 = 9;</code>
+       * <code>optional string tumorAllele2 = 8;</code>
        */
       public Builder clearTumorAllele2() {
         
@@ -6348,7 +6054,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string tumorAllele2 = 9;</code>
+       * <code>optional string tumorAllele2 = 8;</code>
        */
       public Builder setTumorAllele2Bytes(
           com.google.protobuf.ByteString value) {
@@ -6364,7 +6070,7 @@ public final class Sample {
 
       private java.lang.Object sequencer_ = "";
       /**
-       * <code>optional string sequencer = 10;</code>
+       * <code>optional string sequencer = 9;</code>
        */
       public java.lang.String getSequencer() {
         java.lang.Object ref = sequencer_;
@@ -6379,7 +6085,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string sequencer = 10;</code>
+       * <code>optional string sequencer = 9;</code>
        */
       public com.google.protobuf.ByteString
           getSequencerBytes() {
@@ -6395,7 +6101,7 @@ public final class Sample {
         }
       }
       /**
-       * <code>optional string sequencer = 10;</code>
+       * <code>optional string sequencer = 9;</code>
        */
       public Builder setSequencer(
           java.lang.String value) {
@@ -6408,7 +6114,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string sequencer = 10;</code>
+       * <code>optional string sequencer = 9;</code>
        */
       public Builder clearSequencer() {
         
@@ -6417,7 +6123,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional string sequencer = 10;</code>
+       * <code>optional string sequencer = 9;</code>
        */
       public Builder setSequencerBytes(
           com.google.protobuf.ByteString value) {
@@ -6431,356 +6137,365 @@ public final class Sample {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureHasEffectEdgesIsMutable() {
-        if (!((bitField0_ & 0x00000400) == 0x00000400)) {
-          hasEffectEdges_ = new com.google.protobuf.LazyStringArrayList(hasEffectEdges_);
-          bitField0_ |= 0x00000400;
+      private com.google.protobuf.LazyStringList atPositionEdgesPosition_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureAtPositionEdgesPositionIsMutable() {
+        if (!((bitField0_ & 0x00000200) == 0x00000200)) {
+          atPositionEdgesPosition_ = new com.google.protobuf.LazyStringArrayList(atPositionEdgesPosition_);
+          bitField0_ |= 0x00000200;
          }
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
       public com.google.protobuf.ProtocolStringList
-          getHasEffectEdgesList() {
-        return hasEffectEdges_.getUnmodifiableView();
+          getAtPositionEdgesPositionList() {
+        return atPositionEdgesPosition_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public int getHasEffectEdgesCount() {
-        return hasEffectEdges_.size();
+      public int getAtPositionEdgesPositionCount() {
+        return atPositionEdgesPosition_.size();
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public java.lang.String getHasEffectEdges(int index) {
-        return hasEffectEdges_.get(index);
+      public java.lang.String getAtPositionEdgesPosition(int index) {
+        return atPositionEdgesPosition_.get(index);
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getHasEffectEdgesBytes(int index) {
-        return hasEffectEdges_.getByteString(index);
+          getAtPositionEdgesPositionBytes(int index) {
+        return atPositionEdgesPosition_.getByteString(index);
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public Builder setHasEffectEdges(
+      public Builder setAtPositionEdgesPosition(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.set(index, value);
+  ensureAtPositionEdgesPositionIsMutable();
+        atPositionEdgesPosition_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public Builder addHasEffectEdges(
+      public Builder addAtPositionEdgesPosition(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.add(value);
+  ensureAtPositionEdgesPositionIsMutable();
+        atPositionEdgesPosition_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public Builder addAllHasEffectEdges(
+      public Builder addAllAtPositionEdgesPosition(
           java.lang.Iterable<java.lang.String> values) {
-        ensureHasEffectEdgesIsMutable();
+        ensureAtPositionEdgesPositionIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, hasEffectEdges_);
+            values, atPositionEdgesPosition_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * where on the genome this variant occurred 
+       * edges to Position
        * </pre>
        */
-      public Builder clearHasEffectEdges() {
-        hasEffectEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearAtPositionEdgesPosition() {
+        atPositionEdgesPosition_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000200);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string atPositionEdgesPosition = 10;</code>
+       *
+       * <pre>
+       * where on the genome this variant occurred 
+       * edges to Position
+       * </pre>
+       */
+      public Builder addAtPositionEdgesPositionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureAtPositionEdgesPositionIsMutable();
+        atPositionEdgesPosition_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList tumorSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureTumorSampleEdgesBiosampleIsMutable() {
+        if (!((bitField0_ & 0x00000400) == 0x00000400)) {
+          tumorSampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList(tumorSampleEdgesBiosample_);
+          bitField0_ |= 0x00000400;
+         }
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getTumorSampleEdgesBiosampleList() {
+        return tumorSampleEdgesBiosample_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public int getTumorSampleEdgesBiosampleCount() {
+        return tumorSampleEdgesBiosample_.size();
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public java.lang.String getTumorSampleEdgesBiosample(int index) {
+        return tumorSampleEdgesBiosample_.get(index);
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getTumorSampleEdgesBiosampleBytes(int index) {
+        return tumorSampleEdgesBiosample_.getByteString(index);
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public Builder setTumorSampleEdgesBiosample(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTumorSampleEdgesBiosampleIsMutable();
+        tumorSampleEdgesBiosample_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public Builder addTumorSampleEdgesBiosample(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureTumorSampleEdgesBiosampleIsMutable();
+        tumorSampleEdgesBiosample_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public Builder addAllTumorSampleEdgesBiosample(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureTumorSampleEdgesBiosampleIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, tumorSampleEdgesBiosample_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
+       *
+       * <pre>
+       * edges to Biosample
+       * </pre>
+       */
+      public Builder clearTumorSampleEdgesBiosample() {
+        tumorSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000400);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasEffectEdges = 11;</code>
+       * <code>repeated string tumorSampleEdgesBiosample = 11;</code>
        *
        * <pre>
-       * edges to VariantEffect
+       * edges to Biosample
        * </pre>
        */
-      public Builder addHasEffectEdgesBytes(
+      public Builder addTumorSampleEdgesBiosampleBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureHasEffectEdgesIsMutable();
-        hasEffectEdges_.add(value);
+        ensureTumorSampleEdgesBiosampleIsMutable();
+        tumorSampleEdgesBiosample_.add(value);
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.LazyStringList tumorSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureTumorSampleEdgesIsMutable() {
+      private com.google.protobuf.LazyStringList normalSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureNormalSampleEdgesBiosampleIsMutable() {
         if (!((bitField0_ & 0x00000800) == 0x00000800)) {
-          tumorSampleEdges_ = new com.google.protobuf.LazyStringArrayList(tumorSampleEdges_);
+          normalSampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList(normalSampleEdgesBiosample_);
           bitField0_ |= 0x00000800;
          }
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
       public com.google.protobuf.ProtocolStringList
-          getTumorSampleEdgesList() {
-        return tumorSampleEdges_.getUnmodifiableView();
+          getNormalSampleEdgesBiosampleList() {
+        return normalSampleEdgesBiosample_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public int getTumorSampleEdgesCount() {
-        return tumorSampleEdges_.size();
+      public int getNormalSampleEdgesBiosampleCount() {
+        return normalSampleEdgesBiosample_.size();
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public java.lang.String getTumorSampleEdges(int index) {
-        return tumorSampleEdges_.get(index);
+      public java.lang.String getNormalSampleEdgesBiosample(int index) {
+        return normalSampleEdgesBiosample_.get(index);
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
       public com.google.protobuf.ByteString
-          getTumorSampleEdgesBytes(int index) {
-        return tumorSampleEdges_.getByteString(index);
+          getNormalSampleEdgesBiosampleBytes(int index) {
+        return normalSampleEdgesBiosample_.getByteString(index);
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public Builder setTumorSampleEdges(
+      public Builder setNormalSampleEdgesBiosample(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureTumorSampleEdgesIsMutable();
-        tumorSampleEdges_.set(index, value);
+  ensureNormalSampleEdgesBiosampleIsMutable();
+        normalSampleEdgesBiosample_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public Builder addTumorSampleEdges(
+      public Builder addNormalSampleEdgesBiosample(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureTumorSampleEdgesIsMutable();
-        tumorSampleEdges_.add(value);
+  ensureNormalSampleEdgesBiosampleIsMutable();
+        normalSampleEdgesBiosample_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public Builder addAllTumorSampleEdges(
+      public Builder addAllNormalSampleEdgesBiosample(
           java.lang.Iterable<java.lang.String> values) {
-        ensureTumorSampleEdgesIsMutable();
+        ensureNormalSampleEdgesBiosampleIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, tumorSampleEdges_);
+            values, normalSampleEdgesBiosample_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public Builder clearTumorSampleEdges() {
-        tumorSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearNormalSampleEdgesBiosample() {
+        normalSampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000800);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string tumorSampleEdges = 12;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
+       * <code>repeated string normalSampleEdgesBiosample = 12;</code>
        */
-      public Builder addTumorSampleEdgesBytes(
+      public Builder addNormalSampleEdgesBiosampleBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureTumorSampleEdgesIsMutable();
-        tumorSampleEdges_.add(value);
-        onChanged();
-        return this;
-      }
-
-      private com.google.protobuf.LazyStringList normalSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureNormalSampleEdgesIsMutable() {
-        if (!((bitField0_ & 0x00001000) == 0x00001000)) {
-          normalSampleEdges_ = new com.google.protobuf.LazyStringArrayList(normalSampleEdges_);
-          bitField0_ |= 0x00001000;
-         }
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getNormalSampleEdgesList() {
-        return normalSampleEdges_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public int getNormalSampleEdgesCount() {
-        return normalSampleEdges_.size();
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public java.lang.String getNormalSampleEdges(int index) {
-        return normalSampleEdges_.get(index);
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public com.google.protobuf.ByteString
-          getNormalSampleEdgesBytes(int index) {
-        return normalSampleEdges_.getByteString(index);
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public Builder setNormalSampleEdges(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureNormalSampleEdgesIsMutable();
-        normalSampleEdges_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public Builder addNormalSampleEdges(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureNormalSampleEdgesIsMutable();
-        normalSampleEdges_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public Builder addAllNormalSampleEdges(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureNormalSampleEdgesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, normalSampleEdges_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public Builder clearNormalSampleEdges() {
-        normalSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00001000);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string normalSampleEdges = 13;</code>
-       */
-      public Builder addNormalSampleEdgesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureNormalSampleEdgesIsMutable();
-        normalSampleEdges_.add(value);
+        ensureNormalSampleEdgesBiosampleIsMutable();
+        normalSampleEdgesBiosample_.add(value);
         onChanged();
         return this;
       }
@@ -6808,7 +6523,7 @@ public final class Sample {
         return info_;
       }
       /**
-       * <code>map&lt;string, string&gt; info = 14;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -6818,7 +6533,7 @@ public final class Sample {
         return internalGetInfo().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 14;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -6829,7 +6544,7 @@ public final class Sample {
         return internalGetMutableInfo().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; info = 14;</code>
+       * <code>map&lt;string, string&gt; info = 13;</code>
        *
        * <pre>
        * A map of additional variant call information, including a Feature Id for now...
@@ -6898,8 +6613,8 @@ public final class Sample {
 
   }
 
-  public interface BioSampleOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.BioSample)
+  public interface BiosampleOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Biosample)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -6975,70 +6690,70 @@ public final class Sample {
         getSampleTypeBytes();
 
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
     com.google.protobuf.ProtocolStringList
-        getHasExpressionEdgesList();
+        getSampleOfEdgesIndividualList();
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
-    int getHasExpressionEdgesCount();
+    int getSampleOfEdgesIndividualCount();
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
-    java.lang.String getHasExpressionEdges(int index);
+    java.lang.String getSampleOfEdgesIndividual(int index);
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
     com.google.protobuf.ByteString
-        getHasExpressionEdgesBytes(int index);
+        getSampleOfEdgesIndividualBytes(int index);
   }
   /**
-   * Protobuf type {@code bmeg.gaea.schema.BioSample}
+   * Protobuf type {@code bmeg.gaea.schema.Biosample}
    *
    * <pre>
    * From GA4GH:
-   *    A BioSample refers to a unit of biological material from which the substrate
+   *    A Biosample refers to a unit of biological material from which the substrate
    *   molecules (e.g. genomic DNA, RNA, proteins) for molecular analyses (e.g.
    *   sequencing, array hybridisation, mass-spectrometry) are extracted. Examples
    *   would be a tissue biopsy, a single cell from a culture for single cell genome
    *   sequencing or a protein fraction from a gradient centrifugation.
    *   Several instances (e.g. technical replicates) or types of experiments (e.g.
-   *   genomic array as well as RNA-seq experiments) may refer to the same BioSample.
-   *   In the context of the GA4GH metadata schema, BioSample constitutes the central
+   *   genomic array as well as RNA-seq experiments) may refer to the same Biosample.
+   *   In the context of the GA4GH metadata schema, Biosample constitutes the central
    *   reference object.
    * </pre>
    */
-  public  static final class BioSample extends
+  public  static final class Biosample extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.BioSample)
-      BioSampleOrBuilder {
-    // Use BioSample.newBuilder() to construct.
-    private BioSample(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Biosample)
+      BiosampleOrBuilder {
+    // Use Biosample.newBuilder() to construct.
+    private Biosample(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
     }
-    private BioSample() {
+    private Biosample() {
       name_ = "";
       source_ = "";
       barcode_ = "";
       sampleType_ = "";
-      hasExpressionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      sampleOfEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -7046,7 +6761,7 @@ public final class Sample {
     getUnknownFields() {
       return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
     }
-    private BioSample(
+    private Biosample(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
       this();
@@ -7092,10 +6807,10 @@ public final class Sample {
             case 42: {
               java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-                hasExpressionEdges_ = new com.google.protobuf.LazyStringArrayList();
+                sampleOfEdgesIndividual_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000010;
               }
-              hasExpressionEdges_.add(s);
+              sampleOfEdgesIndividual_.add(s);
               break;
             }
           }
@@ -7108,21 +6823,21 @@ public final class Sample {
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
-          hasExpressionEdges_ = hasExpressionEdges_.getUnmodifiableView();
+          sampleOfEdgesIndividual_ = sampleOfEdgesIndividual_.getUnmodifiableView();
         }
         makeExtensionsImmutable();
       }
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_BioSample_descriptor;
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Biosample_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_BioSample_fieldAccessorTable
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Biosample_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              bmeg.gaea.schema.Sample.BioSample.class, bmeg.gaea.schema.Sample.BioSample.Builder.class);
+              bmeg.gaea.schema.Sample.Biosample.class, bmeg.gaea.schema.Sample.Biosample.Builder.class);
     }
 
     private int bitField0_;
@@ -7294,49 +7009,49 @@ public final class Sample {
       }
     }
 
-    public static final int HASEXPRESSIONEDGES_FIELD_NUMBER = 5;
-    private com.google.protobuf.LazyStringList hasExpressionEdges_;
+    public static final int SAMPLEOFEDGESINDIVIDUAL_FIELD_NUMBER = 5;
+    private com.google.protobuf.LazyStringList sampleOfEdgesIndividual_;
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
     public com.google.protobuf.ProtocolStringList
-        getHasExpressionEdgesList() {
-      return hasExpressionEdges_;
+        getSampleOfEdgesIndividualList() {
+      return sampleOfEdgesIndividual_;
     }
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
-    public int getHasExpressionEdgesCount() {
-      return hasExpressionEdges_.size();
+    public int getSampleOfEdgesIndividualCount() {
+      return sampleOfEdgesIndividual_.size();
     }
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
-    public java.lang.String getHasExpressionEdges(int index) {
-      return hasExpressionEdges_.get(index);
+    public java.lang.String getSampleOfEdgesIndividual(int index) {
+      return sampleOfEdgesIndividual_.get(index);
     }
     /**
-     * <code>repeated string hasExpressionEdges = 5;</code>
+     * <code>repeated string sampleOfEdgesIndividual = 5;</code>
      *
      * <pre>
-     * edges to GeneExpression
+     * edges to Biosample
      * </pre>
      */
     public com.google.protobuf.ByteString
-        getHasExpressionEdgesBytes(int index) {
-      return hasExpressionEdges_.getByteString(index);
+        getSampleOfEdgesIndividualBytes(int index) {
+      return sampleOfEdgesIndividual_.getByteString(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -7363,8 +7078,8 @@ public final class Sample {
       if (!getSampleTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 4, sampleType_);
       }
-      for (int i = 0; i < hasExpressionEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 5, hasExpressionEdges_.getRaw(i));
+      for (int i = 0; i < sampleOfEdgesIndividual_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, sampleOfEdgesIndividual_.getRaw(i));
       }
     }
 
@@ -7387,64 +7102,64 @@ public final class Sample {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < hasExpressionEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(hasExpressionEdges_.getRaw(i));
+        for (int i = 0; i < sampleOfEdgesIndividual_.size(); i++) {
+          dataSize += computeStringSizeNoTag(sampleOfEdgesIndividual_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getHasExpressionEdgesList().size();
+        size += 1 * getSampleOfEdgesIndividualList().size();
       }
       memoizedSize = size;
       return size;
     }
 
     private static final long serialVersionUID = 0L;
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(byte[] data)
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(java.io.InputStream input)
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseDelimitedFrom(java.io.InputStream input)
+    public static bmeg.gaea.schema.Sample.Biosample parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseDelimitedFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static bmeg.gaea.schema.Sample.BioSample parseFrom(
+    public static bmeg.gaea.schema.Sample.Biosample parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -7455,7 +7170,7 @@ public final class Sample {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(bmeg.gaea.schema.Sample.BioSample prototype) {
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Biosample prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -7470,38 +7185,38 @@ public final class Sample {
       return builder;
     }
     /**
-     * Protobuf type {@code bmeg.gaea.schema.BioSample}
+     * Protobuf type {@code bmeg.gaea.schema.Biosample}
      *
      * <pre>
      * From GA4GH:
-     *    A BioSample refers to a unit of biological material from which the substrate
+     *    A Biosample refers to a unit of biological material from which the substrate
      *   molecules (e.g. genomic DNA, RNA, proteins) for molecular analyses (e.g.
      *   sequencing, array hybridisation, mass-spectrometry) are extracted. Examples
      *   would be a tissue biopsy, a single cell from a culture for single cell genome
      *   sequencing or a protein fraction from a gradient centrifugation.
      *   Several instances (e.g. technical replicates) or types of experiments (e.g.
-     *   genomic array as well as RNA-seq experiments) may refer to the same BioSample.
-     *   In the context of the GA4GH metadata schema, BioSample constitutes the central
+     *   genomic array as well as RNA-seq experiments) may refer to the same Biosample.
+     *   In the context of the GA4GH metadata schema, Biosample constitutes the central
      *   reference object.
      * </pre>
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.BioSample)
-        bmeg.gaea.schema.Sample.BioSampleOrBuilder {
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Biosample)
+        bmeg.gaea.schema.Sample.BiosampleOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_BioSample_descriptor;
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Biosample_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_BioSample_fieldAccessorTable
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Biosample_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                bmeg.gaea.schema.Sample.BioSample.class, bmeg.gaea.schema.Sample.BioSample.Builder.class);
+                bmeg.gaea.schema.Sample.Biosample.class, bmeg.gaea.schema.Sample.Biosample.Builder.class);
       }
 
-      // Construct using bmeg.gaea.schema.Sample.BioSample.newBuilder()
+      // Construct using bmeg.gaea.schema.Sample.Biosample.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -7525,30 +7240,30 @@ public final class Sample {
 
         sampleType_ = "";
 
-        hasExpressionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        sampleOfEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_BioSample_descriptor;
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Biosample_descriptor;
       }
 
-      public bmeg.gaea.schema.Sample.BioSample getDefaultInstanceForType() {
-        return bmeg.gaea.schema.Sample.BioSample.getDefaultInstance();
+      public bmeg.gaea.schema.Sample.Biosample getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Biosample.getDefaultInstance();
       }
 
-      public bmeg.gaea.schema.Sample.BioSample build() {
-        bmeg.gaea.schema.Sample.BioSample result = buildPartial();
+      public bmeg.gaea.schema.Sample.Biosample build() {
+        bmeg.gaea.schema.Sample.Biosample result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public bmeg.gaea.schema.Sample.BioSample buildPartial() {
-        bmeg.gaea.schema.Sample.BioSample result = new bmeg.gaea.schema.Sample.BioSample(this);
+      public bmeg.gaea.schema.Sample.Biosample buildPartial() {
+        bmeg.gaea.schema.Sample.Biosample result = new bmeg.gaea.schema.Sample.Biosample(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.name_ = name_;
@@ -7556,26 +7271,26 @@ public final class Sample {
         result.barcode_ = barcode_;
         result.sampleType_ = sampleType_;
         if (((bitField0_ & 0x00000010) == 0x00000010)) {
-          hasExpressionEdges_ = hasExpressionEdges_.getUnmodifiableView();
+          sampleOfEdgesIndividual_ = sampleOfEdgesIndividual_.getUnmodifiableView();
           bitField0_ = (bitField0_ & ~0x00000010);
         }
-        result.hasExpressionEdges_ = hasExpressionEdges_;
+        result.sampleOfEdgesIndividual_ = sampleOfEdgesIndividual_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof bmeg.gaea.schema.Sample.BioSample) {
-          return mergeFrom((bmeg.gaea.schema.Sample.BioSample)other);
+        if (other instanceof bmeg.gaea.schema.Sample.Biosample) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Biosample)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(bmeg.gaea.schema.Sample.BioSample other) {
-        if (other == bmeg.gaea.schema.Sample.BioSample.getDefaultInstance()) return this;
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Biosample other) {
+        if (other == bmeg.gaea.schema.Sample.Biosample.getDefaultInstance()) return this;
         if (!other.getName().isEmpty()) {
           name_ = other.name_;
           onChanged();
@@ -7592,13 +7307,13 @@ public final class Sample {
           sampleType_ = other.sampleType_;
           onChanged();
         }
-        if (!other.hasExpressionEdges_.isEmpty()) {
-          if (hasExpressionEdges_.isEmpty()) {
-            hasExpressionEdges_ = other.hasExpressionEdges_;
+        if (!other.sampleOfEdgesIndividual_.isEmpty()) {
+          if (sampleOfEdgesIndividual_.isEmpty()) {
+            sampleOfEdgesIndividual_ = other.sampleOfEdgesIndividual_;
             bitField0_ = (bitField0_ & ~0x00000010);
           } else {
-            ensureHasExpressionEdgesIsMutable();
-            hasExpressionEdges_.addAll(other.hasExpressionEdges_);
+            ensureSampleOfEdgesIndividualIsMutable();
+            sampleOfEdgesIndividual_.addAll(other.sampleOfEdgesIndividual_);
           }
           onChanged();
         }
@@ -7614,11 +7329,11 @@ public final class Sample {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        bmeg.gaea.schema.Sample.BioSample parsedMessage = null;
+        bmeg.gaea.schema.Sample.Biosample parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (bmeg.gaea.schema.Sample.BioSample) e.getUnfinishedMessage();
+          parsedMessage = (bmeg.gaea.schema.Sample.Biosample) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -7985,132 +7700,132 @@ public final class Sample {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList hasExpressionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureHasExpressionEdgesIsMutable() {
+      private com.google.protobuf.LazyStringList sampleOfEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureSampleOfEdgesIndividualIsMutable() {
         if (!((bitField0_ & 0x00000010) == 0x00000010)) {
-          hasExpressionEdges_ = new com.google.protobuf.LazyStringArrayList(hasExpressionEdges_);
+          sampleOfEdgesIndividual_ = new com.google.protobuf.LazyStringArrayList(sampleOfEdgesIndividual_);
           bitField0_ |= 0x00000010;
          }
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
       public com.google.protobuf.ProtocolStringList
-          getHasExpressionEdgesList() {
-        return hasExpressionEdges_.getUnmodifiableView();
+          getSampleOfEdgesIndividualList() {
+        return sampleOfEdgesIndividual_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public int getHasExpressionEdgesCount() {
-        return hasExpressionEdges_.size();
+      public int getSampleOfEdgesIndividualCount() {
+        return sampleOfEdgesIndividual_.size();
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public java.lang.String getHasExpressionEdges(int index) {
-        return hasExpressionEdges_.get(index);
+      public java.lang.String getSampleOfEdgesIndividual(int index) {
+        return sampleOfEdgesIndividual_.get(index);
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
       public com.google.protobuf.ByteString
-          getHasExpressionEdgesBytes(int index) {
-        return hasExpressionEdges_.getByteString(index);
+          getSampleOfEdgesIndividualBytes(int index) {
+        return sampleOfEdgesIndividual_.getByteString(index);
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public Builder setHasExpressionEdges(
+      public Builder setSampleOfEdgesIndividual(
           int index, java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureHasExpressionEdgesIsMutable();
-        hasExpressionEdges_.set(index, value);
+  ensureSampleOfEdgesIndividualIsMutable();
+        sampleOfEdgesIndividual_.set(index, value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public Builder addHasExpressionEdges(
+      public Builder addSampleOfEdgesIndividual(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-  ensureHasExpressionEdgesIsMutable();
-        hasExpressionEdges_.add(value);
+  ensureSampleOfEdgesIndividualIsMutable();
+        sampleOfEdgesIndividual_.add(value);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public Builder addAllHasExpressionEdges(
+      public Builder addAllSampleOfEdgesIndividual(
           java.lang.Iterable<java.lang.String> values) {
-        ensureHasExpressionEdgesIsMutable();
+        ensureSampleOfEdgesIndividualIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, hasExpressionEdges_);
+            values, sampleOfEdgesIndividual_);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public Builder clearHasExpressionEdges() {
-        hasExpressionEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      public Builder clearSampleOfEdgesIndividual() {
+        sampleOfEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
         bitField0_ = (bitField0_ & ~0x00000010);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string hasExpressionEdges = 5;</code>
+       * <code>repeated string sampleOfEdgesIndividual = 5;</code>
        *
        * <pre>
-       * edges to GeneExpression
+       * edges to Biosample
        * </pre>
        */
-      public Builder addHasExpressionEdgesBytes(
+      public Builder addSampleOfEdgesIndividualBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        ensureHasExpressionEdgesIsMutable();
-        hasExpressionEdges_.add(value);
+        ensureSampleOfEdgesIndividualIsMutable();
+        sampleOfEdgesIndividual_.add(value);
         onChanged();
         return this;
       }
@@ -8125,27 +7840,27 @@ public final class Sample {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.BioSample)
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Biosample)
     }
 
-    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.BioSample)
-    private static final bmeg.gaea.schema.Sample.BioSample DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Biosample)
+    private static final bmeg.gaea.schema.Sample.Biosample DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.BioSample();
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Biosample();
     }
 
-    public static bmeg.gaea.schema.Sample.BioSample getDefaultInstance() {
+    public static bmeg.gaea.schema.Sample.Biosample getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<BioSample>
-        PARSER = new com.google.protobuf.AbstractParser<BioSample>() {
-      public BioSample parsePartialFrom(
+    private static final com.google.protobuf.Parser<Biosample>
+        PARSER = new com.google.protobuf.AbstractParser<Biosample>() {
+      public Biosample parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
         try {
-          return new BioSample(input, extensionRegistry);
+          return new Biosample(input, extensionRegistry);
         } catch (RuntimeException e) {
           if (e.getCause() instanceof
               com.google.protobuf.InvalidProtocolBufferException) {
@@ -8157,16 +7872,16 @@ public final class Sample {
       }
     };
 
-    public static com.google.protobuf.Parser<BioSample> parser() {
+    public static com.google.protobuf.Parser<Biosample> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<BioSample> getParserForType() {
+    public com.google.protobuf.Parser<Biosample> getParserForType() {
       return PARSER;
     }
 
-    public bmeg.gaea.schema.Sample.BioSample getDefaultInstanceForType() {
+    public bmeg.gaea.schema.Sample.Biosample getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -8215,42 +7930,7 @@ public final class Sample {
         getSourceBytes();
 
     /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    com.google.protobuf.ProtocolStringList
-        getHasSampleEdgesList();
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    int getHasSampleEdgesCount();
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    java.lang.String getHasSampleEdges(int index);
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    com.google.protobuf.ByteString
-        getHasSampleEdgesBytes(int index);
-
-    /**
-     * <code>map&lt;string, string&gt; observations = 4;</code>
+     * <code>map&lt;string, string&gt; observations = 3;</code>
      *
      * <pre>
      * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -8273,7 +7953,6 @@ public final class Sample {
     private Individual() {
       name_ = "";
       source_ = "";
-      hasSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -8313,19 +7992,10 @@ public final class Sample {
               break;
             }
             case 26: {
-              java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-                hasSampleEdges_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000004;
-              }
-              hasSampleEdges_.add(s);
-              break;
-            }
-            case 34: {
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
                 observations_ = com.google.protobuf.MapField.newMapField(
                     ObservationsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000004;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               observations = input.readMessage(
@@ -8342,9 +8012,6 @@ public final class Sample {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
-          hasSampleEdges_ = hasSampleEdges_.getUnmodifiableView();
-        }
         makeExtensionsImmutable();
       }
     }
@@ -8357,7 +8024,7 @@ public final class Sample {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 4:
+        case 3:
           return internalGetObservations();
         default:
           throw new RuntimeException(
@@ -8458,52 +8125,7 @@ public final class Sample {
       }
     }
 
-    public static final int HASSAMPLEEDGES_FIELD_NUMBER = 3;
-    private com.google.protobuf.LazyStringList hasSampleEdges_;
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    public com.google.protobuf.ProtocolStringList
-        getHasSampleEdgesList() {
-      return hasSampleEdges_;
-    }
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    public int getHasSampleEdgesCount() {
-      return hasSampleEdges_.size();
-    }
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    public java.lang.String getHasSampleEdges(int index) {
-      return hasSampleEdges_.get(index);
-    }
-    /**
-     * <code>repeated string hasSampleEdges = 3;</code>
-     *
-     * <pre>
-     * edges to BioSample
-     * </pre>
-     */
-    public com.google.protobuf.ByteString
-        getHasSampleEdgesBytes(int index) {
-      return hasSampleEdges_.getByteString(index);
-    }
-
-    public static final int OBSERVATIONS_FIELD_NUMBER = 4;
+    public static final int OBSERVATIONS_FIELD_NUMBER = 3;
     private static final class ObservationsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -8526,7 +8148,7 @@ public final class Sample {
       return observations_;
     }
     /**
-     * <code>map&lt;string, string&gt; observations = 4;</code>
+     * <code>map&lt;string, string&gt; observations = 3;</code>
      *
      * <pre>
      * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -8555,9 +8177,6 @@ public final class Sample {
       if (!getSourceBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, source_);
       }
-      for (int i = 0; i < hasSampleEdges_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, hasSampleEdges_.getRaw(i));
-      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetObservations().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -8565,7 +8184,7 @@ public final class Sample {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(4, observations);
+        output.writeMessage(3, observations);
       }
     }
 
@@ -8580,14 +8199,6 @@ public final class Sample {
       if (!getSourceBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, source_);
       }
-      {
-        int dataSize = 0;
-        for (int i = 0; i < hasSampleEdges_.size(); i++) {
-          dataSize += computeStringSizeNoTag(hasSampleEdges_.getRaw(i));
-        }
-        size += dataSize;
-        size += 1 * getHasSampleEdgesList().size();
-      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetObservations().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -8596,7 +8207,7 @@ public final class Sample {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(4, observations);
+            .computeMessageSize(3, observations);
       }
       memoizedSize = size;
       return size;
@@ -8690,7 +8301,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetObservations();
           default:
             throw new RuntimeException(
@@ -8701,7 +8312,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetMutableObservations();
           default:
             throw new RuntimeException(
@@ -8735,8 +8346,6 @@ public final class Sample {
 
         source_ = "";
 
-        hasSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
         internalGetMutableObservations().clear();
         return this;
       }
@@ -8764,11 +8373,6 @@ public final class Sample {
         int to_bitField0_ = 0;
         result.name_ = name_;
         result.source_ = source_;
-        if (((bitField0_ & 0x00000004) == 0x00000004)) {
-          hasSampleEdges_ = hasSampleEdges_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000004);
-        }
-        result.hasSampleEdges_ = hasSampleEdges_;
         result.observations_ = internalGetObservations();
         result.observations_.makeImmutable();
         result.bitField0_ = to_bitField0_;
@@ -8793,16 +8397,6 @@ public final class Sample {
         }
         if (!other.getSource().isEmpty()) {
           source_ = other.source_;
-          onChanged();
-        }
-        if (!other.hasSampleEdges_.isEmpty()) {
-          if (hasSampleEdges_.isEmpty()) {
-            hasSampleEdges_ = other.hasSampleEdges_;
-            bitField0_ = (bitField0_ & ~0x00000004);
-          } else {
-            ensureHasSampleEdgesIsMutable();
-            hasSampleEdges_.addAll(other.hasSampleEdges_);
-          }
           onChanged();
         }
         internalGetMutableObservations().mergeFrom(
@@ -9017,136 +8611,6 @@ public final class Sample {
         return this;
       }
 
-      private com.google.protobuf.LazyStringList hasSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      private void ensureHasSampleEdgesIsMutable() {
-        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
-          hasSampleEdges_ = new com.google.protobuf.LazyStringArrayList(hasSampleEdges_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public com.google.protobuf.ProtocolStringList
-          getHasSampleEdgesList() {
-        return hasSampleEdges_.getUnmodifiableView();
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public int getHasSampleEdgesCount() {
-        return hasSampleEdges_.size();
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public java.lang.String getHasSampleEdges(int index) {
-        return hasSampleEdges_.get(index);
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public com.google.protobuf.ByteString
-          getHasSampleEdgesBytes(int index) {
-        return hasSampleEdges_.getByteString(index);
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public Builder setHasSampleEdges(
-          int index, java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureHasSampleEdgesIsMutable();
-        hasSampleEdges_.set(index, value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public Builder addHasSampleEdges(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureHasSampleEdgesIsMutable();
-        hasSampleEdges_.add(value);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public Builder addAllHasSampleEdges(
-          java.lang.Iterable<java.lang.String> values) {
-        ensureHasSampleEdgesIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, hasSampleEdges_);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public Builder clearHasSampleEdges() {
-        hasSampleEdges_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000004);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated string hasSampleEdges = 3;</code>
-       *
-       * <pre>
-       * edges to BioSample
-       * </pre>
-       */
-      public Builder addHasSampleEdgesBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        ensureHasSampleEdgesIsMutable();
-        hasSampleEdges_.add(value);
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.MapField<
           java.lang.String, java.lang.String> observations_;
       private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -9170,7 +8634,7 @@ public final class Sample {
         return observations_;
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 4;</code>
+       * <code>map&lt;string, string&gt; observations = 3;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -9180,7 +8644,7 @@ public final class Sample {
         return internalGetObservations().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 4;</code>
+       * <code>map&lt;string, string&gt; observations = 3;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -9191,7 +8655,7 @@ public final class Sample {
         return internalGetMutableObservations().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; observations = 4;</code>
+       * <code>map&lt;string, string&gt; observations = 3;</code>
        *
        * <pre>
        * placeholder data dump of remaining 591 columns in summary_patient_metadata_pancan.tsv
@@ -9295,7 +8759,42 @@ public final class Sample {
         getBarcodeBytes();
 
     /**
-     * <code>map&lt;string, string&gt; expressions = 4;</code>
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getExpressionForEdgesBiosampleList();
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    int getExpressionForEdgesBiosampleCount();
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    java.lang.String getExpressionForEdgesBiosample(int index);
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getExpressionForEdgesBiosampleBytes(int index);
+
+    /**
+     * <code>map&lt;string, string&gt; expressions = 5;</code>
      */
     java.util.Map<java.lang.String, java.lang.String>
     getExpressions();
@@ -9315,6 +8814,7 @@ public final class Sample {
       name_ = "";
       source_ = "";
       barcode_ = "";
+      expressionForEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
 
     @java.lang.Override
@@ -9360,10 +8860,19 @@ public final class Sample {
               break;
             }
             case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
               if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                expressionForEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              expressionForEdgesBiosample_.add(s);
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
                 expressions_ = com.google.protobuf.MapField.newMapField(
                     ExpressionsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000010;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
               expressions = input.readMessage(
@@ -9380,6 +8889,9 @@ public final class Sample {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          expressionForEdgesBiosample_ = expressionForEdgesBiosample_.getUnmodifiableView();
+        }
         makeExtensionsImmutable();
       }
     }
@@ -9392,7 +8904,7 @@ public final class Sample {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 4:
+        case 5:
           return internalGetExpressions();
         default:
           throw new RuntimeException(
@@ -9509,7 +9021,52 @@ public final class Sample {
       }
     }
 
-    public static final int EXPRESSIONS_FIELD_NUMBER = 4;
+    public static final int EXPRESSIONFOREDGESBIOSAMPLE_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList expressionForEdgesBiosample_;
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getExpressionForEdgesBiosampleList() {
+      return expressionForEdgesBiosample_;
+    }
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    public int getExpressionForEdgesBiosampleCount() {
+      return expressionForEdgesBiosample_.size();
+    }
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    public java.lang.String getExpressionForEdgesBiosample(int index) {
+      return expressionForEdgesBiosample_.get(index);
+    }
+    /**
+     * <code>repeated string expressionForEdgesBiosample = 4;</code>
+     *
+     * <pre>
+     * edges to GeneExpression
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getExpressionForEdgesBiosampleBytes(int index) {
+      return expressionForEdgesBiosample_.getByteString(index);
+    }
+
+    public static final int EXPRESSIONS_FIELD_NUMBER = 5;
     private static final class ExpressionsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -9532,7 +9089,7 @@ public final class Sample {
       return expressions_;
     }
     /**
-     * <code>map&lt;string, string&gt; expressions = 4;</code>
+     * <code>map&lt;string, string&gt; expressions = 5;</code>
      */
 
     public java.util.Map<java.lang.String, java.lang.String> getExpressions() {
@@ -9560,6 +9117,9 @@ public final class Sample {
       if (!getBarcodeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 3, barcode_);
       }
+      for (int i = 0; i < expressionForEdgesBiosample_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, expressionForEdgesBiosample_.getRaw(i));
+      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetExpressions().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -9567,7 +9127,7 @@ public final class Sample {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(4, expressions);
+        output.writeMessage(5, expressions);
       }
     }
 
@@ -9585,6 +9145,14 @@ public final class Sample {
       if (!getBarcodeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(3, barcode_);
       }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < expressionForEdgesBiosample_.size(); i++) {
+          dataSize += computeStringSizeNoTag(expressionForEdgesBiosample_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getExpressionForEdgesBiosampleList().size();
+      }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetExpressions().getMap().entrySet()) {
         com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
@@ -9593,7 +9161,7 @@ public final class Sample {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(4, expressions);
+            .computeMessageSize(5, expressions);
       }
       memoizedSize = size;
       return size;
@@ -9687,7 +9255,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 5:
             return internalGetExpressions();
           default:
             throw new RuntimeException(
@@ -9698,7 +9266,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 4:
+          case 5:
             return internalGetMutableExpressions();
           default:
             throw new RuntimeException(
@@ -9734,6 +9302,8 @@ public final class Sample {
 
         barcode_ = "";
 
+        expressionForEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
         internalGetMutableExpressions().clear();
         return this;
       }
@@ -9762,6 +9332,11 @@ public final class Sample {
         result.name_ = name_;
         result.source_ = source_;
         result.barcode_ = barcode_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          expressionForEdgesBiosample_ = expressionForEdgesBiosample_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.expressionForEdgesBiosample_ = expressionForEdgesBiosample_;
         result.expressions_ = internalGetExpressions();
         result.expressions_.makeImmutable();
         result.bitField0_ = to_bitField0_;
@@ -9790,6 +9365,16 @@ public final class Sample {
         }
         if (!other.getBarcode().isEmpty()) {
           barcode_ = other.barcode_;
+          onChanged();
+        }
+        if (!other.expressionForEdgesBiosample_.isEmpty()) {
+          if (expressionForEdgesBiosample_.isEmpty()) {
+            expressionForEdgesBiosample_ = other.expressionForEdgesBiosample_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureExpressionForEdgesBiosampleIsMutable();
+            expressionForEdgesBiosample_.addAll(other.expressionForEdgesBiosample_);
+          }
           onChanged();
         }
         internalGetMutableExpressions().mergeFrom(
@@ -10028,6 +9613,136 @@ public final class Sample {
         return this;
       }
 
+      private com.google.protobuf.LazyStringList expressionForEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureExpressionForEdgesBiosampleIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          expressionForEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList(expressionForEdgesBiosample_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getExpressionForEdgesBiosampleList() {
+        return expressionForEdgesBiosample_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public int getExpressionForEdgesBiosampleCount() {
+        return expressionForEdgesBiosample_.size();
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public java.lang.String getExpressionForEdgesBiosample(int index) {
+        return expressionForEdgesBiosample_.get(index);
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getExpressionForEdgesBiosampleBytes(int index) {
+        return expressionForEdgesBiosample_.getByteString(index);
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public Builder setExpressionForEdgesBiosample(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureExpressionForEdgesBiosampleIsMutable();
+        expressionForEdgesBiosample_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public Builder addExpressionForEdgesBiosample(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureExpressionForEdgesBiosampleIsMutable();
+        expressionForEdgesBiosample_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public Builder addAllExpressionForEdgesBiosample(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureExpressionForEdgesBiosampleIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, expressionForEdgesBiosample_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public Builder clearExpressionForEdgesBiosample() {
+        expressionForEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string expressionForEdgesBiosample = 4;</code>
+       *
+       * <pre>
+       * edges to GeneExpression
+       * </pre>
+       */
+      public Builder addExpressionForEdgesBiosampleBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureExpressionForEdgesBiosampleIsMutable();
+        expressionForEdgesBiosample_.add(value);
+        onChanged();
+        return this;
+      }
+
       private com.google.protobuf.MapField<
           java.lang.String, java.lang.String> expressions_;
       private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -10051,20 +9766,20 @@ public final class Sample {
         return expressions_;
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 4;</code>
+       * <code>map&lt;string, string&gt; expressions = 5;</code>
        */
       public java.util.Map<java.lang.String, java.lang.String> getExpressions() {
         return internalGetExpressions().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 4;</code>
+       * <code>map&lt;string, string&gt; expressions = 5;</code>
        */
       public java.util.Map<java.lang.String, java.lang.String>
       getMutableExpressions() {
         return internalGetMutableExpressions().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 4;</code>
+       * <code>map&lt;string, string&gt; expressions = 5;</code>
        */
       public Builder putAllExpressions(
           java.util.Map<java.lang.String, java.lang.String> values) {
@@ -10170,10 +9885,10 @@ public final class Sample {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_bmeg_gaea_schema_BioSample_descriptor;
+    internal_static_bmeg_gaea_schema_Biosample_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_bmeg_gaea_schema_BioSample_fieldAccessorTable;
+      internal_static_bmeg_gaea_schema_Biosample_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_bmeg_gaea_schema_Individual_descriptor;
   private static
@@ -10207,41 +9922,42 @@ public final class Sample {
       "ema/sample.proto\022\020bmeg.gaea.schema\"X\n\010Po" +
       "sition\022\014\n\004name\030\001 \001(\t\022\022\n\nchromosome\030\002 \001(\t" +
       "\022\r\n\005start\030\003 \001(\003\022\013\n\003end\030\004 \001(\003\022\016\n\006strand\030\005" +
-      " \001(\t\"\272\001\n\007Feature\022\014\n\004name\030\001 \001(\t\022\027\n\017atPosi" +
-      "tionEdges\030\002 \003(\t\022\026\n\016hasEffectEdges\030\003 \003(\t\022" +
-      "=\n\nattributes\030\004 \003(\0132).bmeg.gaea.schema.F" +
-      "eature.AttributesEntry\0321\n\017AttributesEntr" +
-      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\026\n\006Dom" +
-      "ain\022\014\n\004name\030\001 \001(\t\"\372\001\n\021VariantCallEffect\022",
-      "\014\n\004name\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\035\n\025variant" +
-      "Classification\030\003 \001(\t\022\025\n\rinDomainEdges\030\004 " +
-      "\003(\t\022\017\n\007dbsnpRS\030\005 \001(\t\022\026\n\016dbsnpValStatus\030\006" +
-      " \001(\t\022;\n\004info\030\007 \003(\0132-.bmeg.gaea.schema.Va" +
-      "riantCallEffect.InfoEntry\032+\n\tInfoEntry\022\013" +
-      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\220\003\n\013Varia" +
-      "ntCall\022\014\n\004name\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\027\n\017" +
-      "atPositionEdges\030\003 \003(\t\022\023\n\013variantType\030\004 \001" +
-      "(\t\022\027\n\017referenceAllele\030\005 \001(\t\022\025\n\rnormalAll" +
-      "ele1\030\006 \001(\t\022\025\n\rnormalAllele2\030\007 \001(\t\022\024\n\014tum",
-      "orAllele1\030\010 \001(\t\022\024\n\014tumorAllele2\030\t \001(\t\022\021\n" +
-      "\tsequencer\030\n \001(\t\022\026\n\016hasEffectEdges\030\013 \003(\t" +
-      "\022\030\n\020tumorSampleEdges\030\014 \003(\t\022\031\n\021normalSamp" +
-      "leEdges\030\r \003(\t\0225\n\004info\030\016 \003(\0132\'.bmeg.gaea." +
-      "schema.VariantCall.InfoEntry\032+\n\tInfoEntr" +
-      "y\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"j\n\tBio" +
-      "Sample\022\014\n\004name\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\017\n\007" +
-      "barcode\030\003 \001(\t\022\022\n\nsampleType\030\004 \001(\t\022\032\n\022has" +
-      "ExpressionEdges\030\005 \003(\t\"\275\001\n\nIndividual\022\014\n\004" +
-      "name\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\026\n\016hasSampleE",
-      "dges\030\003 \003(\t\022D\n\014observations\030\004 \003(\0132..bmeg." +
-      "gaea.schema.Individual.ObservationsEntry" +
-      "\0323\n\021ObservationsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005va" +
-      "lue\030\002 \001(\t:\0028\001\"\273\001\n\016GeneExpression\022\014\n\004name" +
-      "\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\017\n\007barcode\030\003 \001(\t\022" +
-      "F\n\013expressions\030\004 \003(\01321.bmeg.gaea.schema." +
-      "GeneExpression.ExpressionsEntry\0322\n\020Expre" +
-      "ssionsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:" +
-      "\0028\001b\006proto3"
+      " \001(\t\"\211\001\n\007Feature\022\014\n\004name\030\001 \001(\t\022=\n\nattrib" +
+      "utes\030\004 \003(\0132).bmeg.gaea.schema.Feature.At" +
+      "tributesEntry\0321\n\017AttributesEntry\022\013\n\003key\030" +
+      "\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\026\n\006Domain\022\014\n\004na" +
+      "me\030\001 \001(\t\"\301\002\n\021VariantCallEffect\022\014\n\004name\030\001" +
+      " \001(\t\022\016\n\006source\030\002 \001(\t\022\035\n\025variantClassific",
+      "ation\030\003 \001(\t\022\033\n\023inDomainEdgesDomain\030\004 \003(\t" +
+      "\022\035\n\025inFeatureEdgesFeature\030\005 \003(\t\022 \n\030effec" +
+      "tOfEdgesVariantCall\030\006 \003(\t\022\017\n\007dbsnpRS\030\007 \001" +
+      "(\t\022\026\n\016dbsnpValStatus\030\010 \001(\t\022;\n\004info\030\t \003(\013" +
+      "2-.bmeg.gaea.schema.VariantCallEffect.In" +
+      "foEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005val" +
+      "ue\030\002 \001(\t:\0028\001\"\222\003\n\013VariantCall\022\014\n\004name\030\001 \001" +
+      "(\t\022\016\n\006source\030\002 \001(\t\022\023\n\013variantType\030\003 \001(\t\022" +
+      "\027\n\017referenceAllele\030\004 \001(\t\022\025\n\rnormalAllele" +
+      "1\030\005 \001(\t\022\025\n\rnormalAllele2\030\006 \001(\t\022\024\n\014tumorA",
+      "llele1\030\007 \001(\t\022\024\n\014tumorAllele2\030\010 \001(\t\022\021\n\tse" +
+      "quencer\030\t \001(\t\022\037\n\027atPositionEdgesPosition" +
+      "\030\n \003(\t\022!\n\031tumorSampleEdgesBiosample\030\013 \003(" +
+      "\t\022\"\n\032normalSampleEdgesBiosample\030\014 \003(\t\0225\n" +
+      "\004info\030\r \003(\0132\'.bmeg.gaea.schema.VariantCa" +
+      "ll.InfoEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r" +
+      "\n\005value\030\002 \001(\t:\0028\001\"o\n\tBiosample\022\014\n\004name\030\001" +
+      " \001(\t\022\016\n\006source\030\002 \001(\t\022\017\n\007barcode\030\003 \001(\t\022\022\n" +
+      "\nsampleType\030\004 \001(\t\022\037\n\027sampleOfEdgesIndivi" +
+      "dual\030\005 \003(\t\"\245\001\n\nIndividual\022\014\n\004name\030\001 \001(\t\022",
+      "\016\n\006source\030\002 \001(\t\022D\n\014observations\030\003 \003(\0132.." +
+      "bmeg.gaea.schema.Individual.Observations" +
+      "Entry\0323\n\021ObservationsEntry\022\013\n\003key\030\001 \001(\t\022" +
+      "\r\n\005value\030\002 \001(\t:\0028\001\"\340\001\n\016GeneExpression\022\014\n" +
+      "\004name\030\001 \001(\t\022\016\n\006source\030\002 \001(\t\022\017\n\007barcode\030\003" +
+      " \001(\t\022#\n\033expressionForEdgesBiosample\030\004 \003(" +
+      "\t\022F\n\013expressions\030\005 \003(\01321.bmeg.gaea.schem" +
+      "a.GeneExpression.ExpressionsEntry\0322\n\020Exp" +
+      "ressionsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(" +
+      "\t:\0028\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10266,7 +9982,7 @@ public final class Sample {
     internal_static_bmeg_gaea_schema_Feature_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Feature_descriptor,
-        new java.lang.String[] { "Name", "AtPositionEdges", "HasEffectEdges", "Attributes", });
+        new java.lang.String[] { "Name", "Attributes", });
     internal_static_bmeg_gaea_schema_Feature_AttributesEntry_descriptor =
       internal_static_bmeg_gaea_schema_Feature_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_Feature_AttributesEntry_fieldAccessorTable = new
@@ -10284,7 +10000,7 @@ public final class Sample {
     internal_static_bmeg_gaea_schema_VariantCallEffect_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_VariantCallEffect_descriptor,
-        new java.lang.String[] { "Name", "Source", "VariantClassification", "InDomainEdges", "DbsnpRS", "DbsnpValStatus", "Info", });
+        new java.lang.String[] { "Name", "Source", "VariantClassification", "InDomainEdgesDomain", "InFeatureEdgesFeature", "EffectOfEdgesVariantCall", "DbsnpRS", "DbsnpValStatus", "Info", });
     internal_static_bmeg_gaea_schema_VariantCallEffect_InfoEntry_descriptor =
       internal_static_bmeg_gaea_schema_VariantCallEffect_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_VariantCallEffect_InfoEntry_fieldAccessorTable = new
@@ -10296,25 +10012,25 @@ public final class Sample {
     internal_static_bmeg_gaea_schema_VariantCall_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_VariantCall_descriptor,
-        new java.lang.String[] { "Name", "Source", "AtPositionEdges", "VariantType", "ReferenceAllele", "NormalAllele1", "NormalAllele2", "TumorAllele1", "TumorAllele2", "Sequencer", "HasEffectEdges", "TumorSampleEdges", "NormalSampleEdges", "Info", });
+        new java.lang.String[] { "Name", "Source", "VariantType", "ReferenceAllele", "NormalAllele1", "NormalAllele2", "TumorAllele1", "TumorAllele2", "Sequencer", "AtPositionEdgesPosition", "TumorSampleEdgesBiosample", "NormalSampleEdgesBiosample", "Info", });
     internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_descriptor =
       internal_static_bmeg_gaea_schema_VariantCall_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_VariantCall_InfoEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_bmeg_gaea_schema_BioSample_descriptor =
+    internal_static_bmeg_gaea_schema_Biosample_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_bmeg_gaea_schema_BioSample_fieldAccessorTable = new
+    internal_static_bmeg_gaea_schema_Biosample_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_bmeg_gaea_schema_BioSample_descriptor,
-        new java.lang.String[] { "Name", "Source", "Barcode", "SampleType", "HasExpressionEdges", });
+        internal_static_bmeg_gaea_schema_Biosample_descriptor,
+        new java.lang.String[] { "Name", "Source", "Barcode", "SampleType", "SampleOfEdgesIndividual", });
     internal_static_bmeg_gaea_schema_Individual_descriptor =
       getDescriptor().getMessageTypes().get(6);
     internal_static_bmeg_gaea_schema_Individual_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Individual_descriptor,
-        new java.lang.String[] { "Name", "Source", "HasSampleEdges", "Observations", });
+        new java.lang.String[] { "Name", "Source", "Observations", });
     internal_static_bmeg_gaea_schema_Individual_ObservationsEntry_descriptor =
       internal_static_bmeg_gaea_schema_Individual_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_Individual_ObservationsEntry_fieldAccessorTable = new
@@ -10326,7 +10042,7 @@ public final class Sample {
     internal_static_bmeg_gaea_schema_GeneExpression_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_GeneExpression_descriptor,
-        new java.lang.String[] { "Name", "Source", "Barcode", "Expressions", });
+        new java.lang.String[] { "Name", "Source", "Barcode", "ExpressionForEdgesBiosample", "Expressions", });
     internal_static_bmeg_gaea_schema_GeneExpression_ExpressionsEntry_descriptor =
       internal_static_bmeg_gaea_schema_GeneExpression_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_GeneExpression_ExpressionsEntry_fieldAccessorTable = new

@@ -1,6 +1,6 @@
 package bmeg.gaea.convoy
 
-import bmeg.gaea.schema.sample.Sample
+import bmeg.gaea.schema.Sample
 import com.google.protobuf.util.JsonFormat
 
 object Parse {

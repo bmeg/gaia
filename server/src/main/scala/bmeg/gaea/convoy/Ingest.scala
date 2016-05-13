@@ -158,13 +158,7 @@ object Ingest {
   }
 
   def ingestFeature(graph: TitanGraph) (feature: sample.Feature): Vertex = {
-    val featureVertex = Feature.findFeature(graph) (feature.name)
-    for (effect <- feature.hasEffectEdges) {
-      val effectVertex = findVertex(graph) ("variantCallEffect") (effect)
-      featureVertex --- ("hasEffect") --> effectVertex
-    }
-
-    featureVertex
+    Feature.findFeature(graph) (feature.name)
   }
 
   def ingestPosition(graph: TitanGraph) (position: sample.Position): Vertex = {
@@ -186,9 +180,19 @@ object Ingest {
     effectVertex.setProperty(keys("dbsnpRS"), effect.dbsnpRS)
     effectVertex.setProperty(keys("dbsnpValStatus"), effect.dbsnpValStatus)
 
-    for (domain <- effect.inDomainEdges) {
+    for (feature <- effect.inFeatureEdgesFeature) {
+      val featureVertex = Feature.findFeature(graph) (feature)
+      effectVertex --- ("inFeature") --> featureVertex
+    }
+
+    for (domain <- effect.inDomainEdgesDomain) {
       val domainVertex = ingestDomain(graph) (sample.Domain(domain))
       effectVertex --- ("inDomain") --> domainVertex
+    }
+
+    for (variant <- effect.effectOfEdgesVariantCall) {
+      val variantVertex = findVertex(graph) ("variantCall") (variant)
+      effectVertex --- ("effectOf") --> variantVertex
     }
 
     effectVertex
@@ -206,22 +210,17 @@ object Ingest {
     variantVertex.setProperty(keys("tumorAllele2"), variant.tumorAllele2)
     variantVertex.setProperty(keys("sequencer"), variant.sequencer)
 
-    for (tumor <- variant.tumorSampleEdges) {
+    for (tumor <- variant.tumorSampleEdgesBiosample) {
       val tumorVertex = findVertex(graph) ("biosample") (tumor)
       variantVertex --- ("tumorSample") --> tumorVertex
     }
 
-    for (normal <- variant.normalSampleEdges) {
+    for (normal <- variant.normalSampleEdgesBiosample) {
       val normalVertex = findVertex(graph) ("biosample") (normal)
       variantVertex --- ("normalSample") --> normalVertex
     }
 
-    for (effect <- variant.hasEffectEdges) {
-      val effectVertex = findVertex(graph) ("variantCallEffect") (effect)
-      variantVertex --- ("hasEffect") --> effectVertex
-    }
-
-    for (position <- variant.atPositionEdges) {
+    for (position <- variant.atPositionEdgesPosition) {
       val positionVertex = findVertex(graph) ("position") (position)
       variantVertex --- ("atPosition") --> positionVertex
     }
@@ -234,6 +233,11 @@ object Ingest {
     biosampleVertex.setProperty(keys("source"), biosample.source)
     biosampleVertex.setProperty(keys("barcode"), biosample.barcode)
     biosampleVertex.setProperty(keys("sampleType"), biosample.sampleType)
+
+    for (individual <- biosample.sampleOfEdgesIndividual) {
+      val individualVertex = findVertex(graph) ("individual") (individual)
+      biosampleVertex --- ("sampleOf") --> individualVertex
+    }
 
     biosampleVertex
   }
@@ -261,11 +265,6 @@ object Ingest {
           Key[String](observationKey)
         }, observation)
       }
-    }
-
-    for (biosample <- individual.hasSampleEdges) {
-      val biosampleVertex = findVertex(graph) ("biosample") (biosample)
-      individualVertex --- ("hasSample") --> biosampleVertex
     }
 
     individualVertex
