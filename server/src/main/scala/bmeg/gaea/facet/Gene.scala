@@ -2,7 +2,7 @@ package bmeg.gaea.facet
 
 import bmeg.gaea.titan.Titan
 import bmeg.gaea.schema.Variant
-import bmeg.gaea.convoy.Convoy
+import bmeg.gaea.convoy.Ingest
 import bmeg.gaea.feature.Feature
 
 import org.http4s._
@@ -31,10 +31,10 @@ object GeneFacet {
 
   def puts(line: String): Task[Unit] = Task { println(line) }
 
-  def ingest(graph: TitanGraph) (line: String): Task[Vertex] = Task {
-    val individual = Convoy.parseIndividual(line)
-    Convoy.ingestIndividual(graph) (individual)
-  }
+  // def ingest(graph: TitanGraph) (line: String): Task[Vertex] = Task {
+  //   val individual = Convoy.parseIndividual(line)
+  //   Convoy.ingestIndividual(graph) (individual)
+  // }
 
   def commit(graph: TitanGraph): Process[Task, Unit] = Process eval_ (Task {
     graph.tx.commit()
@@ -51,19 +51,27 @@ object GeneFacet {
       }
       Ok(jSingleObject(name, jString(synonym)))
 
-    case request @ POST -> Root / "individual-list" =>
-      request.as[String].flatMap { raw =>
-        val individualList = Convoy.parseIndividualList(raw)
-        val size = Convoy.ingestIndividualList(individualList)
-        Ok(jNumber(size))
-      }
+    // case request @ POST -> Root / "individual-list" =>
+    //   request.as[String].flatMap { raw =>
+    //     val individualList = Convoy.parseIndividualList(raw)
+    //     val size = Convoy.ingestIndividualList(individualList)
+    //     Ok(jNumber(size))
+    //   }
 
-    case request @ POST -> Root / "individuals" =>
+    // case request @ POST -> Root / "individuals" =>
+    //   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
+    //   val individuals = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
+    //     Process eval ingest(graph) (line)
+    //   } onComplete commit(graph)
+    //   individuals.runLog.run
+    //   Ok(jString("done!"))
+
+    case request @ POST -> Root / "message" / messageType =>
       val graph = Titan.connect(Titan.configuration(Map[String, String]()))
-      val individuals = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
-        Process eval ingest(graph) (line) 
+      val messages = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
+        Process eval Ingest.ingestMessage(messageType) (graph) (line)
       } onComplete commit(graph)
-      individuals.runLog.run
+      messages.runLog.run
       Ok(jString("done!"))
 
     case request @ POST -> Root / "yellow" =>

@@ -29,13 +29,13 @@ object HelloWorld {
       }
       Ok(jSingleObject(name, jString(synonym)))
 
-    case request @ POST -> Root / "individual-list" =>
-      request.as[String].flatMap { raw =>
-        val individualList: Variant.IndividualList.Builder = Variant.IndividualList.newBuilder()
-        JsonFormat.parser().merge(raw, individualList)
-        val size = Convoy.ingestIndividualList(individualList.build())
-        Ok(jNumber(size))
-      }
+    // case request @ POST -> Root / "individual-list" =>
+    //   request.as[String].flatMap { raw =>
+    //     val individualList: Variant.IndividualList.Builder = Variant.IndividualList.newBuilder()
+    //     JsonFormat.parser().merge(raw, individualList)
+    //     val size = Convoy.ingestIndividualList(individualList.build())
+    //     Ok(jNumber(size))
+    //   }
 
     // case request @ POST -> Root / "individual-list" =>
     //   request.as[String].flatMap { raw =>
