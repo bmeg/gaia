@@ -1,15 +1,12 @@
 package bmeg.gaea.convoy
 
 import bmeg.gaea.titan.Titan
-// import bmeg.gaea.schema.Variant
 import bmeg.gaea.feature.Feature
-import bmeg.gaea.schema.sample
+import bmeg.gaea.schema.Sample
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import scala.collection.JavaConverters._
-// import com.google.protobuf.util.JsonFormat
-import com.trueaccord.scalapb.json.JsonFormat
 import java.lang.{Long => Llong}
 import scalaz.concurrent.Task
 
@@ -26,6 +23,8 @@ object Ingest {
     // sample keys
     "tumor",
     "normal",
+    "barcode",
+    "sampleType",
 
     // variant keys
     "variantType",
@@ -157,40 +156,40 @@ object Ingest {
     }
   }
 
-  def ingestFeature(graph: TitanGraph) (feature: sample.Feature): Vertex = {
-    Feature.findFeature(graph) (feature.name)
+  def ingestFeature(graph: TitanGraph) (feature: Sample.Feature): Vertex = {
+    Feature.findFeature(graph) (feature.getName())
   }
 
-  def ingestPosition(graph: TitanGraph) (position: sample.Position): Vertex = {
-    val positionVertex = findVertex(graph) ("position") (position.name)
-    positionVertex.setProperty(keys("chromosome"), position.chromosome)
-    positionVertex.setProperty(keys("strand"), position.strand)
-    positionVertex.setProperty(Key[Long]("start"), position.start)
-    positionVertex.setProperty(Key[Long]("end"), position.end)
+  def ingestPosition(graph: TitanGraph) (position: Sample.Position): Vertex = {
+    val positionVertex = findVertex(graph) ("position") (position.getName())
+    positionVertex.setProperty(keys("chromosome"), position.getChromosome())
+    positionVertex.setProperty(keys("strand"), position.getStrand())
+    positionVertex.setProperty(Key[Long]("start"), position.getStart())
+    positionVertex.setProperty(Key[Long]("end"), position.getEnd())
     positionVertex
   }
 
-  def ingestDomain(graph: TitanGraph) (domain: sample.Domain): Vertex = {
-    findVertex(graph) ("domain") (domain.name)
+  def ingestDomain(graph: TitanGraph) (domain: Sample.Domain): Vertex = {
+    findVertex(graph) ("domain") (domain.getName())
   }
 
-  def ingestVariantCallEffect(graph: TitanGraph) (effect: sample.VariantCallEffect): Vertex = {
-    val effectVertex = findVertex(graph) ("variantCallEffect") (effect.name)
-    effectVertex.setProperty(keys("variantClassification"), effect.variantClassification)
-    effectVertex.setProperty(keys("dbsnpRS"), effect.dbsnpRS)
-    effectVertex.setProperty(keys("dbsnpValStatus"), effect.dbsnpValStatus)
+  def ingestVariantCallEffect(graph: TitanGraph) (effect: Sample.VariantCallEffect): Vertex = {
+    val effectVertex = findVertex(graph) ("variantCallEffect") (effect.getName())
+    effectVertex.setProperty(keys("variantClassification"), effect.getVariantClassification())
+    effectVertex.setProperty(keys("dbsnpRS"), effect.getDbsnpRS())
+    effectVertex.setProperty(keys("dbsnpValStatus"), effect.getDbsnpValStatus())
 
-    for (feature <- effect.inFeatureEdgesFeature) {
+    for (feature <- effect.getInFeatureEdgesFeatureList().asScala.toList) {
       val featureVertex = Feature.findFeature(graph) (feature)
       effectVertex --- ("inFeature") --> featureVertex
     }
 
-    for (domain <- effect.inDomainEdgesDomain) {
-      val domainVertex = ingestDomain(graph) (sample.Domain(domain))
+    for (domain <- effect.getInDomainEdgesDomainList().asScala.toList) {
+      val domainVertex = findVertex(graph) ("domain") (domain)
       effectVertex --- ("inDomain") --> domainVertex
     }
 
-    for (variant <- effect.effectOfEdgesVariantCall) {
+    for (variant <- effect.getEffectOfEdgesVariantCallList().asScala.toList) {
       val variantVertex = findVertex(graph) ("variantCall") (variant)
       effectVertex --- ("effectOf") --> variantVertex
     }
@@ -198,29 +197,29 @@ object Ingest {
     effectVertex
   }
 
-  def ingestVariantCall(graph: TitanGraph) (variant: sample.VariantCall): Vertex = {
-    val variantVertex = findVertex(graph) ("variantCall") (variant.name)
+  def ingestVariantCall(graph: TitanGraph) (variant: Sample.VariantCall): Vertex = {
+    val variantVertex = findVertex(graph) ("variantCall") (variant.getName())
 
-    variantVertex.setProperty(keys("source"), variant.source)
-    variantVertex.setProperty(keys("variantType"), variant.variantType)
-    variantVertex.setProperty(keys("referenceAllele"), variant.referenceAllele)
-    variantVertex.setProperty(keys("normalAllele1"), variant.normalAllele1)
-    variantVertex.setProperty(keys("normalAllele2"), variant.normalAllele2)
-    variantVertex.setProperty(keys("tumorAllele1"), variant.tumorAllele1)
-    variantVertex.setProperty(keys("tumorAllele2"), variant.tumorAllele2)
-    variantVertex.setProperty(keys("sequencer"), variant.sequencer)
+    variantVertex.setProperty(keys("source"), variant.getSource())
+    variantVertex.setProperty(keys("variantType"), variant.getVariantType())
+    variantVertex.setProperty(keys("referenceAllele"), variant.getReferenceAllele())
+    variantVertex.setProperty(keys("normalAllele1"), variant.getNormalAllele1())
+    variantVertex.setProperty(keys("normalAllele2"), variant.getNormalAllele2())
+    variantVertex.setProperty(keys("tumorAllele1"), variant.getTumorAllele1())
+    variantVertex.setProperty(keys("tumorAllele2"), variant.getTumorAllele2())
+    variantVertex.setProperty(keys("sequencer"), variant.getSequencer())
 
-    for (tumor <- variant.tumorSampleEdgesBiosample) {
+    for (tumor <- variant.getTumorSampleEdgesBiosampleList().asScala.toList) {
       val tumorVertex = findVertex(graph) ("biosample") (tumor)
       variantVertex --- ("tumorSample") --> tumorVertex
     }
 
-    for (normal <- variant.normalSampleEdgesBiosample) {
+    for (normal <- variant.getNormalSampleEdgesBiosampleList().asScala.toList) {
       val normalVertex = findVertex(graph) ("biosample") (normal)
       variantVertex --- ("normalSample") --> normalVertex
     }
 
-    for (position <- variant.atPositionEdgesPosition) {
+    for (position <- variant.getAtPositionEdgesPositionList().asScala.toList) {
       val positionVertex = findVertex(graph) ("position") (position)
       variantVertex --- ("atPosition") --> positionVertex
     }
@@ -228,13 +227,13 @@ object Ingest {
     variantVertex
   }
 
-  def ingestBiosample(graph: TitanGraph) (biosample: sample.Biosample): Vertex = {
-    val biosampleVertex = findVertex(graph) ("biosample") (biosample.name)
-    biosampleVertex.setProperty(keys("source"), biosample.source)
-    biosampleVertex.setProperty(keys("barcode"), biosample.barcode)
-    biosampleVertex.setProperty(keys("sampleType"), biosample.sampleType)
+  def ingestBiosample(graph: TitanGraph) (biosample: Sample.Biosample): Vertex = {
+    val biosampleVertex = findVertex(graph) ("biosample") (biosample.getName())
+    biosampleVertex.setProperty(keys("source"), biosample.getSource())
+    biosampleVertex.setProperty(keys("barcode"), biosample.getBarcode())
+    biosampleVertex.setProperty(keys("sampleType"), biosample.getSampleType())
 
-    for (individual <- biosample.sampleOfEdgesIndividual) {
+    for (individual <- biosample.getSampleOfEdgesIndividualList().asScala.toList) {
       val individualVertex = findVertex(graph) ("individual") (individual)
       biosampleVertex --- ("sampleOf") --> individualVertex
     }
@@ -242,12 +241,13 @@ object Ingest {
     biosampleVertex
   }
 
-  def ingestIndividual(graph: TitanGraph) (individual: sample.Individual): Vertex = {
-    println("ingesting individual" + individual.name)
-    val individualVertex = findVertex(graph) ("individual") (individual.name)
-    individualVertex.setProperty(keys("source"), individual.source)
+  def ingestIndividual(graph: TitanGraph) (individual: Sample.Individual): Vertex = {
+    println("ingesting individual" + individual.getName())
+    val individualVertex = findVertex(graph) ("individual") (individual.getName())
+    individualVertex.setProperty(keys("source"), individual.getSource())
 
-    for ((key, observation) <- individual.observations) {
+    val observations = individual.getObservations().asScala
+    for ((key, observation) <- observations) {
       val observationKey = camelize(key)
       println(observationKey)
       if (nkeys.contains(observationKey)) {
@@ -270,62 +270,30 @@ object Ingest {
     individualVertex
   }
 
-  // def parseIndividual(raw: String): sample.Individual = {
-  //   val individual: sample.Individual.Builder = sample.Individual.newBuilder()
-  //   JsonFormat.parser().merge(raw, individual)
-  //   individual.build()
-  // }
-
-  // def parseMessage[T <: com.trueaccord.scalapb.GeneratedMessage](raw: String): T = {
-  //   JsonFormat.fromJsonString[T](raw)
-  // }
-
   def ingestMessage(messageType: String) (graph: TitanGraph) (line: String): Task[Vertex] = Task {
     if (messageType == "Feature") {
-      val feature = JsonFormat.fromJsonString[sample.Feature](line)
+      val feature = Parse.parseFeature(line)
       ingestFeature(graph) (feature)
     } else if (messageType == "Domain") {
-      val domain = JsonFormat.fromJsonString[sample.Domain](line)
+      val domain = Parse.parseDomain(line)
       ingestDomain(graph) (domain)
     } else if (messageType == "Position") {
-      val position = JsonFormat.fromJsonString[sample.Position](line)
+      val position = Parse.parsePosition(line)
       ingestPosition(graph) (position)
     } else if (messageType == "VariantCall") {
-      val variantCall = JsonFormat.fromJsonString[sample.VariantCall](line)
+      val variantCall = Parse.parseVariantCall(line)
       ingestVariantCall(graph) (variantCall)
     } else if (messageType == "VariantCallEffect") {
-      val variantCallEffect = JsonFormat.fromJsonString[sample.VariantCallEffect](line)
+      val variantCallEffect = Parse.parseVariantCallEffect(line)
       ingestVariantCallEffect(graph) (variantCallEffect)
     } else if (messageType == "Biosample") {
-      val biosample = JsonFormat.fromJsonString[sample.Biosample](line)
+      val biosample = Parse.parseBiosample(line)
       ingestBiosample(graph) (biosample)
     } else if (messageType == "Individual") {
-      val individual = JsonFormat.fromJsonString[sample.Individual](line)
+      val individual = Parse.parseIndividual(line)
       ingestIndividual(graph) (individual)
     } else {
       findVertex(graph) ("void") ("void")
     }
   }
-
-  // def ingestIndividuals(individuals: List[sample.Individual]): Int = {
-  //   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
-  //   println(s"Ingesting ${individuals.length} individuals")
-
-  //   val individualVertexes = individuals.map(ingestIndividual(graph))
-  //   graph.tx.commit()
-
-  //   println(s"Ingested ${individualVertexes.length} individuals")
-  //   individualVertexes.length
-  // }
-
-  // def parseIndividualList(raw: String): sample.IndividualList = {
-  //   val individualList: sample.IndividualList.Builder = sample.IndividualList.newBuilder()
-  //   JsonFormat.parser().merge(raw, individualList)
-  //   individualList.build()
-  // }
-
-  // def ingestIndividualList(individualList: sample.IndividualList): Int = {
-  //   val individuals = individualList.getIndividualsList().asScala.toList
-  //   ingestIndividuals(individuals)
-  // }
 }
