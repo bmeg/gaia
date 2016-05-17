@@ -228,6 +228,7 @@ object Ingest {
   }
 
   def ingestBiosample(graph: TitanGraph) (biosample: Sample.Biosample): Vertex = {
+    println("ingesting biosample " + biosample.getName())
     val biosampleVertex = findVertex(graph) ("biosample") (biosample.getName())
     biosampleVertex.setProperty(keys("source"), biosample.getSource())
     biosampleVertex.setProperty(keys("barcode"), biosample.getBarcode())
@@ -242,7 +243,7 @@ object Ingest {
   }
 
   def ingestIndividual(graph: TitanGraph) (individual: Sample.Individual): Vertex = {
-    println("ingesting individual" + individual.getName())
+    println("ingesting individual " + individual.getName())
     val individualVertex = findVertex(graph) ("individual") (individual.getName())
     individualVertex.setProperty(keys("source"), individual.getSource())
 
@@ -271,7 +272,18 @@ object Ingest {
   }
 
   def ingestGeneExpression(graph: TitanGraph) (expression: Sample.GeneExpression): Vertex = {
+    println("ingesting expression " + expression.getName())
     val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
+    val expressions = expression.getExpressions().asScala
+    for ((feature, value) <- expressions) {
+      expressionVertex.setProperty(Key[java.lang.Double](feature), value)
+    }
+
+    for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {
+      val sampleVertex = findVertex(graph) ("biosample") (sample)
+      expressionVertex --- ("expressionFor") --> sampleVertex
+    }
+
     expressionVertex
   }
 
