@@ -6,7 +6,6 @@ name := "gaea"
 version := "0.0.1-SNAPSHOT"
 scalaVersion := "2.11.8"
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-javaOptions += "-D-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9911"
 
 libraryDependencies ++= Seq(
   "com.thinkaurelius.titan" %  "titan-core"          % "1.1.0-SNAPSHOT",

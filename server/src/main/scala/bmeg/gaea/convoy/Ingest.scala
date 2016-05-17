@@ -270,6 +270,11 @@ object Ingest {
     individualVertex
   }
 
+  def ingestGeneExpression(graph: TitanGraph) (expression: Sample.GeneExpression): Vertex = {
+    val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
+    expressionVertex
+  }
+
   def ingestMessage(messageType: String) (graph: TitanGraph) (line: String): Task[Vertex] = Task {
     if (messageType == "Feature") {
       val feature = Parse.parseFeature(line)
@@ -292,6 +297,9 @@ object Ingest {
     } else if (messageType == "Individual") {
       val individual = Parse.parseIndividual(line)
       ingestIndividual(graph) (individual)
+    } else if (messageType == "GeneExpression") {
+      val geneExpression = Parse.parseGeneExpression(line)
+      ingestGeneExpression(graph) (geneExpression)
     } else {
       findVertex(graph) ("void") ("void")
     }

@@ -45,4 +45,10 @@ object Parse {
     JsonFormat.parser().merge(raw, individual)
     individual.build()
   }
+
+  def parseGeneExpression(raw: String): Sample.GeneExpression = {
+    val geneExpression: Sample.GeneExpression.Builder = Sample.GeneExpression.newBuilder()
+    JsonFormat.parser().merge(raw, geneExpression)
+    geneExpression.build()
+  }
 }

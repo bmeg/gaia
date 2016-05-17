@@ -8794,9 +8794,9 @@ public final class Sample {
         getExpressionForEdgesBiosampleBytes(int index);
 
     /**
-     * <code>map&lt;string, string&gt; expressions = 5;</code>
+     * <code>map&lt;string, double&gt; expressions = 5;</code>
      */
-    java.util.Map<java.lang.String, java.lang.String>
+    java.util.Map<java.lang.String, java.lang.Double>
     getExpressions();
   }
   /**
@@ -8874,7 +8874,7 @@ public final class Sample {
                     ExpressionsDefaultEntryHolder.defaultEntry);
                 mutable_bitField0_ |= 0x00000010;
               }
-              com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.Double>
               expressions = input.readMessage(
                   ExpressionsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
               expressions_.getMutableMap().put(expressions.getKey(), expressions.getValue());
@@ -9069,18 +9069,18 @@ public final class Sample {
     public static final int EXPRESSIONS_FIELD_NUMBER = 5;
     private static final class ExpressionsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
-          java.lang.String, java.lang.String> defaultEntry =
+          java.lang.String, java.lang.Double> defaultEntry =
               com.google.protobuf.MapEntry
-              .<java.lang.String, java.lang.String>newDefaultInstance(
+              .<java.lang.String, java.lang.Double>newDefaultInstance(
                   bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_GeneExpression_ExpressionsEntry_descriptor, 
                   com.google.protobuf.WireFormat.FieldType.STRING,
                   "",
-                  com.google.protobuf.WireFormat.FieldType.STRING,
-                  "");
+                  com.google.protobuf.WireFormat.FieldType.DOUBLE,
+                  0D);
     }
     private com.google.protobuf.MapField<
-        java.lang.String, java.lang.String> expressions_;
-    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        java.lang.String, java.lang.Double> expressions_;
+    private com.google.protobuf.MapField<java.lang.String, java.lang.Double>
     internalGetExpressions() {
       if (expressions_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
@@ -9089,10 +9089,10 @@ public final class Sample {
       return expressions_;
     }
     /**
-     * <code>map&lt;string, string&gt; expressions = 5;</code>
+     * <code>map&lt;string, double&gt; expressions = 5;</code>
      */
 
-    public java.util.Map<java.lang.String, java.lang.String> getExpressions() {
+    public java.util.Map<java.lang.String, java.lang.Double> getExpressions() {
       return internalGetExpressions().getMap();
     }
 
@@ -9120,9 +9120,9 @@ public final class Sample {
       for (int i = 0; i < expressionForEdgesBiosample_.size(); i++) {
         com.google.protobuf.GeneratedMessage.writeString(output, 4, expressionForEdgesBiosample_.getRaw(i));
       }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+      for (java.util.Map.Entry<java.lang.String, java.lang.Double> entry
            : internalGetExpressions().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.Double>
         expressions = ExpressionsDefaultEntryHolder.defaultEntry.newBuilderForType()
             .setKey(entry.getKey())
             .setValue(entry.getValue())
@@ -9153,9 +9153,9 @@ public final class Sample {
         size += dataSize;
         size += 1 * getExpressionForEdgesBiosampleList().size();
       }
-      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+      for (java.util.Map.Entry<java.lang.String, java.lang.Double> entry
            : internalGetExpressions().getMap().entrySet()) {
-        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.Double>
         expressions = ExpressionsDefaultEntryHolder.defaultEntry.newBuilderForType()
             .setKey(entry.getKey())
             .setValue(entry.getValue())
@@ -9744,8 +9744,8 @@ public final class Sample {
       }
 
       private com.google.protobuf.MapField<
-          java.lang.String, java.lang.String> expressions_;
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+          java.lang.String, java.lang.Double> expressions_;
+      private com.google.protobuf.MapField<java.lang.String, java.lang.Double>
       internalGetExpressions() {
         if (expressions_ == null) {
           return com.google.protobuf.MapField.emptyMapField(
@@ -9753,7 +9753,7 @@ public final class Sample {
        }
         return expressions_;
       }
-      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      private com.google.protobuf.MapField<java.lang.String, java.lang.Double>
       internalGetMutableExpressions() {
         onChanged();;
         if (expressions_ == null) {
@@ -9766,23 +9766,23 @@ public final class Sample {
         return expressions_;
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 5;</code>
+       * <code>map&lt;string, double&gt; expressions = 5;</code>
        */
-      public java.util.Map<java.lang.String, java.lang.String> getExpressions() {
+      public java.util.Map<java.lang.String, java.lang.Double> getExpressions() {
         return internalGetExpressions().getMap();
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 5;</code>
+       * <code>map&lt;string, double&gt; expressions = 5;</code>
        */
-      public java.util.Map<java.lang.String, java.lang.String>
+      public java.util.Map<java.lang.String, java.lang.Double>
       getMutableExpressions() {
         return internalGetMutableExpressions().getMutableMap();
       }
       /**
-       * <code>map&lt;string, string&gt; expressions = 5;</code>
+       * <code>map&lt;string, double&gt; expressions = 5;</code>
        */
       public Builder putAllExpressions(
-          java.util.Map<java.lang.String, java.lang.String> values) {
+          java.util.Map<java.lang.String, java.lang.Double> values) {
         getMutableExpressions().putAll(values);
         return this;
       }
@@ -9839,6 +9839,7600 @@ public final class Sample {
     }
 
     public bmeg.gaea.schema.Sample.GeneExpression getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PhenotypeAssociationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.PhenotypeAssociation)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+        getHasGenotypeEdgesGenotypeList();
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    int getHasGenotypeEdgesGenotypeCount();
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    java.lang.String getHasGenotypeEdgesGenotype(int index);
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getHasGenotypeEdgesGenotypeBytes(int index);
+
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    boolean hasTheContext();
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    bmeg.gaea.schema.Sample.Context getTheContext();
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    bmeg.gaea.schema.Sample.ContextOrBuilder getTheContextOrBuilder();
+
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+        getHasPhenotypeEdgesPhenotypeList();
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    int getHasPhenotypeEdgesPhenotypeCount();
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    java.lang.String getHasPhenotypeEdgesPhenotype(int index);
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getHasPhenotypeEdgesPhenotypeBytes(int index);
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.PhenotypeAssociation}
+   */
+  public  static final class PhenotypeAssociation extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.PhenotypeAssociation)
+      PhenotypeAssociationOrBuilder {
+    // Use PhenotypeAssociation.newBuilder() to construct.
+    private PhenotypeAssociation(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private PhenotypeAssociation() {
+      name_ = "";
+      hasGenotypeEdgesGenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      hasPhenotypeEdgesPhenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private PhenotypeAssociation(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                hasGenotypeEdgesGenotype_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              hasGenotypeEdgesGenotype_.add(s);
+              break;
+            }
+            case 26: {
+              bmeg.gaea.schema.Sample.Context.Builder subBuilder = null;
+              if (theContext_ != null) {
+                subBuilder = theContext_.toBuilder();
+              }
+              theContext_ = input.readMessage(bmeg.gaea.schema.Sample.Context.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(theContext_);
+                theContext_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                hasPhenotypeEdgesPhenotype_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              hasPhenotypeEdgesPhenotype_.add(s);
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          hasGenotypeEdgesGenotype_ = hasGenotypeEdgesGenotype_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          hasPhenotypeEdgesPhenotype_ = hasPhenotypeEdgesPhenotype_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_PhenotypeAssociation_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.PhenotypeAssociation.class, bmeg.gaea.schema.Sample.PhenotypeAssociation.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int HASGENOTYPEEDGESGENOTYPE_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList hasGenotypeEdgesGenotype_;
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getHasGenotypeEdgesGenotypeList() {
+      return hasGenotypeEdgesGenotype_;
+    }
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    public int getHasGenotypeEdgesGenotypeCount() {
+      return hasGenotypeEdgesGenotype_.size();
+    }
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    public java.lang.String getHasGenotypeEdgesGenotype(int index) {
+      return hasGenotypeEdgesGenotype_.get(index);
+    }
+    /**
+     * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getHasGenotypeEdgesGenotypeBytes(int index) {
+      return hasGenotypeEdgesGenotype_.getByteString(index);
+    }
+
+    public static final int THECONTEXT_FIELD_NUMBER = 3;
+    private bmeg.gaea.schema.Sample.Context theContext_;
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    public boolean hasTheContext() {
+      return theContext_ != null;
+    }
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    public bmeg.gaea.schema.Sample.Context getTheContext() {
+      return theContext_ == null ? bmeg.gaea.schema.Sample.Context.getDefaultInstance() : theContext_;
+    }
+    /**
+     * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+     *
+     * <pre>
+     * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+     * </pre>
+     */
+    public bmeg.gaea.schema.Sample.ContextOrBuilder getTheContextOrBuilder() {
+      return getTheContext();
+    }
+
+    public static final int HASPHENOTYPEEDGESPHENOTYPE_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList hasPhenotypeEdgesPhenotype_;
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getHasPhenotypeEdgesPhenotypeList() {
+      return hasPhenotypeEdgesPhenotype_;
+    }
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    public int getHasPhenotypeEdgesPhenotypeCount() {
+      return hasPhenotypeEdgesPhenotype_.size();
+    }
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    public java.lang.String getHasPhenotypeEdgesPhenotype(int index) {
+      return hasPhenotypeEdgesPhenotype_.get(index);
+    }
+    /**
+     * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getHasPhenotypeEdgesPhenotypeBytes(int index) {
+      return hasPhenotypeEdgesPhenotype_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < hasGenotypeEdgesGenotype_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, hasGenotypeEdgesGenotype_.getRaw(i));
+      }
+      if (theContext_ != null) {
+        output.writeMessage(3, getTheContext());
+      }
+      for (int i = 0; i < hasPhenotypeEdgesPhenotype_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, hasPhenotypeEdgesPhenotype_.getRaw(i));
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < hasGenotypeEdgesGenotype_.size(); i++) {
+          dataSize += computeStringSizeNoTag(hasGenotypeEdgesGenotype_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getHasGenotypeEdgesGenotypeList().size();
+      }
+      if (theContext_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getTheContext());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < hasPhenotypeEdgesPhenotype_.size(); i++) {
+          dataSize += computeStringSizeNoTag(hasPhenotypeEdgesPhenotype_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getHasPhenotypeEdgesPhenotypeList().size();
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.PhenotypeAssociation prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.PhenotypeAssociation}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.PhenotypeAssociation)
+        bmeg.gaea.schema.Sample.PhenotypeAssociationOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_PhenotypeAssociation_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.PhenotypeAssociation.class, bmeg.gaea.schema.Sample.PhenotypeAssociation.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.PhenotypeAssociation.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        hasGenotypeEdgesGenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        if (theContextBuilder_ == null) {
+          theContext_ = null;
+        } else {
+          theContext_ = null;
+          theContextBuilder_ = null;
+        }
+        hasPhenotypeEdgesPhenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.PhenotypeAssociation getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.PhenotypeAssociation.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.PhenotypeAssociation build() {
+        bmeg.gaea.schema.Sample.PhenotypeAssociation result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.PhenotypeAssociation buildPartial() {
+        bmeg.gaea.schema.Sample.PhenotypeAssociation result = new bmeg.gaea.schema.Sample.PhenotypeAssociation(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          hasGenotypeEdgesGenotype_ = hasGenotypeEdgesGenotype_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.hasGenotypeEdgesGenotype_ = hasGenotypeEdgesGenotype_;
+        if (theContextBuilder_ == null) {
+          result.theContext_ = theContext_;
+        } else {
+          result.theContext_ = theContextBuilder_.build();
+        }
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          hasPhenotypeEdgesPhenotype_ = hasPhenotypeEdgesPhenotype_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.hasPhenotypeEdgesPhenotype_ = hasPhenotypeEdgesPhenotype_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.PhenotypeAssociation) {
+          return mergeFrom((bmeg.gaea.schema.Sample.PhenotypeAssociation)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.PhenotypeAssociation other) {
+        if (other == bmeg.gaea.schema.Sample.PhenotypeAssociation.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.hasGenotypeEdgesGenotype_.isEmpty()) {
+          if (hasGenotypeEdgesGenotype_.isEmpty()) {
+            hasGenotypeEdgesGenotype_ = other.hasGenotypeEdgesGenotype_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureHasGenotypeEdgesGenotypeIsMutable();
+            hasGenotypeEdgesGenotype_.addAll(other.hasGenotypeEdgesGenotype_);
+          }
+          onChanged();
+        }
+        if (other.hasTheContext()) {
+          mergeTheContext(other.getTheContext());
+        }
+        if (!other.hasPhenotypeEdgesPhenotype_.isEmpty()) {
+          if (hasPhenotypeEdgesPhenotype_.isEmpty()) {
+            hasPhenotypeEdgesPhenotype_ = other.hasPhenotypeEdgesPhenotype_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureHasPhenotypeEdgesPhenotypeIsMutable();
+            hasPhenotypeEdgesPhenotype_.addAll(other.hasPhenotypeEdgesPhenotype_);
+          }
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.PhenotypeAssociation parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.PhenotypeAssociation) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList hasGenotypeEdgesGenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureHasGenotypeEdgesGenotypeIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          hasGenotypeEdgesGenotype_ = new com.google.protobuf.LazyStringArrayList(hasGenotypeEdgesGenotype_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getHasGenotypeEdgesGenotypeList() {
+        return hasGenotypeEdgesGenotype_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public int getHasGenotypeEdgesGenotypeCount() {
+        return hasGenotypeEdgesGenotype_.size();
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public java.lang.String getHasGenotypeEdgesGenotype(int index) {
+        return hasGenotypeEdgesGenotype_.get(index);
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getHasGenotypeEdgesGenotypeBytes(int index) {
+        return hasGenotypeEdgesGenotype_.getByteString(index);
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public Builder setHasGenotypeEdgesGenotype(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasGenotypeEdgesGenotypeIsMutable();
+        hasGenotypeEdgesGenotype_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public Builder addHasGenotypeEdgesGenotype(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasGenotypeEdgesGenotypeIsMutable();
+        hasGenotypeEdgesGenotype_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public Builder addAllHasGenotypeEdgesGenotype(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureHasGenotypeEdgesGenotypeIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, hasGenotypeEdgesGenotype_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public Builder clearHasGenotypeEdgesGenotype() {
+        hasGenotypeEdgesGenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasGenotypeEdgesGenotype = 2;</code>
+       */
+      public Builder addHasGenotypeEdgesGenotypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureHasGenotypeEdgesGenotypeIsMutable();
+        hasGenotypeEdgesGenotype_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private bmeg.gaea.schema.Sample.Context theContext_ = null;
+      private com.google.protobuf.SingleFieldBuilder<
+          bmeg.gaea.schema.Sample.Context, bmeg.gaea.schema.Sample.Context.Builder, bmeg.gaea.schema.Sample.ContextOrBuilder> theContextBuilder_;
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public boolean hasTheContext() {
+        return theContextBuilder_ != null || theContext_ != null;
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public bmeg.gaea.schema.Sample.Context getTheContext() {
+        if (theContextBuilder_ == null) {
+          return theContext_ == null ? bmeg.gaea.schema.Sample.Context.getDefaultInstance() : theContext_;
+        } else {
+          return theContextBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public Builder setTheContext(bmeg.gaea.schema.Sample.Context value) {
+        if (theContextBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          theContext_ = value;
+          onChanged();
+        } else {
+          theContextBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public Builder setTheContext(
+          bmeg.gaea.schema.Sample.Context.Builder builderForValue) {
+        if (theContextBuilder_ == null) {
+          theContext_ = builderForValue.build();
+          onChanged();
+        } else {
+          theContextBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public Builder mergeTheContext(bmeg.gaea.schema.Sample.Context value) {
+        if (theContextBuilder_ == null) {
+          if (theContext_ != null) {
+            theContext_ =
+              bmeg.gaea.schema.Sample.Context.newBuilder(theContext_).mergeFrom(value).buildPartial();
+          } else {
+            theContext_ = value;
+          }
+          onChanged();
+        } else {
+          theContextBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public Builder clearTheContext() {
+        if (theContextBuilder_ == null) {
+          theContext_ = null;
+          onChanged();
+        } else {
+          theContext_ = null;
+          theContextBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public bmeg.gaea.schema.Sample.Context.Builder getTheContextBuilder() {
+        
+        onChanged();
+        return getTheContextFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      public bmeg.gaea.schema.Sample.ContextOrBuilder getTheContextOrBuilder() {
+        if (theContextBuilder_ != null) {
+          return theContextBuilder_.getMessageOrBuilder();
+        } else {
+          return theContext_ == null ?
+              bmeg.gaea.schema.Sample.Context.getDefaultInstance() : theContext_;
+        }
+      }
+      /**
+       * <code>optional .bmeg.gaea.schema.Context theContext = 3;</code>
+       *
+       * <pre>
+       * The context is unique to the PhenotypeAssociation, so for now using containment rather than name reference.
+       * </pre>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          bmeg.gaea.schema.Sample.Context, bmeg.gaea.schema.Sample.Context.Builder, bmeg.gaea.schema.Sample.ContextOrBuilder> 
+          getTheContextFieldBuilder() {
+        if (theContextBuilder_ == null) {
+          theContextBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              bmeg.gaea.schema.Sample.Context, bmeg.gaea.schema.Sample.Context.Builder, bmeg.gaea.schema.Sample.ContextOrBuilder>(
+                  getTheContext(),
+                  getParentForChildren(),
+                  isClean());
+          theContext_ = null;
+        }
+        return theContextBuilder_;
+      }
+
+      private com.google.protobuf.LazyStringList hasPhenotypeEdgesPhenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureHasPhenotypeEdgesPhenotypeIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          hasPhenotypeEdgesPhenotype_ = new com.google.protobuf.LazyStringArrayList(hasPhenotypeEdgesPhenotype_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getHasPhenotypeEdgesPhenotypeList() {
+        return hasPhenotypeEdgesPhenotype_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public int getHasPhenotypeEdgesPhenotypeCount() {
+        return hasPhenotypeEdgesPhenotype_.size();
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public java.lang.String getHasPhenotypeEdgesPhenotype(int index) {
+        return hasPhenotypeEdgesPhenotype_.get(index);
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getHasPhenotypeEdgesPhenotypeBytes(int index) {
+        return hasPhenotypeEdgesPhenotype_.getByteString(index);
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public Builder setHasPhenotypeEdgesPhenotype(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasPhenotypeEdgesPhenotypeIsMutable();
+        hasPhenotypeEdgesPhenotype_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public Builder addHasPhenotypeEdgesPhenotype(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasPhenotypeEdgesPhenotypeIsMutable();
+        hasPhenotypeEdgesPhenotype_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public Builder addAllHasPhenotypeEdgesPhenotype(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureHasPhenotypeEdgesPhenotypeIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, hasPhenotypeEdgesPhenotype_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public Builder clearHasPhenotypeEdgesPhenotype() {
+        hasPhenotypeEdgesPhenotype_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasPhenotypeEdgesPhenotype = 4;</code>
+       */
+      public Builder addHasPhenotypeEdgesPhenotypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureHasPhenotypeEdgesPhenotypeIsMutable();
+        hasPhenotypeEdgesPhenotype_.add(value);
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.PhenotypeAssociation)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.PhenotypeAssociation)
+    private static final bmeg.gaea.schema.Sample.PhenotypeAssociation DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.PhenotypeAssociation();
+    }
+
+    public static bmeg.gaea.schema.Sample.PhenotypeAssociation getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<PhenotypeAssociation>
+        PARSER = new com.google.protobuf.AbstractParser<PhenotypeAssociation>() {
+      public PhenotypeAssociation parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new PhenotypeAssociation(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<PhenotypeAssociation> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<PhenotypeAssociation> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.PhenotypeAssociation getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface PhenotypeOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Phenotype)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    com.google.protobuf.ProtocolStringList
+        getIsTypeEdgesOntologyTermList();
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    int getIsTypeEdgesOntologyTermCount();
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    java.lang.String getIsTypeEdgesOntologyTerm(int index);
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getIsTypeEdgesOntologyTermBytes(int index);
+
+    /**
+     * <code>optional string description = 3;</code>
+     */
+    java.lang.String getDescription();
+    /**
+     * <code>optional string description = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getDescriptionBytes();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Phenotype}
+   */
+  public  static final class Phenotype extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Phenotype)
+      PhenotypeOrBuilder {
+    // Use Phenotype.newBuilder() to construct.
+    private Phenotype(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Phenotype() {
+      name_ = "";
+      isTypeEdgesOntologyTerm_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      description_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Phenotype(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                isTypeEdgesOntologyTerm_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              isTypeEdgesOntologyTerm_.add(s);
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              description_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          isTypeEdgesOntologyTerm_ = isTypeEdgesOntologyTerm_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Phenotype_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Phenotype_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Phenotype.class, bmeg.gaea.schema.Sample.Phenotype.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ISTYPEEDGESONTOLOGYTERM_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList isTypeEdgesOntologyTerm_;
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getIsTypeEdgesOntologyTermList() {
+      return isTypeEdgesOntologyTerm_;
+    }
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    public int getIsTypeEdgesOntologyTermCount() {
+      return isTypeEdgesOntologyTerm_.size();
+    }
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    public java.lang.String getIsTypeEdgesOntologyTerm(int index) {
+      return isTypeEdgesOntologyTerm_.get(index);
+    }
+    /**
+     * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getIsTypeEdgesOntologyTermBytes(int index) {
+      return isTypeEdgesOntologyTerm_.getByteString(index);
+    }
+
+    public static final int DESCRIPTION_FIELD_NUMBER = 3;
+    private volatile java.lang.Object description_;
+    /**
+     * <code>optional string description = 3;</code>
+     */
+    public java.lang.String getDescription() {
+      java.lang.Object ref = description_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        description_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string description = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDescriptionBytes() {
+      java.lang.Object ref = description_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        description_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < isTypeEdgesOntologyTerm_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, isTypeEdgesOntologyTerm_.getRaw(i));
+      }
+      if (!getDescriptionBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, description_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < isTypeEdgesOntologyTerm_.size(); i++) {
+          dataSize += computeStringSizeNoTag(isTypeEdgesOntologyTerm_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getIsTypeEdgesOntologyTermList().size();
+      }
+      if (!getDescriptionBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, description_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Phenotype parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Phenotype prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Phenotype}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Phenotype)
+        bmeg.gaea.schema.Sample.PhenotypeOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Phenotype_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Phenotype_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Phenotype.class, bmeg.gaea.schema.Sample.Phenotype.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Phenotype.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        isTypeEdgesOntologyTerm_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        description_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Phenotype_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Phenotype getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Phenotype.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Phenotype build() {
+        bmeg.gaea.schema.Sample.Phenotype result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Phenotype buildPartial() {
+        bmeg.gaea.schema.Sample.Phenotype result = new bmeg.gaea.schema.Sample.Phenotype(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          isTypeEdgesOntologyTerm_ = isTypeEdgesOntologyTerm_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.isTypeEdgesOntologyTerm_ = isTypeEdgesOntologyTerm_;
+        result.description_ = description_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Phenotype) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Phenotype)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Phenotype other) {
+        if (other == bmeg.gaea.schema.Sample.Phenotype.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.isTypeEdgesOntologyTerm_.isEmpty()) {
+          if (isTypeEdgesOntologyTerm_.isEmpty()) {
+            isTypeEdgesOntologyTerm_ = other.isTypeEdgesOntologyTerm_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureIsTypeEdgesOntologyTermIsMutable();
+            isTypeEdgesOntologyTerm_.addAll(other.isTypeEdgesOntologyTerm_);
+          }
+          onChanged();
+        }
+        if (!other.getDescription().isEmpty()) {
+          description_ = other.description_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Phenotype parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Phenotype) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList isTypeEdgesOntologyTerm_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureIsTypeEdgesOntologyTermIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          isTypeEdgesOntologyTerm_ = new com.google.protobuf.LazyStringArrayList(isTypeEdgesOntologyTerm_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getIsTypeEdgesOntologyTermList() {
+        return isTypeEdgesOntologyTerm_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public int getIsTypeEdgesOntologyTermCount() {
+        return isTypeEdgesOntologyTerm_.size();
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public java.lang.String getIsTypeEdgesOntologyTerm(int index) {
+        return isTypeEdgesOntologyTerm_.get(index);
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getIsTypeEdgesOntologyTermBytes(int index) {
+        return isTypeEdgesOntologyTerm_.getByteString(index);
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public Builder setIsTypeEdgesOntologyTerm(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsTypeEdgesOntologyTermIsMutable();
+        isTypeEdgesOntologyTerm_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public Builder addIsTypeEdgesOntologyTerm(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsTypeEdgesOntologyTermIsMutable();
+        isTypeEdgesOntologyTerm_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public Builder addAllIsTypeEdgesOntologyTerm(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureIsTypeEdgesOntologyTermIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, isTypeEdgesOntologyTerm_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public Builder clearIsTypeEdgesOntologyTerm() {
+        isTypeEdgesOntologyTerm_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isTypeEdgesOntologyTerm = 2;</code>
+       */
+      public Builder addIsTypeEdgesOntologyTermBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureIsTypeEdgesOntologyTermIsMutable();
+        isTypeEdgesOntologyTerm_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object description_ = "";
+      /**
+       * <code>optional string description = 3;</code>
+       */
+      public java.lang.String getDescription() {
+        java.lang.Object ref = description_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          description_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDescriptionBytes() {
+        java.lang.Object ref = description_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          description_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string description = 3;</code>
+       */
+      public Builder setDescription(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        description_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string description = 3;</code>
+       */
+      public Builder clearDescription() {
+        
+        description_ = getDefaultInstance().getDescription();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string description = 3;</code>
+       */
+      public Builder setDescriptionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        description_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Phenotype)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Phenotype)
+    private static final bmeg.gaea.schema.Sample.Phenotype DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Phenotype();
+    }
+
+    public static bmeg.gaea.schema.Sample.Phenotype getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Phenotype>
+        PARSER = new com.google.protobuf.AbstractParser<Phenotype>() {
+      public Phenotype parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Phenotype(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Phenotype> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Phenotype> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Phenotype getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface OntologyTermOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.OntologyTerm)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>optional string term = 2;</code>
+     */
+    java.lang.String getTerm();
+    /**
+     * <code>optional string term = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getTermBytes();
+
+    /**
+     * <code>optional string source = 3;</code>
+     */
+    java.lang.String getSource();
+    /**
+     * <code>optional string source = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getSourceBytes();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.OntologyTerm}
+   */
+  public  static final class OntologyTerm extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.OntologyTerm)
+      OntologyTermOrBuilder {
+    // Use OntologyTerm.newBuilder() to construct.
+    private OntologyTerm(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private OntologyTerm() {
+      name_ = "";
+      term_ = "";
+      source_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private OntologyTerm(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              term_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              source_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_OntologyTerm_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_OntologyTerm_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.OntologyTerm.class, bmeg.gaea.schema.Sample.OntologyTerm.Builder.class);
+    }
+
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int TERM_FIELD_NUMBER = 2;
+    private volatile java.lang.Object term_;
+    /**
+     * <code>optional string term = 2;</code>
+     */
+    public java.lang.String getTerm() {
+      java.lang.Object ref = term_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        term_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string term = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTermBytes() {
+      java.lang.Object ref = term_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        term_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SOURCE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object source_;
+    /**
+     * <code>optional string source = 3;</code>
+     */
+    public java.lang.String getSource() {
+      java.lang.Object ref = source_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        source_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string source = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getSourceBytes() {
+      java.lang.Object ref = source_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        source_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      if (!getTermBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, term_);
+      }
+      if (!getSourceBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, source_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      if (!getTermBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, term_);
+      }
+      if (!getSourceBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, source_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.OntologyTerm parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.OntologyTerm prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.OntologyTerm}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.OntologyTerm)
+        bmeg.gaea.schema.Sample.OntologyTermOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_OntologyTerm_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_OntologyTerm_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.OntologyTerm.class, bmeg.gaea.schema.Sample.OntologyTerm.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.OntologyTerm.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        term_ = "";
+
+        source_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_OntologyTerm_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.OntologyTerm getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.OntologyTerm.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.OntologyTerm build() {
+        bmeg.gaea.schema.Sample.OntologyTerm result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.OntologyTerm buildPartial() {
+        bmeg.gaea.schema.Sample.OntologyTerm result = new bmeg.gaea.schema.Sample.OntologyTerm(this);
+        result.name_ = name_;
+        result.term_ = term_;
+        result.source_ = source_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.OntologyTerm) {
+          return mergeFrom((bmeg.gaea.schema.Sample.OntologyTerm)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.OntologyTerm other) {
+        if (other == bmeg.gaea.schema.Sample.OntologyTerm.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.getTerm().isEmpty()) {
+          term_ = other.term_;
+          onChanged();
+        }
+        if (!other.getSource().isEmpty()) {
+          source_ = other.source_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.OntologyTerm parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.OntologyTerm) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object term_ = "";
+      /**
+       * <code>optional string term = 2;</code>
+       */
+      public java.lang.String getTerm() {
+        java.lang.Object ref = term_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          term_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string term = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTermBytes() {
+        java.lang.Object ref = term_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          term_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string term = 2;</code>
+       */
+      public Builder setTerm(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        term_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string term = 2;</code>
+       */
+      public Builder clearTerm() {
+        
+        term_ = getDefaultInstance().getTerm();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string term = 2;</code>
+       */
+      public Builder setTermBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        term_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object source_ = "";
+      /**
+       * <code>optional string source = 3;</code>
+       */
+      public java.lang.String getSource() {
+        java.lang.Object ref = source_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          source_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string source = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getSourceBytes() {
+        java.lang.Object ref = source_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          source_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string source = 3;</code>
+       */
+      public Builder setSource(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        source_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string source = 3;</code>
+       */
+      public Builder clearSource() {
+        
+        source_ = getDefaultInstance().getSource();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string source = 3;</code>
+       */
+      public Builder setSourceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        source_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.OntologyTerm)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.OntologyTerm)
+    private static final bmeg.gaea.schema.Sample.OntologyTerm DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.OntologyTerm();
+    }
+
+    public static bmeg.gaea.schema.Sample.OntologyTerm getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OntologyTerm>
+        PARSER = new com.google.protobuf.AbstractParser<OntologyTerm>() {
+      public OntologyTerm parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new OntologyTerm(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<OntologyTerm> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OntologyTerm> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.OntologyTerm getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface GenotypeOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Genotype)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getIsVariantCallEdgesVariantCallList();
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    int getIsVariantCallEdgesVariantCallCount();
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    java.lang.String getIsVariantCallEdgesVariantCall(int index);
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getIsVariantCallEdgesVariantCallBytes(int index);
+
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getIsBiosampleEdgesBiosampleList();
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    int getIsBiosampleEdgesBiosampleCount();
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    java.lang.String getIsBiosampleEdgesBiosample(int index);
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getIsBiosampleEdgesBiosampleBytes(int index);
+
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getIsIndividualEdgesIndividualList();
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    int getIsIndividualEdgesIndividualCount();
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    java.lang.String getIsIndividualEdgesIndividual(int index);
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getIsIndividualEdgesIndividualBytes(int index);
+
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getIsFeatureEdgesFeatureList();
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    int getIsFeatureEdgesFeatureCount();
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    java.lang.String getIsFeatureEdgesFeature(int index);
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getIsFeatureEdgesFeatureBytes(int index);
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Genotype}
+   */
+  public  static final class Genotype extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Genotype)
+      GenotypeOrBuilder {
+    // Use Genotype.newBuilder() to construct.
+    private Genotype(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Genotype() {
+      name_ = "";
+      isVariantCallEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      isBiosampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      isIndividualEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      isFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Genotype(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                isVariantCallEdgesVariantCall_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              isVariantCallEdgesVariantCall_.add(s);
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                isBiosampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              isBiosampleEdgesBiosample_.add(s);
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                isIndividualEdgesIndividual_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              isIndividualEdgesIndividual_.add(s);
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                isFeatureEdgesFeature_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000010;
+              }
+              isFeatureEdgesFeature_.add(s);
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          isVariantCallEdgesVariantCall_ = isVariantCallEdgesVariantCall_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          isBiosampleEdgesBiosample_ = isBiosampleEdgesBiosample_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          isIndividualEdgesIndividual_ = isIndividualEdgesIndividual_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+          isFeatureEdgesFeature_ = isFeatureEdgesFeature_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Genotype_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Genotype_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Genotype.class, bmeg.gaea.schema.Sample.Genotype.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int ISVARIANTCALLEDGESVARIANTCALL_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList isVariantCallEdgesVariantCall_;
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getIsVariantCallEdgesVariantCallList() {
+      return isVariantCallEdgesVariantCall_;
+    }
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    public int getIsVariantCallEdgesVariantCallCount() {
+      return isVariantCallEdgesVariantCall_.size();
+    }
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    public java.lang.String getIsVariantCallEdgesVariantCall(int index) {
+      return isVariantCallEdgesVariantCall_.get(index);
+    }
+    /**
+     * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+     *
+     * <pre>
+     * Note: We will have null fields.
+     * If the genotype is a VariantCall, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getIsVariantCallEdgesVariantCallBytes(int index) {
+      return isVariantCallEdgesVariantCall_.getByteString(index);
+    }
+
+    public static final int ISBIOSAMPLEEDGESBIOSAMPLE_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList isBiosampleEdgesBiosample_;
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getIsBiosampleEdgesBiosampleList() {
+      return isBiosampleEdgesBiosample_;
+    }
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    public int getIsBiosampleEdgesBiosampleCount() {
+      return isBiosampleEdgesBiosample_.size();
+    }
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    public java.lang.String getIsBiosampleEdgesBiosample(int index) {
+      return isBiosampleEdgesBiosample_.get(index);
+    }
+    /**
+     * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+     *
+     * <pre>
+     * If the genotype is a Biosample, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getIsBiosampleEdgesBiosampleBytes(int index) {
+      return isBiosampleEdgesBiosample_.getByteString(index);
+    }
+
+    public static final int ISINDIVIDUALEDGESINDIVIDUAL_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList isIndividualEdgesIndividual_;
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getIsIndividualEdgesIndividualList() {
+      return isIndividualEdgesIndividual_;
+    }
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    public int getIsIndividualEdgesIndividualCount() {
+      return isIndividualEdgesIndividual_.size();
+    }
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    public java.lang.String getIsIndividualEdgesIndividual(int index) {
+      return isIndividualEdgesIndividual_.get(index);
+    }
+    /**
+     * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+     *
+     * <pre>
+     * If the genotype is an Individual, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getIsIndividualEdgesIndividualBytes(int index) {
+      return isIndividualEdgesIndividual_.getByteString(index);
+    }
+
+    public static final int ISFEATUREEDGESFEATURE_FIELD_NUMBER = 5;
+    private com.google.protobuf.LazyStringList isFeatureEdgesFeature_;
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getIsFeatureEdgesFeatureList() {
+      return isFeatureEdgesFeature_;
+    }
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    public int getIsFeatureEdgesFeatureCount() {
+      return isFeatureEdgesFeature_.size();
+    }
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    public java.lang.String getIsFeatureEdgesFeature(int index) {
+      return isFeatureEdgesFeature_.get(index);
+    }
+    /**
+     * <code>repeated string isFeatureEdgesFeature = 5;</code>
+     *
+     * <pre>
+     * If the genotype is a Feature, specify it here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getIsFeatureEdgesFeatureBytes(int index) {
+      return isFeatureEdgesFeature_.getByteString(index);
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < isVariantCallEdgesVariantCall_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, isVariantCallEdgesVariantCall_.getRaw(i));
+      }
+      for (int i = 0; i < isBiosampleEdgesBiosample_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, isBiosampleEdgesBiosample_.getRaw(i));
+      }
+      for (int i = 0; i < isIndividualEdgesIndividual_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, isIndividualEdgesIndividual_.getRaw(i));
+      }
+      for (int i = 0; i < isFeatureEdgesFeature_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 5, isFeatureEdgesFeature_.getRaw(i));
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < isVariantCallEdgesVariantCall_.size(); i++) {
+          dataSize += computeStringSizeNoTag(isVariantCallEdgesVariantCall_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getIsVariantCallEdgesVariantCallList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < isBiosampleEdgesBiosample_.size(); i++) {
+          dataSize += computeStringSizeNoTag(isBiosampleEdgesBiosample_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getIsBiosampleEdgesBiosampleList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < isIndividualEdgesIndividual_.size(); i++) {
+          dataSize += computeStringSizeNoTag(isIndividualEdgesIndividual_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getIsIndividualEdgesIndividualList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < isFeatureEdgesFeature_.size(); i++) {
+          dataSize += computeStringSizeNoTag(isFeatureEdgesFeature_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getIsFeatureEdgesFeatureList().size();
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Genotype parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Genotype prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Genotype}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Genotype)
+        bmeg.gaea.schema.Sample.GenotypeOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Genotype_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Genotype_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Genotype.class, bmeg.gaea.schema.Sample.Genotype.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Genotype.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        isVariantCallEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        isBiosampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        isIndividualEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        isFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Genotype_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Genotype getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Genotype.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Genotype build() {
+        bmeg.gaea.schema.Sample.Genotype result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Genotype buildPartial() {
+        bmeg.gaea.schema.Sample.Genotype result = new bmeg.gaea.schema.Sample.Genotype(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          isVariantCallEdgesVariantCall_ = isVariantCallEdgesVariantCall_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.isVariantCallEdgesVariantCall_ = isVariantCallEdgesVariantCall_;
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          isBiosampleEdgesBiosample_ = isBiosampleEdgesBiosample_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.isBiosampleEdgesBiosample_ = isBiosampleEdgesBiosample_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          isIndividualEdgesIndividual_ = isIndividualEdgesIndividual_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.isIndividualEdgesIndividual_ = isIndividualEdgesIndividual_;
+        if (((bitField0_ & 0x00000010) == 0x00000010)) {
+          isFeatureEdgesFeature_ = isFeatureEdgesFeature_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000010);
+        }
+        result.isFeatureEdgesFeature_ = isFeatureEdgesFeature_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Genotype) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Genotype)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Genotype other) {
+        if (other == bmeg.gaea.schema.Sample.Genotype.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.isVariantCallEdgesVariantCall_.isEmpty()) {
+          if (isVariantCallEdgesVariantCall_.isEmpty()) {
+            isVariantCallEdgesVariantCall_ = other.isVariantCallEdgesVariantCall_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureIsVariantCallEdgesVariantCallIsMutable();
+            isVariantCallEdgesVariantCall_.addAll(other.isVariantCallEdgesVariantCall_);
+          }
+          onChanged();
+        }
+        if (!other.isBiosampleEdgesBiosample_.isEmpty()) {
+          if (isBiosampleEdgesBiosample_.isEmpty()) {
+            isBiosampleEdgesBiosample_ = other.isBiosampleEdgesBiosample_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureIsBiosampleEdgesBiosampleIsMutable();
+            isBiosampleEdgesBiosample_.addAll(other.isBiosampleEdgesBiosample_);
+          }
+          onChanged();
+        }
+        if (!other.isIndividualEdgesIndividual_.isEmpty()) {
+          if (isIndividualEdgesIndividual_.isEmpty()) {
+            isIndividualEdgesIndividual_ = other.isIndividualEdgesIndividual_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureIsIndividualEdgesIndividualIsMutable();
+            isIndividualEdgesIndividual_.addAll(other.isIndividualEdgesIndividual_);
+          }
+          onChanged();
+        }
+        if (!other.isFeatureEdgesFeature_.isEmpty()) {
+          if (isFeatureEdgesFeature_.isEmpty()) {
+            isFeatureEdgesFeature_ = other.isFeatureEdgesFeature_;
+            bitField0_ = (bitField0_ & ~0x00000010);
+          } else {
+            ensureIsFeatureEdgesFeatureIsMutable();
+            isFeatureEdgesFeature_.addAll(other.isFeatureEdgesFeature_);
+          }
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Genotype parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Genotype) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList isVariantCallEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureIsVariantCallEdgesVariantCallIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          isVariantCallEdgesVariantCall_ = new com.google.protobuf.LazyStringArrayList(isVariantCallEdgesVariantCall_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getIsVariantCallEdgesVariantCallList() {
+        return isVariantCallEdgesVariantCall_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public int getIsVariantCallEdgesVariantCallCount() {
+        return isVariantCallEdgesVariantCall_.size();
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public java.lang.String getIsVariantCallEdgesVariantCall(int index) {
+        return isVariantCallEdgesVariantCall_.get(index);
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getIsVariantCallEdgesVariantCallBytes(int index) {
+        return isVariantCallEdgesVariantCall_.getByteString(index);
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public Builder setIsVariantCallEdgesVariantCall(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsVariantCallEdgesVariantCallIsMutable();
+        isVariantCallEdgesVariantCall_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public Builder addIsVariantCallEdgesVariantCall(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsVariantCallEdgesVariantCallIsMutable();
+        isVariantCallEdgesVariantCall_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public Builder addAllIsVariantCallEdgesVariantCall(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureIsVariantCallEdgesVariantCallIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, isVariantCallEdgesVariantCall_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public Builder clearIsVariantCallEdgesVariantCall() {
+        isVariantCallEdgesVariantCall_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isVariantCallEdgesVariantCall = 2;</code>
+       *
+       * <pre>
+       * Note: We will have null fields.
+       * If the genotype is a VariantCall, specify it here.
+       * </pre>
+       */
+      public Builder addIsVariantCallEdgesVariantCallBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureIsVariantCallEdgesVariantCallIsMutable();
+        isVariantCallEdgesVariantCall_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList isBiosampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureIsBiosampleEdgesBiosampleIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          isBiosampleEdgesBiosample_ = new com.google.protobuf.LazyStringArrayList(isBiosampleEdgesBiosample_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getIsBiosampleEdgesBiosampleList() {
+        return isBiosampleEdgesBiosample_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public int getIsBiosampleEdgesBiosampleCount() {
+        return isBiosampleEdgesBiosample_.size();
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public java.lang.String getIsBiosampleEdgesBiosample(int index) {
+        return isBiosampleEdgesBiosample_.get(index);
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getIsBiosampleEdgesBiosampleBytes(int index) {
+        return isBiosampleEdgesBiosample_.getByteString(index);
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public Builder setIsBiosampleEdgesBiosample(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsBiosampleEdgesBiosampleIsMutable();
+        isBiosampleEdgesBiosample_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public Builder addIsBiosampleEdgesBiosample(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsBiosampleEdgesBiosampleIsMutable();
+        isBiosampleEdgesBiosample_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public Builder addAllIsBiosampleEdgesBiosample(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureIsBiosampleEdgesBiosampleIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, isBiosampleEdgesBiosample_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public Builder clearIsBiosampleEdgesBiosample() {
+        isBiosampleEdgesBiosample_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isBiosampleEdgesBiosample = 3;</code>
+       *
+       * <pre>
+       * If the genotype is a Biosample, specify it here.
+       * </pre>
+       */
+      public Builder addIsBiosampleEdgesBiosampleBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureIsBiosampleEdgesBiosampleIsMutable();
+        isBiosampleEdgesBiosample_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList isIndividualEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureIsIndividualEdgesIndividualIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          isIndividualEdgesIndividual_ = new com.google.protobuf.LazyStringArrayList(isIndividualEdgesIndividual_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getIsIndividualEdgesIndividualList() {
+        return isIndividualEdgesIndividual_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public int getIsIndividualEdgesIndividualCount() {
+        return isIndividualEdgesIndividual_.size();
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public java.lang.String getIsIndividualEdgesIndividual(int index) {
+        return isIndividualEdgesIndividual_.get(index);
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getIsIndividualEdgesIndividualBytes(int index) {
+        return isIndividualEdgesIndividual_.getByteString(index);
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public Builder setIsIndividualEdgesIndividual(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsIndividualEdgesIndividualIsMutable();
+        isIndividualEdgesIndividual_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public Builder addIsIndividualEdgesIndividual(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsIndividualEdgesIndividualIsMutable();
+        isIndividualEdgesIndividual_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public Builder addAllIsIndividualEdgesIndividual(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureIsIndividualEdgesIndividualIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, isIndividualEdgesIndividual_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public Builder clearIsIndividualEdgesIndividual() {
+        isIndividualEdgesIndividual_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isIndividualEdgesIndividual = 4;</code>
+       *
+       * <pre>
+       * If the genotype is an Individual, specify it here.
+       * </pre>
+       */
+      public Builder addIsIndividualEdgesIndividualBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureIsIndividualEdgesIndividualIsMutable();
+        isIndividualEdgesIndividual_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList isFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureIsFeatureEdgesFeatureIsMutable() {
+        if (!((bitField0_ & 0x00000010) == 0x00000010)) {
+          isFeatureEdgesFeature_ = new com.google.protobuf.LazyStringArrayList(isFeatureEdgesFeature_);
+          bitField0_ |= 0x00000010;
+         }
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getIsFeatureEdgesFeatureList() {
+        return isFeatureEdgesFeature_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public int getIsFeatureEdgesFeatureCount() {
+        return isFeatureEdgesFeature_.size();
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public java.lang.String getIsFeatureEdgesFeature(int index) {
+        return isFeatureEdgesFeature_.get(index);
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getIsFeatureEdgesFeatureBytes(int index) {
+        return isFeatureEdgesFeature_.getByteString(index);
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public Builder setIsFeatureEdgesFeature(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsFeatureEdgesFeatureIsMutable();
+        isFeatureEdgesFeature_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public Builder addIsFeatureEdgesFeature(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureIsFeatureEdgesFeatureIsMutable();
+        isFeatureEdgesFeature_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public Builder addAllIsFeatureEdgesFeature(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureIsFeatureEdgesFeatureIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, isFeatureEdgesFeature_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public Builder clearIsFeatureEdgesFeature() {
+        isFeatureEdgesFeature_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000010);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string isFeatureEdgesFeature = 5;</code>
+       *
+       * <pre>
+       * If the genotype is a Feature, specify it here.
+       * </pre>
+       */
+      public Builder addIsFeatureEdgesFeatureBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureIsFeatureEdgesFeatureIsMutable();
+        isFeatureEdgesFeature_.add(value);
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Genotype)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Genotype)
+    private static final bmeg.gaea.schema.Sample.Genotype DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Genotype();
+    }
+
+    public static bmeg.gaea.schema.Sample.Genotype getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Genotype>
+        PARSER = new com.google.protobuf.AbstractParser<Genotype>() {
+      public Genotype parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Genotype(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Genotype> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Genotype> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Genotype getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ContextOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Context)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getInvolvesModelEdgesModelList();
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    int getInvolvesModelEdgesModelCount();
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    java.lang.String getInvolvesModelEdgesModel(int index);
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getInvolvesModelEdgesModelBytes(int index);
+
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getInvolvesDrugEdgesDrugList();
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    int getInvolvesDrugEdgesDrugCount();
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    java.lang.String getInvolvesDrugEdgesDrug(int index);
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getInvolvesDrugEdgesDrugBytes(int index);
+
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getHasEvidenceEdgesEvidenceList();
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    int getHasEvidenceEdgesEvidenceCount();
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    java.lang.String getHasEvidenceEdgesEvidence(int index);
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getHasEvidenceEdgesEvidenceBytes(int index);
+
+    /**
+     * <code>map&lt;string, string&gt; info = 5;</code>
+     *
+     * <pre>
+     * Additional information about this context for the PhenotypeAssociation
+     * </pre>
+     */
+    java.util.Map<java.lang.String, java.lang.String>
+    getInfo();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Context}
+   *
+   * <pre>
+   * For now, Context nodes are contained within PhenotypeAssociation (as opposed to referencing)
+   * </pre>
+   */
+  public  static final class Context extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Context)
+      ContextOrBuilder {
+    // Use Context.newBuilder() to construct.
+    private Context(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Context() {
+      name_ = "";
+      involvesModelEdgesModel_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      involvesDrugEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      hasEvidenceEdgesEvidence_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Context(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                involvesModelEdgesModel_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              involvesModelEdgesModel_.add(s);
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                involvesDrugEdgesDrug_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000004;
+              }
+              involvesDrugEdgesDrug_.add(s);
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                hasEvidenceEdgesEvidence_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              hasEvidenceEdgesEvidence_.add(s);
+              break;
+            }
+            case 42: {
+              if (!((mutable_bitField0_ & 0x00000010) == 0x00000010)) {
+                info_ = com.google.protobuf.MapField.newMapField(
+                    InfoDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000010;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+              info = input.readMessage(
+                  InfoDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              info_.getMutableMap().put(info.getKey(), info.getValue());
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          involvesModelEdgesModel_ = involvesModelEdgesModel_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+          involvesDrugEdgesDrug_ = involvesDrugEdgesDrug_.getUnmodifiableView();
+        }
+        if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          hasEvidenceEdgesEvidence_ = hasEvidenceEdgesEvidence_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_descriptor;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(
+        int number) {
+      switch (number) {
+        case 5:
+          return internalGetInfo();
+        default:
+          throw new RuntimeException(
+              "Invalid map field number: " + number);
+      }
+    }
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Context.class, bmeg.gaea.schema.Sample.Context.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int INVOLVESMODELEDGESMODEL_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList involvesModelEdgesModel_;
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getInvolvesModelEdgesModelList() {
+      return involvesModelEdgesModel_;
+    }
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    public int getInvolvesModelEdgesModelCount() {
+      return involvesModelEdgesModel_.size();
+    }
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    public java.lang.String getInvolvesModelEdgesModel(int index) {
+      return involvesModelEdgesModel_.get(index);
+    }
+    /**
+     * <code>repeated string involvesModelEdgesModel = 2;</code>
+     *
+     * <pre>
+     * If applicable, specify the relevant Machine Learning Model here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getInvolvesModelEdgesModelBytes(int index) {
+      return involvesModelEdgesModel_.getByteString(index);
+    }
+
+    public static final int INVOLVESDRUGEDGESDRUG_FIELD_NUMBER = 3;
+    private com.google.protobuf.LazyStringList involvesDrugEdgesDrug_;
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getInvolvesDrugEdgesDrugList() {
+      return involvesDrugEdgesDrug_;
+    }
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    public int getInvolvesDrugEdgesDrugCount() {
+      return involvesDrugEdgesDrug_.size();
+    }
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    public java.lang.String getInvolvesDrugEdgesDrug(int index) {
+      return involvesDrugEdgesDrug_.get(index);
+    }
+    /**
+     * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+     *
+     * <pre>
+     * If applicable, specify relevant Drug(s) here.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getInvolvesDrugEdgesDrugBytes(int index) {
+      return involvesDrugEdgesDrug_.getByteString(index);
+    }
+
+    public static final int HASEVIDENCEEDGESEVIDENCE_FIELD_NUMBER = 4;
+    private com.google.protobuf.LazyStringList hasEvidenceEdgesEvidence_;
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getHasEvidenceEdgesEvidenceList() {
+      return hasEvidenceEdgesEvidence_;
+    }
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    public int getHasEvidenceEdgesEvidenceCount() {
+      return hasEvidenceEdgesEvidence_.size();
+    }
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    public java.lang.String getHasEvidenceEdgesEvidence(int index) {
+      return hasEvidenceEdgesEvidence_.get(index);
+    }
+    /**
+     * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+     *
+     * <pre>
+     * Edges to other evidence for the PhenotypeAssociation
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getHasEvidenceEdgesEvidenceBytes(int index) {
+      return hasEvidenceEdgesEvidence_.getByteString(index);
+    }
+
+    public static final int INFO_FIELD_NUMBER = 5;
+    private static final class InfoDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+          java.lang.String, java.lang.String> defaultEntry =
+              com.google.protobuf.MapEntry
+              .<java.lang.String, java.lang.String>newDefaultInstance(
+                  bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_InfoEntry_descriptor, 
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "",
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "");
+    }
+    private com.google.protobuf.MapField<
+        java.lang.String, java.lang.String> info_;
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    internalGetInfo() {
+      if (info_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            InfoDefaultEntryHolder.defaultEntry);
+     }
+      return info_;
+    }
+    /**
+     * <code>map&lt;string, string&gt; info = 5;</code>
+     *
+     * <pre>
+     * Additional information about this context for the PhenotypeAssociation
+     * </pre>
+     */
+
+    public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+      return internalGetInfo().getMap();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < involvesModelEdgesModel_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, involvesModelEdgesModel_.getRaw(i));
+      }
+      for (int i = 0; i < involvesDrugEdgesDrug_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, involvesDrugEdgesDrug_.getRaw(i));
+      }
+      for (int i = 0; i < hasEvidenceEdgesEvidence_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 4, hasEvidenceEdgesEvidence_.getRaw(i));
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        output.writeMessage(5, info);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < involvesModelEdgesModel_.size(); i++) {
+          dataSize += computeStringSizeNoTag(involvesModelEdgesModel_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getInvolvesModelEdgesModelList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < involvesDrugEdgesDrug_.size(); i++) {
+          dataSize += computeStringSizeNoTag(involvesDrugEdgesDrug_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getInvolvesDrugEdgesDrugList().size();
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < hasEvidenceEdgesEvidence_.size(); i++) {
+          dataSize += computeStringSizeNoTag(hasEvidenceEdgesEvidence_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getHasEvidenceEdgesEvidenceList().size();
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(5, info);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Context parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Context prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Context}
+     *
+     * <pre>
+     * For now, Context nodes are contained within PhenotypeAssociation (as opposed to referencing)
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Context)
+        bmeg.gaea.schema.Sample.ContextOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_descriptor;
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+          int number) {
+        switch (number) {
+          case 5:
+            return internalGetInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+          int number) {
+        switch (number) {
+          case 5:
+            return internalGetMutableInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Context.class, bmeg.gaea.schema.Sample.Context.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Context.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        involvesModelEdgesModel_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        involvesDrugEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        hasEvidenceEdgesEvidence_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        internalGetMutableInfo().clear();
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Context_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Context getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Context.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Context build() {
+        bmeg.gaea.schema.Sample.Context result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Context buildPartial() {
+        bmeg.gaea.schema.Sample.Context result = new bmeg.gaea.schema.Sample.Context(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          involvesModelEdgesModel_ = involvesModelEdgesModel_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.involvesModelEdgesModel_ = involvesModelEdgesModel_;
+        if (((bitField0_ & 0x00000004) == 0x00000004)) {
+          involvesDrugEdgesDrug_ = involvesDrugEdgesDrug_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000004);
+        }
+        result.involvesDrugEdgesDrug_ = involvesDrugEdgesDrug_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          hasEvidenceEdgesEvidence_ = hasEvidenceEdgesEvidence_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.hasEvidenceEdgesEvidence_ = hasEvidenceEdgesEvidence_;
+        result.info_ = internalGetInfo();
+        result.info_.makeImmutable();
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Context) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Context)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Context other) {
+        if (other == bmeg.gaea.schema.Sample.Context.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.involvesModelEdgesModel_.isEmpty()) {
+          if (involvesModelEdgesModel_.isEmpty()) {
+            involvesModelEdgesModel_ = other.involvesModelEdgesModel_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureInvolvesModelEdgesModelIsMutable();
+            involvesModelEdgesModel_.addAll(other.involvesModelEdgesModel_);
+          }
+          onChanged();
+        }
+        if (!other.involvesDrugEdgesDrug_.isEmpty()) {
+          if (involvesDrugEdgesDrug_.isEmpty()) {
+            involvesDrugEdgesDrug_ = other.involvesDrugEdgesDrug_;
+            bitField0_ = (bitField0_ & ~0x00000004);
+          } else {
+            ensureInvolvesDrugEdgesDrugIsMutable();
+            involvesDrugEdgesDrug_.addAll(other.involvesDrugEdgesDrug_);
+          }
+          onChanged();
+        }
+        if (!other.hasEvidenceEdgesEvidence_.isEmpty()) {
+          if (hasEvidenceEdgesEvidence_.isEmpty()) {
+            hasEvidenceEdgesEvidence_ = other.hasEvidenceEdgesEvidence_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureHasEvidenceEdgesEvidenceIsMutable();
+            hasEvidenceEdgesEvidence_.addAll(other.hasEvidenceEdgesEvidence_);
+          }
+          onChanged();
+        }
+        internalGetMutableInfo().mergeFrom(
+            other.internalGetInfo());
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Context parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Context) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList involvesModelEdgesModel_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInvolvesModelEdgesModelIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          involvesModelEdgesModel_ = new com.google.protobuf.LazyStringArrayList(involvesModelEdgesModel_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getInvolvesModelEdgesModelList() {
+        return involvesModelEdgesModel_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public int getInvolvesModelEdgesModelCount() {
+        return involvesModelEdgesModel_.size();
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public java.lang.String getInvolvesModelEdgesModel(int index) {
+        return involvesModelEdgesModel_.get(index);
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getInvolvesModelEdgesModelBytes(int index) {
+        return involvesModelEdgesModel_.getByteString(index);
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public Builder setInvolvesModelEdgesModel(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInvolvesModelEdgesModelIsMutable();
+        involvesModelEdgesModel_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public Builder addInvolvesModelEdgesModel(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInvolvesModelEdgesModelIsMutable();
+        involvesModelEdgesModel_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public Builder addAllInvolvesModelEdgesModel(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureInvolvesModelEdgesModelIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, involvesModelEdgesModel_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public Builder clearInvolvesModelEdgesModel() {
+        involvesModelEdgesModel_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesModelEdgesModel = 2;</code>
+       *
+       * <pre>
+       * If applicable, specify the relevant Machine Learning Model here.
+       * </pre>
+       */
+      public Builder addInvolvesModelEdgesModelBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureInvolvesModelEdgesModelIsMutable();
+        involvesModelEdgesModel_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList involvesDrugEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureInvolvesDrugEdgesDrugIsMutable() {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
+          involvesDrugEdgesDrug_ = new com.google.protobuf.LazyStringArrayList(involvesDrugEdgesDrug_);
+          bitField0_ |= 0x00000004;
+         }
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getInvolvesDrugEdgesDrugList() {
+        return involvesDrugEdgesDrug_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public int getInvolvesDrugEdgesDrugCount() {
+        return involvesDrugEdgesDrug_.size();
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public java.lang.String getInvolvesDrugEdgesDrug(int index) {
+        return involvesDrugEdgesDrug_.get(index);
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getInvolvesDrugEdgesDrugBytes(int index) {
+        return involvesDrugEdgesDrug_.getByteString(index);
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public Builder setInvolvesDrugEdgesDrug(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInvolvesDrugEdgesDrugIsMutable();
+        involvesDrugEdgesDrug_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public Builder addInvolvesDrugEdgesDrug(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureInvolvesDrugEdgesDrugIsMutable();
+        involvesDrugEdgesDrug_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public Builder addAllInvolvesDrugEdgesDrug(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureInvolvesDrugEdgesDrugIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, involvesDrugEdgesDrug_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public Builder clearInvolvesDrugEdgesDrug() {
+        involvesDrugEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string involvesDrugEdgesDrug = 3;</code>
+       *
+       * <pre>
+       * If applicable, specify relevant Drug(s) here.
+       * </pre>
+       */
+      public Builder addInvolvesDrugEdgesDrugBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureInvolvesDrugEdgesDrugIsMutable();
+        involvesDrugEdgesDrug_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList hasEvidenceEdgesEvidence_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureHasEvidenceEdgesEvidenceIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          hasEvidenceEdgesEvidence_ = new com.google.protobuf.LazyStringArrayList(hasEvidenceEdgesEvidence_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getHasEvidenceEdgesEvidenceList() {
+        return hasEvidenceEdgesEvidence_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public int getHasEvidenceEdgesEvidenceCount() {
+        return hasEvidenceEdgesEvidence_.size();
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public java.lang.String getHasEvidenceEdgesEvidence(int index) {
+        return hasEvidenceEdgesEvidence_.get(index);
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getHasEvidenceEdgesEvidenceBytes(int index) {
+        return hasEvidenceEdgesEvidence_.getByteString(index);
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder setHasEvidenceEdgesEvidence(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasEvidenceEdgesEvidenceIsMutable();
+        hasEvidenceEdgesEvidence_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder addHasEvidenceEdgesEvidence(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureHasEvidenceEdgesEvidenceIsMutable();
+        hasEvidenceEdgesEvidence_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder addAllHasEvidenceEdgesEvidence(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureHasEvidenceEdgesEvidenceIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, hasEvidenceEdgesEvidence_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder clearHasEvidenceEdgesEvidence() {
+        hasEvidenceEdgesEvidence_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string hasEvidenceEdgesEvidence = 4;</code>
+       *
+       * <pre>
+       * Edges to other evidence for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder addHasEvidenceEdgesEvidenceBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureHasEvidenceEdgesEvidenceIsMutable();
+        hasEvidenceEdgesEvidence_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.MapField<
+          java.lang.String, java.lang.String> info_;
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetInfo() {
+        if (info_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+       }
+        return info_;
+      }
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetMutableInfo() {
+        onChanged();;
+        if (info_ == null) {
+          info_ = com.google.protobuf.MapField.newMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+        }
+        if (!info_.isMutable()) {
+          info_ = info_.copy();
+        }
+        return info_;
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 5;</code>
+       *
+       * <pre>
+       * Additional information about this context for the PhenotypeAssociation
+       * </pre>
+       */
+      public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+        return internalGetInfo().getMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 5;</code>
+       *
+       * <pre>
+       * Additional information about this context for the PhenotypeAssociation
+       * </pre>
+       */
+      public java.util.Map<java.lang.String, java.lang.String>
+      getMutableInfo() {
+        return internalGetMutableInfo().getMutableMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 5;</code>
+       *
+       * <pre>
+       * Additional information about this context for the PhenotypeAssociation
+       * </pre>
+       */
+      public Builder putAllInfo(
+          java.util.Map<java.lang.String, java.lang.String> values) {
+        getMutableInfo().putAll(values);
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Context)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Context)
+    private static final bmeg.gaea.schema.Sample.Context DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Context();
+    }
+
+    public static bmeg.gaea.schema.Sample.Context getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Context>
+        PARSER = new com.google.protobuf.AbstractParser<Context>() {
+      public Context parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Context(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Context> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Context> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Context getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface EvidenceOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Evidence)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getPmidList();
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    int getPmidCount();
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    java.lang.String getPmid(int index);
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getPmidBytes(int index);
+
+    /**
+     * <code>map&lt;string, string&gt; info = 3;</code>
+     *
+     * <pre>
+     * Information about this evidence item
+     * </pre>
+     */
+    java.util.Map<java.lang.String, java.lang.String>
+    getInfo();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Evidence}
+   */
+  public  static final class Evidence extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Evidence)
+      EvidenceOrBuilder {
+    // Use Evidence.newBuilder() to construct.
+    private Evidence(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Evidence() {
+      name_ = "";
+      pmid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Evidence(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                pmid_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              pmid_.add(s);
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                info_ = com.google.protobuf.MapField.newMapField(
+                    InfoDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000004;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+              info = input.readMessage(
+                  InfoDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              info_.getMutableMap().put(info.getKey(), info.getValue());
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          pmid_ = pmid_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_descriptor;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(
+        int number) {
+      switch (number) {
+        case 3:
+          return internalGetInfo();
+        default:
+          throw new RuntimeException(
+              "Invalid map field number: " + number);
+      }
+    }
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Evidence.class, bmeg.gaea.schema.Sample.Evidence.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PMID_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList pmid_;
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getPmidList() {
+      return pmid_;
+    }
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    public int getPmidCount() {
+      return pmid_.size();
+    }
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    public java.lang.String getPmid(int index) {
+      return pmid_.get(index);
+    }
+    /**
+     * <code>repeated string pmid = 2;</code>
+     *
+     * <pre>
+     * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getPmidBytes(int index) {
+      return pmid_.getByteString(index);
+    }
+
+    public static final int INFO_FIELD_NUMBER = 3;
+    private static final class InfoDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+          java.lang.String, java.lang.String> defaultEntry =
+              com.google.protobuf.MapEntry
+              .<java.lang.String, java.lang.String>newDefaultInstance(
+                  bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_InfoEntry_descriptor, 
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "",
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "");
+    }
+    private com.google.protobuf.MapField<
+        java.lang.String, java.lang.String> info_;
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    internalGetInfo() {
+      if (info_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            InfoDefaultEntryHolder.defaultEntry);
+     }
+      return info_;
+    }
+    /**
+     * <code>map&lt;string, string&gt; info = 3;</code>
+     *
+     * <pre>
+     * Information about this evidence item
+     * </pre>
+     */
+
+    public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+      return internalGetInfo().getMap();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < pmid_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, pmid_.getRaw(i));
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        output.writeMessage(3, info);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < pmid_.size(); i++) {
+          dataSize += computeStringSizeNoTag(pmid_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getPmidList().size();
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(3, info);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Evidence parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Evidence prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Evidence}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Evidence)
+        bmeg.gaea.schema.Sample.EvidenceOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_descriptor;
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+          int number) {
+        switch (number) {
+          case 3:
+            return internalGetInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+          int number) {
+        switch (number) {
+          case 3:
+            return internalGetMutableInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Evidence.class, bmeg.gaea.schema.Sample.Evidence.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Evidence.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        pmid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        internalGetMutableInfo().clear();
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Evidence_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Evidence getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Evidence.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Evidence build() {
+        bmeg.gaea.schema.Sample.Evidence result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Evidence buildPartial() {
+        bmeg.gaea.schema.Sample.Evidence result = new bmeg.gaea.schema.Sample.Evidence(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          pmid_ = pmid_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.pmid_ = pmid_;
+        result.info_ = internalGetInfo();
+        result.info_.makeImmutable();
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Evidence) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Evidence)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Evidence other) {
+        if (other == bmeg.gaea.schema.Sample.Evidence.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.pmid_.isEmpty()) {
+          if (pmid_.isEmpty()) {
+            pmid_ = other.pmid_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensurePmidIsMutable();
+            pmid_.addAll(other.pmid_);
+          }
+          onChanged();
+        }
+        internalGetMutableInfo().mergeFrom(
+            other.internalGetInfo());
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Evidence parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Evidence) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList pmid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensurePmidIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          pmid_ = new com.google.protobuf.LazyStringArrayList(pmid_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getPmidList() {
+        return pmid_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public int getPmidCount() {
+        return pmid_.size();
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public java.lang.String getPmid(int index) {
+        return pmid_.get(index);
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getPmidBytes(int index) {
+        return pmid_.getByteString(index);
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public Builder setPmid(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensurePmidIsMutable();
+        pmid_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public Builder addPmid(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensurePmidIsMutable();
+        pmid_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public Builder addAllPmid(
+          java.lang.Iterable<java.lang.String> values) {
+        ensurePmidIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, pmid_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public Builder clearPmid() {
+        pmid_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string pmid = 2;</code>
+       *
+       * <pre>
+       * In the future, we might want to turn this field into an edge to a full-fledged Publication object
+       * </pre>
+       */
+      public Builder addPmidBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensurePmidIsMutable();
+        pmid_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.MapField<
+          java.lang.String, java.lang.String> info_;
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetInfo() {
+        if (info_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+       }
+        return info_;
+      }
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetMutableInfo() {
+        onChanged();;
+        if (info_ == null) {
+          info_ = com.google.protobuf.MapField.newMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+        }
+        if (!info_.isMutable()) {
+          info_ = info_.copy();
+        }
+        return info_;
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       *
+       * <pre>
+       * Information about this evidence item
+       * </pre>
+       */
+      public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+        return internalGetInfo().getMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       *
+       * <pre>
+       * Information about this evidence item
+       * </pre>
+       */
+      public java.util.Map<java.lang.String, java.lang.String>
+      getMutableInfo() {
+        return internalGetMutableInfo().getMutableMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       *
+       * <pre>
+       * Information about this evidence item
+       * </pre>
+       */
+      public Builder putAllInfo(
+          java.util.Map<java.lang.String, java.lang.String> values) {
+        getMutableInfo().putAll(values);
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Evidence)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Evidence)
+    private static final bmeg.gaea.schema.Sample.Evidence DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Evidence();
+    }
+
+    public static bmeg.gaea.schema.Sample.Evidence getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Evidence>
+        PARSER = new com.google.protobuf.AbstractParser<Evidence>() {
+      public Evidence parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Evidence(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Evidence> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Evidence> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Evidence getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface DrugOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Drug)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    com.google.protobuf.ProtocolStringList
+        getSynonymsList();
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    int getSynonymsCount();
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    java.lang.String getSynonyms(int index);
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getSynonymsBytes(int index);
+
+    /**
+     * <code>map&lt;string, string&gt; info = 3;</code>
+     */
+    java.util.Map<java.lang.String, java.lang.String>
+    getInfo();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Drug}
+   */
+  public  static final class Drug extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Drug)
+      DrugOrBuilder {
+    // Use Drug.newBuilder() to construct.
+    private Drug(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Drug() {
+      name_ = "";
+      synonyms_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Drug(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                synonyms_ = new com.google.protobuf.LazyStringArrayList();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              synonyms_.add(s);
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+                info_ = com.google.protobuf.MapField.newMapField(
+                    InfoDefaultEntryHolder.defaultEntry);
+                mutable_bitField0_ |= 0x00000004;
+              }
+              com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+              info = input.readMessage(
+                  InfoDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              info_.getMutableMap().put(info.getKey(), info.getValue());
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          synonyms_ = synonyms_.getUnmodifiableView();
+        }
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_descriptor;
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(
+        int number) {
+      switch (number) {
+        case 3:
+          return internalGetInfo();
+        default:
+          throw new RuntimeException(
+              "Invalid map field number: " + number);
+      }
+    }
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Drug.class, bmeg.gaea.schema.Sample.Drug.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SYNONYMS_FIELD_NUMBER = 2;
+    private com.google.protobuf.LazyStringList synonyms_;
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    public com.google.protobuf.ProtocolStringList
+        getSynonymsList() {
+      return synonyms_;
+    }
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    public int getSynonymsCount() {
+      return synonyms_.size();
+    }
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    public java.lang.String getSynonyms(int index) {
+      return synonyms_.get(index);
+    }
+    /**
+     * <code>repeated string synonyms = 2;</code>
+     *
+     * <pre>
+     * Each synonym may end up as a node.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getSynonymsBytes(int index) {
+      return synonyms_.getByteString(index);
+    }
+
+    public static final int INFO_FIELD_NUMBER = 3;
+    private static final class InfoDefaultEntryHolder {
+      static final com.google.protobuf.MapEntry<
+          java.lang.String, java.lang.String> defaultEntry =
+              com.google.protobuf.MapEntry
+              .<java.lang.String, java.lang.String>newDefaultInstance(
+                  bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_InfoEntry_descriptor, 
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "",
+                  com.google.protobuf.WireFormat.FieldType.STRING,
+                  "");
+    }
+    private com.google.protobuf.MapField<
+        java.lang.String, java.lang.String> info_;
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+    internalGetInfo() {
+      if (info_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            InfoDefaultEntryHolder.defaultEntry);
+     }
+      return info_;
+    }
+    /**
+     * <code>map&lt;string, string&gt; info = 3;</code>
+     */
+
+    public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+      return internalGetInfo().getMap();
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+      for (int i = 0; i < synonyms_.size(); i++) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, synonyms_.getRaw(i));
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        output.writeMessage(3, info);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < synonyms_.size(); i++) {
+          dataSize += computeStringSizeNoTag(synonyms_.getRaw(i));
+        }
+        size += dataSize;
+        size += 1 * getSynonymsList().size();
+      }
+      for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
+           : internalGetInfo().getMap().entrySet()) {
+        com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+        info = InfoDefaultEntryHolder.defaultEntry.newBuilderForType()
+            .setKey(entry.getKey())
+            .setValue(entry.getValue())
+            .build();
+        size += com.google.protobuf.CodedOutputStream
+            .computeMessageSize(3, info);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Drug parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Drug prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Drug}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Drug)
+        bmeg.gaea.schema.Sample.DrugOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_descriptor;
+      }
+
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMapField(
+          int number) {
+        switch (number) {
+          case 3:
+            return internalGetInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      @SuppressWarnings({"rawtypes"})
+      protected com.google.protobuf.MapField internalGetMutableMapField(
+          int number) {
+        switch (number) {
+          case 3:
+            return internalGetMutableInfo();
+          default:
+            throw new RuntimeException(
+                "Invalid map field number: " + number);
+        }
+      }
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Drug.class, bmeg.gaea.schema.Sample.Drug.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Drug.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        synonyms_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        internalGetMutableInfo().clear();
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Drug_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Drug getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Drug.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Drug build() {
+        bmeg.gaea.schema.Sample.Drug result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Drug buildPartial() {
+        bmeg.gaea.schema.Sample.Drug result = new bmeg.gaea.schema.Sample.Drug(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        result.name_ = name_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          synonyms_ = synonyms_.getUnmodifiableView();
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.synonyms_ = synonyms_;
+        result.info_ = internalGetInfo();
+        result.info_.makeImmutable();
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Drug) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Drug)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Drug other) {
+        if (other == bmeg.gaea.schema.Sample.Drug.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        if (!other.synonyms_.isEmpty()) {
+          if (synonyms_.isEmpty()) {
+            synonyms_ = other.synonyms_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureSynonymsIsMutable();
+            synonyms_.addAll(other.synonyms_);
+          }
+          onChanged();
+        }
+        internalGetMutableInfo().mergeFrom(
+            other.internalGetInfo());
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Drug parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Drug) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.LazyStringList synonyms_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      private void ensureSynonymsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          synonyms_ = new com.google.protobuf.LazyStringArrayList(synonyms_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public com.google.protobuf.ProtocolStringList
+          getSynonymsList() {
+        return synonyms_.getUnmodifiableView();
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public int getSynonymsCount() {
+        return synonyms_.size();
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public java.lang.String getSynonyms(int index) {
+        return synonyms_.get(index);
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getSynonymsBytes(int index) {
+        return synonyms_.getByteString(index);
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public Builder setSynonyms(
+          int index, java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureSynonymsIsMutable();
+        synonyms_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public Builder addSynonyms(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  ensureSynonymsIsMutable();
+        synonyms_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public Builder addAllSynonyms(
+          java.lang.Iterable<java.lang.String> values) {
+        ensureSynonymsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, synonyms_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public Builder clearSynonyms() {
+        synonyms_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated string synonyms = 2;</code>
+       *
+       * <pre>
+       * Each synonym may end up as a node.
+       * </pre>
+       */
+      public Builder addSynonymsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        ensureSynonymsIsMutable();
+        synonyms_.add(value);
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.MapField<
+          java.lang.String, java.lang.String> info_;
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetInfo() {
+        if (info_ == null) {
+          return com.google.protobuf.MapField.emptyMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+       }
+        return info_;
+      }
+      private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetMutableInfo() {
+        onChanged();;
+        if (info_ == null) {
+          info_ = com.google.protobuf.MapField.newMapField(
+              InfoDefaultEntryHolder.defaultEntry);
+        }
+        if (!info_.isMutable()) {
+          info_ = info_.copy();
+        }
+        return info_;
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       */
+      public java.util.Map<java.lang.String, java.lang.String> getInfo() {
+        return internalGetInfo().getMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       */
+      public java.util.Map<java.lang.String, java.lang.String>
+      getMutableInfo() {
+        return internalGetMutableInfo().getMutableMap();
+      }
+      /**
+       * <code>map&lt;string, string&gt; info = 3;</code>
+       */
+      public Builder putAllInfo(
+          java.util.Map<java.lang.String, java.lang.String> values) {
+        getMutableInfo().putAll(values);
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Drug)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Drug)
+    private static final bmeg.gaea.schema.Sample.Drug DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Drug();
+    }
+
+    public static bmeg.gaea.schema.Sample.Drug getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Drug>
+        PARSER = new com.google.protobuf.AbstractParser<Drug>() {
+      public Drug parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Drug(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Drug> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Drug> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Drug getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ModelOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Model)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    java.lang.String getName();
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getNameBytes();
+  }
+  /**
+   * Protobuf type {@code bmeg.gaea.schema.Model}
+   *
+   * <pre>
+   * Placeholder for the entire machine learning schema
+   * </pre>
+   */
+  public  static final class Model extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Model)
+      ModelOrBuilder {
+    // Use Model.newBuilder() to construct.
+    private Model(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Model() {
+      name_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private Model(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              name_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw new RuntimeException(e.setUnfinishedMessage(this));
+      } catch (java.io.IOException e) {
+        throw new RuntimeException(
+            new com.google.protobuf.InvalidProtocolBufferException(
+                e.getMessage()).setUnfinishedMessage(this));
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              bmeg.gaea.schema.Sample.Model.class, bmeg.gaea.schema.Sample.Model.Builder.class);
+    }
+
+    public static final int NAME_FIELD_NUMBER = 1;
+    private volatile java.lang.Object name_;
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public java.lang.String getName() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        name_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string name = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getNameBytes() {
+      java.lang.Object ref = name_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        name_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getNameBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getNameBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static bmeg.gaea.schema.Sample.Model parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(bmeg.gaea.schema.Sample.Model prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code bmeg.gaea.schema.Model}
+     *
+     * <pre>
+     * Placeholder for the entire machine learning schema
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Model)
+        bmeg.gaea.schema.Sample.ModelOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                bmeg.gaea.schema.Sample.Model.class, bmeg.gaea.schema.Sample.Model.Builder.class);
+      }
+
+      // Construct using bmeg.gaea.schema.Sample.Model.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        name_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
+      }
+
+      public bmeg.gaea.schema.Sample.Model getDefaultInstanceForType() {
+        return bmeg.gaea.schema.Sample.Model.getDefaultInstance();
+      }
+
+      public bmeg.gaea.schema.Sample.Model build() {
+        bmeg.gaea.schema.Sample.Model result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public bmeg.gaea.schema.Sample.Model buildPartial() {
+        bmeg.gaea.schema.Sample.Model result = new bmeg.gaea.schema.Sample.Model(this);
+        result.name_ = name_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof bmeg.gaea.schema.Sample.Model) {
+          return mergeFrom((bmeg.gaea.schema.Sample.Model)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(bmeg.gaea.schema.Sample.Model other) {
+        if (other == bmeg.gaea.schema.Sample.Model.getDefaultInstance()) return this;
+        if (!other.getName().isEmpty()) {
+          name_ = other.name_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        bmeg.gaea.schema.Sample.Model parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (bmeg.gaea.schema.Sample.Model) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object name_ = "";
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public java.lang.String getName() {
+        java.lang.Object ref = name_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          name_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getNameBytes() {
+        java.lang.Object ref = name_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          name_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setName(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder clearName() {
+        
+        name_ = getDefaultInstance().getName();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string name = 1;</code>
+       */
+      public Builder setNameBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        name_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Model)
+    }
+
+    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Model)
+    private static final bmeg.gaea.schema.Sample.Model DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Model();
+    }
+
+    public static bmeg.gaea.schema.Sample.Model getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Model>
+        PARSER = new com.google.protobuf.AbstractParser<Model>() {
+      public Model parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        try {
+          return new Model(input, extensionRegistry);
+        } catch (RuntimeException e) {
+          if (e.getCause() instanceof
+              com.google.protobuf.InvalidProtocolBufferException) {
+            throw (com.google.protobuf.InvalidProtocolBufferException)
+                e.getCause();
+          }
+          throw e;
+        }
+      }
+    };
+
+    public static com.google.protobuf.Parser<Model> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Model> getParserForType() {
+      return PARSER;
+    }
+
+    public bmeg.gaea.schema.Sample.Model getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -9909,6 +17503,61 @@ public final class Sample {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_bmeg_gaea_schema_GeneExpression_ExpressionsEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_PhenotypeAssociation_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Phenotype_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Phenotype_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_OntologyTerm_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_OntologyTerm_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Genotype_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Genotype_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Context_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Context_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Context_InfoEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Context_InfoEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Evidence_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Evidence_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Evidence_InfoEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Evidence_InfoEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Drug_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Drug_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Drug_InfoEntry_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Drug_InfoEntry_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_bmeg_gaea_schema_Model_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_bmeg_gaea_schema_Model_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -9957,7 +17606,31 @@ public final class Sample {
       "\t\022F\n\013expressions\030\005 \003(\01321.bmeg.gaea.schem" +
       "a.GeneExpression.ExpressionsEntry\0322\n\020Exp" +
       "ressionsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(" +
-      "\t:\0028\001b\006proto3"
+      "\001:\0028\001\"\231\001\n\024PhenotypeAssociation\022\014\n\004name\030\001",
+      " \001(\t\022 \n\030hasGenotypeEdgesGenotype\030\002 \003(\t\022-" +
+      "\n\ntheContext\030\003 \001(\0132\031.bmeg.gaea.schema.Co" +
+      "ntext\022\"\n\032hasPhenotypeEdgesPhenotype\030\004 \003(" +
+      "\t\"O\n\tPhenotype\022\014\n\004name\030\001 \001(\t\022\037\n\027isTypeEd" +
+      "gesOntologyTerm\030\002 \003(\t\022\023\n\013description\030\003 \001" +
+      "(\t\":\n\014OntologyTerm\022\014\n\004name\030\001 \001(\t\022\014\n\004term" +
+      "\030\002 \001(\t\022\016\n\006source\030\003 \001(\t\"\246\001\n\010Genotype\022\014\n\004n" +
+      "ame\030\001 \001(\t\022%\n\035isVariantCallEdgesVariantCa" +
+      "ll\030\002 \003(\t\022!\n\031isBiosampleEdgesBiosample\030\003 " +
+      "\003(\t\022#\n\033isIndividualEdgesIndividual\030\004 \003(\t",
+      "\022\035\n\025isFeatureEdgesFeature\030\005 \003(\t\"\331\001\n\007Cont" +
+      "ext\022\014\n\004name\030\001 \001(\t\022\037\n\027involvesModelEdgesM" +
+      "odel\030\002 \003(\t\022\035\n\025involvesDrugEdgesDrug\030\003 \003(" +
+      "\t\022 \n\030hasEvidenceEdgesEvidence\030\004 \003(\t\0221\n\004i" +
+      "nfo\030\005 \003(\0132#.bmeg.gaea.schema.Context.Inf" +
+      "oEntry\032+\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005valu" +
+      "e\030\002 \001(\t:\0028\001\"\207\001\n\010Evidence\022\014\n\004name\030\001 \001(\t\022\014" +
+      "\n\004pmid\030\002 \003(\t\0222\n\004info\030\003 \003(\0132$.bmeg.gaea.s" +
+      "chema.Evidence.InfoEntry\032+\n\tInfoEntry\022\013\n" +
+      "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"\203\001\n\004Drug\022\014",
+      "\n\004name\030\001 \001(\t\022\020\n\010synonyms\030\002 \003(\t\022.\n\004info\030\003" +
+      " \003(\0132 .bmeg.gaea.schema.Drug.InfoEntry\032+" +
+      "\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:" +
+      "\0028\001\"\025\n\005Model\022\014\n\004name\030\001 \001(\tb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -10049,6 +17722,72 @@ public final class Sample {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_GeneExpression_ExpressionsEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
+    internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_bmeg_gaea_schema_PhenotypeAssociation_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_PhenotypeAssociation_descriptor,
+        new java.lang.String[] { "Name", "HasGenotypeEdgesGenotype", "TheContext", "HasPhenotypeEdgesPhenotype", });
+    internal_static_bmeg_gaea_schema_Phenotype_descriptor =
+      getDescriptor().getMessageTypes().get(9);
+    internal_static_bmeg_gaea_schema_Phenotype_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Phenotype_descriptor,
+        new java.lang.String[] { "Name", "IsTypeEdgesOntologyTerm", "Description", });
+    internal_static_bmeg_gaea_schema_OntologyTerm_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_bmeg_gaea_schema_OntologyTerm_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_OntologyTerm_descriptor,
+        new java.lang.String[] { "Name", "Term", "Source", });
+    internal_static_bmeg_gaea_schema_Genotype_descriptor =
+      getDescriptor().getMessageTypes().get(11);
+    internal_static_bmeg_gaea_schema_Genotype_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Genotype_descriptor,
+        new java.lang.String[] { "Name", "IsVariantCallEdgesVariantCall", "IsBiosampleEdgesBiosample", "IsIndividualEdgesIndividual", "IsFeatureEdgesFeature", });
+    internal_static_bmeg_gaea_schema_Context_descriptor =
+      getDescriptor().getMessageTypes().get(12);
+    internal_static_bmeg_gaea_schema_Context_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Context_descriptor,
+        new java.lang.String[] { "Name", "InvolvesModelEdgesModel", "InvolvesDrugEdgesDrug", "HasEvidenceEdgesEvidence", "Info", });
+    internal_static_bmeg_gaea_schema_Context_InfoEntry_descriptor =
+      internal_static_bmeg_gaea_schema_Context_descriptor.getNestedTypes().get(0);
+    internal_static_bmeg_gaea_schema_Context_InfoEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Context_InfoEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_bmeg_gaea_schema_Evidence_descriptor =
+      getDescriptor().getMessageTypes().get(13);
+    internal_static_bmeg_gaea_schema_Evidence_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Evidence_descriptor,
+        new java.lang.String[] { "Name", "Pmid", "Info", });
+    internal_static_bmeg_gaea_schema_Evidence_InfoEntry_descriptor =
+      internal_static_bmeg_gaea_schema_Evidence_descriptor.getNestedTypes().get(0);
+    internal_static_bmeg_gaea_schema_Evidence_InfoEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Evidence_InfoEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_bmeg_gaea_schema_Drug_descriptor =
+      getDescriptor().getMessageTypes().get(14);
+    internal_static_bmeg_gaea_schema_Drug_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Drug_descriptor,
+        new java.lang.String[] { "Name", "Synonyms", "Info", });
+    internal_static_bmeg_gaea_schema_Drug_InfoEntry_descriptor =
+      internal_static_bmeg_gaea_schema_Drug_descriptor.getNestedTypes().get(0);
+    internal_static_bmeg_gaea_schema_Drug_InfoEntry_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Drug_InfoEntry_descriptor,
+        new java.lang.String[] { "Key", "Value", });
+    internal_static_bmeg_gaea_schema_Model_descriptor =
+      getDescriptor().getMessageTypes().get(15);
+    internal_static_bmeg_gaea_schema_Model_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_bmeg_gaea_schema_Model_descriptor,
+        new java.lang.String[] { "Name", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
