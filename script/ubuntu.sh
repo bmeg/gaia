@@ -30,6 +30,13 @@ cd ..
 git clone https://github.com/bmeg/gaea.git
 
 
+# SBT CONFIGURATION -----------------------------------------
+
+sudo nano /usr/share/sbt-launcher-packaging/conf/sbtopts
+-J-XX:-UseConcMarkSweepGC
+-J-Xmx4G
+
+
 
 # INSTALLING CASSANDRA -----------------------------------
 
@@ -38,7 +45,6 @@ curl -L https://debian.datastax.com/debian/repo_key | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install openjdk-8-jdk
 sudo apt-get install datastax-ddc
-
 
 
 # CASSANDRA CONFIGURATION ------------------------------------
@@ -54,11 +60,6 @@ broadcast_rpc_address: 10.104.0.5
 
 
 
-# SBT CONFIGURATION -----------------------------------------
-
-sudo nano /usr/share/sbt-launcher-packaging/conf/sbtopts
--J-XX:-UseConcMarkSweepGC
--J-Xmx4G
 
 
 
