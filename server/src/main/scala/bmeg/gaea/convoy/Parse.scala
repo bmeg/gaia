@@ -51,4 +51,10 @@ object ParseProtobuffer {
     JsonFormat.parser().merge(raw, geneExpression)
     geneExpression.build()
   }
+
+  def parseLinearSignature(raw: String): Sample.LinearSignature = {
+    val linearSignature: Sample.LinearSignature.Builder = Sample.LinearSignature.newBuilder()
+    JsonFormat.parser().merge(raw, linearSignature)
+    linearSignature.build()
+  }
 }

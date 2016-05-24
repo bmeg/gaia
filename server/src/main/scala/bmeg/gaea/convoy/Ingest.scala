@@ -196,6 +196,7 @@ object Ingest {
       effectVertex --- ("effectOf") --> variantVertex
     }
 
+    retryCommit(graph) (5)
     effectVertex
   }
 
@@ -226,6 +227,7 @@ object Ingest {
       variantVertex --- ("atPosition") --> positionVertex
     }
 
+    retryCommit(graph) (5)
     variantVertex
   }
 
@@ -270,24 +272,47 @@ object Ingest {
       }
     }
 
+    retryCommit(graph) (5)
     individualVertex
   }
 
   def ingestGeneExpression(graph: TitanGraph) (expression: Sample.GeneExpression): Vertex = {
     println("ingesting expression " + expression.getName())
     val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
-    val expressions = expression.getExpressions().asScala
+    val expressions = expression.getExpressions().asScala.toMap
+    val expressionJson = expressions.asJson.toString
 
-    for ((feature, value) <- expressions) {
-      expressionVertex.setProperty(Key[java.lang.Double](feature), value)
-    }
+    expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
+
+    // for ((feature, value) <- expressions) {
+    //   expressionVertex.setProperty(Key[java.lang.Double](feature), value)
+    // }
 
     for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {
       val sampleVertex = findVertex(graph) ("biosample") (sample)
       expressionVertex --- ("expressionFor") --> sampleVertex
     }
 
+    retryCommit(graph) (5)
     expressionVertex
+  }
+
+  def ingestLinearSignature(graph: TitanGraph) (signature: Sample.LinearSignature): Vertex = {
+    println("ingesting signature " + signature.getName())
+    val signatureVertex = findVertex(graph) ("linearSignature") (signature.getName())
+    val coefficients = signature.getCoefficients().asScala.toMap
+    val coefficientsJson = coefficients.asJson.toString
+
+    signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
+    signatureVertex.setProperty(Key[Double]("intercept"), signature.getIntercept())
+
+    for (drug <- signature.getSignatureForEdgesDrugList().asScala.toList) {
+      val drugVertex = findVertex(graph) ("drug") (drug)
+      signatureVertex --- ("signatureFor") --> drugVertex
+    }
+
+    retryCommit(graph) (5)
+    signatureVertex
   }
 
   def retryCommit(graph: TitanGraph) (times: Integer): Unit = {
@@ -329,11 +354,13 @@ object Ingest {
     } else if (messageType == "GeneExpression") {
       val geneExpression = ParseProtobuffer.parseGeneExpression(line)
       ingestGeneExpression(graph) (geneExpression)
+    } else if (messageType == "LinearSignature") {
+      val linearSignature = ParseProtobuffer.parseLinearSignature(line)
+      ingestLinearSignature(graph) (linearSignature)
     } else {
       findVertex(graph) ("void") ("void")
     }
 
-    retryCommit(graph) (5)
     vertex
   }
 }

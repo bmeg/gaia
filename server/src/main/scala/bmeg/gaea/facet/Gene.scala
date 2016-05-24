@@ -12,6 +12,7 @@ import org.http4s.dsl._
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 
+import com.typesafe.scalalogging._
 import _root_.argonaut._, Argonaut._
 import org.http4s.argonaut._
 import scalaz.stream.text
@@ -20,7 +21,7 @@ import scalaz.stream.Process._
 import scalaz.stream.Process1
 import scalaz.concurrent.Task
 
-object GeneFacet {
+object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
 
   def splitLines(rest: String): Process1[String, String] =
@@ -49,10 +50,12 @@ object GeneFacet {
       Ok(jSingleObject(name, jString(synonym)))
 
     case request @ POST -> Root / "message" / messageType =>
+      logger.info("importing " + messageType)
       val messages = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
         Process eval Ingest.ingestMessage(messageType) (graph) (line)
       } 
       messages.runLog.run
+      Ingest.retryCommit(graph) (5)
 
       Ok(jString("done!"))
 
