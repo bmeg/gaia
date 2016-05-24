@@ -9,6 +9,8 @@ import gremlin.scala._
 import scala.collection.JavaConverters._
 import java.lang.{Long => Llong}
 import scalaz.concurrent.Task
+import scalaz._, Scalaz._
+import argonaut._, Argonaut._
 
 // RNASeq.geneExp
 // *.maf
@@ -275,6 +277,7 @@ object Ingest {
     println("ingesting expression " + expression.getName())
     val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
     val expressions = expression.getExpressions().asScala
+
     for ((feature, value) <- expressions) {
       expressionVertex.setProperty(Key[java.lang.Double](feature), value)
     }
