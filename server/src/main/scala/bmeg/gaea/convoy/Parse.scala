@@ -3,7 +3,7 @@ package bmeg.gaea.convoy
 import bmeg.gaea.schema.Sample
 import com.google.protobuf.util.JsonFormat
 
-object Parse {
+object ParseProtobuffer {
   def parseFeature(raw: String): Sample.Feature = {
     val feature: Sample.Feature.Builder = Sample.Feature.newBuilder()
     JsonFormat.parser().merge(raw, feature)

@@ -4,25 +4,25 @@ import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 
 object Feature {
-  val symbolKey = Key[String]("symbol")
+  val nameKey = Key[String]("name")
 
-  def findSynonymVertex(graph: TitanGraph) (symbol: String): Option[Vertex] = {
-    graph.V.hasLabel("featureSynonym").has(symbolKey, symbol).out("synonymFor").headOption
+  def findSynonymVertex(graph: TitanGraph) (name: String): Option[Vertex] = {
+    graph.V.hasLabel("featureSynonym").has(nameKey, name).out("synonymFor").headOption
   }
 
-  def findSynonym(graph: TitanGraph) (symbol: String): Option[String] = {
-    val values = findSynonymVertex(graph) (symbol).map(_.valueMap())
-    values.map(_("symbol").asInstanceOf[String])
+  def findSynonym(graph: TitanGraph) (name: String): Option[String] = {
+    val values = findSynonymVertex(graph) (name).map(_.valueMap())
+    values.map(_("name").asInstanceOf[String])
   }
 
-  def findFeature(graph: TitanGraph) (symbol: String): Vertex = {
-    findSynonymVertex(graph) (symbol).getOrElse {
-      val synonym = graph.V.hasLabel("featureSynonym").has(symbolKey, symbol).headOption.getOrElse {
-        graph + ("featureSynonym", symbolKey -> symbol)
+  def findFeature(graph: TitanGraph) (name: String): Vertex = {
+    findSynonymVertex(graph) (name).getOrElse {
+      val synonym = graph.V.hasLabel("featureSynonym").has(nameKey, name).headOption.getOrElse {
+        graph + ("featureSynonym", nameKey -> name)
       }
 
-      val feature = graph.V.hasLabel("feature").has(symbolKey, symbol).headOption.getOrElse {
-        graph + ("feature", symbolKey -> symbol)
+      val feature = graph.V.hasLabel("feature").has(nameKey, name).headOption.getOrElse {
+        graph + ("feature", nameKey -> name)
       }
 
       synonym --- ("synonymFor") --> feature

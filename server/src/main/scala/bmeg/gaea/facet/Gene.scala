@@ -37,21 +37,6 @@ object GeneFacet {
     graph.tx.commit()
   })
 
-  def retryCommit(graph: TitanGraph) (times: Integer): Unit = {
-    if (times == 0) {
-      println("TRANSACTION FAILED!")
-    } else {
-      println("trying transaction: " + times.toString)
-      try {
-        graph.tx.commit()
-      } catch {
-        case ex: Exception => {
-          retryCommit(graph) (times - 1)
-        }
-      }
-    }
-  }
-
   val service = HttpService {
     case GET -> Root / "hello" / name =>
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
@@ -68,7 +53,6 @@ object GeneFacet {
         Process eval Ingest.ingestMessage(messageType) (graph) (line)
       } 
       messages.runLog.run
-      retryCommit(graph) (5)
 
       Ok(jString("done!"))
 

@@ -8,8 +8,8 @@ import gremlin.scala._
 
 object Hugo {
   val hugoIdKey = Key[String]("hugoId")
-  val symbolKey = Key[String]("symbol")
   val nameKey = Key[String]("name")
+  val descriptionKey = Key[String]("description")
   val chromosomeKey = Key[String]("chromosome")
   val accessionKey = Key[String]("accession")
   val refseqKey = Key[String]("refseq")
@@ -27,8 +27,8 @@ object Hugo {
     val refseq = if(hugo.length > 8) hugo(8) else ""
     val feature = graph + ("feature",
       hugoIdKey -> hugo(0).replaceFirst("HGNC:", ""),
-      symbolKey -> hugo(1),
-      nameKey -> hugo(2),
+      nameKey -> hugo(1),
+      descriptionKey -> hugo(2),
       chromosomeKey -> chromosome,
       accessionKey -> accession,
       refseqKey -> refseq)
@@ -36,7 +36,7 @@ object Hugo {
     val otherSynonyms = if(hugo.length > 5 && hugo(5) != "") hugo(5).split(", ") else Array[String]()
     val synonyms = otherSynonyms :+ hugo(1)
     for (synonym <- synonyms) {
-      val synonymVertex = graph + ("featureSynonym", symbolKey -> synonym)
+      val synonymVertex = graph + ("featureSynonym", nameKey -> synonym)
       synonymVertex --- ("synonymFor") --> feature
     }
 

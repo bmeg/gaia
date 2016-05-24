@@ -18,7 +18,7 @@ object Ingest {
   val titanStringKeys = List(
     "name",
     "source",
-    "symbol",
+    // "symbol",
 
     // sample keys
     "tumor",
@@ -123,7 +123,7 @@ object Ingest {
 
     "nameIndex" -> Map("name" -> classOf[String]),
 
-    "symbolIndex" -> Map("symbol" -> classOf[String]),
+    // "symbolIndex" -> Map("symbol" -> classOf[String]),
     "genderIndex" -> Map("gender" -> classOf[String]),
     "cancerIndex" -> Map("cancer" -> classOf[String])
   )
@@ -287,33 +287,50 @@ object Ingest {
     expressionVertex
   }
 
+  def retryCommit(graph: TitanGraph) (times: Integer): Unit = {
+    if (times == 0) {
+      println("TRANSACTION FAILED!")
+    } else {
+      try {
+        graph.tx.commit()
+      } catch {
+        case ex: Exception => {
+          retryCommit(graph) (times - 1)
+        }
+      }
+    }
+  }
+
   def ingestMessage(messageType: String) (graph: TitanGraph) (line: String): Task[Vertex] = Task {
-    if (messageType == "Feature") {
-      val feature = Parse.parseFeature(line)
+    val vertex = if (messageType == "Feature") {
+      val feature = ParseProtobuffer.parseFeature(line)
       ingestFeature(graph) (feature)
     } else if (messageType == "Domain") {
-      val domain = Parse.parseDomain(line)
+      val domain = ParseProtobuffer.parseDomain(line)
       ingestDomain(graph) (domain)
     } else if (messageType == "Position") {
-      val position = Parse.parsePosition(line)
+      val position = ParseProtobuffer.parsePosition(line)
       ingestPosition(graph) (position)
     } else if (messageType == "VariantCall") {
-      val variantCall = Parse.parseVariantCall(line)
+      val variantCall = ParseProtobuffer.parseVariantCall(line)
       ingestVariantCall(graph) (variantCall)
     } else if (messageType == "VariantCallEffect") {
-      val variantCallEffect = Parse.parseVariantCallEffect(line)
+      val variantCallEffect = ParseProtobuffer.parseVariantCallEffect(line)
       ingestVariantCallEffect(graph) (variantCallEffect)
     } else if (messageType == "Biosample") {
-      val biosample = Parse.parseBiosample(line)
+      val biosample = ParseProtobuffer.parseBiosample(line)
       ingestBiosample(graph) (biosample)
     } else if (messageType == "Individual") {
-      val individual = Parse.parseIndividual(line)
+      val individual = ParseProtobuffer.parseIndividual(line)
       ingestIndividual(graph) (individual)
     } else if (messageType == "GeneExpression") {
-      val geneExpression = Parse.parseGeneExpression(line)
+      val geneExpression = ParseProtobuffer.parseGeneExpression(line)
       ingestGeneExpression(graph) (geneExpression)
     } else {
       findVertex(graph) ("void") ("void")
     }
+
+    retryCommit(graph) (5)
+    vertex
   }
 }

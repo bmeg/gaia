@@ -23,6 +23,10 @@ object Titan {
     TitanFactory.open(conf)
   }
 
+  def defaultGraph(): TitanGraph = {
+    connect(configuration(Map[String, String]()))
+  }
+
   def findVertex[A](graph: TitanGraph) (label: String) (keys: Map[Key[A], A]): Option[Vertex] = {
     val prequery = graph.V.hasLabel(label)
     val query = keys.foldLeft(prequery) {(query, kv) =>
