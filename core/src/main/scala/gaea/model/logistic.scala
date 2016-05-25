@@ -81,6 +81,20 @@ class LogisticRegression(coef: Vector[Double], intercept: Double) {
     mutableProbability.toVector
   }
 
+  /** Natural logarithmic of probability of predicting '1'.
+    *
+    * @param data the data to make predictions on.
+    */
+  def predictLogProba(data:Vector[Vector[Double]]): Vector[Double] = {
+    val proba = predictProba(data)
+    var mutableLogProba = new ListBuffer[Double]()
+
+    for (i <- 0 to proba.length -1 ) {
+      mutableLogProba += scala.math.log(proba(i))
+    }
+    mutableLogProba.toVector
+  }
+
   /** Predict binary state, represented in '1' and '0'.
     *
     * @param data the data to make predictions on.
