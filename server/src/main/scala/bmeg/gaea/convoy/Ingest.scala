@@ -176,6 +176,7 @@ object Ingest {
   }
 
   def ingestVariantCallEffect(graph: TitanGraph) (effect: Sample.VariantCallEffect): Vertex = {
+    println("ingesting variant call effect " + effect.getName())
     val effectVertex = findVertex(graph) ("variantCallEffect") (effect.getName())
     effectVertex.setProperty(keys("variantClassification"), effect.getVariantClassification())
     effectVertex.setProperty(keys("dbsnpRS"), effect.getDbsnpRS())
@@ -191,6 +192,7 @@ object Ingest {
       effectVertex --- ("inDomain") --> domainVertex
     }
 
+
     for (variant <- effect.getEffectOfEdgesVariantCallList().asScala.toList) {
       val variantVertex = findVertex(graph) ("variantCall") (variant)
       effectVertex --- ("effectOf") --> variantVertex
@@ -201,6 +203,7 @@ object Ingest {
   }
 
   def ingestVariantCall(graph: TitanGraph) (variant: Sample.VariantCall): Vertex = {
+    println("ingesting variant call " + variant.getName())
     val variantVertex = findVertex(graph) ("variantCall") (variant.getName())
 
     variantVertex.setProperty(keys("source"), variant.getSource())
@@ -243,6 +246,7 @@ object Ingest {
       biosampleVertex --- ("sampleOf") --> individualVertex
     }
 
+    retryCommit(graph) (5)
     biosampleVertex
   }
 
@@ -283,10 +287,6 @@ object Ingest {
     val expressionJson = expressions.asJson.toString
 
     expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
-
-    // for ((feature, value) <- expressions) {
-    //   expressionVertex.setProperty(Key[java.lang.Double](feature), value)
-    // }
 
     for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {
       val sampleVertex = findVertex(graph) ("biosample") (sample)

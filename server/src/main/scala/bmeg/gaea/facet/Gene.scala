@@ -24,14 +24,6 @@ import scalaz.concurrent.Task
 object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
 
-  def splitLines(rest: String): Process1[String, String] =
-    rest.split("""\r\n|\n|\r""", 2) match {
-      case Array(head, tail) =>
-        emit(head) ++ splitLines(tail)
-      case Array(head) =>
-        receive1Or[String, String](emit(rest)) { s => splitLines(rest + s) }
-    }
-
   def puts(line: String): Task[Unit] = Task { println(line) }
 
   def commit(graph: TitanGraph): Process[Task, Unit] = Process eval_ (Task {
@@ -67,4 +59,3 @@ object GeneFacet extends LazyLogging {
       Ok(jNumber(1))
   }
 }
-
