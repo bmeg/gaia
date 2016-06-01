@@ -70,10 +70,16 @@ object GeneFacet extends LazyLogging {
         val geneNames = json.as[List[String]].getOr(List[String]())
         val featureVertexes = geneNames.map(Feature.findSynonymVertex(graph) (_)).flatten
         val featureNames = featureVertexes.map(_.property(Name).orElse(""))
-        val signatureVertexes = featureVertexes.flatMap(_.in("hasCoefficient").toList)
+        val signatureVertexes = featureVertexes.flatMap(_.in("hasCoefficient").toList).toSet
         val signatureJson = signatureVertexes.map(signatureToJson(featureNames))
         Ok(signatureJson.asJson)
       }
+
+    // case request @ POST -> Root / "gaea" / "signature" / "sample" =>
+    //   request.as[Json].flatMap { json =>
+    //     val data = json.as[Map[String, List[Map[String, String]]]].getOr(Map[String, List[Map[String, String]]]())
+    //     val 
+    //   }
 
     case request @ POST -> Root / "gaea" / "message" / messageType =>
       logger.info("importing " + messageType)
