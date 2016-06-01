@@ -4,6 +4,7 @@ import bmeg.gaea.titan.Titan
 import bmeg.gaea.schema.Variant
 import bmeg.gaea.convoy.Ingest
 import bmeg.gaea.feature.Feature
+import bmeg.gaea.worker.SignatureWorker
 
 import org.http4s._
 import org.http4s.server._
@@ -23,6 +24,8 @@ import scalaz.concurrent.Task
 
 object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
+  val Name = Key[String]("name")
+  val Coefficients = Key[String]("coefficients")
 
   def puts(line: String): Task[Unit] = Task { println(line) }
 
@@ -30,18 +33,49 @@ object GeneFacet extends LazyLogging {
     graph.tx.commit()
   })
 
+  def coefficientsToJson(coefficients: Map[String, Double]): Json = {
+    coefficients.foldLeft(jEmptyArray) { (json, coefficient) =>
+      val (feature, level) = coefficient
+      val pair = ("feature", jString(feature)) ->: ("weight", jNumber(level).getOrElse(jZero)) ->: jEmptyObject
+      pair -->>: json
+    }
+  }
+
+  def eventMetadata(eventID: String, eventType: String, datatype: String, weights: Map[String, Double]): Json = {
+    val weightsJson = coefficientsToJson(weights)
+    ("eventID", jString(eventID)) ->: ("eventType", jString(eventType)) ->: ("datatype", jString(datatype)) ->: ("featureWeights", weightsJson) ->: jEmptyObject
+  }
+
+  def signatureToJson(featureNames: List[String]) (vertex: Vertex): Json = {
+    val coefficients = SignatureWorker.dehydrateCoefficients(vertex.property(Coefficients).orElse(""))
+    val relevant = SignatureWorker.selectKeys[String, Double](coefficients) (featureNames) (0.0)
+    val score = relevant.values.foldLeft(0.0) (_ + _)
+    val signatureName = vertex.property(Name).orElse("no name")
+    val metadata = eventMetadata(signatureName, "drug sensitivity signature", "NUMERIC", relevant)
+    ("score", jNumber(score).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
+  }
+
   val service = HttpService {
-    case GET -> Root / "hello" / name =>
+    case GET -> Root / "gaea" / "hello" / name =>
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
 
-    case GET -> Root / "gene" / name =>
-      val graph = Titan.connect(Titan.configuration(Map[String, String]()))
+    case GET -> Root / "gaea" / "gene" / name =>
       val synonym = Feature.findSynonym(graph) (name).getOrElse {
         "no synonym found"
       }
       Ok(jSingleObject(name, jString(synonym)))
 
-    case request @ POST -> Root / "message" / messageType =>
+    case request @ POST -> Root / "gaea" / "signature" / "gene" =>
+      request.as[Json].flatMap { json => 
+        val geneNames = json.as[List[String]].getOr(List[String]())
+        val featureVertexes = geneNames.map(Feature.findSynonymVertex(graph) (_)).flatten
+        val featureNames = featureVertexes.map(_.property(Name).orElse(""))
+        val signatureVertexes = featureVertexes.flatMap(_.in("hasCoefficient").toList)
+        val signatureJson = signatureVertexes.map(signatureToJson(featureNames))
+        Ok(signatureJson.asJson)
+      }
+
+    case request @ POST -> Root / "gaea" / "message" / messageType =>
       logger.info("importing " + messageType)
       val messages = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
         Process eval Ingest.ingestMessage(messageType) (graph) (line)
