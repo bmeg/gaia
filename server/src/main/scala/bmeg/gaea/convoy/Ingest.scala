@@ -303,7 +303,7 @@ object Ingest {
   def ingestLinearSignature(graph: TitanGraph) (signature: Sample.LinearSignature): Vertex = {
     println("ingesting signature " + signature.getName())
 
-    val signatureType = findVertex(graph) ("type") ("type:geneExpression")
+    val signatureType = findVertex(graph) ("type") ("type:linearSignature")
     val signatureVertex = findVertex(graph) ("linearSignature") (signature.getName())
     val coefficients = signature.getCoefficients().asScala.toMap
     val coefficientsJson = coefficients.asJson.toString
