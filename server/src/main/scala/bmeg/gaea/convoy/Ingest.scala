@@ -282,10 +282,13 @@ object Ingest {
 
   def ingestGeneExpression(graph: TitanGraph) (expression: Sample.GeneExpression): Vertex = {
     println("ingesting expression " + expression.getName())
+
+    val expressionType = findVertex(graph) ("type") ("type:geneExpression")
     val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
     val expressions = expression.getExpressions().asScala.toMap
     val expressionJson = expressions.asJson.toString
 
+    expressionType --- ("hasInstance") --> expressionVertex
     expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
 
     for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {

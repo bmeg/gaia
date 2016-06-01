@@ -1,6 +1,5 @@
 package bmeg.gaea.worker
 
-import gaea.model.logistic.LogisticRegression
 import bmeg.gaea.feature.Feature
 
 import gremlin.scala._
@@ -12,7 +11,7 @@ object SignatureWorker {
   val Name = Key[String]("name")
   val Intercept = Key[Double]("intercept")
   val Expressions = Key[String]("expressions")
-  val Coefficient = Key[String]("coefficient")
+  val Coefficient = Key[Double]("coefficient")
   val Coefficients = Key[String]("coefficients")
   val emptyMap = Map[String, Double]()
 
@@ -26,8 +25,8 @@ object SignatureWorker {
 
   def linkSignaturesToFeatures(graph: TitanGraph): List[Tuple2[Vertex, Map[String, Double]]] = {
     val signatureVertexes = typeVertexes(graph) ("linearSignature")
-    val signatures = signatureVertexes.map(
-      (_, dehydrateCoefficients(_.property(Coefficients).orElse(""))))
+    val signatures = signatureVertexes.map((vertex) =>
+      (vertex, dehydrateCoefficients(vertex.property(Coefficients).orElse(""))))
 
     for ((signatureVertex, coefficients) <- signatures) {
       for ((feature, coefficient) <- coefficients) {
@@ -41,33 +40,104 @@ object SignatureWorker {
     signatures
   }
 
-  def splitMap[A, B](m: Map[A, B]): Tuple2[Vector[A], Vector[B]] = {
+  def dotProduct(coefficients: Vector[Double]) (intercept: Double) (value: Vector[Double]): Double = {
+    coefficients.zip(value).foldLeft(intercept) ((total, dot) => total + dot._1 * dot._2)
+  }
+
+  def splitMap[A <% Ordered[A], B](m: Map[A, B]): Tuple2[Vector[A], Vector[B]] = {
     val ordered = m.toVector.sortBy(_._1)
     val a = ordered.map(_._1)
     val b = ordered.map(_._2)
     (a, b)
   }
 
-  def selectKeys[A, B](m: Map[A, B]) (keys: List[A]) (default: B): Map[A, B] = {
+  def selectKeys[A, B](m: Map[A, B]) (keys: Seq[A]) (default: B): Map[A, B] = {
     keys.map(key => (key, m.get(key).getOrElse(default))).toMap
   }
 
-  def applySignatureToExpressions(graph: TitanGraph)
+  def signatureAppliesTo
+    (features: Vector[String])
+    (coefficients: Vector[Double])
+    (intercept: Double)
+    (threshold: Double)
+    (expressionVertex: Vertex)
+      : Boolean = {
+
+    val expressions = dehydrateCoefficients(expressionVertex.property(Expressions).orElse(""))
+    val relevantFeatures = selectKeys[String, Double](expressions) (features) (0.0)
+    val (genes, levels) = splitMap[String, Double](relevantFeatures)
+
+    val dot = dotProduct(coefficients) (intercept) (levels)
+    dot > threshold
+  }
+
+  def applySignatureToExpressions
+    (graph: TitanGraph)
     (signature: Tuple2[Vertex, Map[String, Double]])
-    (expressions: List[Tuple2[Vertex, Map[String, Double]]]): TitanGraph = {
+    (expressions: List[Vertex])
+      : TitanGraph = {
 
-    val (vertex, coefficients) = signature
+    val (signatureVertex, coefficients) = signature
     val (features, values) = splitMap[String, Double](coefficients)
-    val regression = LogisticRegression(values, vertex.property(Intercept).orElse(0.0))
+    val intercept = signatureVertex.property(Intercept).orElse(0.0)
 
-    // iterate through expressions and apply signature, creating an edge if positive
+    val relevant = expressions.filter(signatureAppliesTo(features) (values) (intercept) (0.5))
+
+    for (expressionVertex <- relevant) {
+      signatureVertex --- ("appliesTo") --> expressionVertex
+    }
+
+    graph.tx.commit()
+    graph
   }
 
-  def applySignaturesToExpressions(graph: TitanGraph) (signatures: List[Tuple2[Vertex, Map[String, Double]]]): TitanGraph = {
-    val expressionVertexes = typeVertexes(graph) ("geneExpression")
-    val expressions = expressionVertexes.map(
-      (_, dehydrateCoefficients(_.property(Expressions).orElse(""))))
+  def applySignaturesToExpressions
+    (graph: TitanGraph)
+    (signatures: List[Tuple2[Vertex, Map[String, Double]]])
+      : TitanGraph = {
 
-    val signatureRegressions = signatures.map(((vertex, coefficients)) => (vertex, coefficients, new LogisticRegression(coefficients.toVector, vertex.property(Intercept).orElse(0.0))))
+    val expressions = typeVertexes(graph) ("geneExpression")
+
+    for (signature <- signatures) {
+      applySignatureToExpressions(graph) (signature) (expressions)
+    }
+
+    graph
   }
+
+  // def applySignatureToExpressions
+  //   (graph: TitanGraph)
+  //   (signature: Tuple2[Vertex, Map[String, Double]])
+  //   (expressions: List[Tuple2[Vertex, Map[String, Double]]])
+  //     : TitanGraph = {
+
+  //   val (signatureVertex, coefficients) = signature
+  //   val (features, values) = splitMap[String, Double](coefficients)
+  //   val intercept = signatureVertex.property(Intercept).orElse(0.0)
+
+  //   val relevant = expressions.filter(signatureAppliesTo(features) (values) (intercept) (0.5))
+
+  //   for (expression <- relevant) {
+  //     val (expressionVertex, levels) = expression
+  //     signatureVertex --- ("appliesTo") --> expressionVertex
+  //   }
+
+  //   graph.tx.commit()
+  //   graph
+  // }
+
+  // def applySignaturesToExpressions
+  //   (graph: TitanGraph)
+  //   (signatures: List[Tuple2[Vertex, Map[String, Double]]])
+  //     : TitanGraph = {
+
+  //   val expressionVertexes = typeVertexes(graph) ("geneExpression")
+  //   val expressions = expressionVertexes.map((vertex) => (vertex, dehydrateCoefficients(vertex.property(Expressions).orElse(""))))
+
+  //   for (signature <- signatures) {
+  //     applySignatureToExpressions(graph) (signature) (expressions)
+  //   }
+
+  //   graph
+  // }
 }
