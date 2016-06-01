@@ -13,6 +13,8 @@ object SignatureWorker {
   val Expressions = Key[String]("expressions")
   val Coefficient = Key[Double]("coefficient")
   val Coefficients = Key[String]("coefficients")
+  val Level = Key[Double]("level")
+
   val emptyMap = Map[String, Double]()
 
   def dehydrateCoefficients(raw: String): Map[String, Double] = {
@@ -57,6 +59,20 @@ object SignatureWorker {
     keys.map(key => (key, m.get(key).getOrElse(default))).toMap
   }
 
+  def signatureLevel
+    (features: Vector[String])
+    (coefficients: Vector[Double])
+    (intercept: Double)
+    (expression: Tuple2[Vertex, Map[String, Double]])
+      : Double = {
+
+    val (vertex, expressions) = expression
+    val relevantFeatures = selectKeys[String, Double](expressions) (features) (0.0)
+    val (genes, levels) = splitMap[String, Double](relevantFeatures)
+
+    dotProduct(coefficients) (intercept) (levels)
+  }
+
   def signatureAppliesTo
     (features: Vector[String])
     (coefficients: Vector[Double])
@@ -65,12 +81,7 @@ object SignatureWorker {
     (expression: Tuple2[Vertex, Map[String, Double]])
       : Boolean = {
 
-    val (vertex, expressions) = expression
-    val relevantFeatures = selectKeys[String, Double](expressions) (features) (0.0)
-    val (genes, levels) = splitMap[String, Double](relevantFeatures)
-
-    val dot = dotProduct(coefficients) (intercept) (levels)
-    dot > threshold
+    signatureLevel(features) (coefficients) (intercept) (expression) > threshold
   }
 
   def applyExpressionToSignatures
@@ -86,9 +97,13 @@ object SignatureWorker {
       val intercept = signatureVertex.property(Intercept).orElse(0.0)
       val (features, values) = splitMap[String, Double](coefficients)
       val (expressionVertex, levels) = expression
-      if (signatureAppliesTo(features) (values) (intercept) (0.5) (expression)) {
-        signatureVertex --- ("appliesTo") --> expressionVertex
-      }
+      val level = signatureLevel(features) (values) (intercept) (expression)
+
+      signatureVertex --- ("appliesTo", Level -> level) --> expressionVertex
+
+      // if (signatureAppliesTo(features) (values) (intercept) (0.5) (expression)) {
+      //   signatureVertex --- ("appliesTo") --> expressionVertex
+      // }
     }
 
     graph.tx.commit()

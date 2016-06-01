@@ -75,11 +75,14 @@ object GeneFacet extends LazyLogging {
         Ok(signatureJson.asJson)
       }
 
-    // case request @ POST -> Root / "gaea" / "signature" / "sample" =>
-    //   request.as[Json].flatMap { json =>
-    //     val data = json.as[Map[String, List[Map[String, String]]]].getOr(Map[String, List[Map[String, String]]]())
-    //     val 
-    //   }
+    case request @ POST -> Root / "gaea" / "signature" / "sample" =>
+      request.as[Json].flatMap { json =>
+        val metadata = json.as[Map[String, List[Map[String, String]]]].getOr(Map[String, List[Map[String, String]]]())
+        val signatureMetadata = metadata("signatureMetadata")
+        val expressionMetadata = metadata("expressionMetadata")
+        val clinicalEventMetadata = metadata("clinicalEventMetadata")
+        Ok(json)
+      }
 
     case request @ POST -> Root / "gaea" / "message" / messageType =>
       logger.info("importing " + messageType)
