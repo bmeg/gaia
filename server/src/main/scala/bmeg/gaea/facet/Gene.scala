@@ -86,14 +86,19 @@ object GeneFacet extends LazyLogging {
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
   }
 
-  def expressionEvent(expressions: Seq[Tuple3[String, Map[String, Double], Double]]) (gene: String): Json = {
+  def expressionEvent(expressions: Seq[Tuple2[String, Map[String, Double]]]) (gene: String): Json = {
     val individuals = expressions.map(_._1)
     val coefficients = expressions.map(_._2)
-    val levels = expressions.map(_._3)
     val metadata = eventMetadata(gene, "mrna_expression", "NUMERIC", Map[String, Double]())
     val expression = coefficients.map(_.get(gene).getOrElse(0.0))
     val properties = individuals.zip(expression).toMap
     val json = coefficientsToJson(properties) ("sampleID") ("value")
+    ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
+  }
+
+  def levelEvent(levels: Map[String, Double]) (signature: String): Json = {
+    val metadata = eventMetadata(signature, "drug sensitivity score", "NUMERIC", Map[String, Double]())
+    val json = coefficientsToJson(levels) ("sampleID") ("value")
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
   }
 
@@ -145,14 +150,20 @@ object GeneFacet extends LazyLogging {
           .select((signatureStep, expressionEdgeStep, expressionStep, individualStep)).toSet
 
         val signatureData = query.map(_._1)
-        // val expressionLevels = query.map(_._2)
-        // val expressionData = query.map(_._3)
         val individualData = query.map(_._4)
         val expressionData = query.map { q =>
           val (sig, edge, expression, individual) = q
           val coefficients = SignatureWorker.dehydrateCoefficients(expression.property("expressions").orElse(""))
-          (individual.property("name").orElse(""), coefficients, edge.property("level").orElse(0.0))
+          (individual.property("name").orElse(""), coefficients)
         }
+
+        val levelData = query.map { q =>
+          val (signature, edge, expression, individual) = q
+          val signatureName = signature.property("name").orElse("")
+          val individualName = individual.property("name").orElse("")
+          val level = edge.property("level").orElse(0.0)
+          (signatureName, individualName, level)
+        }.groupBy(_._1)
 
         val individualJson = clinicalNames.foldLeft(jEmptyArray) { (json, clinical) =>
           clinicalEvent(individualData.toList) (clinical) -->>: json
@@ -162,9 +173,13 @@ object GeneFacet extends LazyLogging {
           expressionEvent(expressionData.toList) (gene) -->>: json
         }
 
-        // val levelJson = 
+        val levelJson = levelData.foldLeft(expressionJson) { (json, score) =>
+          val (signature, levelTuples) = score
+          val levels = levelTuples.map(level => (level._2, level._3)).toMap
+          levelEvent(levels) (signature) -->>: json
+        }
 
-        Ok(expressionJson)
+        Ok(levelJson)
       }
 
     // case request @ POST -> Root / "gaea" / "signature" / "sample" =>
