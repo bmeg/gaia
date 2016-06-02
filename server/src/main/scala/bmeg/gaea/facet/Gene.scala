@@ -64,14 +64,6 @@ object GeneFacet extends LazyLogging {
     ("score", jNumber(score).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
   }
 
-  // def expressionEvent(expressionVertex: Vertex) (level: Double) (geneNames: List[String]): Json = {
-  //   val metadata = eventMetadata(expressionVertex.property(Name).orElse(""), "expression values", "NUMERIC", Map[String, Double]())
-  //   val coefficients = SignatureWorker.dehydrateCoefficients(expressionVertex.property(Coefficients).orElse(""))
-  //   val relevant = SignatureWorker.selectKeys[String, Double](coefficients) (geneNames) (0.0) + ("signatureScore" -> level)
-  //   val sampleJson = coefficientsToJson(relevant) ("sampleID") ("value")
-  //   ("metadata", metadata) ->: ("sampleData", sampleJson) ->: jEmptyObject
-  // }
-
   def individualEvent(individualVertex: Vertex) (clinicalNames: List[String]): Json = {
     val metadata = eventMetadata(individualVertex.property(Name).orElse(""), "clinical values", "STRING", Map[String, Double]())
     val relevant = SignatureWorker.selectKeys[String, Any](individualVertex.valueMap()) (clinicalNames) ("")
@@ -181,50 +173,6 @@ object GeneFacet extends LazyLogging {
 
         Ok(levelJson)
       }
-
-    // case request @ POST -> Root / "gaea" / "signature" / "sample" =>
-    //   request.as[Json].flatMap { json =>
-    //     val metadata = json.as[Map[String, List[Map[String, String]]]].getOr(Map[String, List[Map[String, String]]]())
-    //     val signatureMetadata = metadata("signatureMetadata")
-    //     val expressionMetadata = metadata("expressionMetadata")
-    //     val clinicalEventMetadata = metadata("clinicalEventMetadata")
-
-    //     val signatureNames = signatureMetadata.map(_("eventID"))
-    //     val expressionNames = expressionMetadata.map(_("eventID"))
-    //     val clinicalNames = clinicalEventMetadata.map(_("eventID"))
-
-    //     val signatureStep = StepLabel[Vertex]()
-    //     val expressionEdgeStep = StepLabel[Edge]()
-    //     val expressionStep = StepLabel[Vertex]()
-    //     val individualStep = StepLabel[Vertex]()
-
-    //     val query = graph.V.hasLabel("type")
-    //       .has(Name, "type:linearSignature")
-    //       .out("hasInstance")
-    //       .filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
-    //       .outE("appliesTo").orderBy("level", Order.decr).limit(200).as(expressionEdgeStep)
-    //       .inV.as(expressionStep)
-    //       .out("expressionFor")
-    //       .has(Key[String]("sampleType"), "tumor")
-    //       .out("sampleOf").as(individualStep)
-    //       .select((signatureStep, expressionEdgeStep, expressionStep, individualStep)).toSet
-
-    //     val signatureData = query.map(_._1)
-    //     val expressionData = query.map(t => (t._2, t._3))
-    //     val individualData = query.map(_._4)
-
-    //     val expressionJson = expressionData.foldLeft(jEmptyArray) { (json, expression) =>
-    //       val (edge, vertex) = expression
-    //       val level = edge.property("level").orElse(0.0)
-    //       expressionEvent(vertex) (level) (expressionNames) -->>: json
-    //     }
-
-    //     val individualJson = individualData.foldLeft(expressionJson) { (json, individual) =>
-    //       individualEvent(individual) (clinicalNames) -->>: json
-    //     }
-
-    //     Ok(individualJson)
-    //   }
 
     case request @ POST -> Root / "gaea" / "message" / messageType =>
       logger.info("importing " + messageType)
