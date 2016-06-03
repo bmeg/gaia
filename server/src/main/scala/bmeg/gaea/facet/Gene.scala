@@ -23,6 +23,8 @@ import scalaz.stream.Process._
 import scalaz.stream.Process1
 import scalaz.concurrent.Task
 
+import java.io.File
+
 object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
   val Name = Key[String]("name")
@@ -214,5 +216,19 @@ object GeneFacet extends LazyLogging {
       }
       y.runLog.run
       Ok(jNumber(1))
+
+    case req @ GET -> "static" /: path =>
+      // captures everything after "/static" into `path`
+      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
+      // See also org.http4s.server.staticcontent to create a mountable service for static content
+      val localPath = new File(new File("./static"), path.toString)
+      StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
+
+    case req @ GET -> Root =>
+      // captures everything after "/static" into `path`
+      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
+      // See also org.http4s.server.staticcontent to create a mountable service for static content
+      val localPath = new File(new File("./static"), "main.html")
+      StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
   }
 }
