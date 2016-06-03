@@ -53,6 +53,12 @@ object GeneFacet extends LazyLogging {
     }
   }
 
+  def mapToJson(properties: Map[String, Any]) : Json = {
+    properties.map( x => {
+      ((x._1), (x._2.toString))
+    } ).asJson
+  }
+
   def eventMetadata(eventID: String, eventType: String, datatype: String, weights: Map[String, Double]): Json = {
     val weightsJson = coefficientsToJson(weights) ("feature") ("weight")
     ("eventID", jString(eventID)) ->: ("eventType", jString(eventType)) ->: ("datatype", jString(datatype)) ->: ("featureWeights", weightsJson) ->: jEmptyObject
@@ -216,6 +222,18 @@ object GeneFacet extends LazyLogging {
       }
       y.runLog.run
       Ok(jNumber(1))
+
+    case request @ GET -> Root / "gaea" / "vertex" / name =>
+      val h = graph.V.has(Name, name).head
+      val o = graph.V.has(Name, name).out().value(Name).toList()
+      val i = graph.V.has(Name, name).out().value(Name).toList()
+      val out = Map[String,Json](
+        "type" -> h.label().asJson,
+        "properties" -> mapToJson(h.valueMap),
+        "out" -> o.asJson,
+        "in" -> i.asJson
+      )
+      Ok(out.asJson)
 
     case req @ GET -> "static" /: path =>
       // captures everything after "/static" into `path`
