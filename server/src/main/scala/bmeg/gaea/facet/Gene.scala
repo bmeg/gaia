@@ -27,6 +27,7 @@ object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
   val Name = Key[String]("name")
   val Coefficients = Key[String]("coefficients")
+  val SampleType = Key[String]("sampleType")
 
   def puts(line: String): Task[Unit] = Task { println(line) }
 
@@ -78,9 +79,9 @@ object GeneFacet extends LazyLogging {
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
   }
 
-  def expressionEvent(expressions: Seq[Tuple2[String, Map[String, Double]]]) (gene: String): Json = {
+  def expressionEvent(expressions: Seq[Tuple3[String, Vertex, Map[String, Double]]]) (gene: String): Json = {
     val individuals = expressions.map(_._1)
-    val coefficients = expressions.map(_._2)
+    val coefficients = expressions.map(_._3)
     val metadata = eventMetadata(gene, "mrna_expression", "NUMERIC", Map[String, Double]())
     val expression = coefficients.map(_.get(gene).getOrElse(0.0))
     val properties = individuals.zip(expression).toMap
@@ -137,7 +138,7 @@ object GeneFacet extends LazyLogging {
           .outE("appliesTo").orderBy("level", Order.decr).limit(200).as(expressionEdgeStep)
           .inV.as(expressionStep)
           .out("expressionFor")
-          .has(Key[String]("sampleType"), "tumor")
+          .has(SampleType, "tumor")
           .out("sampleOf").as(individualStep)
           .select((signatureStep, expressionEdgeStep, expressionStep, individualStep)).toSet
 
@@ -146,16 +147,36 @@ object GeneFacet extends LazyLogging {
         val expressionData = query.map { q =>
           val (sig, edge, expression, individual) = q
           val coefficients = SignatureWorker.dehydrateCoefficients(expression.property("expressions").orElse(""))
-          (individual.property("name").orElse(""), coefficients)
+          (individual.property("name").orElse(""), expression, coefficients)
         }
 
-        val levelData = query.map { q =>
-          val (signature, edge, expression, individual) = q
-          val signatureName = signature.property("name").orElse("")
-          val individualName = individual.property("name").orElse("")
-          val level = edge.property("level").orElse(0.0)
-          (signatureName, individualName, level)
+        val levelStep = StepLabel[Edge]()
+
+        val levelData = expressionData.flatMap { expression =>
+          val (individual, vertex, coefficients) = expression
+          val levelQuery = vertex.inE("appliesTo").as(levelStep)
+            .outV.filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
+            .select((signatureStep, levelStep)).toSet
+
+          levelQuery.map { q =>
+            val (signature, edge) = q
+            (signature.property("name").orElse(""), individual, edge.property("level").orElse(0.0))
+          }
         }.groupBy(_._1)
+
+        // val levelData = query.map { q =>
+        //   val (signature, expression, individual) = q
+        //   // val (signature, outedge, expression, individual) = q
+        //   val signatureName = signature.property("name").orElse("")
+        //   val individualName = individual.property("name").orElse("")
+        //   val edges = expression.inE("appliesTo").as(expressionEdgeStep)
+        //     .outV.has(Name, signatureName)
+        //     .select(expressionEdgeStep).toList
+        //   println("reverse edges found: " + edges.size.toString)
+        //   val edge = edges.head
+        //   val level = edge.property("level").orElse(0.0)
+        //   (signatureName, individualName, level)
+        // }.groupBy(_._1)
 
         val individualJson = clinicalNames.foldLeft(jEmptyArray) { (json, clinical) =>
           clinicalEvent(individualData.toList) (clinical) -->>: json
