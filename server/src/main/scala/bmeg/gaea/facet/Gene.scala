@@ -135,16 +135,29 @@ object GeneFacet extends LazyLogging {
         val individualStep = StepLabel[Vertex]()
         val levelStep = StepLabel[Edge]()
 
-        val query = graph.V.hasLabel("type")
+        val highestQuery = graph.V.hasLabel("type")
           .has(Name, "type:linearSignature")
           .out("hasInstance")
           .filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
-          .outE("appliesTo").orderBy("level", Order.decr).limit(200)
+          .outE("appliesTo").orderBy("level", Order.decr).limit(100)
           .inV.as(expressionStep)
           .out("expressionFor")
           .has(SampleType, "tumor")
           .out("sampleOf").as(individualStep)
           .select((signatureStep, expressionStep, individualStep)).toSet
+
+        val lowestQuery = graph.V.hasLabel("type")
+          .has(Name, "type:linearSignature")
+          .out("hasInstance")
+          .filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
+          .outE("appliesTo").orderBy("level", Order.incr).limit(100)
+          .inV.as(expressionStep)
+          .out("expressionFor")
+          .has(SampleType, "tumor")
+          .out("sampleOf").as(individualStep)
+          .select((signatureStep, expressionStep, individualStep)).toSet
+
+        val query = highestQuery ++ lowestQuery
 
         val signatureData = query.map(_._1)
         val geneNames = expressionNames ++ signatureData.flatMap(takeHighest(5))
