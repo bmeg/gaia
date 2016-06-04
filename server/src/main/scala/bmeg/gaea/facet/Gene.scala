@@ -83,10 +83,8 @@ object GeneFacet extends LazyLogging {
 
   def clinicalEvent(individualVertexes: Seq[Vertex]) (clinicalName: String): Json = {
     val metadata = eventMetadata(clinicalName, "clinical", "STRING", Map[String, Double]())
-    val properties = individualVertexes.map(vertex => (vertex.property("name").orElse(""), vertex.property(clinicalName).orElse("????"))).toMap
-    properties.foreach(x => println(x))
+    val properties = individualVertexes.map(vertex => (vertex.property("name").orElse(""), vertex.property(clinicalName).orElse(""))).toMap
     val json = propertiesToJson(properties) ("sampleID") ("value")
-    println(json)
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
   }
 
