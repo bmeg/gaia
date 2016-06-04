@@ -13,6 +13,7 @@ import org.http4s.dsl._
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.Order
+import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 import com.typesafe.scalalogging._
 import _root_.argonaut._, Argonaut._
@@ -135,10 +136,8 @@ object GeneFacet extends LazyLogging {
         val individualStep = StepLabel[Vertex]()
         val levelStep = StepLabel[Edge]()
 
-        val highestQuery = graph.V.hasLabel("type")
-          .has(Name, "type:linearSignature")
-          .out("hasInstance")
-          .filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
+        val highestQuery = graph.V.hasLabel("linearSignature")
+          .has(Name, within(signatureNames:_*)).as(signatureStep)
           .outE("appliesTo").orderBy("level", Order.decr).limit(100)
           .inV.as(expressionStep)
           .out("expressionFor")
@@ -146,10 +145,8 @@ object GeneFacet extends LazyLogging {
           .out("sampleOf").as(individualStep)
           .select((signatureStep, expressionStep, individualStep)).toSet
 
-        val lowestQuery = graph.V.hasLabel("type")
-          .has(Name, "type:linearSignature")
-          .out("hasInstance")
-          .filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
+        val lowestQuery = graph.V.hasLabel("linearSignature")
+          .has(Name, within(signatureNames:_*)).as(signatureStep)
           .outE("appliesTo").orderBy("level", Order.incr).limit(100)
           .inV.as(expressionStep)
           .out("expressionFor")
@@ -169,17 +166,33 @@ object GeneFacet extends LazyLogging {
           (individual.property("name").orElse(""), expression, coefficients)
         }
 
-        val levelData = expressionData.flatMap { expression =>
-          val (individual, vertex, coefficients) = expression
-          val levelQuery = vertex.inE("appliesTo").as(levelStep)
-            .outV.filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
-            .select((signatureStep, levelStep)).toSet
+        val individualNames = individualData.map(_.property("name").orElse(""))
+        val levelQuery = graph.V.hasLabel("individual")
+          .has(Name, within(individualNames.toSeq:_*)).as(individualStep)
+          .in("sampleOf").has(SampleType, "tumor")
+          .in("expressionFor")
+          .inE("appliesTo").as(levelStep)
+          .outV.has(Name, within(signatureNames:_*)).as(signatureStep)
+          .select((signatureStep, individualStep, levelStep)).toList
 
-          levelQuery.map { q =>
-            val (signature, edge) = q
-            (signature.property("name").orElse(""), individual, edge.property("level").orElse(0.0))
-          }
+        val levelData = levelQuery.map { q =>
+          val (signature, individual, level) = q
+          (signature.property("name").orElse(""),
+            individual.property("name").orElse(""),
+            level.property("level").orElse(0.0))
         }.groupBy(_._1)
+
+        // val levelData = expressionData.flatMap { expression =>
+        //   val (individual, vertex, coefficients) = expression
+        //   val levelQuery = vertex.inE("appliesTo").as(levelStep)
+        //     .outV.filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
+        //     .select((signatureStep, levelStep)).toSet
+
+        //   levelQuery.map { q =>
+        //     val (signature, edge) = q
+        //     (signature.property("name").orElse(""), individual, edge.property("level").orElse(0.0))
+        //   }
+        // }.groupBy(_._1)
 
         val individualJson = clinicalNames.foldLeft(jEmptyArray) { (json, clinical) =>
           clinicalEvent(individualData.toList) (clinical) -->>: json
