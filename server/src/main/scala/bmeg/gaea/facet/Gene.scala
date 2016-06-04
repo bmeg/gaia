@@ -23,6 +23,8 @@ import scalaz.stream.Process._
 import scalaz.stream.Process1
 import scalaz.concurrent.Task
 
+import java.io.File
+
 object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
   val Name = Key[String]("name")
@@ -49,6 +51,12 @@ object GeneFacet extends LazyLogging {
       val pair = (key, jString(name)) ->: (value, jString(attribute.toString)) ->: jEmptyObject
       pair -->>: json
     }
+  }
+
+  def mapToJson(properties: Map[String, Any]) : Json = {
+    properties.map( x => {
+      ((x._1), (x._2.toString))
+    } ).asJson
   }
 
   def eventMetadata(eventID: String, eventType: String, datatype: String, weights: Map[String, Double]): Json = {
@@ -214,5 +222,31 @@ object GeneFacet extends LazyLogging {
       }
       y.runLog.run
       Ok(jNumber(1))
+
+    case request @ GET -> Root / "gaea" / "vertex" / name =>
+      val h = graph.V.has(Name, name).head
+      val o = graph.V.has(Name, name).out().value(Name).toList()
+      val i = graph.V.has(Name, name).out().value(Name).toList()
+      val out = Map[String,Json](
+        "type" -> h.label().asJson,
+        "properties" -> mapToJson(h.valueMap),
+        "out" -> o.asJson,
+        "in" -> i.asJson
+      )
+      Ok(out.asJson)
+
+    case req @ GET -> "static" /: path =>
+      // captures everything after "/static" into `path`
+      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
+      // See also org.http4s.server.staticcontent to create a mountable service for static content
+      val localPath = new File(new File("./static"), path.toString)
+      StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
+
+    case req @ GET -> Root =>
+      // captures everything after "/static" into `path`
+      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
+      // See also org.http4s.server.staticcontent to create a mountable service for static content
+      val localPath = new File(new File("./static"), "main.html")
+      StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
   }
 }
