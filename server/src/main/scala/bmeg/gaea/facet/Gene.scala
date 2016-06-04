@@ -190,18 +190,6 @@ object GeneFacet extends LazyLogging {
             level.property("level").orElse(0.0))
         }.groupBy(_._1)
 
-        // val levelData = expressionData.flatMap { expression =>
-        //   val (individual, vertex, coefficients) = expression
-        //   val levelQuery = vertex.inE("appliesTo").as(levelStep)
-        //     .outV.filter((vertex) => signatureNames.contains(vertex.property("name").orElse(""))).as(signatureStep)
-        //     .select((signatureStep, levelStep)).toSet
-
-        //   levelQuery.map { q =>
-        //     val (signature, edge) = q
-        //     (signature.property("name").orElse(""), individual, edge.property("level").orElse(0.0))
-        //   }
-        // }.groupBy(_._1)
-
         val individualJson = clinicalNames.foldLeft(jEmptyArray) { (json, clinical) =>
           clinicalEvent(individualData.toList) (clinical) -->>: json
         }
@@ -249,16 +237,10 @@ object GeneFacet extends LazyLogging {
       Ok(out.asJson)
 
     case req @ GET -> "static" /: path =>
-      // captures everything after "/static" into `path`
-      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
-      // See also org.http4s.server.staticcontent to create a mountable service for static content
       val localPath = new File(new File("./static"), path.toString)
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
 
     case req @ GET -> Root =>
-      // captures everything after "/static" into `path`
-      // Try http://localhost:8080/http4s/static/nasa_blackhole_image.jpg
-      // See also org.http4s.server.staticcontent to create a mountable service for static content
       val localPath = new File(new File("./static"), "main.html")
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
   }
