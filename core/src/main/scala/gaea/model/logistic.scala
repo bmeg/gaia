@@ -22,13 +22,15 @@ object Utils {
     * @param coef a vector that holds coefficients
     * @param intercept the intercept to be added to the dot product.
     */
-  def dotProduct(value: Vector[Double], coef: Vector[Double], intercept: Double): Double = {
-    var dotProduct = intercept
+  def dotProduct(coefficients: Vector[Double]) (intercept: Double) (value: Vector[Double]): Double = {
+    coefficients.zip(value).foldLeft(intercept) ((total, dot) => total + dot._1 * dot._2)
 
-    for ( i <- 0 to value.length -1 ) {
-      dotProduct += ( value(i) * coef(i) )
-    }
-    dotProduct
+    // var dotProduct = intercept
+
+    // for ( i <- 0 to value.length -1 ) {
+    //   dotProduct += ( value(i) * coef(i) )
+    // }
+    // dotProduct
   }
 
   /** Calculate dot products.
@@ -38,14 +40,15 @@ object Utils {
     * @param intercept the intercept to be added to the dot product.
     *                  (default = 0)
     */
-  def dotProductOfVectors(doubleVectors: Vector[Vector[Double]], coef: Vector[Double],
-                      intercept: Double = 0): Vector[Double] = {
-    var mutableDotProductList = new ListBuffer[Double]() 
+  def dotProductOfVectors(coefficients: Vector[Double]) (intercept: Double = 0) (vectors: Vector[Vector[Double]]): Vector[Double] = {
+    vectors.map(dotProduct(coefficients) (intercept))
 
-    for ( i <- 0 to doubleVectors.length -1 ) {
-      mutableDotProductList += dotProduct(doubleVectors(i), coef, intercept)
-    }
-    mutableDotProductList.toVector
+    // var mutableDotProductList = new ListBuffer[Double]() 
+
+    // for ( i <- 0 to doubleVectors.length -1 ) {
+    //   mutableDotProductList += dotProduct(doubleVectors(i), coef, intercept)
+    // }
+    // mutableDotProductList.toVector
   }
 
 }
@@ -64,7 +67,7 @@ class LogisticRegression(coef: Vector[Double], intercept: Double) {
     * @param data the data to make predictions on.
     */
   def decisionFunction(data: Vector[Vector[Double]]): Vector[Double] = {
-    Utils.dotProductOfVectors(data, coef, intercept)
+    Utils.dotProductOfVectors(coef) (intercept) (data)
   }
 
   /** Probability of predicting '1'.
@@ -72,13 +75,15 @@ class LogisticRegression(coef: Vector[Double], intercept: Double) {
       * @param data the data to make predictions on.
       */
   def predictProba(data: Vector[Vector[Double]]): Vector[Double] = {
-    val confidence = decisionFunction(data)
-    var mutableProbability = new ListBuffer[Double]()
+    decisionFunction(data).map(Utils.logisticFunction(_))
 
-    for ( i <- 0 to confidence.length -1 ) {
-      mutableProbability += Utils.logisticFunction(confidence(i))
-    }
-    mutableProbability.toVector
+    // val confidence = decisionFunction(data)
+    // var mutableProbability = new ListBuffer[Double]()
+
+    // for ( i <- 0 to confidence.length -1 ) {
+    //   mutableProbability += Utils.logisticFunction(confidence(i))
+    // }
+    // mutableProbability.toVector
   }
 
   /** Natural logarithmic of probability of predicting '1'.
@@ -102,15 +107,16 @@ class LogisticRegression(coef: Vector[Double], intercept: Double) {
     *                  as a threshold for determining '1' or '0'.
     *                  (default = 0.5)
     */
-  def predict(data: Vector[Vector[Double]], threshold: Double = 0.5): Vector[Int] = {
-    val confidence = decisionFunction(data)
-    var mutablePrediction = new ListBuffer[Int]()
+  def predict(data: Vector[Vector[Double]], threshold: Double = 0.5): Vector[Boolean] = {
+    decisionFunction(data).map(_ > threshold)
 
-    for (i <- 0 to confidence.length -1 ) {
-      if (confidence(i) > threshold) mutablePrediction += 1
-      else mutablePrediction += 0
-    }
-    mutablePrediction.toVector
+    // val confidence = decisionFunction(data)
+    // var mutablePrediction = new ListBuffer[Int]()
+
+    // for (i <- 0 to confidence.length -1 ) {
+    //   if (confidence(i) > threshold) mutablePrediction += 1
+    //   else mutablePrediction += 0
+    // }
+    // mutablePrediction.toVector
   }
-
 }

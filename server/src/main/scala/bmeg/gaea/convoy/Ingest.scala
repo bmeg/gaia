@@ -176,6 +176,7 @@ object Ingest {
   }
 
   def ingestVariantCallEffect(graph: TitanGraph) (effect: Sample.VariantCallEffect): Vertex = {
+    println("ingesting variant call effect " + effect.getName())
     val effectVertex = findVertex(graph) ("variantCallEffect") (effect.getName())
     effectVertex.setProperty(keys("variantClassification"), effect.getVariantClassification())
     effectVertex.setProperty(keys("dbsnpRS"), effect.getDbsnpRS())
@@ -191,6 +192,7 @@ object Ingest {
       effectVertex --- ("inDomain") --> domainVertex
     }
 
+
     for (variant <- effect.getEffectOfEdgesVariantCallList().asScala.toList) {
       val variantVertex = findVertex(graph) ("variantCall") (variant)
       effectVertex --- ("effectOf") --> variantVertex
@@ -201,6 +203,7 @@ object Ingest {
   }
 
   def ingestVariantCall(graph: TitanGraph) (variant: Sample.VariantCall): Vertex = {
+    println("ingesting variant call " + variant.getName())
     val variantVertex = findVertex(graph) ("variantCall") (variant.getName())
 
     variantVertex.setProperty(keys("source"), variant.getSource())
@@ -243,6 +246,7 @@ object Ingest {
       biosampleVertex --- ("sampleOf") --> individualVertex
     }
 
+    retryCommit(graph) (5)
     biosampleVertex
   }
 
@@ -278,15 +282,14 @@ object Ingest {
 
   def ingestGeneExpression(graph: TitanGraph) (expression: Sample.GeneExpression): Vertex = {
     println("ingesting expression " + expression.getName())
+
+    val expressionType = findVertex(graph) ("type") ("type:geneExpression")
     val expressionVertex = findVertex(graph) ("geneExpression") (expression.getName())
     val expressions = expression.getExpressions().asScala.toMap
     val expressionJson = expressions.asJson.toString
 
+    expressionType --- ("hasInstance") --> expressionVertex
     expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
-
-    // for ((feature, value) <- expressions) {
-    //   expressionVertex.setProperty(Key[java.lang.Double](feature), value)
-    // }
 
     for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {
       val sampleVertex = findVertex(graph) ("biosample") (sample)
@@ -299,10 +302,13 @@ object Ingest {
 
   def ingestLinearSignature(graph: TitanGraph) (signature: Sample.LinearSignature): Vertex = {
     println("ingesting signature " + signature.getName())
+
+    val signatureType = findVertex(graph) ("type") ("type:linearSignature")
     val signatureVertex = findVertex(graph) ("linearSignature") (signature.getName())
     val coefficients = signature.getCoefficients().asScala.toMap
     val coefficientsJson = coefficients.asJson.toString
 
+    signatureType --- ("hasInstance") --> signatureVertex
     signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
     signatureVertex.setProperty(Key[Double]("intercept"), signature.getIntercept())
 
