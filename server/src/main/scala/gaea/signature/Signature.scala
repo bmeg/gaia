@@ -1,14 +1,16 @@
-package bmeg.gaea.worker
+package gaea.signature
 
-import bmeg.gaea.feature.Feature
-import bmeg.normalization.ExponentialNormalization
+import gaea.feature.Feature
+import gaea.titan.Titan
+import gaea.math.Stats
+import gaea.collection.Collection._
 
 import gremlin.scala._
 import com.thinkaurelius.titan.core.TitanGraph
 import scalaz._, Scalaz._
 import argonaut._, Argonaut._
 
-object SignatureWorker {
+object Signature {
   val Name = Key[String]("name")
   val Intercept = Key[Double]("intercept")
   val Expressions = Key[String]("expressions")
@@ -18,17 +20,14 @@ object SignatureWorker {
 
   val emptyMap = Map[String, Double]()
 
-  def dehydrateCoefficients(raw: String): Map[String, Double] = {
+  def dehydrateCoefficients(vertex: Vertex) (key: String): Map[String, Double] = {
+    val raw = vertex.property(key).orElse("")
     Parse.parseOption(raw).map(_.as[Map[String, Double]].getOr(emptyMap)).getOrElse(emptyMap)
   }
 
-  def typeVertexes(graph: TitanGraph) (typ: String): List[Vertex] = {
-    graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance").toList
-  }
-
   def findSignatures(graph: TitanGraph): List[Tuple2[Vertex, Map[String, Double]]] = {
-    val signatureVertexes = typeVertexes(graph) ("linearSignature")
-    signatureVertexes.map((vertex) => (vertex, dehydrateCoefficients(vertex.property(Coefficients).orElse(""))))
+    val signatureVertexes = Titan.typeVertexes(graph) ("linearSignature")
+    signatureVertexes.map((vertex) => (vertex, dehydrateCoefficients(vertex) ("coefficients")))
   }
 
   def linkSignaturesToFeatures(graph: TitanGraph): List[Tuple2[Vertex, Map[String, Double]]] = {
@@ -43,29 +42,6 @@ object SignatureWorker {
     }
 
     signatures
-  }
-
-  def dotProduct(coefficients: Vector[Double]) (intercept: Double) (value: Vector[Double]): Double = {
-    coefficients.zip(value).foldLeft(intercept) ((total, dot) => total + dot._1 * dot._2)
-  }
-
-  def splitMap[A <% Ordered[A], B](m: Map[A, B]): Tuple2[Vector[A], Vector[B]] = {
-    val ordered = m.toVector.sortBy(_._1)
-    val a = ordered.map(_._1)
-    val b = ordered.map(_._2)
-    (a, b)
-  }
-
-  def selectKeys[A, B](m: Map[A, B]) (keys: Seq[A]) (default: B): Map[A, B] = {
-    keys.map(key => (key, m.get(key).getOrElse(default))).toMap
-  }
-
-  def normalizeLevels(levels: Map[String, Double]): Map[String, Double] = {
-    val pairs = levels.toArray
-    val keys = pairs.map(_._1)
-    val coefficients = pairs.map(_._2)
-    val normalized = ExponentialNormalization.transform(coefficients)
-    keys.zip(normalized).toMap
   }
 
   def signatureLevel
@@ -99,8 +75,8 @@ object SignatureWorker {
     (signatures: List[Tuple2[Vertex, Map[String, Double]]])
       : TitanGraph = {
 
-    val levels = dehydrateCoefficients(expressionVertex.property(Expressions).orElse(""))
-    val normalized = normalizeLevels(levels)
+    val levels = dehydrateCoefficients(expressionVertex) ("expressions")
+    val normalized = Stats.exponentialNormalization(levels)
 
     for (signature <- signatures) {
       val (signatureVertex, coefficients) = signature
@@ -120,7 +96,7 @@ object SignatureWorker {
     (signatures: List[Tuple2[Vertex, Map[String, Double]]])
       : TitanGraph = {
 
-    val expressionVertexes = typeVertexes(graph) ("geneExpression")
+    val expressionVertexes = Titan.typeVertexes(graph) ("geneExpression")
 
     for (expressionVertex <- expressionVertexes) {
       applyExpressionToSignatures(graph) (expressionVertex) (signatures)
@@ -155,8 +131,8 @@ object SignatureWorker {
     (signatures: List[Tuple2[Vertex, Map[String, Double]]])
       : TitanGraph = {
 
-    val expressionVertexes = typeVertexes(graph) ("geneExpression")
-    val expressions = expressionVertexes.map((vertex) => (vertex, dehydrateCoefficients(vertex.property(Expressions).orElse(""))))
+    val expressionVertexes = Titan.typeVertexes(graph) ("geneExpression")
+    val expressions = expressionVertexes.map((vertex) => (vertex, dehydrateCoefficients(vertex) ("expressions")))
 
     for (signature <- signatures) {
       applySignatureToExpressions(graph) (signature) (expressions)

@@ -1,4 +1,4 @@
-package bmeg.gaea.feature
+package gaea.feature
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._

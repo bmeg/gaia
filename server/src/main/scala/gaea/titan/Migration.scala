@@ -1,7 +1,7 @@
-package bmeg.gaea.titan
+package gaea.titan
 
-import bmeg.gaea.convoy.Ingest
-import bmeg.gaea.convoy.Hugo
+import gaea.convoy.Ingest
+import gaea.convoy.Hugo
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._

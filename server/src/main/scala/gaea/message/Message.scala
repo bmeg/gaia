@@ -1,4 +1,4 @@
-package bmeg.gaea.message
+package gaea.message
 
 import com.google.protobuf.util.JsonFormat
 import com.google.protobuf.GeneratedMessage.Builder

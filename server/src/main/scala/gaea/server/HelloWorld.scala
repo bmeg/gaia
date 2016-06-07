@@ -1,9 +1,7 @@
-package bmeg.gaea
+package gaea.server
 
-import bmeg.gaea.titan.Titan
-import bmeg.gaea.schema.Variant
-import bmeg.gaea.convoy.Convoy
-import bmeg.gaea.feature.Feature
+import gaea.titan.Titan
+import gaea.feature.Feature
 
 import org.http4s._
 import org.http4s.server._

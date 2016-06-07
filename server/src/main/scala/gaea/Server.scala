@@ -1,6 +1,6 @@
-package bmeg.gaea
+package gaea
 
-import bmeg.gaea.facet.GeneFacet
+import gaea.facet.GeneFacet
 import org.http4s.server.blaze.BlazeBuilder
 
 object GaeaFoundation extends App {

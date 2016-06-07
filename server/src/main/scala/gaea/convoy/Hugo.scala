@@ -1,6 +1,6 @@
-package bmeg.gaea.convoy
+package gaea.convoy
 
-import bmeg.gaea.feature.Feature
+import gaea.feature.Feature
 
 import scala.io.Source
 import com.thinkaurelius.titan.core.TitanGraph

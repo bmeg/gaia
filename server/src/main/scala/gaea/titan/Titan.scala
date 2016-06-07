@@ -1,4 +1,4 @@
-package bmeg.gaea.titan
+package gaea.titan
 
 import org.apache.commons.configuration.BaseConfiguration
 import com.thinkaurelius.titan.core.{TitanFactory, TitanGraph}

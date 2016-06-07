@@ -1,7 +1,7 @@
-package bmeg.gaea.convoy
+package gaea.convoy
 
-import bmeg.gaea.titan.Titan
-import bmeg.gaea.feature.Feature
+import gaea.titan.Titan
+import gaea.feature.Feature
 import bmeg.gaea.schema.Sample
 
 import com.thinkaurelius.titan.core.TitanGraph

@@ -1,4 +1,4 @@
-package bmeg.gaea.convoy
+package gaea.convoy
 
 import scalaz._, Scalaz._
 import argonaut._, Argonaut._

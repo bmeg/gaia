@@ -1,4 +1,4 @@
-package bmeg.gaea.convoy
+package gaea.convoy
 
 import bmeg.gaea.schema.Sample
 import com.google.protobuf.util.JsonFormat

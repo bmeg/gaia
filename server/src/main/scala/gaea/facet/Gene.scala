@@ -1,10 +1,9 @@
-package bmeg.gaea.facet
+package gaea.facet
 
-import bmeg.gaea.titan.Titan
-import bmeg.gaea.schema.Variant
-import bmeg.gaea.convoy.Ingest
-import bmeg.gaea.feature.Feature
-import bmeg.gaea.signature.Signature
+import gaea.titan.Titan
+import gaea.convoy.Ingest
+import gaea.feature.Feature
+import gaea.signature.Signature
 import gaea.collection.Collection._
 
 import org.http4s._
