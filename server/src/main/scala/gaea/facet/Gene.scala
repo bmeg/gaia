@@ -139,49 +139,22 @@ object GeneFacet extends LazyLogging {
         val expressionNames = expressionMetadata.map(_("eventID"))
         val clinicalNames = clinicalEventMetadata.map(_("eventID"))
 
-        val signatureStep = StepLabel[Vertex]()
-        val expressionStep = StepLabel[Vertex]()
-        val individualStep = StepLabel[Vertex]()
-        val levelStep = StepLabel[Edge]()
-
-        val highestQuery = graph.V.hasLabel("linearSignature")
-          .has(Name, within(signatureNames:_*)).as(signatureStep)
-          .outE("appliesTo").orderBy("level", Order.decr).limit(100)
-          .inV.as(expressionStep)
-          .out("expressionFor")
-          .has(SampleType, "tumor")
-          .out("sampleOf").as(individualStep)
-          .select((signatureStep, expressionStep, individualStep)).toSet
-
-        val lowestQuery = graph.V.hasLabel("linearSignature")
-          .has(Name, within(signatureNames:_*)).as(signatureStep)
-          .outE("appliesTo").orderBy("level", Order.incr).limit(100)
-          .inV.as(expressionStep)
-          .out("expressionFor")
-          .has(SampleType, "tumor")
-          .out("sampleOf").as(individualStep)
-          .select((signatureStep, expressionStep, individualStep)).toSet
-
+        val highestQuery = Signature.highestScoringSamples(graph) (signatureNames) (100) (Order.decr)
+        val lowestQuery = Signature.highestScoringSamples(graph) (signatureNames) (100) (Order.incr)
         val query = highestQuery ++ lowestQuery
 
         val signatureData = query.map(_._1)
         val geneNames = expressionNames ++ signatureData.flatMap(takeHighest(5))
+
         val individualData = query.map(_._3)
+        val individualNames = individualData.map(_.property("name").orElse(""))
+        val levelQuery = Signature.individualScores(graph) (individualNames.toList) (signatureNames)
 
         val expressionData = query.map { q =>
           val (sig, expression, individual) = q
           val coefficients = Signature.dehydrateCoefficients(expression) ("expressions")
           (individual.property("name").orElse(""), expression, coefficients)
         }
-
-        val individualNames = individualData.map(_.property("name").orElse(""))
-        val levelQuery = graph.V.hasLabel("individual")
-          .has(Name, within(individualNames.toSeq:_*)).as(individualStep)
-          .in("sampleOf").has(SampleType, "tumor")
-          .in("expressionFor")
-          .inE("appliesTo").as(levelStep)
-          .outV.has(Name, within(signatureNames:_*)).as(signatureStep)
-          .select((signatureStep, individualStep, levelStep)).toList
 
         val levelData = levelQuery.map { q =>
           val (signature, individual, level) = q

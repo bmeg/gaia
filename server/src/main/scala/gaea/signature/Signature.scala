@@ -7,6 +7,9 @@ import gaea.collection.Collection._
 
 import gremlin.scala._
 import com.thinkaurelius.titan.core.TitanGraph
+import org.apache.tinkerpop.gremlin.process.traversal.Order
+import org.apache.tinkerpop.gremlin.process.traversal.P._
+
 import scalaz._, Scalaz._
 import argonaut._, Argonaut._
 
@@ -17,6 +20,12 @@ object Signature {
   val Coefficient = Key[Double]("coefficient")
   val Coefficients = Key[String]("coefficients")
   val Level = Key[Double]("level")
+  val SampleType = Key[String]("sampleType")
+
+  val signatureStep = StepLabel[Vertex]()
+  val expressionStep = StepLabel[Vertex]()
+  val individualStep = StepLabel[Vertex]()
+  val levelStep = StepLabel[Edge]()
 
   val emptyMap = Map[String, Double]()
 
@@ -105,6 +114,39 @@ object Signature {
     graph
   }
 
+  def highestScoringSamples
+    (graph: TitanGraph)
+    (signatures: Seq[String])
+    (limit: Long)
+    (order: Order)
+      : Set[Tuple3[Vertex, Vertex, Vertex]] = {
+
+    graph.V.hasLabel("linearSignature")
+      .has(Name, within(signatures:_*)).as(signatureStep)
+      .outE("appliesTo").orderBy("level", order).limit(limit)
+      .inV.as(expressionStep)
+      .out("expressionFor")
+      .has(SampleType, "tumor")
+      .out("sampleOf").as(individualStep)
+      .select((signatureStep, expressionStep, individualStep)).toSet
+  }
+
+  def individualScores
+    (graph: TitanGraph)
+    (individuals: Seq[String])
+    (signatures: Seq[String])
+      : Set[Tuple3[Vertex, Vertex, Edge]] = {
+
+    graph.V.hasLabel("individual")
+      .has(Name, within(individuals.toSeq:_*)).as(individualStep)
+      .in("sampleOf").has(SampleType, "tumor")
+      .in("expressionFor")
+      .inE("appliesTo").as(levelStep)
+      .outV.has(Name, within(signatures:_*)).as(signatureStep)
+      .select((signatureStep, individualStep, levelStep)).toSet
+  }
+
+  // DEPRECATED as inefficient way to do things -----------------------------------------
   def applySignatureToExpressions
     (graph: TitanGraph)
     (signature: Tuple2[Vertex, Map[String, Double]])
