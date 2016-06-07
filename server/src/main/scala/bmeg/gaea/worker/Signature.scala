@@ -1,6 +1,7 @@
 package bmeg.gaea.worker
 
 import bmeg.gaea.feature.Feature
+import bmeg.normalization.ExponentialNormalization
 
 import gremlin.scala._
 import com.thinkaurelius.titan.core.TitanGraph
@@ -59,14 +60,21 @@ object SignatureWorker {
     keys.map(key => (key, m.get(key).getOrElse(default))).toMap
   }
 
+  def normalizeLevels(levels: Map[String, Double]): Map[String, Double] = {
+    val pairs = levels.toArray
+    val keys = pairs.map(_._1)
+    val coefficients = pairs.map(_._2)
+    val normalized = ExponentialNormalization.transform(coefficients)
+    keys.zip(normalized).toMap
+  }
+
   def signatureLevel
     (features: Vector[String])
     (coefficients: Vector[Double])
     (intercept: Double)
-    (expression: Tuple2[Vertex, Map[String, Double]])
+    (expressions: Map[String, Double])
       : Double = {
 
-    val (vertex, expressions) = expression
     val relevantFeatures = selectKeys[String, Double](expressions) (features) (0.0)
     val (genes, levels) = splitMap[String, Double](relevantFeatures)
 
@@ -81,7 +89,8 @@ object SignatureWorker {
     (expression: Tuple2[Vertex, Map[String, Double]])
       : Boolean = {
 
-    signatureLevel(features) (coefficients) (intercept) (expression) > threshold
+    val (vertex, expressions) = expression
+    signatureLevel(features) (coefficients) (intercept) (expressions) > threshold
   }
 
   def applyExpressionToSignatures
@@ -90,20 +99,16 @@ object SignatureWorker {
     (signatures: List[Tuple2[Vertex, Map[String, Double]]])
       : TitanGraph = {
 
-    val expression = (expressionVertex, dehydrateCoefficients(expressionVertex.property(Expressions).orElse("")))
+    val levels = dehydrateCoefficients(expressionVertex.property(Expressions).orElse(""))
+    val normalized = normalizeLevels(levels)
 
     for (signature <- signatures) {
       val (signatureVertex, coefficients) = signature
       val intercept = signatureVertex.property(Intercept).orElse(0.0)
       val (features, values) = splitMap[String, Double](coefficients)
-      val (expressionVertex, levels) = expression
-      val level = signatureLevel(features) (values) (intercept) (expression)
+      val level = signatureLevel(features) (values) (intercept) (normalized)
 
       signatureVertex --- ("appliesTo", Level -> level) --> expressionVertex
-
-      // if (signatureAppliesTo(features) (values) (intercept) (0.5) (expression)) {
-      //   signatureVertex --- ("appliesTo") --> expressionVertex
-      // }
     }
 
     graph.tx.commit()
