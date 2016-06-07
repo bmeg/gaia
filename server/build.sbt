@@ -24,9 +24,6 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"        %  "protobuf-java"       % "3.0.0-beta-2",
   "ch.qos.logback"             %  "logback-classic"     % "1.1.2",
 
-  "org.scalanlp"               %% "breeze"              % "0.12",
-  "org.scalanlp"               %% "breeze-natives"      % "0.12",
-
   "org.http4s"                 %% "http4s-blaze-server" % "0.12.4",
   "org.http4s"                 %% "http4s-dsl"          % "0.12.4",
   "org.http4s"                 %% "http4s-argonaut"     % "0.12.4",

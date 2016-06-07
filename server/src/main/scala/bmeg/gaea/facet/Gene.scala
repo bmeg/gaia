@@ -4,7 +4,8 @@ import bmeg.gaea.titan.Titan
 import bmeg.gaea.schema.Variant
 import bmeg.gaea.convoy.Ingest
 import bmeg.gaea.feature.Feature
-import bmeg.gaea.worker.SignatureWorker
+import bmeg.gaea.signature.Signature
+import gaea.collection.Collection._
 
 import org.http4s._
 import org.http4s.server._
@@ -66,8 +67,8 @@ object GeneFacet extends LazyLogging {
   }
 
   def signatureToJson(featureNames: List[String]) (vertex: Vertex): Json = {
-    val coefficients = SignatureWorker.dehydrateCoefficients(vertex.property(Coefficients).orElse(""))
-    val relevant = SignatureWorker.selectKeys[String, Double](coefficients) (featureNames) (0.0)
+    val coefficients = Signature.dehydrateCoefficients(vertex) ("coefficients")
+    val relevant = selectKeys[String, Double](coefficients) (featureNames) (0.0)
     val score = relevant.values.foldLeft(0.0) (_ + _)
     val signatureName = vertex.property(Name).orElse("no name")
     val metadata = eventMetadata(signatureName, "drug sensitivity signature", "NUMERIC", relevant)
@@ -76,7 +77,7 @@ object GeneFacet extends LazyLogging {
 
   def individualEvent(individualVertex: Vertex) (clinicalNames: List[String]): Json = {
     val metadata = eventMetadata(individualVertex.property(Name).orElse(""), "clinical values", "STRING", Map[String, Double]())
-    val relevant = SignatureWorker.selectKeys[String, Any](individualVertex.valueMap()) (clinicalNames) ("")
+    val relevant = selectKeys[String, Any](individualVertex.valueMap()) (clinicalNames) ("")
     val clinicalJson = propertiesToJson(relevant) ("sampleID") ("value")
     ("metadata", metadata) ->: ("sampleData", clinicalJson) ->: jEmptyObject
   }
@@ -105,7 +106,7 @@ object GeneFacet extends LazyLogging {
   }
 
   def takeHighest(n: Int) (signature: Vertex): List[String] = {
-    SignatureWorker.dehydrateCoefficients(signature.property("coefficients").orElse("")).toList.sortWith(_._2 > _._2).take(n).map(_._1)
+    Signature.dehydrateCoefficients(signature) ("coefficients").toList.sortWith(_._2 > _._2).take(n).map(_._1)
   }
 
   val service = HttpService {
@@ -170,7 +171,7 @@ object GeneFacet extends LazyLogging {
 
         val expressionData = query.map { q =>
           val (sig, expression, individual) = q
-          val coefficients = SignatureWorker.dehydrateCoefficients(expression.property("expressions").orElse(""))
+          val coefficients = Signature.dehydrateCoefficients(expression) ("expressions")
           (individual.property("name").orElse(""), expression, coefficients)
         }
 

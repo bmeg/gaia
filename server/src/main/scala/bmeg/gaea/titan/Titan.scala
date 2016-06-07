@@ -6,6 +6,8 @@ import com.thinkaurelius.titan.core.util.TitanCleanup
 import gremlin.scala._
 
 object Titan {
+  val Name = Key[String]("name")
+
   def configuration(properties: Map[String, String]): BaseConfiguration = {
     val config = new BaseConfiguration()
     config.setProperty("storage.backend", "cassandra")
@@ -35,6 +37,10 @@ object Titan {
     }
 
     query.toList.headOption
+  }
+
+  def typeVertexes(graph: TitanGraph) (typ: String): List[Vertex] = {
+    graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance").toList
   }
 
   def makeIndex(graph: TitanGraph) (name: String) (keys: Map[String, Class[_]]) = {
