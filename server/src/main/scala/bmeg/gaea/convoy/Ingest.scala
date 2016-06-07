@@ -309,8 +309,9 @@ object Ingest {
     val coefficientsJson = coefficients.asJson.toString
 
     signatureType --- ("hasInstance") --> signatureVertex
-    signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
+    signatureVertex.setProperty(Key[String]("predicts"), signature.getPredicts())
     signatureVertex.setProperty(Key[Double]("intercept"), signature.getIntercept())
+    signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
 
     for (drug <- signature.getSignatureForEdgesDrugList().asScala.toList) {
       val drugVertex = findVertex(graph) ("drug") (drug)

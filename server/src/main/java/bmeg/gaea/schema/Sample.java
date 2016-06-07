@@ -16981,463 +16981,6 @@ public final class Sample {
 
   }
 
-  public interface ModelOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.Model)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <code>optional string name = 1;</code>
-     */
-    java.lang.String getName();
-    /**
-     * <code>optional string name = 1;</code>
-     */
-    com.google.protobuf.ByteString
-        getNameBytes();
-  }
-  /**
-   * Protobuf type {@code bmeg.gaea.schema.Model}
-   *
-   * <pre>
-   * Placeholder for the entire machine learning schema
-   * </pre>
-   */
-  public  static final class Model extends
-      com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:bmeg.gaea.schema.Model)
-      ModelOrBuilder {
-    // Use Model.newBuilder() to construct.
-    private Model(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-      super(builder);
-    }
-    private Model() {
-      name_ = "";
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
-    }
-    private Model(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
-      this();
-      int mutable_bitField0_ = 0;
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            default: {
-              if (!input.skipField(tag)) {
-                done = true;
-              }
-              break;
-            }
-            case 10: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              name_ = s;
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw new RuntimeException(e.setUnfinishedMessage(this));
-      } catch (java.io.IOException e) {
-        throw new RuntimeException(
-            new com.google.protobuf.InvalidProtocolBufferException(
-                e.getMessage()).setUnfinishedMessage(this));
-      } finally {
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
-    }
-
-    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              bmeg.gaea.schema.Sample.Model.class, bmeg.gaea.schema.Sample.Model.Builder.class);
-    }
-
-    public static final int NAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object name_;
-    /**
-     * <code>optional string name = 1;</code>
-     */
-    public java.lang.String getName() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        name_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string name = 1;</code>
-     */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
-      java.lang.Object ref = name_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        name_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (!getNameBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
-      }
-    }
-
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (!getNameBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
-      }
-      memoizedSize = size;
-      return size;
-    }
-
-    private static final long serialVersionUID = 0L;
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseDelimitedFrom(input, extensionRegistry);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input);
-    }
-    public static bmeg.gaea.schema.Sample.Model parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return PARSER.parseFrom(input, extensionRegistry);
-    }
-
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(bmeg.gaea.schema.Sample.Model prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @java.lang.Override
-    protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code bmeg.gaea.schema.Model}
-     *
-     * <pre>
-     * Placeholder for the entire machine learning schema
-     * </pre>
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:bmeg.gaea.schema.Model)
-        bmeg.gaea.schema.Sample.ModelOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
-      }
-
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                bmeg.gaea.schema.Sample.Model.class, bmeg.gaea.schema.Sample.Model.Builder.class);
-      }
-
-      // Construct using bmeg.gaea.schema.Sample.Model.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
-        }
-      }
-      public Builder clear() {
-        super.clear();
-        name_ = "";
-
-        return this;
-      }
-
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return bmeg.gaea.schema.Sample.internal_static_bmeg_gaea_schema_Model_descriptor;
-      }
-
-      public bmeg.gaea.schema.Sample.Model getDefaultInstanceForType() {
-        return bmeg.gaea.schema.Sample.Model.getDefaultInstance();
-      }
-
-      public bmeg.gaea.schema.Sample.Model build() {
-        bmeg.gaea.schema.Sample.Model result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      public bmeg.gaea.schema.Sample.Model buildPartial() {
-        bmeg.gaea.schema.Sample.Model result = new bmeg.gaea.schema.Sample.Model(this);
-        result.name_ = name_;
-        onBuilt();
-        return result;
-      }
-
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof bmeg.gaea.schema.Sample.Model) {
-          return mergeFrom((bmeg.gaea.schema.Sample.Model)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(bmeg.gaea.schema.Sample.Model other) {
-        if (other == bmeg.gaea.schema.Sample.Model.getDefaultInstance()) return this;
-        if (!other.getName().isEmpty()) {
-          name_ = other.name_;
-          onChanged();
-        }
-        onChanged();
-        return this;
-      }
-
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        bmeg.gaea.schema.Sample.Model parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (bmeg.gaea.schema.Sample.Model) e.getUnfinishedMessage();
-          throw e;
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private java.lang.Object name_ = "";
-      /**
-       * <code>optional string name = 1;</code>
-       */
-      public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string name = 1;</code>
-       */
-      public com.google.protobuf.ByteString
-          getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string name = 1;</code>
-       */
-      public Builder setName(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        name_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string name = 1;</code>
-       */
-      public Builder clearName() {
-        
-        name_ = getDefaultInstance().getName();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string name = 1;</code>
-       */
-      public Builder setNameBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        name_ = value;
-        onChanged();
-        return this;
-      }
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
-      }
-
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return this;
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:bmeg.gaea.schema.Model)
-    }
-
-    // @@protoc_insertion_point(class_scope:bmeg.gaea.schema.Model)
-    private static final bmeg.gaea.schema.Sample.Model DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new bmeg.gaea.schema.Sample.Model();
-    }
-
-    public static bmeg.gaea.schema.Sample.Model getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Model>
-        PARSER = new com.google.protobuf.AbstractParser<Model>() {
-      public Model parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        try {
-          return new Model(input, extensionRegistry);
-        } catch (RuntimeException e) {
-          if (e.getCause() instanceof
-              com.google.protobuf.InvalidProtocolBufferException) {
-            throw (com.google.protobuf.InvalidProtocolBufferException)
-                e.getCause();
-          }
-          throw e;
-        }
-      }
-    };
-
-    public static com.google.protobuf.Parser<Model> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<Model> getParserForType() {
-      return PARSER;
-    }
-
-    public bmeg.gaea.schema.Sample.Model getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
   public interface LinearSignatureOrBuilder extends
       // @@protoc_insertion_point(interface_extends:bmeg.gaea.schema.LinearSignature)
       com.google.protobuf.MessageOrBuilder {
@@ -17453,31 +16996,92 @@ public final class Sample {
         getNameBytes();
 
     /**
-     * <code>optional double intercept = 2;</code>
+     * <code>optional string predicts = 2;</code>
+     *
+     * <pre>
+     * Specify what the model predicts, i.e. 'drug response'.
+     * </pre>
+     */
+    java.lang.String getPredicts();
+    /**
+     * <code>optional string predicts = 2;</code>
+     *
+     * <pre>
+     * Specify what the model predicts, i.e. 'drug response'.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getPredictsBytes();
+
+    /**
+     * <code>optional string phenotype = 3;</code>
+     *
+     * <pre>
+     * Specify what phenotype it predicts, i.e. 'AZD6482'.
+     * </pre>
+     */
+    java.lang.String getPhenotype();
+    /**
+     * <code>optional string phenotype = 3;</code>
+     *
+     * <pre>
+     * Specify what phenotype it predicts, i.e. 'AZD6482'.
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getPhenotypeBytes();
+
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    java.util.List<java.lang.Double> getQuantileList();
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    int getQuantileCount();
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    double getQuantile(int index);
+
+    /**
+     * <code>optional double intercept = 5;</code>
      */
     double getIntercept();
 
     /**
-     * <code>map&lt;string, double&gt; coefficients = 3;</code>
+     * <code>map&lt;string, double&gt; coefficients = 6;</code>
      */
     java.util.Map<java.lang.String, java.lang.Double>
     getCoefficients();
 
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     com.google.protobuf.ProtocolStringList
         getSignatureForEdgesDrugList();
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     int getSignatureForEdgesDrugCount();
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     java.lang.String getSignatureForEdgesDrug(int index);
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     com.google.protobuf.ByteString
         getSignatureForEdgesDrugBytes(int index);
@@ -17495,6 +17099,9 @@ public final class Sample {
     }
     private LinearSignature() {
       name_ = "";
+      predicts_ = "";
+      phenotype_ = "";
+      quantile_ = java.util.Collections.emptyList();
       intercept_ = 0D;
       signatureForEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     }
@@ -17529,16 +17136,49 @@ public final class Sample {
               name_ = s;
               break;
             }
-            case 17: {
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              predicts_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              phenotype_ = s;
+              break;
+            }
+            case 33: {
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+                quantile_ = new java.util.ArrayList<java.lang.Double>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              quantile_.add(input.readDouble());
+              break;
+            }
+            case 34: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008) && input.getBytesUntilLimit() > 0) {
+                quantile_ = new java.util.ArrayList<java.lang.Double>();
+                mutable_bitField0_ |= 0x00000008;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                quantile_.add(input.readDouble());
+              }
+              input.popLimit(limit);
+              break;
+            }
+            case 41: {
 
               intercept_ = input.readDouble();
               break;
             }
-            case 26: {
-              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
+            case 50: {
+              if (!((mutable_bitField0_ & 0x00000020) == 0x00000020)) {
                 coefficients_ = com.google.protobuf.MapField.newMapField(
                     CoefficientsDefaultEntryHolder.defaultEntry);
-                mutable_bitField0_ |= 0x00000004;
+                mutable_bitField0_ |= 0x00000020;
               }
               com.google.protobuf.MapEntry<java.lang.String, java.lang.Double>
               coefficients = input.readMessage(
@@ -17546,11 +17186,11 @@ public final class Sample {
               coefficients_.getMutableMap().put(coefficients.getKey(), coefficients.getValue());
               break;
             }
-            case 34: {
+            case 58: {
               java.lang.String s = input.readStringRequireUtf8();
-              if (!((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+              if (!((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
                 signatureForEdgesDrug_ = new com.google.protobuf.LazyStringArrayList();
-                mutable_bitField0_ |= 0x00000008;
+                mutable_bitField0_ |= 0x00000040;
               }
               signatureForEdgesDrug_.add(s);
               break;
@@ -17565,6 +17205,9 @@ public final class Sample {
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
         if (((mutable_bitField0_ & 0x00000008) == 0x00000008)) {
+          quantile_ = java.util.Collections.unmodifiableList(quantile_);
+        }
+        if (((mutable_bitField0_ & 0x00000040) == 0x00000040)) {
           signatureForEdgesDrug_ = signatureForEdgesDrug_.getUnmodifiableView();
         }
         makeExtensionsImmutable();
@@ -17579,7 +17222,7 @@ public final class Sample {
     protected com.google.protobuf.MapField internalGetMapField(
         int number) {
       switch (number) {
-        case 3:
+        case 6:
           return internalGetCoefficients();
         default:
           throw new RuntimeException(
@@ -17628,16 +17271,135 @@ public final class Sample {
       }
     }
 
-    public static final int INTERCEPT_FIELD_NUMBER = 2;
+    public static final int PREDICTS_FIELD_NUMBER = 2;
+    private volatile java.lang.Object predicts_;
+    /**
+     * <code>optional string predicts = 2;</code>
+     *
+     * <pre>
+     * Specify what the model predicts, i.e. 'drug response'.
+     * </pre>
+     */
+    public java.lang.String getPredicts() {
+      java.lang.Object ref = predicts_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        predicts_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string predicts = 2;</code>
+     *
+     * <pre>
+     * Specify what the model predicts, i.e. 'drug response'.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getPredictsBytes() {
+      java.lang.Object ref = predicts_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        predicts_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PHENOTYPE_FIELD_NUMBER = 3;
+    private volatile java.lang.Object phenotype_;
+    /**
+     * <code>optional string phenotype = 3;</code>
+     *
+     * <pre>
+     * Specify what phenotype it predicts, i.e. 'AZD6482'.
+     * </pre>
+     */
+    public java.lang.String getPhenotype() {
+      java.lang.Object ref = phenotype_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        phenotype_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string phenotype = 3;</code>
+     *
+     * <pre>
+     * Specify what phenotype it predicts, i.e. 'AZD6482'.
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getPhenotypeBytes() {
+      java.lang.Object ref = phenotype_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        phenotype_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int QUANTILE_FIELD_NUMBER = 4;
+    private java.util.List<java.lang.Double> quantile_;
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    public java.util.List<java.lang.Double>
+        getQuantileList() {
+      return quantile_;
+    }
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    public int getQuantileCount() {
+      return quantile_.size();
+    }
+    /**
+     * <code>repeated double quantile = 4;</code>
+     *
+     * <pre>
+     * Array for quantile normalization.
+     * </pre>
+     */
+    public double getQuantile(int index) {
+      return quantile_.get(index);
+    }
+    private int quantileMemoizedSerializedSize = -1;
+
+    public static final int INTERCEPT_FIELD_NUMBER = 5;
     private double intercept_;
     /**
-     * <code>optional double intercept = 2;</code>
+     * <code>optional double intercept = 5;</code>
      */
     public double getIntercept() {
       return intercept_;
     }
 
-    public static final int COEFFICIENTS_FIELD_NUMBER = 3;
+    public static final int COEFFICIENTS_FIELD_NUMBER = 6;
     private static final class CoefficientsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.Double> defaultEntry =
@@ -17660,36 +17422,36 @@ public final class Sample {
       return coefficients_;
     }
     /**
-     * <code>map&lt;string, double&gt; coefficients = 3;</code>
+     * <code>map&lt;string, double&gt; coefficients = 6;</code>
      */
 
     public java.util.Map<java.lang.String, java.lang.Double> getCoefficients() {
       return internalGetCoefficients().getMap();
     }
 
-    public static final int SIGNATUREFOREDGESDRUG_FIELD_NUMBER = 4;
+    public static final int SIGNATUREFOREDGESDRUG_FIELD_NUMBER = 7;
     private com.google.protobuf.LazyStringList signatureForEdgesDrug_;
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     public com.google.protobuf.ProtocolStringList
         getSignatureForEdgesDrugList() {
       return signatureForEdgesDrug_;
     }
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     public int getSignatureForEdgesDrugCount() {
       return signatureForEdgesDrug_.size();
     }
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     public java.lang.String getSignatureForEdgesDrug(int index) {
       return signatureForEdgesDrug_.get(index);
     }
     /**
-     * <code>repeated string signatureForEdgesDrug = 4;</code>
+     * <code>repeated string signatureForEdgesDrug = 7;</code>
      */
     public com.google.protobuf.ByteString
         getSignatureForEdgesDrugBytes(int index) {
@@ -17708,11 +17470,25 @@ public final class Sample {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       if (!getNameBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 1, name_);
       }
+      if (!getPredictsBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, predicts_);
+      }
+      if (!getPhenotypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, phenotype_);
+      }
+      if (getQuantileList().size() > 0) {
+        output.writeRawVarint32(34);
+        output.writeRawVarint32(quantileMemoizedSerializedSize);
+      }
+      for (int i = 0; i < quantile_.size(); i++) {
+        output.writeDoubleNoTag(quantile_.get(i));
+      }
       if (intercept_ != 0D) {
-        output.writeDouble(2, intercept_);
+        output.writeDouble(5, intercept_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.Double> entry
            : internalGetCoefficients().getMap().entrySet()) {
@@ -17721,10 +17497,10 @@ public final class Sample {
             .setKey(entry.getKey())
             .setValue(entry.getValue())
             .build();
-        output.writeMessage(3, coefficients);
+        output.writeMessage(6, coefficients);
       }
       for (int i = 0; i < signatureForEdgesDrug_.size(); i++) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, signatureForEdgesDrug_.getRaw(i));
+        com.google.protobuf.GeneratedMessage.writeString(output, 7, signatureForEdgesDrug_.getRaw(i));
       }
     }
 
@@ -17736,9 +17512,26 @@ public final class Sample {
       if (!getNameBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(1, name_);
       }
+      if (!getPredictsBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, predicts_);
+      }
+      if (!getPhenotypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, phenotype_);
+      }
+      {
+        int dataSize = 0;
+        dataSize = 8 * getQuantileList().size();
+        size += dataSize;
+        if (!getQuantileList().isEmpty()) {
+          size += 1;
+          size += com.google.protobuf.CodedOutputStream
+              .computeInt32SizeNoTag(dataSize);
+        }
+        quantileMemoizedSerializedSize = dataSize;
+      }
       if (intercept_ != 0D) {
         size += com.google.protobuf.CodedOutputStream
-          .computeDoubleSize(2, intercept_);
+          .computeDoubleSize(5, intercept_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.Double> entry
            : internalGetCoefficients().getMap().entrySet()) {
@@ -17748,7 +17541,7 @@ public final class Sample {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(3, coefficients);
+            .computeMessageSize(6, coefficients);
       }
       {
         int dataSize = 0;
@@ -17850,7 +17643,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMapField(
           int number) {
         switch (number) {
-          case 3:
+          case 6:
             return internalGetCoefficients();
           default:
             throw new RuntimeException(
@@ -17861,7 +17654,7 @@ public final class Sample {
       protected com.google.protobuf.MapField internalGetMutableMapField(
           int number) {
         switch (number) {
-          case 3:
+          case 6:
             return internalGetMutableCoefficients();
           default:
             throw new RuntimeException(
@@ -17893,11 +17686,17 @@ public final class Sample {
         super.clear();
         name_ = "";
 
+        predicts_ = "";
+
+        phenotype_ = "";
+
+        quantile_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000008);
         intercept_ = 0D;
 
         internalGetMutableCoefficients().clear();
         signatureForEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000040);
         return this;
       }
 
@@ -17923,12 +17722,19 @@ public final class Sample {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.name_ = name_;
+        result.predicts_ = predicts_;
+        result.phenotype_ = phenotype_;
+        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+          quantile_ = java.util.Collections.unmodifiableList(quantile_);
+          bitField0_ = (bitField0_ & ~0x00000008);
+        }
+        result.quantile_ = quantile_;
         result.intercept_ = intercept_;
         result.coefficients_ = internalGetCoefficients();
         result.coefficients_.makeImmutable();
-        if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (((bitField0_ & 0x00000040) == 0x00000040)) {
           signatureForEdgesDrug_ = signatureForEdgesDrug_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ = (bitField0_ & ~0x00000040);
         }
         result.signatureForEdgesDrug_ = signatureForEdgesDrug_;
         result.bitField0_ = to_bitField0_;
@@ -17951,6 +17757,24 @@ public final class Sample {
           name_ = other.name_;
           onChanged();
         }
+        if (!other.getPredicts().isEmpty()) {
+          predicts_ = other.predicts_;
+          onChanged();
+        }
+        if (!other.getPhenotype().isEmpty()) {
+          phenotype_ = other.phenotype_;
+          onChanged();
+        }
+        if (!other.quantile_.isEmpty()) {
+          if (quantile_.isEmpty()) {
+            quantile_ = other.quantile_;
+            bitField0_ = (bitField0_ & ~0x00000008);
+          } else {
+            ensureQuantileIsMutable();
+            quantile_.addAll(other.quantile_);
+          }
+          onChanged();
+        }
         if (other.getIntercept() != 0D) {
           setIntercept(other.getIntercept());
         }
@@ -17959,7 +17783,7 @@ public final class Sample {
         if (!other.signatureForEdgesDrug_.isEmpty()) {
           if (signatureForEdgesDrug_.isEmpty()) {
             signatureForEdgesDrug_ = other.signatureForEdgesDrug_;
-            bitField0_ = (bitField0_ & ~0x00000008);
+            bitField0_ = (bitField0_ & ~0x00000040);
           } else {
             ensureSignatureForEdgesDrugIsMutable();
             signatureForEdgesDrug_.addAll(other.signatureForEdgesDrug_);
@@ -18062,15 +17886,287 @@ public final class Sample {
         return this;
       }
 
+      private java.lang.Object predicts_ = "";
+      /**
+       * <code>optional string predicts = 2;</code>
+       *
+       * <pre>
+       * Specify what the model predicts, i.e. 'drug response'.
+       * </pre>
+       */
+      public java.lang.String getPredicts() {
+        java.lang.Object ref = predicts_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          predicts_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string predicts = 2;</code>
+       *
+       * <pre>
+       * Specify what the model predicts, i.e. 'drug response'.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getPredictsBytes() {
+        java.lang.Object ref = predicts_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          predicts_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string predicts = 2;</code>
+       *
+       * <pre>
+       * Specify what the model predicts, i.e. 'drug response'.
+       * </pre>
+       */
+      public Builder setPredicts(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        predicts_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string predicts = 2;</code>
+       *
+       * <pre>
+       * Specify what the model predicts, i.e. 'drug response'.
+       * </pre>
+       */
+      public Builder clearPredicts() {
+        
+        predicts_ = getDefaultInstance().getPredicts();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string predicts = 2;</code>
+       *
+       * <pre>
+       * Specify what the model predicts, i.e. 'drug response'.
+       * </pre>
+       */
+      public Builder setPredictsBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        predicts_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object phenotype_ = "";
+      /**
+       * <code>optional string phenotype = 3;</code>
+       *
+       * <pre>
+       * Specify what phenotype it predicts, i.e. 'AZD6482'.
+       * </pre>
+       */
+      public java.lang.String getPhenotype() {
+        java.lang.Object ref = phenotype_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          phenotype_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string phenotype = 3;</code>
+       *
+       * <pre>
+       * Specify what phenotype it predicts, i.e. 'AZD6482'.
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getPhenotypeBytes() {
+        java.lang.Object ref = phenotype_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          phenotype_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string phenotype = 3;</code>
+       *
+       * <pre>
+       * Specify what phenotype it predicts, i.e. 'AZD6482'.
+       * </pre>
+       */
+      public Builder setPhenotype(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        phenotype_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string phenotype = 3;</code>
+       *
+       * <pre>
+       * Specify what phenotype it predicts, i.e. 'AZD6482'.
+       * </pre>
+       */
+      public Builder clearPhenotype() {
+        
+        phenotype_ = getDefaultInstance().getPhenotype();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string phenotype = 3;</code>
+       *
+       * <pre>
+       * Specify what phenotype it predicts, i.e. 'AZD6482'.
+       * </pre>
+       */
+      public Builder setPhenotypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        phenotype_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Double> quantile_ = java.util.Collections.emptyList();
+      private void ensureQuantileIsMutable() {
+        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+          quantile_ = new java.util.ArrayList<java.lang.Double>(quantile_);
+          bitField0_ |= 0x00000008;
+         }
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public java.util.List<java.lang.Double>
+          getQuantileList() {
+        return java.util.Collections.unmodifiableList(quantile_);
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public int getQuantileCount() {
+        return quantile_.size();
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public double getQuantile(int index) {
+        return quantile_.get(index);
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public Builder setQuantile(
+          int index, double value) {
+        ensureQuantileIsMutable();
+        quantile_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public Builder addQuantile(double value) {
+        ensureQuantileIsMutable();
+        quantile_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public Builder addAllQuantile(
+          java.lang.Iterable<? extends java.lang.Double> values) {
+        ensureQuantileIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, quantile_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated double quantile = 4;</code>
+       *
+       * <pre>
+       * Array for quantile normalization.
+       * </pre>
+       */
+      public Builder clearQuantile() {
+        quantile_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+
       private double intercept_ ;
       /**
-       * <code>optional double intercept = 2;</code>
+       * <code>optional double intercept = 5;</code>
        */
       public double getIntercept() {
         return intercept_;
       }
       /**
-       * <code>optional double intercept = 2;</code>
+       * <code>optional double intercept = 5;</code>
        */
       public Builder setIntercept(double value) {
         
@@ -18079,7 +18175,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>optional double intercept = 2;</code>
+       * <code>optional double intercept = 5;</code>
        */
       public Builder clearIntercept() {
         
@@ -18111,20 +18207,20 @@ public final class Sample {
         return coefficients_;
       }
       /**
-       * <code>map&lt;string, double&gt; coefficients = 3;</code>
+       * <code>map&lt;string, double&gt; coefficients = 6;</code>
        */
       public java.util.Map<java.lang.String, java.lang.Double> getCoefficients() {
         return internalGetCoefficients().getMap();
       }
       /**
-       * <code>map&lt;string, double&gt; coefficients = 3;</code>
+       * <code>map&lt;string, double&gt; coefficients = 6;</code>
        */
       public java.util.Map<java.lang.String, java.lang.Double>
       getMutableCoefficients() {
         return internalGetMutableCoefficients().getMutableMap();
       }
       /**
-       * <code>map&lt;string, double&gt; coefficients = 3;</code>
+       * <code>map&lt;string, double&gt; coefficients = 6;</code>
        */
       public Builder putAllCoefficients(
           java.util.Map<java.lang.String, java.lang.Double> values) {
@@ -18134,39 +18230,39 @@ public final class Sample {
 
       private com.google.protobuf.LazyStringList signatureForEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureSignatureForEdgesDrugIsMutable() {
-        if (!((bitField0_ & 0x00000008) == 0x00000008)) {
+        if (!((bitField0_ & 0x00000040) == 0x00000040)) {
           signatureForEdgesDrug_ = new com.google.protobuf.LazyStringArrayList(signatureForEdgesDrug_);
-          bitField0_ |= 0x00000008;
+          bitField0_ |= 0x00000040;
          }
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public com.google.protobuf.ProtocolStringList
           getSignatureForEdgesDrugList() {
         return signatureForEdgesDrug_.getUnmodifiableView();
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public int getSignatureForEdgesDrugCount() {
         return signatureForEdgesDrug_.size();
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public java.lang.String getSignatureForEdgesDrug(int index) {
         return signatureForEdgesDrug_.get(index);
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public com.google.protobuf.ByteString
           getSignatureForEdgesDrugBytes(int index) {
         return signatureForEdgesDrug_.getByteString(index);
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public Builder setSignatureForEdgesDrug(
           int index, java.lang.String value) {
@@ -18179,7 +18275,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public Builder addSignatureForEdgesDrug(
           java.lang.String value) {
@@ -18192,7 +18288,7 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public Builder addAllSignatureForEdgesDrug(
           java.lang.Iterable<java.lang.String> values) {
@@ -18203,16 +18299,16 @@ public final class Sample {
         return this;
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public Builder clearSignatureForEdgesDrug() {
         signatureForEdgesDrug_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000040);
         onChanged();
         return this;
       }
       /**
-       * <code>repeated string signatureForEdgesDrug = 4;</code>
+       * <code>repeated string signatureForEdgesDrug = 7;</code>
        */
       public Builder addSignatureForEdgesDrugBytes(
           com.google.protobuf.ByteString value) {
@@ -18399,11 +18495,6 @@ public final class Sample {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_bmeg_gaea_schema_Drug_InfoEntry_fieldAccessorTable;
   private static com.google.protobuf.Descriptors.Descriptor
-    internal_static_bmeg_gaea_schema_Model_descriptor;
-  private static
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_bmeg_gaea_schema_Model_fieldAccessorTable;
-  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_bmeg_gaea_schema_LinearSignature_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -18485,13 +18576,13 @@ public final class Sample {
       "\n\004name\030\001 \001(\t\022\020\n\010synonyms\030\002 \003(\t\022.\n\004info\030\003" +
       " \003(\0132 .bmeg.gaea.schema.Drug.InfoEntry\032+" +
       "\n\tInfoEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:" +
-      "\0028\001\"\025\n\005Model\022\014\n\004name\030\001 \001(\t\"\321\001\n\017LinearSig" +
-      "nature\022\014\n\004name\030\001 \001(\t\022\021\n\tintercept\030\002 \001(\001\022" +
-      "I\n\014coefficients\030\003 \003(\01323.bmeg.gaea.schema" +
-      ".LinearSignature.CoefficientsEntry\022\035\n\025si" +
-      "gnatureForEdgesDrug\030\004 \003(\t\0323\n\021Coefficient" +
-      "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\001:\0028\001b\006" +
-      "proto3"
+      "\0028\001\"\210\002\n\017LinearSignature\022\014\n\004name\030\001 \001(\t\022\020\n" +
+      "\010predicts\030\002 \001(\t\022\021\n\tphenotype\030\003 \001(\t\022\020\n\010qu" +
+      "antile\030\004 \003(\001\022\021\n\tintercept\030\005 \001(\001\022I\n\014coeff" +
+      "icients\030\006 \003(\01323.bmeg.gaea.schema.LinearS" +
+      "ignature.CoefficientsEntry\022\035\n\025signatureF" +
+      "orEdgesDrug\030\007 \003(\t\0323\n\021CoefficientsEntry\022\013" +
+      "\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\001:\0028\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -18643,18 +18734,12 @@ public final class Sample {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_Drug_InfoEntry_descriptor,
         new java.lang.String[] { "Key", "Value", });
-    internal_static_bmeg_gaea_schema_Model_descriptor =
-      getDescriptor().getMessageTypes().get(15);
-    internal_static_bmeg_gaea_schema_Model_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_bmeg_gaea_schema_Model_descriptor,
-        new java.lang.String[] { "Name", });
     internal_static_bmeg_gaea_schema_LinearSignature_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(15);
     internal_static_bmeg_gaea_schema_LinearSignature_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_bmeg_gaea_schema_LinearSignature_descriptor,
-        new java.lang.String[] { "Name", "Intercept", "Coefficients", "SignatureForEdgesDrug", });
+        new java.lang.String[] { "Name", "Predicts", "Phenotype", "Quantile", "Intercept", "Coefficients", "SignatureForEdgesDrug", });
     internal_static_bmeg_gaea_schema_LinearSignature_CoefficientsEntry_descriptor =
       internal_static_bmeg_gaea_schema_LinearSignature_descriptor.getNestedTypes().get(0);
     internal_static_bmeg_gaea_schema_LinearSignature_CoefficientsEntry_fieldAccessorTable = new
