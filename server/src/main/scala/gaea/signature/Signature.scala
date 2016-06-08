@@ -118,13 +118,21 @@ object Signature {
   def signatureCorrelation(graph: TitanGraph) (a: String) (b: String): Tuple3[Vertex, Vertex, Double] = {
     val query = graph.V.has(Name, within(List(a, b):_*)).as(signatureStep)
       .outE("appliesTo").as(levelStep)
-      .inV.value("name").as(nameStep)
-      .select((signatureStep, levelStep, nameStep))
-      .map(q => (q._1.property("name").orElse(""), q._1, q._2.property("level").orElse(0.0), q._3)).toSet.toArray
+      .inV.as(expressionStep)
+      .select((signatureStep, levelStep, expressionStep))
+      .map(q => (q._1.property("name").orElse(""),
+        q._1,
+        q._2.property("level").orElse(0.0),
+        q._3.property("name").orElse(""))).toSet
 
-    val levels = query.groupBy(_._1).map { kv => 
+    val signatures = query.groupBy(_._1)
+    val aNames = signatures(a).map(_._4)
+    val bNames = signatures(b).map(_._4)
+    val intersect = aNames.intersect(bNames)
+
+    val levels = signatures.map { kv =>
       val (signatureName, tuple) = kv
-      (signatureName, tuple.sortBy(_._4))
+      (signatureName, tuple.toArray.filter(t => intersect.contains(t._4)).sortBy(_._4))
     }.toMap
 
     val score = Stats.pearson(
@@ -139,6 +147,21 @@ object Signature {
     vertexA <-- ("correlatesTo") --> vertexB
     graph.tx.commit()
     score
+  }
+
+  def correlateAllSignatures(graph: TitanGraph): TitanGraph = {
+    val signatureNames = graph.V.hasLabel("type")
+      .has(Name, "type:linearSignature")
+      .out("hasInstance")
+      .toSet.map(_.property("name").orElse(""))
+
+    val pairs = distinctPairs(signatureNames)
+    for ((a, b) <- pairs) {
+      val score = applySignatureCorrelation(graph) (a) (b)
+      println(a.toString + " <--> " + b.toString + ": " + score)
+    }
+
+    graph
   }
 
   def highestScoringSamples

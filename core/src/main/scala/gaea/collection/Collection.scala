@@ -15,4 +15,8 @@ object Collection {
   def selectKeys[A, B](m: Map[A, B]) (keys: Seq[A]) (default: B): Map[A, B] = {
     keys.map(key => (key, m.get(key).getOrElse(default))).toMap
   }
+
+  def distinctPairs[A](items: Iterable[A]): Iterable[Tuple2[A, A]] = {
+    for (x <- items; y <- items if x != y) yield (x, y)
+  }
 }

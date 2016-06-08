@@ -25,12 +25,24 @@ import scalaz.stream.Process1
 import scalaz.concurrent.Task
 
 import java.io.File
+import scala.collection.JavaConversions._
+// import scala.collection.JavaConverters._
 
 object GeneFacet extends LazyLogging {
   val graph = Titan.connect(Titan.configuration(Map[String, String]()))
   val Name = Key[String]("name")
   val Coefficients = Key[String]("coefficients")
   val SampleType = Key[String]("sampleType")
+
+  def countVertexes(graph: TitanGraph): Map[String, Long] = {
+    val counts = graph.V.traversal.label.groupCount.toList.get(0)
+    val labels = counts.keySet.toList.asInstanceOf[List[String]]
+    labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
+      countMap + (label.toString -> counts.get(label))
+    }
+  }
+
+  lazy val vertexCounts = countVertexes(graph)
 
   def puts(line: String): Task[Unit] = Task { println(line) }
 
@@ -117,6 +129,9 @@ object GeneFacet extends LazyLogging {
         "no synonym found"
       }
       Ok(jSingleObject(name, jString(synonym)))
+
+    case GET -> Root / "gaea" / "vertex" / "counts" =>
+      Ok(vertexCounts.asJson)
 
     case request @ POST -> Root / "gaea" / "signature" / "gene" =>
       request.as[Json].flatMap { json => 
