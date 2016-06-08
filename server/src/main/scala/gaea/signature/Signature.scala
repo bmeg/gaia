@@ -26,6 +26,7 @@ object Signature {
   val expressionStep = StepLabel[Vertex]()
   val individualStep = StepLabel[Vertex]()
   val levelStep = StepLabel[Edge]()
+  val nameStep = StepLabel[String]()
 
   val emptyMap = Map[String, Double]()
 
@@ -112,6 +113,32 @@ object Signature {
     }
 
     graph
+  }
+
+  def signatureCorrelation(graph: TitanGraph) (a: String) (b: String): Tuple3[Vertex, Vertex, Double] = {
+    val query = graph.V.has(Name, within(List(a, b):_*)).as(signatureStep)
+      .outE("appliesTo").as(levelStep)
+      .inV.value("name").as(nameStep)
+      .select((signatureStep, levelStep, nameStep))
+      .map(q => (q._1.property("name").orElse(""), q._1, q._2.property("level").orElse(0.0), q._3)).toSet.toArray
+
+    val levels = query.groupBy(_._1).map { kv => 
+      val (signatureName, tuple) = kv
+      (signatureName, tuple.sortBy(_._4))
+    }.toMap
+
+    val score = Stats.pearson(
+      breeze.linalg.Vector[Double](levels(a).map(_._3)),
+      breeze.linalg.Vector[Double](levels(b).map(_._3)))
+
+    (levels(a).head._2, levels(b).head._2, score)
+  }
+
+  def applySignatureCorrelation(graph: TitanGraph) (a: String) (b:String): Double = {
+    val (vertexA, vertexB, score) = signatureCorrelation(graph) (a) (b)
+    vertexA <-- ("correlatesTo") --> vertexB
+    graph.tx.commit()
+    score
   }
 
   def highestScoringSamples
