@@ -34,6 +34,12 @@ object GeneFacet extends LazyLogging {
   val Coefficients = Key[String]("coefficients")
   val SampleType = Key[String]("sampleType")
 
+  val ilog2 = 1.0 / scala.math.log(2)
+
+  def log2(x: Double): Double = {
+    scala.math.log(x) * ilog2
+  }
+
   def countVertexes(graph: TitanGraph): Map[String, Long] = {
     val counts = graph.V.traversal.label.groupCount.toList.get(0)
     val labels = counts.keySet.toList.asInstanceOf[List[String]]
@@ -80,7 +86,7 @@ object GeneFacet extends LazyLogging {
   def signatureToJson(featureNames: List[String]) (vertex: Vertex): Json = {
     val coefficients = Signature.dehydrateCoefficients(vertex) ("coefficients")
     val relevant = selectKeys[String, Double](coefficients) (featureNames) (0.0)
-    val score = relevant.values.foldLeft(0.0) (_ + _)
+    val score = relevant.values.foldLeft(0.0) ((s, v) => s + Math.abs(v))
     val signatureName = vertex.property(Name).orElse("no name")
     val metadata = eventMetadata(signatureName, "drug sensitivity signature", "NUMERIC", relevant)
     ("score", jNumber(score).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
@@ -104,7 +110,7 @@ object GeneFacet extends LazyLogging {
     val individuals = expressions.map(_._1)
     val coefficients = expressions.map(_._3)
     val metadata = eventMetadata(gene, "mrna_expression", "NUMERIC", Map[String, Double]())
-    val expression = coefficients.map(_.get(gene).getOrElse(0.0))
+    val expression = coefficients.map(coefficient => log2(coefficient.get(gene).getOrElse(0.0)))
     val properties = individuals.zip(expression).toMap
     val json = coefficientsToJson(properties) ("sampleID") ("value")
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
