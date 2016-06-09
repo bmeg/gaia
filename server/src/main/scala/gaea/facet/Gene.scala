@@ -225,11 +225,11 @@ object GeneFacet extends LazyLogging {
       Ok(out.asJson)
 
     case req @ GET -> "static" /: path =>
-      val localPath = new File(new File("./static"), path.toString)
+      val localPath = new File(new File("./resources/public/static"), path.toString)
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
 
     case req @ GET -> Root =>
-      val localPath = new File(new File("./static"), "main.html")
+      val localPath = new File(new File("./resources/public/static"), "main.html")
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
   }
 }
