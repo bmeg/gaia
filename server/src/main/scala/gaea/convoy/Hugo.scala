@@ -7,12 +7,12 @@ import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 
 object Hugo {
-  val hugoIdKey = Key[String]("hugoId")
-  val nameKey = Key[String]("name")
-  val descriptionKey = Key[String]("description")
-  val chromosomeKey = Key[String]("chromosome")
-  val accessionKey = Key[String]("accession")
-  val refseqKey = Key[String]("refseq")
+  val HugoId = Key[String]("hugoId")
+  val Name = Key[String]("name")
+  val Description = Key[String]("description")
+  val Chromosome = Key[String]("chromosome")
+  val Accession = Key[String]("accession")
+  val Refseq = Key[String]("refseq")
 
   def readHugo(filename: String): List[Array[String]] = {
     val hugoLines = Source.fromFile(filename).getLines
@@ -26,17 +26,17 @@ object Hugo {
     val accession = if(hugo.length > 7) hugo(7) else ""
     val refseq = if(hugo.length > 8) hugo(8) else ""
     val feature = graph + ("feature",
-      hugoIdKey -> hugo(0).replaceFirst("HGNC:", ""),
-      nameKey -> hugo(1),
-      descriptionKey -> hugo(2),
-      chromosomeKey -> chromosome,
-      accessionKey -> accession,
-      refseqKey -> refseq)
+      Name -> ("feature:" + hugo(1)),
+      HugoId -> hugo(0).replaceFirst("HGNC:", ""),
+      Description -> hugo(2),
+      Chromosome -> chromosome,
+      Accession -> accession,
+      Refseq -> refseq)
 
     val otherSynonyms = if(hugo.length > 5 && hugo(5) != "") hugo(5).split(", ") else Array[String]()
     val synonyms = otherSynonyms :+ hugo(1)
     for (synonym <- synonyms) {
-      val synonymVertex = graph + ("featureSynonym", nameKey -> synonym)
+      val synonymVertex = graph + ("featureSynonym", Name -> ("feature:" + synonym))
       synonymVertex --- ("synonymFor") --> feature
     }
 

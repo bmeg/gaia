@@ -44,7 +44,7 @@ object Signature {
     val signatures = findSignatures(graph)
     for ((signatureVertex, coefficients) <- signatures) {
       for ((feature, coefficient) <- coefficients) {
-        val featureVertex = Feature.findFeature(graph) (feature)
+        val featureVertex = Feature.findFeature(graph) ("feature:" + feature)
         signatureVertex --- ("hasCoefficient", Coefficient -> coefficient) --> featureVertex
       }
 

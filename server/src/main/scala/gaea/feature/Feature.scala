@@ -29,4 +29,9 @@ object Feature {
       feature
     }
   }
+
+  def removePrefix(name: String): String = {
+    name.split(":").drop(1).reduceLeft((t, s) => t + ":" + s)
+  }
 }
+

@@ -182,18 +182,18 @@ object Ingest {
     effectVertex.setProperty(keys("dbsnpRS"), effect.getDbsnpRS())
     effectVertex.setProperty(keys("dbsnpValStatus"), effect.getDbsnpValStatus())
 
-    for (feature <- effect.getInFeatureEdgesFeatureList().asScala.toList) {
+    for (feature <- effect.getInFeatureEdgesList().asScala.toList) {
       val featureVertex = Feature.findFeature(graph) (feature)
       effectVertex --- ("inFeature") --> featureVertex
     }
 
-    for (domain <- effect.getInDomainEdgesDomainList().asScala.toList) {
+    for (domain <- effect.getInDomainEdgesList().asScala.toList) {
       val domainVertex = findVertex(graph) ("domain") (domain)
       effectVertex --- ("inDomain") --> domainVertex
     }
 
 
-    for (variant <- effect.getEffectOfEdgesVariantCallList().asScala.toList) {
+    for (variant <- effect.getEffectOfEdgesList().asScala.toList) {
       val variantVertex = findVertex(graph) ("variantCall") (variant)
       effectVertex --- ("effectOf") --> variantVertex
     }
@@ -215,17 +215,17 @@ object Ingest {
     variantVertex.setProperty(keys("tumorAllele2"), variant.getTumorAllele2())
     variantVertex.setProperty(keys("sequencer"), variant.getSequencer())
 
-    for (tumor <- variant.getTumorSampleEdgesBiosampleList().asScala.toList) {
+    for (tumor <- variant.getTumorSampleEdgesList().asScala.toList) {
       val tumorVertex = findVertex(graph) ("biosample") (tumor)
       variantVertex --- ("tumorSample") --> tumorVertex
     }
 
-    for (normal <- variant.getNormalSampleEdgesBiosampleList().asScala.toList) {
+    for (normal <- variant.getNormalSampleEdgesList().asScala.toList) {
       val normalVertex = findVertex(graph) ("biosample") (normal)
       variantVertex --- ("normalSample") --> normalVertex
     }
 
-    for (position <- variant.getAtPositionEdgesPositionList().asScala.toList) {
+    for (position <- variant.getAtPositionEdgesList().asScala.toList) {
       val positionVertex = findVertex(graph) ("position") (position)
       variantVertex --- ("atPosition") --> positionVertex
     }
@@ -241,7 +241,7 @@ object Ingest {
     biosampleVertex.setProperty(keys("barcode"), biosample.getBarcode())
     biosampleVertex.setProperty(keys("sampleType"), biosample.getSampleType())
 
-    for (individual <- biosample.getSampleOfEdgesIndividualList().asScala.toList) {
+    for (individual <- biosample.getSampleOfEdgesList().asScala.toList) {
       val individualVertex = findVertex(graph) ("individual") (individual)
       biosampleVertex --- ("sampleOf") --> individualVertex
     }
@@ -291,7 +291,7 @@ object Ingest {
     expressionType --- ("hasInstance") --> expressionVertex
     expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
 
-    for (sample <- expression.getExpressionForEdgesBiosampleList().asScala.toList) {
+    for (sample <- expression.getExpressionForEdgesList().asScala.toList) {
       val sampleVertex = findVertex(graph) ("biosample") (sample)
       expressionVertex --- ("expressionFor") --> sampleVertex
     }
@@ -313,7 +313,7 @@ object Ingest {
     signatureVertex.setProperty(Key[Double]("intercept"), signature.getIntercept())
     signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
 
-    for (drug <- signature.getSignatureForEdgesDrugList().asScala.toList) {
+    for (drug <- signature.getSignatureForEdgesList().asScala.toList) {
       val drugVertex = findVertex(graph) ("drug") (drug)
       signatureVertex --- ("signatureFor") --> drugVertex
     }
