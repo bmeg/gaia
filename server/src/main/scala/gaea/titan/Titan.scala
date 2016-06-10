@@ -39,8 +39,38 @@ object Titan {
     query.toList.headOption
   }
 
+  def namedVertex(graph: TitanGraph) (label: String) (name: String): Vertex = {
+    graph.V.has(Name, name).headOption.getOrElse {
+      graph + (label, Name -> name)
+    }
+  }
+
   def typeVertexes(graph: TitanGraph) (typ: String): List[Vertex] = {
     graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance").toList
+  }
+
+  def associateOut(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toName: String): Boolean = {
+    if (from.out(edge).has(Name, toName).toList.isEmpty) {
+      val to = namedVertex(graph) (toLabel) (toName)
+      from --- (edge) --> to
+      true
+    } else {
+      false
+    }
+  }
+
+  def associateIn(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toName: String): Boolean = {
+    if (from.in(edge).has(Name, toName).toList.isEmpty) {
+      val to = namedVertex(graph) (toLabel) (toName)
+      from <-- (edge) --- to
+      true
+    } else {
+      false
+    }
+  }
+
+  def associateType(graph: TitanGraph) (instance: Vertex) (typ: String): Boolean = {
+    associateIn(graph) (instance) ("hasInstance") ("type") ("type:" + typ)
   }
 
   def makeIndex(graph: TitanGraph) (name: String) (keys: Map[String, Class[_]]) = {

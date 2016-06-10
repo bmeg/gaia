@@ -1,6 +1,7 @@
 package gaea.convoy
 
 import gaea.feature.Feature
+import gaea.titan.Titan
 
 import scala.io.Source
 import com.thinkaurelius.titan.core.TitanGraph
@@ -21,7 +22,7 @@ object Hugo {
     allHugos.filter(_(3) == "Approved")
   }
 
-  def featureConvoy(graph: TitanGraph) (hugo: Array[String]): Vertex = {
+  def featureConvoy(graph: TitanGraph) (hugo: Array[String]) (featureType: Vertex) (synonymType: Vertex): Vertex = {
     val chromosome = if(hugo.length > 6) hugo(6) else ""
     val accession = if(hugo.length > 7) hugo(7) else ""
     val refseq = if(hugo.length > 8) hugo(8) else ""
@@ -33,10 +34,15 @@ object Hugo {
       Accession -> accession,
       Refseq -> refseq)
 
+    // Titan.associateType(graph) (feature) ("feature")
+    featureType --- ("hasInstance") --> feature
+
     val otherSynonyms = if(hugo.length > 5 && hugo(5) != "") hugo(5).split(", ") else Array[String]()
     val synonyms = otherSynonyms :+ hugo(1)
     for (synonym <- synonyms) {
       val synonymVertex = graph + ("featureSynonym", Name -> ("feature:" + synonym))
+      // Titan.associateType(graph) (synonymVertex) ("featureSynonym")
+      synonymType --- ("hasInstance") --> synonymVertex
       synonymVertex --- ("synonymFor") --> feature
     }
 
@@ -44,10 +50,14 @@ object Hugo {
   }
 
   def hugoConvoy(graph: TitanGraph) (hugos: List[Array[String]]): Integer = {
+    val featureType = graph.V.has(Name, "type:feature").head
+    val synonymType = graph.V.has(Name, "type:featureSynonym").head
+
     for (hugo <- hugos) {
       print(".")
-      featureConvoy(graph) (hugo)
+      featureConvoy(graph) (featureType) (synonymType) (hugo)
     }
+
     hugos.length
   }
 

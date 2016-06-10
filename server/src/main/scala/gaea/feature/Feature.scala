@@ -6,13 +6,17 @@ import gremlin.scala._
 object Feature {
   val nameKey = Key[String]("name")
 
+  def removePrefix(name: String): String = {
+    name.split(":").drop(1).reduceLeft((t, s) => t + ":" + s)
+  }
+
   def findSynonymVertex(graph: TitanGraph) (name: String): Option[Vertex] = {
     graph.V.hasLabel("featureSynonym").has(nameKey, name).out("synonymFor").headOption
   }
 
   def findSynonym(graph: TitanGraph) (name: String): Option[String] = {
     val values = findSynonymVertex(graph) (name).map(_.valueMap())
-    values.map(_("name").asInstanceOf[String])
+    values.map(vertex => removePrefix(vertex("name").asInstanceOf[String]))
   }
 
   def findFeature(graph: TitanGraph) (name: String): Vertex = {
@@ -28,10 +32,6 @@ object Feature {
       synonym --- ("synonymFor") --> feature
       feature
     }
-  }
-
-  def removePrefix(name: String): String = {
-    name.split(":").drop(1).reduceLeft((t, s) => t + ":" + s)
   }
 }
 
