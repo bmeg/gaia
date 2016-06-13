@@ -126,6 +126,24 @@ object GeneFacet extends LazyLogging {
     Signature.dehydrateCoefficients(signature) ("coefficients").toList.sortWith(_._2 > _._2).take(n).map(_._1)
   }
 
+  def longProperty(vertex: Vertex) (property: String): Option[Long] = {
+    vertex.valueMap.get(property).map(_.asInstanceOf[Long])
+  }
+
+  def individualSurvivalJson(individual: Vertex): Json = {
+    val values = individual.valueMap("name", "vitalStatus", "deathDaysTo", "submittedTumorType")
+
+    val json = ("name", jString(values("name").asInstanceOf[String])) ->:
+      ("status", jString(values("vitalStatus").asInstanceOf[String])) ->:
+      ("tumor", jString(values.get("submittedTumorType").getOrElse("unknown").asInstanceOf[String])) ->:
+      jEmptyObject
+
+    values.get("deathDaysTo") match {
+      case Some(days) => ("days", jNumber(days.asInstanceOf[Long])) ->: json
+      case None => json
+    }
+  }
+
   val service = HttpService {
     case GET -> Root / "gaea" / "hello" / name =>
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
@@ -138,6 +156,17 @@ object GeneFacet extends LazyLogging {
 
     case GET -> Root / "gaea" / "vertex" / "counts" =>
       Ok(vertexCounts.asJson)
+
+    case request @ POST -> Root / "gaea" / "individual" / "survival" =>
+      request.as[Json].flatMap { json =>
+        val individualNames = json.as[List[String]].getOr(List[String]())
+        val individualVertexes = graph.V.hasLabel("individual").has(Name, within(individualNames:_*)).toList
+        val individualJson = individualVertexes.foldLeft(jEmptyArray) {(array, vertex) =>
+          individualSurvivalJson(vertex) -->>: array
+        }
+
+        Ok(individualJson)
+      }
 
     case request @ POST -> Root / "gaea" / "signature" / "gene" =>
       request.as[Json].flatMap { json => 
@@ -218,13 +247,13 @@ object GeneFacet extends LazyLogging {
       y.runLog.run
       Ok(jNumber(1))
 
-    case request @ GET -> Root / "gaea" / "vertex" / name =>
-      val h = graph.V.has(Name, name).head
-      val o = graph.V.has(Name, name).out().value(Name).toList()
-      val i = graph.V.has(Name, name).out().value(Name).toList()
+    case GET -> Root / "gaea" / "vertex" / name =>
+      val vertex = graph.V.has(Name, name).head
+      val o = vertex.out().value(Name).toList()
+      val i = vertex.in().value(Name).toList()
       val out = Map[String,Json](
-        "type" -> h.label().asJson,
-        "properties" -> mapToJson(h.valueMap),
+        "type" -> vertex.label().asJson,
+        "properties" -> mapToJson(vertex.valueMap),
         "out" -> o.asJson,
         "in" -> i.asJson
       )

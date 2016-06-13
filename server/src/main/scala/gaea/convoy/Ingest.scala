@@ -176,7 +176,7 @@ object Ingest {
   }
 
   def ingestVariantCallEffect(graph: TitanGraph) (effect: Sample.VariantCallEffect): Vertex = {
-    println("ingesting variant call effect " + effect.getName())
+    // println("ingesting variant call effect " + effect.getName())
 
     val effectVertex = findVertex(graph) ("variantCallEffect") (effect.getName())
     effectVertex.setProperty(keys("variantClassification"), effect.getVariantClassification())
@@ -184,22 +184,16 @@ object Ingest {
     effectVertex.setProperty(keys("dbsnpValStatus"), effect.getDbsnpValStatus())
 
     for (feature <- effect.getInFeatureEdgesList().asScala.toList) {
-      // val featureVertex = Feature.findFeature(graph) (feature)
-      // effectVertex --- ("inFeature") --> featureVertex
       val featureVertex = Feature.findFeature(graph) (feature)
       Titan.associateOut(graph) (effectVertex) ("inFeature") ("feature") (featureVertex.property("name").orElse(""))
     }
 
     for (domain <- effect.getInDomainEdgesList().asScala.toList) {
-      // val domainVertex = Titan.namedVertex(graph) ("domain") (domain)
-      // effectVertex --- ("inDomain") --> domainVertex
       Titan.associateOut(graph) (effectVertex) ("inDomain") ("domain") (domain)
     }
 
 
     for (variant <- effect.getEffectOfEdgesList().asScala.toList) {
-      // val variantVertex = Titan.namedVertex(graph) ("variantCall") (variant)
-      // effectVertex --- ("effectOf") --> variantVertex
       Titan.associateOut(graph) (effectVertex) ("effectOf") ("variantCall") (variant)
     }
 
@@ -208,7 +202,7 @@ object Ingest {
   }
 
   def ingestVariantCall(graph: TitanGraph) (variant: Sample.VariantCall): Vertex = {
-    println("ingesting variant call " + variant.getName())
+    // println("ingesting variant call " + variant.getName())
 
     val variantVertex = findVertex(graph) ("variantCall") (variant.getName())
     variantVertex.setProperty(keys("source"), variant.getSource())
@@ -221,20 +215,14 @@ object Ingest {
     variantVertex.setProperty(keys("sequencer"), variant.getSequencer())
 
     for (tumor <- variant.getTumorSampleEdgesList().asScala.toList) {
-      // val tumorVertex = Titan.namedVertex(graph) ("biosample") (tumor)
-      // variantVertex --- ("tumorSample") --> tumorVertex
       Titan.associateOut(graph) (variantVertex) ("tumorSample") ("biosample") (tumor)
     }
 
     for (normal <- variant.getNormalSampleEdgesList().asScala.toList) {
-      // val normalVertex = Titan.namedVertex(graph) ("biosample") (normal)
-      // variantVertex --- ("normalSample") --> normalVertex
       Titan.associateOut(graph) (variantVertex) ("normalSample") ("biosample") (normal)
     }
 
     for (position <- variant.getAtPositionEdgesList().asScala.toList) {
-      // val positionVertex = Titan.namedVertex(graph) ("position") (position)
-      // variantVertex --- ("atPosition") --> positionVertex
       Titan.associateOut(graph) (variantVertex) ("atPosition") ("position") (position)
     }
 
@@ -251,8 +239,6 @@ object Ingest {
     biosampleVertex.setProperty(keys("sampleType"), biosample.getSampleType())
 
     for (individual <- biosample.getSampleOfEdgesList().asScala.toList) {
-      // val individualVertex = Titan.namedVertex(graph) ("individual") (individual)
-      // biosampleVertex --- ("sampleOf") --> individualVertex
       Titan.associateOut(graph) (biosampleVertex) ("sampleOf") ("individual") (individual)
     }
 
@@ -301,8 +287,6 @@ object Ingest {
     expressionVertex.setProperty(Key[String]("expressions"), expressionJson)
 
     for (sample <- expression.getExpressionForEdgesList().asScala.toList) {
-      // val sampleVertex = Titan.namedVertex(graph) ("biosample") (sample)
-      // expressionVertex --- ("expressionFor") --> sampleVertex
       Titan.associateOut(graph) (expressionVertex) ("expressionFor") ("biosample") (sample)
     }
 
@@ -322,8 +306,6 @@ object Ingest {
     signatureVertex.setProperty(Key[String]("coefficients"), coefficientsJson)
 
     for (drug <- signature.getSignatureForEdgesList().asScala.toList) {
-      // val drugVertex = Titan.namedVertex(graph) ("drug") (drug)
-      // signatureVertex --- ("signatureFor") --> drugVertex
       Titan.associateOut(graph) (signatureVertex) ("signatureFor") ("drug") (drug)
     }
 

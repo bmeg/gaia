@@ -22,7 +22,7 @@ object Hugo {
     allHugos.filter(_(3) == "Approved")
   }
 
-  def featureConvoy(graph: TitanGraph) (hugo: Array[String]) (featureType: Vertex) (synonymType: Vertex): Vertex = {
+  def featureConvoy(graph: TitanGraph) (featureType: Vertex) (synonymType: Vertex) (hugo: Array[String]): Vertex = {
     val chromosome = if(hugo.length > 6) hugo(6) else ""
     val accession = if(hugo.length > 7) hugo(7) else ""
     val refseq = if(hugo.length > 8) hugo(8) else ""
