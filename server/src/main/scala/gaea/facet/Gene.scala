@@ -33,6 +33,7 @@ object GeneFacet extends LazyLogging {
   val Name = Key[String]("name")
   val Coefficients = Key[String]("coefficients")
   val SampleType = Key[String]("sampleType")
+  val TumorSite = Key[String]("submittedTumorSite")
 
   val ilog2 = 1.0 / scala.math.log(2)
 
@@ -156,6 +157,9 @@ object GeneFacet extends LazyLogging {
 
     case GET -> Root / "gaea" / "vertex" / "counts" =>
       Ok(vertexCounts.asJson)
+
+    case GET -> Root / "gaea" / "individual" / "tumor" / tumorType =>
+      Ok(graph.V.has(Name, "type:individual").out("hasInstance").has(TumorSite, tumorType).value(Name).toList.asJson)
 
     case request @ POST -> Root / "gaea" / "individual" / "survival" =>
       request.as[Json].flatMap { json =>
