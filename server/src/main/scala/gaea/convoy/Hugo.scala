@@ -50,8 +50,8 @@ object Hugo {
   }
 
   def hugoConvoy(graph: TitanGraph) (hugos: List[Array[String]]): Integer = {
-    val featureType = graph.V.has(Name, "type:feature").head
-    val synonymType = graph.V.has(Name, "type:featureSynonym").head
+    val featureType = graph + ("type", Name -> "type:feature")
+    val synonymType = graph + ("type", Name -> "type:featureSynonym")
 
     for (hugo <- hugos) {
       print(".")
