@@ -10,6 +10,30 @@ object ParseProtobuffer {
     feature.build()
   }
 
+  def parseDrug(raw: String): Sample.Drug = {
+    val drug: Sample.Drug.Builder = Sample.Drug.newBuilder()
+    JsonFormat.parser().merge(raw, drug)
+    drug.build()
+  }
+
+  def parseOntologyTerm(raw: String): Sample.OntologyTerm = {
+    val ontologyTerm: Sample.OntologyTerm.Builder = Sample.OntologyTerm.newBuilder()
+    JsonFormat.parser().merge(raw, ontologyTerm)
+    ontologyTerm.build()
+  }
+
+  def parsePhenotype(raw: String): Sample.Phenotype = {
+    val phenotype: Sample.Phenotype.Builder = Sample.Phenotype.newBuilder()
+    JsonFormat.parser().merge(raw, phenotype)
+    phenotype.build()
+  }
+
+  def parsePhenotypeAssociation(raw: String): Sample.PhenotypeAssociation = {
+    val phenotypeAssociation: Sample.PhenotypeAssociation.Builder = Sample.PhenotypeAssociation.newBuilder()
+    JsonFormat.parser().merge(raw, phenotypeAssociation)
+    phenotypeAssociation.build()
+  }
+
   def parseDomain(raw: String): Sample.Domain = {
     val domain: Sample.Domain.Builder = Sample.Domain.newBuilder()
     JsonFormat.parser().merge(raw, domain)

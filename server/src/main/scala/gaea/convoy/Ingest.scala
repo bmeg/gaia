@@ -162,6 +162,49 @@ object Ingest {
     Feature.findFeature(graph) (feature.getName())
   }
 
+  def ingestDrug(graph: TitanGraph) (drug: Sample.Drug): Vertex = {
+    findVertex(graph) ("drug") (drug.getName())
+  }
+
+  def ingestOntologyTerm(graph: TitanGraph) (ontologyTerm: Sample.OntologyTerm): Vertex = {
+    val ontologyVertex = findVertex(graph) ("ontologyTerm") (ontologyTerm.getName())
+    ontologyVertex.setProperty(Key[String]("term"), ontologyTerm.getTerm())
+    ontologyVertex
+  }
+
+  def ingestPhenotype(graph: TitanGraph) (phenotype: Sample.Phenotype): Vertex = {
+    val phenotypeVertex = findVertex(graph) ("phenotype") (phenotype.getName())
+
+    for (ontologyTerm <- phenotype.getIsTypeEdgesList().asScala.toList) {
+      Titan.associateOut(graph) (phenotypeVertex) ("isType") ("ontologyTerm") (ontologyTerm)
+    }
+
+    retryCommit(graph) (5)
+    phenotypeVertex
+  }
+
+  def ingestPhenotypeAssociation(graph: TitanGraph) (phenotypeAssociation: Sample.PhenotypeAssociation): Vertex = {
+    val phenotypeAssociationVertex = findVertex(graph) ("phenotypeAssociation") (phenotypeAssociation.getName())
+    val infoMap = phenotypeAssociation.getInfo().asScala
+
+    val activityArea: Double = java.lang.Double.parseDouble(infoMap("ActArea"))
+    phenotypeAssociationVertex.setProperty(Key[Double]("activityArea"), activityArea)
+
+    for (phenotype <- phenotypeAssociation.getHasPhenotypeEdgesList().asScala.toList) {
+      Titan.associateOut(graph) (phenotypeAssociationVertex) ("hasPhenotype") ("phenotype") (phenotype)
+    }
+
+    for (drug <- phenotypeAssociation.getHasContextEdgesList().asScala.toList) {
+      Titan.associateOut(graph) (phenotypeAssociationVertex) ("hasContext") ("drug") (drug)
+    }
+
+    for (biosample <- phenotypeAssociation.getHasGenotypeEdgesList().asScala.toList) {
+      Titan.associateOut(graph) (phenotypeAssociationVertex) ("hasGenotype") ("biosample") (biosample)
+    }
+
+    phenotypeAssociationVertex
+  }
+
   def ingestPosition(graph: TitanGraph) (position: Sample.Position): Vertex = {
     val positionVertex = findVertex(graph) ("position") (position.getName())
     positionVertex.setProperty(keys("chromosome"), position.getChromosome())
@@ -334,6 +377,18 @@ object Ingest {
     } else if (messageType == "Domain") {
       val domain = ParseProtobuffer.parseDomain(line)
       ingestDomain(graph) (domain)
+    } else if (messageType == "Drug") {
+      val drug = ParseProtobuffer.parseDrug(line)
+      ingestDrug(graph) (drug)
+    } else if (messageType == "OntologyTerm") {
+      val ontologyTerm = ParseProtobuffer.parseOntologyTerm(line)
+      ingestOntologyTerm(graph) (ontologyTerm)
+    } else if (messageType == "Phenotype") {
+      val phenotype = ParseProtobuffer.parsePhenotype(line)
+      ingestPhenotype(graph) (phenotype)
+    } else if (messageType == "PhenotypeAssociation") {
+      val phenotypeAssociation = ParseProtobuffer.parsePhenotypeAssociation(line)
+      ingestPhenotypeAssociation(graph) (phenotypeAssociation)
     } else if (messageType == "Position") {
       val position = ParseProtobuffer.parsePosition(line)
       ingestPosition(graph) (position)
