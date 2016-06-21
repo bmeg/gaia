@@ -150,7 +150,7 @@ object GeneFacet extends LazyLogging {
       Ok(jSingleObject("message", jString(s"Hello, ${name}")))
 
     case GET -> Root / "gaea" / "gene" / name =>
-      val synonym = Feature.findSynonym(graph) ("feature:" + name).getOrElse {
+      val synonym = Feature.findSynonym(graph) (name).getOrElse {
         "no synonym found"
       }
       Ok(jSingleObject(name, jString(synonym)))
@@ -175,7 +175,7 @@ object GeneFacet extends LazyLogging {
     case request @ POST -> Root / "gaea" / "signature" / "gene" =>
       request.as[Json].flatMap { json => 
         val geneNames = json.as[List[String]].getOr(List[String]())
-        val featureVertexes = geneNames.map((name: String) => Feature.findSynonymVertex(graph) ("feature:" + name)).flatten
+        val featureVertexes = geneNames.map((name: String) => Feature.findSynonymVertex(graph) (name)).flatten
         val featureNames = featureVertexes.map(feature => Feature.removePrefix(feature.property(Name).orElse("")))
         val signatureVertexes = featureVertexes.flatMap(_.in("hasCoefficient").toList).toSet
         val signatureJson = signatureVertexes.map(signatureToJson(featureNames))

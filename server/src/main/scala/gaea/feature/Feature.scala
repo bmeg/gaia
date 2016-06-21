@@ -11,7 +11,7 @@ object Feature {
   }
 
   def findSynonymVertex(graph: TitanGraph) (name: String): Option[Vertex] = {
-    graph.V.hasLabel("featureSynonym").has(nameKey, name).out("synonymFor").headOption
+    graph.V.hasLabel("featureSynonym").has(nameKey, "feature:" + name).out("synonymFor").headOption
   }
 
   def findSynonym(graph: TitanGraph) (name: String): Option[String] = {
