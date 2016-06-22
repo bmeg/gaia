@@ -45,8 +45,12 @@ object Titan {
     }
   }
 
+  def typeQuery(graph: TitanGraph) (typ: String): List[Vertex] = {
+    graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance")
+  }
+
   def typeVertexes(graph: TitanGraph) (typ: String): List[Vertex] = {
-    graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance").toList
+    typeQuery(graph) (typ).toList
   }
 
   def associateOut(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toName: String): Boolean = {

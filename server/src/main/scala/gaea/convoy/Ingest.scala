@@ -163,12 +163,16 @@ object Ingest {
   }
 
   def ingestDrug(graph: TitanGraph) (drug: Sample.Drug): Vertex = {
-    findVertex(graph) ("drug") (drug.getName())
+    val drugVertex = findVertex(graph) ("drug") (drug.getName())
+    retryCommit(graph) (5)
+    drugVertex
   }
 
   def ingestOntologyTerm(graph: TitanGraph) (ontologyTerm: Sample.OntologyTerm): Vertex = {
     val ontologyVertex = findVertex(graph) ("ontologyTerm") (ontologyTerm.getName())
     ontologyVertex.setProperty(Key[String]("term"), ontologyTerm.getTerm())
+
+    retryCommit(graph) (5)
     ontologyVertex
   }
 
@@ -202,6 +206,7 @@ object Ingest {
       Titan.associateOut(graph) (phenotypeAssociationVertex) ("hasGenotype") ("biosample") (biosample)
     }
 
+    retryCommit(graph) (5)
     phenotypeAssociationVertex
   }
 
