@@ -45,7 +45,7 @@ object Titan {
     }
   }
 
-  def typeQuery(graph: TitanGraph) (typ: String): List[Vertex] = {
+  def typeQuery(graph: TitanGraph) (typ: String): GremlinScala[Vertex, shapeless.HNil] = {
     graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance")
   }
 
