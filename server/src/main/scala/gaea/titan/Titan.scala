@@ -82,7 +82,12 @@ object Titan {
     val preindex = mg.buildIndex(name, classOf[Vertex])
     val index = keys.foldLeft(preindex) {(index, kv) =>
       val (s, c) = kv
-      val property = mg.makePropertyKey(s).dataType(c).make()
+      val property = if (mg.getPropertyKey(s) == null) {
+        mg.makePropertyKey(s).dataType(c).make()
+      } else {
+        mg.getPropertyKey(s)
+      }
+
       index.addKey(property)
     }
 
