@@ -1,6 +1,7 @@
 package gaea.facet
 
 import gaea.titan.Titan
+import gaea.titan.Console
 import gaea.convoy.Ingest
 import gaea.feature.Feature
 import gaea.signature.Signature
@@ -262,6 +263,18 @@ object GeneFacet extends LazyLogging {
         "in" -> i.asJson
       )
       Ok(out.asJson)
+
+    case request @ POST -> Root / "gaea" / "console" =>
+      request.as[Json].flatMap { query =>
+        val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
+        val line = queryLens.get(query).getOrElse("")
+
+        println(line)
+        val result = Console.eval[Any](line)
+        println(result)
+
+        Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
+      }
 
     case req @ GET -> "static" /: path =>
       val localPath = new File(new File("./resources/public/static"), path.toString)
