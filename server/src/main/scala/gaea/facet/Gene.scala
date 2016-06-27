@@ -270,10 +270,16 @@ object GeneFacet extends LazyLogging {
         val line = queryLens.get(query).getOrElse("")
 
         println(line)
-        val result = Console.eval[Any](line)
+
+        val result = try {
+          Console.eval[Any](line).toString
+        } catch {
+          case e: Throwable => e.toString.replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+        }
+
         println(result)
 
-        Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
+        Ok(("result" -> jString(result)) ->: jEmptyObject)
       }
 
     case req @ GET -> "static" /: path =>

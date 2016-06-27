@@ -9,8 +9,6 @@ var GraphConsole = React.createClass({
     e.preventDefault()
     e.stopPropagation()
 
-    console.log(e)
-
     var query = $('#console-input').val()
     this.state.queries.push({query: query})
     this.setState({queries: this.state.queries})
@@ -36,7 +34,7 @@ var GraphConsole = React.createClass({
   render: function() {
     var queryLine = function(query) {
       return (
-        <div key={query.query} className="mdl-cell mdl-shadow--2dp mdl-cell--12-col-desktop">
+        <div key={query.query+Math.random()} className="mdl-cell mdl-shadow--2dp mdl-cell--12-col-desktop">
           <li className="console-query-line mdl-list__item">
             <span className="mdl-list__item-primary-content">
               <i className="material-icons mdl-list__item-icon mdl-color--white mdl-color-text--teal-100">play_circle_filled</i>
