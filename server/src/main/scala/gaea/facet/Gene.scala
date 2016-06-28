@@ -272,7 +272,7 @@ object GeneFacet extends LazyLogging {
         println(line)
 
         val result = try {
-          Console.eval[Any](line).toString
+          Console.interpret[Any](line).toString
         } catch {
           case e: Throwable => e.toString.replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
         }

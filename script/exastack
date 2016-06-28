@@ -1,0 +1,98 @@
+I'll be the first to admit that my knowledge of OpenStack is largely empirical. I've found what does work rather than having a formal understanding of what should work.
+
+With that caveat, what's worked for me is to put project VMs on a project network, rather that directly on the public network, and then assign them a floating IP address on the public network.
+
+The workflow is fairly straightforward, if somewhat long to explain.
+
+* Navigate to Project -> Network -> Networks
+
+* Create a Network
+  - Press the Create Network button.
+  - Assign the network a name;
+    there's no convention for network naming (yet).
+  - Ensure Admin State is UP.
+  - Assuming you want to assign a subnet to this network,
+    ensure the Create Subnet box is checked.
+  - Press the Next button.
+
+* Create a Subnet
+  - Assign the new subnet a name (again, no convention yet).
+  - Assign it an address using CIDR notation, e.g., 10.40.40.0/24.
+  - By default, the subnet's gateway IP address will be the first
+    usable address in the CIDR block you assigned (so 10.40.40.1
+    in my example). You can change it if there's some other
+    convention you'd like to use, but the Gateway must exist
+    within your CIDR block.
+  - Press the Next button.
+
+* Assign Subnet details
+  - You almost certainly want to keep the Enable DHCP box checked.
+  - The allocation pool or pools must live in your CIDR block.
+    Each line should contain the beginning and ending addresses
+    of a pool separated by a comma, e.g., 10.40.40.10,10.40.40.254.
+  - Use real DNS Name servers (one per line). You can use the ACC
+    servers (192.168.110.99 and 192.168.110.141) or those from ITG
+    (137.53.223.44 and 137.53.223.36).
+  - It's unlikely you'll need to specify Host Routes unless
+    you've got a really gnarly set of virtual subnets and routers
+    you need to access.
+  - Press the Create button.
+
+Once you have a subnet, you'll probably want to route it to the Internet. By default, your new subnet will access the wider network via NAT, so you don't have to worry about that. Your next step is to create a router.
+
+* Navigate to Project -> Network -> Routers
+
+* Create a router
+  - Press the Create Router button.
+  - Assign the router a name (no convention).
+  - Ensure Admin State is UP.
+  - Pick a network from the External Network drop-down list;
+    there may be only one choice (public).
+  - Press the Create Router button.
+
+* Assign your router a local subnet.
+  - Your new router should appear in the list. Press the link
+    in the Name column.
+  - Press the Interfaces link on the details page.
+  - Press the Add Interface button.
+  - Select the new network/subnet you created in the earlier
+    steps from the Subnet drop-down menu.
+  - Leave the IP Address blank unless you know for certain
+    that it needs a static assignment.
+
+When you create a VM, put it on your new subnet. You should see a huge speed increase because internal OpenStack network operations won't be timing out.
+
+Once the VM is up and running, you'll want to assign it a floating IP address, but first you'll need to allocate some.
+
+* Navigate to Project -> Compute -> Access & Security
+
+* Click the Floating IPs tab-like link.
+
+* Click the Allocate IP To Project button. There's only one
+  pool from which you can allocate an address (public), so click
+  the Allocate IP button.
+
+* You can either associate the newly assigned IP address from the
+  Access & Security menu, or you can do it from the Instances
+  list.
+
+----------------------------------------------------------------------------
+
+Also, I’ve found the Ubuntu images difficult to access. Ubuntu’s default cloud-init process will indeed install your SSH into /root/.ssh/authorized_keys, but it won’t let you login because it includes a force command that is, umm, less than helpful.
+
+What I’d suggest is building a cloud-init script to install your personal user account and give it sudo privileges. Here’s a snippet that I use. I believe the “#cloud-config” line is necessary, but I haven’t tested an installation without it. The SSH key is elided for clarity, but it all needs to go on one line. In Ubuntu, make sure you give yourself membership in the ‘sudo’ group. The package_upgrade line is optional; I just like my VMs to be running the latest software when I first login.
+
+#cloud-config
+users:
+  - name: spanglry
+    gecos: Ryan Spangler
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    shell: /bin/bash
+    groups: sudo
+    ssh-authorized-keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDGndX51JpObA9/MC+p60s/9S54j0OjqlO7f/Tz9U2GsnDmMki8XpZOw0klJG7YFniIWhLKq1caAEk1/OyLjB8693h2Rv7HAdnNnUba5YmnsI9sgdHqZ5iMSD5qPNQDcmepvPt0k/UO0PzuSKeO4CmnWfZUIy0pTvWrP6Q4rXQzT6VlcxxlAFlwPNmZ6k0Oezf9QhYFBBHU3m0fOMbLFoiSv+k833TuawZYoM/TcIfwVo5lhiJqb6+mguTvjKkvIr1a6zJrTOK6lkPoZaTnME4Nr3P6rwdl5PbjOlS8g1tBHOarHmScuOmfnLlzQi+DRf10ZPBQW/ncppaON79wleVpUYuccKv6dffIeZQ3oqvGKJxLXRzE5gy5Zy8DEXsYapMwCU+KlVkHTDnSWnwznVG8jDs1KdWBj2hLZu3L3xNAYSpEbn8NrcY1bp1s8KziFN24efxbJmABnINYguMNajc/lCHwRJC1dGE/keYxuGgvpSuQUB8+XkpW7wv7u7GoTQ0yt7BxyHttKmuowOMf44N+cYjpQIC0ftO6Xet65UqCH+VpQ/AbHWIsdYsl3gISGYoE3rUYmZsuYed/l6V4CndAqpA5GBeQJeK+Jp61vFQTJ94uXQHObQjU8HeUTvqPc4kkzTQQ/2Jx0/HLq0Us/6EPrkfE3wOLFvaO/ByYoeT9DQ== ryan.spangler@gmail.com
+
+package_upgrade: true
+# end of file
+
+When you’re creating a VM, go to the Configuration section and either paste your script into Customization Script box or save the script as a file and go the Load Script From File route.
