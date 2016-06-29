@@ -162,6 +162,9 @@ object GeneFacet extends LazyLogging {
     case GET -> Root / "gaea" / "individual" / "tumor" / tumorType =>
       Ok(graph.V.has(Name, "type:individual").out("hasInstance").has(TumorSite, tumorType).value(Name).toList.asJson)
 
+    case GET -> Root / "gaea" / "feature" / feature / "tumor" / "counts" =>
+      Ok(Feature.findTumorCounts(graph) ("feature:" + feature).asJson)
+
     case request @ POST -> Root / "gaea" / "individual" / "survival" =>
       request.as[Json].flatMap { json =>
         val individualNames = json.as[List[String]].getOr(List[String]())
@@ -271,15 +274,21 @@ object GeneFacet extends LazyLogging {
 
         println(line)
 
-        val result = try {
-          Console.interpret[Any](line).toString
-        } catch {
-          case e: Throwable => e.toString.replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+        val result = Console.interpret[Any](line) match {
+          case Right(result) => result
+          case Left(error) => error
         }
+
+        // val result = try {
+        //   Console.interpret[Any](line).toString
+        // } catch {
+        //   case e: Throwable => println(e.getCause); println(e.printStackTrace); e.getMessage();
+        //     // .replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+        // }
 
         println(result)
 
-        Ok(("result" -> jString(result)) ->: jEmptyObject)
+        Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
       }
 
     case req @ GET -> "static" /: path =>

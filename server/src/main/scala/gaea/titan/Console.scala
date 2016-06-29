@@ -18,7 +18,7 @@ object Console {
     true
   }
 
-  def interpret[T](code: String): T = {
+  def interpret[T](code: String): Either[String, T] = {
     Repl.eval[T](code)
   }
 

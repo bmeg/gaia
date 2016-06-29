@@ -19,4 +19,8 @@ object Collection {
   def distinctPairs[A](items: Iterable[A]): Iterable[Tuple2[A, A]] = {
     for (x <- items; y <- items if x != y) yield (x, y)
   }
+
+  def groupCount[A](items: Iterable[A]): Map[A, Int] = {
+    items.groupBy((a) => a).map((t) => (t._1 -> t._2.size)).toMap
+  }
 }
