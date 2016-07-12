@@ -78,7 +78,8 @@ object Ingest {
     }
   }
 
-  def ingestVertex(graph: TitanGraph) (data: JObject): Vertex = {
+  def ingestVertex(graph: TitanGraph) (json: JValue): Vertex = {
+    val data = json.asInstanceOf[JObject]
     val name = stringFor(data) ("name")
     val label = stringFor(data) ("type")
     val vertex = findVertex(graph) (label) (name)

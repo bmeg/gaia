@@ -1,3 +1,0 @@
-[submodule "server/src/main/protobuf"]
-	path = server/src/main/protobuf
-	url = https://github.com/bmeg/bmeg-schemas.git

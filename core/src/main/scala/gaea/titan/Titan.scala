@@ -29,6 +29,8 @@ object Titan {
     connect(configuration(Map[String, String]()))
   }
 
+  lazy val connection = defaultGraph()
+
   def labelPrefix(name: String): String = {
     val split = name.split(":")
     if (split.size == 1) {
