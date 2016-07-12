@@ -33,15 +33,12 @@ object Hugo {
       Chromosome -> chromosome,
       Accession -> accession,
       Refseq -> refseq)
-
-    // Titan.associateType(graph) (feature) ("feature")
     featureType --- ("hasInstance") --> feature
 
     val otherSynonyms = if(hugo.length > 5 && hugo(5) != "") hugo(5).split(", ") else Array[String]()
     val synonyms = otherSynonyms :+ hugo(1)
     for (synonym <- synonyms) {
-      val synonymVertex = graph + ("featureSynonym", Name -> ("feature:" + synonym))
-      // Titan.associateType(graph) (synonymVertex) ("featureSynonym")
+      val synonymVertex = graph + ("featureSynonym", Name -> ("featureSynonym:" + synonym))
       synonymType --- ("hasInstance") --> synonymVertex
       synonymVertex --- ("synonymFor") --> feature
     }

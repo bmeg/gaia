@@ -29,6 +29,24 @@ object Titan {
     connect(configuration(Map[String, String]()))
   }
 
+  def labelPrefix(name: String): String = {
+    val split = name.split(":")
+    if (split.size == 1) {
+      ""
+    } else {
+      split(0)
+    }
+  }
+
+  def removePrefix(name: String): String = {
+    val split = name.split(":")
+    if (split.size == 1) {
+      split(0)
+    } else {
+      split.drop(1).reduceLeft((t, s) => t + ":" + s)
+    }
+  }
+
   def findVertex[A](graph: TitanGraph) (label: String) (keys: Map[Key[A], A]): Option[Vertex] = {
     val prequery = graph.V.hasLabel(label)
     val query = keys.foldLeft(prequery) {(query, kv) =>

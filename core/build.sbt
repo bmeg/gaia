@@ -1,8 +1,6 @@
-organization  := "bmeg"
-
+organization  := "io.bmeg"
 name := "gaea-core"
-
-version := "1.0"
+version := "0.0.1-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -16,14 +14,14 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"        % "protoc"               % "3.0.0-beta-2",
   "org.scala-lang"             % "scala-compiler"       % "2.11.8",
 
+  "org.json4s"                 %% "json4s-native"       % "3.3.0",
+  "org.json4s"                 %% "json4s-jackson"      % "3.3.0",
   "org.scalanlp"               %% "breeze"              % "0.12",
   "org.scalanlp"               %% "breeze-natives"      % "0.12",
   "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0"
-
 )
 
-//resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 resolvers ++= Seq(
   "Akka Repository" at "http://repo.akka.io/releases/",
   "Sonatype Snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
@@ -31,3 +29,13 @@ resolvers ++= Seq(
   "Twitter Maven Repo" at "http://maven.twttr.com",
   "GAEA Depends Repo" at "https://github.com/bmeg/gaea-depends/raw/master/"
 )
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (isSnapshot.value)
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "content/repositories/releases")
+}
+
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
