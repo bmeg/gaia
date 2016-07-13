@@ -11,10 +11,10 @@ object GaeaServer {
   def start(facets: Seq[Tuple2[String, HttpService]]): Unit = {
     val blaze = BlazeBuilder.bindHttp(11223)
     val mounted = (GaeaFacets.facets ++ facets).foldLeft(blaze) { (blaze, facet) =>
-      blaze.mountService(facet._2, "/gaea/" + facet._1)
+      blaze.mountService(facet._2, "/gaea" + facet._1)
     }
 
-    mounted.mountService(StaticFacet.service, "/")
-    mounted.run.awaitShutdown()
+    val static = mounted.mountService(StaticFacet.service, "/")
+    static.run.awaitShutdown()
   }
 }
