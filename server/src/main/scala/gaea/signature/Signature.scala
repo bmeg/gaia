@@ -205,7 +205,7 @@ object Signature {
       val featureLevels = variant._2
       val back = background(variant._1)
       val backgroundLevels = shear[Double](featureLevels, back)
-      println("background: " + backgroundLevels.size + "first: " + backgroundLevels.head + " - levels: " + featureLevels + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
+      println("background: " + backgroundLevels.size + " - first: " + backgroundLevels.head + " - levels: " + featureLevels.size + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
       val p = ks.kolmogorovSmirnovTest(backgroundLevels.toArray, featureLevels.toArray)
 
       (variant._1, p)

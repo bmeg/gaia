@@ -25,14 +25,17 @@ object Collection {
   }
 
   def shear[A](blade: Seq[A], sheep: Seq[A]): List[A] = {
-    // only works with sorted seqs where blade is entirely contained within sheep
+    // only works with sorted seqs where the blade is a sublist of the sheep
     sheep.foldLeft((blade, List[A]())) { (wool, sheep) =>
-      if (wool._1.isEmpty) {
-        (wool._1, wool._2 :+ sheep)
-      } else if (wool._1.head == sheep) {
-        (wool._1.drop(1), wool._2)
+      val blade = wool._1
+      val flock = wool._2
+
+      if (blade.isEmpty) {
+        (blade, flock :+ sheep)
+      } else if (blade.head == sheep) {
+        (blade.drop(1), flock)
       } else {
-        (wool._1, wool._2 :+ sheep)
+        (blade, flock :+ sheep)
       }
     }._2
   }
