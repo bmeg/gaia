@@ -185,8 +185,10 @@ object Signature {
     extractLevels(levelPairs)
   }
 
-  def variantLevels(graph: TitanGraph) (feature: String): Map[String, Seq[Double]] = {
-    val levelPairs = Feature.synonymQuery(graph) (feature)
+  // Eventually filter out these variantClassification values: List("5'Flank", "IGR", "Silent", "Intron")`
+
+  def variantLevels(graph: TitanGraph) (features: Seq[String]): Map[String, Seq[Double]] = {
+    val levelPairs = Feature.synonymsQuery(graph) (features)
       .in("inFeature")
       .out("effectOf")
       .out("tumorSample")
@@ -199,14 +201,15 @@ object Signature {
     extractLevels(levelPairs)
   }
 
-  def variantSignificance(graph: TitanGraph) (feature: String): Map[String, Double] = {
-    val variants = variantLevels(graph) (feature)
+  def variantSignificance(graph: TitanGraph) (features: Seq[String]): Map[String, Double] = {
+    val variants = variantLevels(graph) (features)
     variants.map { variant =>
       val featureLevels = variant._2
       val back = background(variant._1)
       val backgroundLevels = shear[Double](featureLevels, back)
-      println("background: " + backgroundLevels.size + " - first: " + backgroundLevels.head + " - levels: " + featureLevels.size + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
       val p = ks.kolmogorovSmirnovTest(backgroundLevels.toArray, featureLevels.toArray)
+
+      println("background: " + backgroundLevels.size + " - first: " + backgroundLevels.head + " - levels: " + featureLevels.size + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
 
       (variant._1, p)
     }

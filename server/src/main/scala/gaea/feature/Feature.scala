@@ -3,6 +3,7 @@ package gaea.feature
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import gaea.collection.Collection._
+import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 object Feature {
   val Name = Key[String]("name")
@@ -13,8 +14,12 @@ object Feature {
   }
 
   def synonymQuery(graph: TitanGraph) (name: String): GremlinScala[Vertex, shapeless.HNil] = {
-    graph.V.hasLabel("featureSynonym").has(Name, name).out("synonymFor")
-    // graph.V.hasLabel("featureSynonym").has(Name, synonymPrefix + name).out("synonymFor")
+    // graph.V.hasLabel("featureSynonym").has(Name, name).out("synonymFor")
+    graph.V.hasLabel("featureSynonym").has(Name, synonymPrefix + name).out("synonymFor")
+  }
+
+  def synonymsQuery(graph: TitanGraph) (names: Seq[String]): GremlinScala[Vertex, shapeless.HNil] = {
+    graph.V.hasLabel("featureSynonym").has(Name, within(names.map(synonymPrefix + _):_*)).out("synonymFor")
   }
 
   def findSynonymVertex(graph: TitanGraph) (name: String): Option[Vertex] = {

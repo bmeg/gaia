@@ -94,6 +94,14 @@ object GeneFacet extends LazyLogging {
     ("score", jNumber(score).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
   }
 
+  def significanceToJson(featureNames: List[String]) (vertex: Vertex) (significance: Double): Json = {
+    val coefficients = Signature.dehydrateCoefficients(vertex) ("coefficients")
+    val relevant = selectKeys[String, Double](coefficients) (featureNames) (0.0)
+    val signatureName = vertex.property(Name).orElse("no name")
+    val metadata = eventMetadata(signatureName, "significance to mutation", "NUMERIC", relevant)
+    ("significance", jNumber(significance).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
+  }
+
   def individualEvent(individualVertex: Vertex) (clinicalNames: List[String]): Json = {
     val metadata = eventMetadata(individualVertex.property(Name).orElse(""), "clinical values", "STRING", Map[String, Double]())
     val relevant = selectKeys[String, Any](individualVertex.valueMap()) (clinicalNames) ("")
@@ -179,10 +187,24 @@ object GeneFacet extends LazyLogging {
     case request @ POST -> Root / "gaea" / "signature" / "gene" =>
       request.as[Json].flatMap { json => 
         val geneNames = json.as[List[String]].getOr(List[String]())
-        val featureVertexes = geneNames.map((name: String) => Feature.findSynonymVertex(graph) (name)).flatten
+        val featureVertexes = Feature.synonymsQuery(graph) (geneNames).toList
         val featureNames = featureVertexes.map(feature => Feature.removePrefix(feature.property(Name).orElse("")))
         val signatureVertexes = featureVertexes.flatMap(_.in("hasCoefficient").toList).toSet
         val signatureJson = signatureVertexes.map(signatureToJson(featureNames))
+        Ok(signatureJson.asJson)
+      }
+
+    case request @ POST -> Root / "gaea" / "signature" / "mutation" =>
+      request.as[Json].flatMap { json =>
+        val geneNames = json.as[List[String]].getOr(List[String]())
+        val featureVertexes = Feature.synonymsQuery(graph) (geneNames).toList
+        val featureNames = featureVertexes.map(feature => Feature.removePrefix(feature.property(Name).orElse("")))
+        val significance = Signature.variantSignificance(graph) (geneNames).filter(_._2 < 0.05)
+        val signatureVertexes = graph.V.has(Name, within(significance.keys.toList:_*)).toList
+        val signatureJson = signatureVertexes.map { vertex =>
+          significanceToJson(featureNames) (vertex) (significance(vertex.property("name").orElse("")))
+        }
+
         Ok(signatureJson.asJson)
       }
 
