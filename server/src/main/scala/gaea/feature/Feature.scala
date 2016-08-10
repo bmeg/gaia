@@ -6,13 +6,19 @@ import gaea.collection.Collection._
 
 object Feature {
   val Name = Key[String]("name")
+  val synonymPrefix = "feature:"
 
   def removePrefix(name: String): String = {
     name.split(":").drop(1).reduceLeft((t, s) => t + ":" + s)
   }
 
+  def synonymQuery(graph: TitanGraph) (name: String): GremlinScala[Vertex, shapeless.HNil] = {
+    graph.V.hasLabel("featureSynonym").has(Name, name).out("synonymFor")
+    // graph.V.hasLabel("featureSynonym").has(Name, synonymPrefix + name).out("synonymFor")
+  }
+
   def findSynonymVertex(graph: TitanGraph) (name: String): Option[Vertex] = {
-    graph.V.hasLabel("featureSynonym").has(Name, "feature:" + name).out("synonymFor").headOption
+    synonymQuery(graph) (name).headOption
   }
 
   def findSynonym(graph: TitanGraph) (name: String): Option[String] = {
