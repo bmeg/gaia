@@ -77,7 +77,7 @@ object Feature {
       .in("tumorSample").as(variantStep)
       .in("effectOf")
       .out("inFeature")
-      .has(Name, within(genes:_*)).as(featureStep)
+      .has(Name, within(genes.map(synonymPrefix + _):_*)).as(featureStep)
       .select((individualStep, variantStep, featureStep))
       .toList
 
