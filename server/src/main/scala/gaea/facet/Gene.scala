@@ -196,6 +196,20 @@ object GeneFacet extends LazyLogging {
         Ok(individualJson)
       }
 
+    case GET -> Root / "gaea" / "individual" / "properties" =>
+      Ok(Titan.typeQuery(graph) ("individual").toList.flatMap(_.valueMap.keys).toSet.asJson)
+
+    case request @ POST -> Root / "gaea" / "individual" / "values" =>
+      request.as[Json].flatMap { json =>
+        val clinicalNames = json.as[List[String]].getOr(List[String]())
+        val individuals = Titan.typeQuery(graph) ("individual").toList // .map(_.valueMap)
+        val individualJson = clinicalNames.foldLeft(jEmptyArray) { (json, clinical) =>
+          clinicalEvent(individuals) (clinical) -->>: json
+        }
+
+        Ok(individualJson)
+      }
+
     case request @ POST -> Root / "gaea" / "signature" / "gene" =>
       request.as[Json].flatMap { json => 
         val geneNames = json.as[List[String]].getOr(List[String]())
