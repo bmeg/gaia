@@ -207,40 +207,13 @@ object Signature {
       val featureLevels = variant._2
       val back = background(variant._1)
       val backgroundLevels = shear[Double](featureLevels, back)
-      val p = ks.kolmogorovSmirnovTest(backgroundLevels.toArray, featureLevels.toArray)
+      val p = ks.kolmogorovSmirnovTest(backgroundLevels.toArray, featureLevels.toArray, true)
 
       println("background: " + backgroundLevels.size + " - first: " + backgroundLevels.head + " - levels: " + featureLevels.size + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
 
       (variant._1, p)
     }
   }
-
-  // def variantSignificance(graph: TitanGraph) (feature: String) (signature: String): Double = {
-  //   val variantLevels = Feature.synonymQuery(graph) (feature)
-  //     .in("inFeature")
-  //     .out("effectOf")
-  //     .out("tumorSample")
-  //     .in("expressionFor").as(expressionStep)
-  //     .inE("appliesTo").as(levelStep)
-  //     .outV
-  //     .has(Name, "linearSignature:" + signature)
-  //     .select((expressionStep, levelStep))
-  //     .toList
-
-  //   val expressionNames = variantLevels.map(_._1.property("name").orElse(""))
-  //   val signatureLevels = variantLevels.map(_._2.property("level").orElse(0.0))
-
-  //   val backgroundLevels = Titan.typeQuery(graph) ("geneExpression")
-  //     .has(Name, without(expressionNames:_*))
-  //     .inE("appliesTo").as(levelStep)
-  //     .outV
-  //     .has(Name, "linearSignature:" + signature)
-  //     .select(levelStep)
-  //     .value[Double]("level")
-  //     .toList
-
-  //   ks.kolmogorovSmirnovTest(signatureLevels.toArray, backgroundLevels.toArray)
-  // }
 
   def highestScoringSamples
     (graph: TitanGraph)

@@ -132,6 +132,18 @@ object GeneFacet extends LazyLogging {
     ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
   }
 
+  def mutationEvent(mutations: Seq[Tuple3[String, String, String]]) (gene: String): Json = {
+    val metadata = eventMetadata(gene, "mutation call", "STRING", Map[String, Double]())
+    val samples = mutations.groupBy(_._1)
+    val variants = samples.map { s =>
+      val (individual, variants) = s
+      (individual, variants.map(_._2).toSet.mkString(","))
+    }.toMap
+
+    val json = propertiesToJson(variants) ("sampleID") ("value")
+    ("metadata", metadata) ->: ("sampleData", json) ->: jEmptyObject
+  }
+
   def takeHighest(n: Int) (signature: Vertex): List[String] = {
     Signature.dehydrateCoefficients(signature) ("coefficients").toList.sortWith(_._2 > _._2).take(n).map(_._1)
   }
@@ -213,11 +225,13 @@ object GeneFacet extends LazyLogging {
         val metadata = json.as[Map[String, List[Map[String, String]]]].getOr(Map[String, List[Map[String, String]]]())
         val signatureMetadata = metadata("signatureMetadata")
         val expressionMetadata = metadata("expressionMetadata")
-        val clinicalEventMetadata = metadata("clinicalEventMetadata")
+        val clinicalMetadata = metadata("clinicalEventMetadata")
+        val mutationMetadata = metadata("mutationEventMetadata")
 
         val signatureNames = signatureMetadata.map(_("eventID"))
         val expressionNames = expressionMetadata.map(_("eventID"))
-        val clinicalNames = clinicalEventMetadata.map(_("eventID"))
+        val clinicalNames = clinicalMetadata.map(_("eventID"))
+        val mutationNames = mutationMetadata.map(_("eventID"))
 
         val highestQuery = Signature.highestScoringSamples(graph) (signatureNames) (100) (Order.decr)
         val lowestQuery = Signature.highestScoringSamples(graph) (signatureNames) (100) (Order.incr)
@@ -236,6 +250,9 @@ object GeneFacet extends LazyLogging {
           (individual.property("name").orElse(""), expression, coefficients)
         }
 
+        val mutationData = Feature.findVariantsForIndividuals(graph) (individualNames.toList) (mutationNames)
+          .groupBy(_._3)
+
         val levelData = levelQuery.map { q =>
           val (signature, individual, level) = q
           (signature.property("name").orElse(""),
@@ -251,7 +268,11 @@ object GeneFacet extends LazyLogging {
           expressionEvent(expressionData.toList) (gene) -->>: json
         }
 
-        val levelJson = levelData.foldLeft(expressionJson) { (json, score) =>
+        val mutationJson = mutationData.keys.foldLeft(expressionJson) { (json, gene) =>
+          mutationEvent(mutationData(gene).toList) (gene) -->>: json
+        }
+
+        val levelJson = levelData.foldLeft(mutationJson) { (json, score) =>
           val (signature, levelTuples) = score
           val levels = levelTuples.map(level => (level._2, level._3)).toMap
           levelEvent(levels) (signature) -->>: json
@@ -287,6 +308,7 @@ object GeneFacet extends LazyLogging {
         "out" -> o.asJson,
         "in" -> i.asJson
       )
+
       Ok(out.asJson)
 
     case request @ POST -> Root / "gaea" / "console" =>
