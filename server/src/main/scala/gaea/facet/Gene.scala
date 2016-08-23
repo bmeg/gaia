@@ -42,15 +42,20 @@ object GeneFacet extends LazyLogging {
     scala.math.log(x) * ilog2
   }
 
-  def countVertexes(graph: TitanGraph): Map[String, Long] = {
-    val counts = graph.V.traversal.label.groupCount.toList.get(0)
-    val labels = counts.keySet.toList.asInstanceOf[List[String]]
-    labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
-      countMap + (label.toString -> counts.get(label))
-    }
+  // def countVertexes(graph: TitanGraph): Map[String, Long] = {
+  //   val counts = graph.V.traversal.label.groupCount.toList.get(0)
+  //   val labels = counts.keySet.toList.asInstanceOf[List[String]]
+  //   labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
+  //     countMap + (label.toString -> counts.get(label))
+  //   }
+  // }
+
+  def findIndividualAttributes(graph: TitanGraph): Set[String] = {
+    Titan.typeQuery(graph) ("individual").toList.flatMap(_.valueMap.keys).toSet
   }
 
-  lazy val vertexCounts = countVertexes(graph)
+  // lazy val vertexCounts = countVertexes(graph)
+  lazy val individualAttributes = findIndividualAttributes(graph)
 
   def puts(line: String): Task[Unit] = Task { println(line) }
 
@@ -176,8 +181,8 @@ object GeneFacet extends LazyLogging {
       }
       Ok(jSingleObject(name, jString(synonym)))
 
-    case GET -> Root / "gaea" / "vertex" / "counts" =>
-      Ok(vertexCounts.asJson)
+    // case GET -> Root / "gaea" / "vertex" / "counts" =>
+    //   Ok(vertexCounts.asJson)
 
     case GET -> Root / "gaea" / "individual" / "tumor" / tumorType =>
       Ok(graph.V.has(Name, "type:individual").out("hasInstance").has(TumorSite, tumorType).value(Name).toList.asJson)
@@ -196,8 +201,8 @@ object GeneFacet extends LazyLogging {
         Ok(individualJson)
       }
 
-    case GET -> Root / "gaea" / "individual" / "properties" =>
-      Ok(Titan.typeQuery(graph) ("individual").toList.flatMap(_.valueMap.keys).toSet.asJson)
+    case GET -> Root / "gaea" / "individual" / "attributes" =>
+      Ok(individualAttributes.asJson)
 
     case request @ POST -> Root / "gaea" / "individual" / "values" =>
       request.as[Json].flatMap { json =>
