@@ -71,13 +71,13 @@ object Feature {
   }
 
   def findVariantsForIndividuals(graph: TitanGraph) (individuals: Seq[String]) (genes: Seq[String]): Seq[Tuple3[String, String, String]] = {
-    val query = graph.V.hasLabel("individual")
-      .has(Name, within(individuals:_*)).as(individualStep)
-      .in("sampleOf")
-      .in("tumorSample").as(variantStep)
-      .in("effectOf")
-      .out("inFeature")
+    val query = graph.V.hasLabel("feature")
       .has(Name, within(genes.map(synonymPrefix + _):_*)).as(featureStep)
+      .in("inFeature")
+      .out("effectOf").as(variantStep)
+      .out("tumorSample")
+      .out("sampleOf")
+      .has(Name, within(individuals:_*)).as(individualStep)
       .select((individualStep, variantStep, featureStep))
       .toList
 
