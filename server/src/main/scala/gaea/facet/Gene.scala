@@ -138,7 +138,7 @@ object GeneFacet extends LazyLogging {
   }
 
   def mutationEvent(mutations: Seq[Tuple3[String, String, String]]) (gene: String): Json = {
-    val metadata = eventMetadata(gene, "mutation call", "STRING", Map[String, Double]())
+    val metadata = eventMetadata(Feature.removePrefix(gene), "mutation call", "STRING", Map[String, Double]())
     val samples = mutations.groupBy(_._1)
     val variants = samples.map { s =>
       val (individual, variants) = s
