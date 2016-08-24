@@ -7,3 +7,5 @@ target
 /log
 genes.json
 
+.DS_Store
+.idea/
