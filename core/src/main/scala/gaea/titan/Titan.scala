@@ -12,6 +12,7 @@ object Titan {
     val config = new BaseConfiguration()
     config.setProperty("storage.backend", "cassandra")
     config.setProperty("storage.hostname", "localhost")
+    config.setProperty("storage.cassandra.keyspace", "gaea")
 
     for (property <- properties) {
       val (key, value) = property
