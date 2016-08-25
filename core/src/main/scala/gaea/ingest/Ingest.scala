@@ -50,8 +50,8 @@ object Ingest {
     }
   }
 
-  def findVertex(graph: TitanGraph) (label: String) (name: String): Vertex = {
-    val vertex = Titan.namedVertex(graph) (label) (name)
+  def findVertex(graph: TitanGraph) (label: String) (gid: String): Vertex = {
+    val vertex = Titan.namedVertex(graph) (label) (gid)
     Titan.associateType(graph) (vertex) (label)
     vertex
   }
@@ -80,9 +80,9 @@ object Ingest {
 
   def ingestVertex(graph: TitanGraph) (json: JValue): Vertex = {
     val data = json.asInstanceOf[JObject]
-    val name = stringFor(data) ("name")
+    val gid = stringFor(data) ("gid")
     val label = stringFor(data) ("type")
-    val vertex = findVertex(graph) (label) (name)
+    val vertex = findVertex(graph) (label) (gid)
 
     for (field <- data.obj) {
       val key = field._1

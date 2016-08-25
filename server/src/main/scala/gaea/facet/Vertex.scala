@@ -21,7 +21,7 @@ import scala.collection.JavaConversions._
 
 object VertexFacet extends LazyLogging {
   lazy val graph = Titan.connection
-  val Name = Key[String]("name")
+  val Gid = Key[String]("gid")
 
   def mapToJson(properties: Map[String, Any]) : Json = {
     properties.map( x => {
@@ -43,10 +43,10 @@ object VertexFacet extends LazyLogging {
     case GET -> Root / "counts" =>
       Ok(vertexCounts.asJson)
 
-    case GET -> Root / "find" / name =>
-      val vertex = graph.V.has(Name, name).head
-      val o = vertex.out().value(Name).toList()
-      val i = vertex.in().value(Name).toList()
+    case GET -> Root / "find" / gid =>
+      val vertex = graph.V.has(Gid, gid).head
+      val o = vertex.out().value(Gid).toList()
+      val i = vertex.in().value(Gid).toList()
       val out = Map[String,Json](
         "type" -> vertex.label().asJson,
         "properties" -> mapToJson(vertex.valueMap),

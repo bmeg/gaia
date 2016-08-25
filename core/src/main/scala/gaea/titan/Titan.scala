@@ -6,12 +6,13 @@ import com.thinkaurelius.titan.core.util.TitanCleanup
 import gremlin.scala._
 
 object Titan {
-  val Name = Key[String]("name")
+  val Gid = Key[String]("gid")
 
   def configuration(properties: Map[String, String]): BaseConfiguration = {
     val config = new BaseConfiguration()
     config.setProperty("storage.backend", "cassandra")
     config.setProperty("storage.hostname", "localhost")
+    config.setProperty("storage.cassandra.keyspace", "gaea")
 
     for (property <- properties) {
       val (key, value) = property
@@ -31,8 +32,8 @@ object Titan {
 
   lazy val connection = defaultGraph()
 
-  def labelPrefix(name: String): String = {
-    val split = name.split(":")
+  def labelPrefix(gid: String): String = {
+    val split = gid.split(":")
     if (split.size == 1) {
       ""
     } else {
@@ -40,8 +41,8 @@ object Titan {
     }
   }
 
-  def removePrefix(name: String): String = {
-    val split = name.split(":")
+  def removePrefix(gid: String): String = {
+    val split = gid.split(":")
     if (split.size == 1) {
       split(0)
     } else {
@@ -59,23 +60,23 @@ object Titan {
     query.toList.headOption
   }
 
-  def namedVertex(graph: TitanGraph) (label: String) (name: String): Vertex = {
-    graph.V.has(Name, name).headOption.getOrElse {
-      graph + (label, Name -> name)
+  def namedVertex(graph: TitanGraph) (label: String) (gid: String): Vertex = {
+    graph.V.has(Gid, gid).headOption.getOrElse {
+      graph + (label, Gid -> gid)
     }
   }
 
   def typeQuery(graph: TitanGraph) (typ: String): GremlinScala[Vertex, shapeless.HNil] = {
-    graph.V.hasLabel("type").has(Name, "type:" + typ).out("hasInstance")
+    graph.V.hasLabel("type").has(Gid, "type:" + typ).out("hasInstance")
   }
 
   def typeVertexes(graph: TitanGraph) (typ: String): List[Vertex] = {
     typeQuery(graph) (typ).toList
   }
 
-  def associateOut(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toName: String): Boolean = {
-    if (from.out(edge).has(Name, toName).toList.isEmpty) {
-      val to = namedVertex(graph) (toLabel) (toName)
+  def associateOut(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toGid: String): Boolean = {
+    if (from.out(edge).has(Gid, toGid).toList.isEmpty) {
+      val to = namedVertex(graph) (toLabel) (toGid)
       from --- (edge) --> to
       true
     } else {
@@ -83,9 +84,9 @@ object Titan {
     }
   }
 
-  def associateIn(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toName: String): Boolean = {
-    if (from.in(edge).has(Name, toName).toList.isEmpty) {
-      val to = namedVertex(graph) (toLabel) (toName)
+  def associateIn(graph: TitanGraph) (from: Vertex) (edge: String) (toLabel: String) (toGid: String): Boolean = {
+    if (from.in(edge).has(Gid, toGid).toList.isEmpty) {
+      val to = namedVertex(graph) (toLabel) (toGid)
       from <-- (edge) --- to
       true
     } else {
