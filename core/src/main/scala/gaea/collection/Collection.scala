@@ -23,4 +23,20 @@ object Collection {
   def groupCount[A](items: Iterable[A]): Map[A, Int] = {
     items.groupBy((a) => a).map((t) => (t._1 -> t._2.size)).toMap
   }
+
+  def shear[A](blade: Seq[A], sheep: Seq[A]): List[A] = {
+    // only works with sorted seqs where the blade is a sublist of the sheep
+    sheep.foldLeft((blade, List[A]())) { (wool, sheep) =>
+      val blade = wool._1
+      val flock = wool._2
+
+      if (blade.isEmpty) {
+        (blade, flock :+ sheep)
+      } else if (blade.head == sheep) {
+        (blade.drop(1), flock)
+      } else {
+        (blade, flock :+ sheep)
+      }
+    }._2
+  }
 }
