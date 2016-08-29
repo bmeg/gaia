@@ -78,6 +78,28 @@ rpc_address: 0.0.0.0
 broadcast_rpc_address: 10.104.0.5
 
 
+# SWIFT OBJECT STORE -----------------------------------------
+
+# put this script in ~/.swift
+
+#!/usr/bin/env bash
+
+unset -v OS_SERVICE_TOKEN OS_USERNAME OS_PASSWORD
+unset -v OS_AUTH_URL OS_TENANT_NAME OS_REGION_NAME
+export OS_USERNAME=username
+export OS_PASSWORD=password
+export OS_TENANT_NAME=tenant
+export PS1='[\u SWIFT \W]\$ '
+export OS_AUTH_URL=http://exastack-00.ohsu.edu:5000/v2.0
+export OS_REGION_NAME=RegionOne
+
+# Then execute these commands:
+
+sudo apt-get install python-pip
+sudo pip install python-swiftclient
+sudo pip install python-keystoneclient
+source ~/.swift
+
 
 # INSTALLING DOCKER ---------------------------------------
 
