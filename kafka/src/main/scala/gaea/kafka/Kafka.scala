@@ -36,7 +36,8 @@ object GaeaConsumer {
   def buildConsumer(server: String, groupID: String, topics: Seq[String]): KafkaConsumer[String, String] = {
     val props = new Properties()
     props.put("bootstrap.servers", server)
-    props.put("group.id", groupID) // "gaea-ingestor")
+    props.put("group.id", groupID)
+    props.put("auto.offset.reset", "earliest")
     props.put("enable.auto.commit", "true")
     props.put("auto.commit.interval.ms", "1000")
     props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")

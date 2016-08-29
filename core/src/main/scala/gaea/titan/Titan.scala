@@ -7,6 +7,7 @@ import gremlin.scala._
 
 object Titan {
   val Gid = Key[String]("gid")
+  val Symbol = Key[String]("symbol")
 
   def configuration(properties: Map[String, String]): BaseConfiguration = {
     val config = new BaseConfiguration()
@@ -94,8 +95,21 @@ object Titan {
     }
   }
 
-  def associateType(graph: TitanGraph) (instance: Vertex) (typ: String): Boolean = {
-    associateIn(graph) (instance) ("hasInstance") ("type") ("type:" + typ)
+  def associateType(graph: TitanGraph) (instance: Vertex) (typ: String): Unit = {
+    val tid = "type:" + typ
+    if (instance.in("hasInstance").has(Gid, tid).toList.isEmpty) {
+      val typeVertex = graph.V.has(Gid, tid).headOption.getOrElse {
+        val vertex = graph + ("type", Gid -> tid, Symbol -> typ)
+        val hub = graph.V.has(Gid, "type:type").headOption.getOrElse {
+          graph + ("type", Gid -> "type:type", Symbol -> "type")
+        }
+
+        vertex <-- ("hasInstance") --- hub
+        vertex
+      }
+
+      instance <-- ("hasInstance") --- typeVertex
+    }
   }
 
   def makeIndex(graph: TitanGraph) (name: String) (keys: Map[String, Class[_]]) = {

@@ -36,6 +36,16 @@ object Ingest {
     upper.mkString("")
   }
 
+  def uncapitalize(s: String): String = {
+    if (s.size > 0) {
+      val c = s.toCharArray
+      c(0) = Character.toLowerCase(c(0))
+      new String(c)
+    } else {
+      ""
+    }
+  }
+
   def retryCommit(graph: TitanGraph) (times: Integer): Unit = {
     if (times == 0) {
       println("TRANSACTION FAILED!")
@@ -81,7 +91,7 @@ object Ingest {
   def ingestVertex(graph: TitanGraph) (json: JValue): Vertex = {
     val data = json.asInstanceOf[JObject]
     val gid = stringFor(data) ("gid")
-    val label = stringFor(data) ("type")
+    val label = uncapitalize(stringFor(data) ("type"))
     val vertex = findVertex(graph) (label) (gid)
 
     for (field <- data.obj) {
