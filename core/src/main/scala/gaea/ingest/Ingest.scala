@@ -2,15 +2,19 @@ package gaea.ingest
 
 import gaea.titan.Titan
 
+import gremlin.scala._
+
+import java.lang.{Long => Llong}
+import java.io.File
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
+import org.json4s.jackson.Serialization.write
 import com.thinkaurelius.titan.core.TitanGraph
-import gremlin.scala._
-import java.lang.{Long => Llong}
 
 object Ingest {
   val edgesPattern = "(.*)Edges$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
+  implicit val formats = DefaultFormats
 
   def findKey[T](key: String): Key[T] = {
     val newkey = keymap.get(key).getOrElse {
@@ -20,6 +24,19 @@ object Ingest {
     }
 
     newkey.asInstanceOf[Key[T]]
+  }
+
+  def listFiles(dir: String): List[File] = {
+    val d = new File(dir)
+    if (d.exists) {
+      if (d.isDirectory) {
+        d.listFiles.filter(_.isFile).toList
+      } else {
+        List[File](d)
+      }
+    } else {
+      List[File]()
+    }
   }
 
   def parseJson(raw: String): JValue = {
@@ -98,13 +115,16 @@ object Ingest {
       val key = field._1
       field._2 match {
         case JObject(obj) =>
-          setProperties(vertex) (obj)
+          setProperty(vertex) ((key, new JString(write(obj))))
+          // setProperties(vertex) (obj)
         case JArray(arr) =>
           edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
             for (value <- arr) {
               val edge = value.asInstanceOf[JString].s
               val label = Titan.labelPrefix(edge)
-              Titan.associateOut(graph) (vertex) (edgeMatch.group(1)) (label) (edge)
+              if (label != "") {
+                Titan.associateOut(graph) (vertex) (edgeMatch.group(1)) (label) (edge)
+              }
             }
           }
         case _ =>

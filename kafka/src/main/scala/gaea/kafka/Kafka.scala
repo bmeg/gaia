@@ -21,13 +21,11 @@ object GaeaProducer {
     props.put("bootstrap.servers", server)
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    // props.put("partitioner.class", "example.producer.SimplePartitioner")
 
     new KafkaProducer[String, String](props)
   }
 
   def send(producer: KafkaProducer[String, String], topic: String, message: String): Unit = {
-    // val json = mapper.writeValueAsString(message)
     producer.send(new ProducerRecord[String, String](topic, UUID.randomUUID().toString, message))
   }
 }
@@ -63,9 +61,11 @@ class Spout(server: String) {
   val producer = GaeaProducer.buildProducer(server)
 
   def spout(path: String, topic: String): Unit = {
-    for (line <- Source.fromFile(path).getLines()) {
-      println(line.take(20))
-      GaeaProducer.send(producer, topic, line)
+    for (file <- Ingest.listFiles(path)) {
+      println("processing file " + file.getName)
+      for (line <- Source.fromFile(file).getLines()) {
+        GaeaProducer.send(producer, topic, line)
+      }
     }
   }
 }
