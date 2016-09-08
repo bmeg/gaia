@@ -151,6 +151,63 @@ zookeeper.connect=10.40.40.23:2181,10.40.40.24:2181,10.40.40.25:2181
 
 
 
+# NGINX for BMEG.IO
+
+upstream gaea {
+    server localhost:11223;
+}
+
+upstream staging {
+    server 10.104.0.8:11223;
+}
+
+upstream observation {
+    server 10.104.0.9:3100;
+}
+
+upstream psychic {
+    server 10.104.0.9:8080;
+}
+
+server {
+    listen 80;
+    server_name bmeg.io;
+
+    root /home/ubuntu/gaea/resources/public;
+
+    index static/main.html;
+
+    location / {
+        try_files $uri $uri/main.html /static/$uri /static/main.html =404;
+    }
+
+    location /sample-psychic {
+        proxy_pass http://psychic;
+    }
+
+    location /observation-deck {
+        proxy_pass http://observation;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+
+    location /gaea {
+	proxy_pass http://gaea;
+    }
+}
+
+server {
+    listen 80;
+    server_name staging.bmeg.io;
+
+    location / {
+        proxy_pass http://staging;
+    }
+}
+
+
+
 # EXASTACK CONFIG ---------------------------------------------
 
 #cloud-config

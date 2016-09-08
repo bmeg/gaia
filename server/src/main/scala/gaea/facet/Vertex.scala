@@ -39,20 +39,40 @@ object VertexFacet extends LazyLogging {
 
   lazy val vertexCounts = countVertexes(graph)
 
+  val example = """[{"vertex": "Gene"},
+ {"has": {"symbol": ["AHI3", "HOIK4L"]}},
+ {"in": "inGene"},
+ {"out": "effectOf"},
+ {"out": "tumorSample"},
+ {"in": "expressionFor"},
+ {"as": "expressionStep"},
+ {"inE": "appliesTo"},
+ {"as": "levelStep"},
+ {"outV": ""},
+ {"as": "signatureStep"},
+ {"select": ["signatureStep", "levelStep", "expressionStep"]}]"""
+
   val service = HttpService {
     case GET -> Root / "counts" =>
       Ok(vertexCounts.asJson)
 
     case GET -> Root / "find" / gid =>
       val vertex = graph.V.has(Gid, gid).head
-      val o = vertex.out().value(Gid).toList()
-      val i = vertex.in().value(Gid).toList()
-      val out = Map[String,Json](
-        "type" -> vertex.label().asJson,
+      val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("gid"))
+      val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("gid"))
+
+      val out = Map[String, Json](
+        "type" -> vertex.label.asJson,
         "properties" -> mapToJson(vertex.valueMap),
-        "out" -> o.asJson,
-        "in" -> i.asJson
+        "in" -> inEdges.asJson,
+        "out" -> outEdges.asJson
       )
+
       Ok(out.asJson)
+
+    case request @ POST -> Root / "query" =>
+      request.as[Json].flatMap { query =>
+        Ok("yellow".asJson)
+      }
   }
 }

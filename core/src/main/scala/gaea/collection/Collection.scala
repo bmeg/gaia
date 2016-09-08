@@ -20,6 +20,13 @@ object Collection {
     for (x <- items; y <- items if x != y) yield (x, y)
   }
 
+  def groupAs[A, B, C](items: Iterable[A]) (key: A => B) (value: A => C): Map[B, List[C]] = {
+    items.foldLeft(Map[B, List[C]]()) { (group, item) =>
+      val k = key(item)
+      group + (k -> (value(item) :: group.getOrElse(k, List[C]())))
+    }
+  }
+
   def groupCount[A](items: Iterable[A]): Map[A, Int] = {
     items.groupBy((a) => a).map((t) => (t._1 -> t._2.size)).toMap
   }
