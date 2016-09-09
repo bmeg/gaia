@@ -18,3 +18,7 @@ object GaeaServer {
     static.run.awaitShutdown()
   }
 }
+
+object GaeaFoundation extends App {
+  GaeaServer.start(List[Tuple2[String, HttpService]]())
+}
