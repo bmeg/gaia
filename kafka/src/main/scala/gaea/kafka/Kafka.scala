@@ -38,6 +38,8 @@ object GaeaConsumer {
     props.put("auto.offset.reset", "earliest")
     props.put("enable.auto.commit", "true")
     props.put("auto.commit.interval.ms", "1000")
+    props.put("request.timeout.ms", "70000")
+    props.put("session.timeout.ms", "60000")
     props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
 
@@ -48,9 +50,9 @@ object GaeaConsumer {
 
   def run(consumer: KafkaConsumer[String, String], handle: ConsumerRecord[String, String] => Unit) = {
     while (true) {
-      val records = consumer.poll(100)
+      val records = consumer.poll(10000)
       records.asScala.foreach( record => {
-        println("offset = " + record.offset.toString + ", value = " + record.value.take(20));
+        println("topic = " + record.topic + ", offset = " + record.offset.toString + ", value = " + record.value.take(20));
         handle(record)
       })
     }
