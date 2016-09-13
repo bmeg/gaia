@@ -11,7 +11,7 @@ var exploreVertex = function(page, gid) {
     type: 'GET',
     success: function(result) {
       if (Object.keys(result).length > 0) {
-        this.setState({vertex: result, lastMatch: page.state.input})
+        page.setState({vertex: result, lastMatch: page.state.input})
       }
     }.bind(page),
 
@@ -71,54 +71,42 @@ var VertexEdges = React.createClass({
   }
 });
 
-var VertexInput = React.createClass({
+var AlternateView = React.createClass({
   getInitialState: function() {
-    return {
-      input: "",
-      lastMatch: "none",
-      vertex: {}
-    };
-  },
-
-  changeInput: function(event) {
-    var gid = event.target.value
-    this.setState({input: gid})
-    exploreVertex(this, gid);
+    return {}
   },
 
   render: function() {
     var page = this;
-    var navigate = function(gid) {
-      return function() {
-        page.setState({input: gid, lastMatch: gid})
-        exploreVertex(page, gid);
-      }
-    };
+    return (
+      <div onClick={this.props.navigate(this.props.back)}>{this.props.vertex.properties.gid}</div>
+    )
+  }
+});
 
-    if (this.state.vertex["properties"]) {
-      var properties = Object.keys(this.state.vertex.properties).map(function(key) {
-        var property = page.state.vertex.properties[key];
-        return <VertexProperty key={key} name={key} property={property} />
-      });
+var VertexView = React.createClass({
+  getInitialState: function() {
+    return {}
+  },
 
-      var inEdges = Object.keys(this.state.vertex['in']).map(function(key) {
-        return <VertexEdges key={key} label={key} navigate={navigate} edges={page.state.vertex['in'][key]} direction="from"/>
-      });
+  render: function() {
+    var page = this;
+    var properties = Object.keys(this.props.vertex.properties).map(function(key) {
+      var property = page.props.vertex.properties[key];
+      return <VertexProperty key={key} name={key} property={property} />
+    });
 
-      var outEdges = Object.keys(this.state.vertex['out']).map(function(key) {
-        return <VertexEdges key={key} label={key} navigate={navigate} edges={page.state.vertex['out'][key]} direction="to"/>
-      });
-    }
+    var inEdges = Object.keys(this.props.vertex['in']).map(function(key) {
+      return <VertexEdges key={key} label={key} navigate={page.props.navigate} edges={page.props.vertex['in'][key]} direction="from"/>
+    });
+
+    var outEdges = Object.keys(this.props.vertex['out']).map(function(key) {
+      return <VertexEdges key={key} label={key} navigate={page.props.navigate} edges={page.props.vertex['out'][key]} direction="to"/>
+    });
 
     return (
       <div>
-        <form onChange={(e) => this.changeInput(e)}>
-          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <label className="mdl-textfield__label" htmlFor="vertex-gid-input">Enter a vertex GID</label>
-            <input id="vertex-gid-input" type="text" name="gid" className="mdl-textfield__input" />
-          </div>
-        </form>
-        <h2>Showing {this.state.vertex.type} vertex {snipPrefix(this.state.lastMatch)}</h2>
+        <h2>Showing {this.props.vertex.type} vertex {snipPrefix(this.props.vertex.properties.gid)}</h2>
         <div className="vertex-properties">
           {properties}
         </div>
@@ -130,6 +118,54 @@ var VertexInput = React.createClass({
           <h3>Out Edges</h3>
           {outEdges}
         </div>
+      </div>
+    )
+  }
+});
+
+var VertexInput = React.createClass({
+  getInitialState: function() {
+    return {
+      input: "",
+      lastMatch: "none",
+      back: '',
+      vertex: {}
+    };
+  },
+
+  changeInput: function(event) {
+    var gid = event.target.value;
+    this.setState({input: gid, back: this.state.input});
+    exploreVertex(this, gid);
+  },
+
+  render: function() {
+    var page = this;
+    var navigate = function(gid) {
+      return function() {
+        page.setState({input: gid, back: page.state.input, lastMatch: gid});
+        exploreVertex(page, gid);
+      }
+    };
+
+    var vertex = <div className="empty-vertex"></div>;
+    if (this.state.vertex['properties']) {
+      if (this.state.vertex.properties.type === 'Individual') {
+        vertex = <AlternateView navigate={navigate} vertex={this.state.vertex} back={this.state.back} />
+      } else {
+        vertex = <VertexView navigate={navigate} vertex={this.state.vertex} />
+      }
+    }
+
+    return (
+      <div>
+        <form onChange={(e) => this.changeInput(e)}>
+          <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <label className="mdl-textfield__label" htmlFor="vertex-gid-input">Enter a vertex GID</label>
+            <input id="vertex-gid-input" type="text" name="gid" className="mdl-textfield__input" />
+          </div>
+        </form>
+        {vertex}
       </div>
     );
   }
