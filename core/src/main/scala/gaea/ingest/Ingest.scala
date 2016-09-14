@@ -13,6 +13,7 @@ import com.thinkaurelius.titan.core.TitanGraph
 
 object Ingest {
   val edgesPattern = "(.*)Edges$".r
+  val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
   implicit val formats = DefaultFormats
 
@@ -99,9 +100,9 @@ object Ingest {
     }
   }
 
-  def setProperties(vertex: Vertex) (fields: List[Tuple2[String, JValue]]): Unit = {
+  def setProperties(vertex: Vertex) (prefix: String) (fields: List[Tuple2[String, JValue]]): Unit = {
     for (field <- fields) {
-      setProperty(vertex) (field)
+      setProperty(vertex) ((prefix + "." + field._1, field._2))
     }
   }
 
@@ -115,8 +116,10 @@ object Ingest {
       val key = field._1
       field._2 match {
         case JObject(obj) =>
-          setProperty(vertex) ((key, new JString(write(obj))))
-          // setProperties(vertex) (obj)
+          propertiesPattern.findFirstMatchIn(key).map(_.subgroups) match {
+            case None => setProperty(vertex) ((key, new JString(write(obj))))
+            case Some(matches) => setProperties(vertex) (matches.head) (obj)
+          }
         case JArray(arr) =>
           edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
             for (value <- arr) {
