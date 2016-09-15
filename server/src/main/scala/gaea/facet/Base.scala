@@ -7,7 +7,7 @@ import org.http4s.dsl._
 object GaeaFacets {
   val facets = List[Tuple2[String, HttpService]](
     ("/vertex/", VertexFacet.service),
-    ("/message/", MessageFacet.service),
-    ("/console/", ConsoleFacet.service)
+    ("/message/", MessageFacet.service) // ,
+    // ("/console/", ConsoleFacet.service)
   )
 }
