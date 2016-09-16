@@ -63,10 +63,14 @@ object GeneFacet extends LazyLogging {
     graph.tx.commit()
   })
 
+  def jNum(value: Double): Json = {
+    jNumber(value).getOrElse(jZero)
+  }
+
   def coefficientsToJson(coefficients: Map[String, Double]) (key: String) (value: String): Json = {
     coefficients.foldLeft(jEmptyArray) { (json, coefficient) =>
       val (feature, level) = coefficient
-      val pair = (key, jString(feature)) ->: (value, jNumber(level).getOrElse(jZero)) ->: jEmptyObject
+      val pair = (key, jString(feature)) ->: (value, jNum(level)) ->: jEmptyObject
       pair -->>: json
     }
   }
@@ -96,15 +100,22 @@ object GeneFacet extends LazyLogging {
     val score = relevant.values.foldLeft(0.0) ((s, v) => s + Math.abs(v))
     val signatureName = vertex.property(Name).orElse("no name")
     val metadata = eventMetadata(signatureName, "drug sensitivity signature", "NUMERIC", relevant)
-    ("score", jNumber(score).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
+    ("score", jNum(score)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
   }
 
-  def significanceToJson(featureNames: List[String]) (vertex: Vertex) (significance: Double): Json = {
+  def sampleGroupToJson(quartiles: Signature.DistributionQuartiles): Json = {
+    val quartilesJson = ("minimum", jNum(quartiles.min)) ->: ("first", jNum(quartiles.lower)) ->: ("second", jNum(quartiles.median)) ->: ("third", jNum(quartiles.upper)) ->: ("maximum", jNum(quartiles.max)) ->: jEmptyObject
+    ("size", jNumber(quartiles.size)) ->: ("quartiles", quartilesJson) ->: jEmptyObject
+  }
+
+  def significanceToJson(featureNames: List[String]) (vertex: Vertex) (significance: Signature.SignificanceDistribution): Json = {
     val coefficients = Signature.dehydrateCoefficients(vertex) ("coefficients")
     val relevant = selectKeys[String, Double](coefficients) (featureNames) (0.0)
     val signatureName = vertex.property(Name).orElse("no name")
     val metadata = eventMetadata(signatureName, "significance to mutation", "NUMERIC", relevant)
-    ("significance", jNumber(significance).getOrElse(jZero)) ->: ("signatureMetadata", metadata) ->: jEmptyObject
+    val featureJson = sampleGroupToJson(significance.feature)
+    val backgroundJson = sampleGroupToJson(significance.background)
+    ("significance", jNum(significance.significance)) ->: ("sampleGroupDetails", featureJson) ->: ("backgroundGroupDetails", backgroundJson) ->: ("signatureMetadata", metadata) ->: jEmptyObject
   }
 
   def individualEvent(individualVertex: Vertex) (clinicalNames: List[String]): Json = {
@@ -166,7 +177,7 @@ object GeneFacet extends LazyLogging {
       jEmptyObject
 
     values.get("deathDaysTo") match {
-      case Some(days) => ("days", jNumber(days.asInstanceOf[Long])) ->: json
+      case Some(days) => ("days", jNum(days.asInstanceOf[Long])) ->: json
       case None => json
     }
   }
@@ -230,7 +241,7 @@ object GeneFacet extends LazyLogging {
         val geneNames = json.as[List[String]].getOr(List[String]())
         val featureVertexes = Feature.synonymsQuery(graph) (geneNames).toList
         val featureNames = featureVertexes.map(feature => Feature.removePrefix(feature.property(Name).orElse("")))
-        val significance = Signature.variantSignificance(graph) (geneNames).filter(_._2 < 0.05)
+        val significance = Signature.variantSignificance(graph) (geneNames).filter(_._2.significance < 0.05)
         val signatureVertexes = graph.V.has(Name, within(significance.keys.toList:_*)).toList
         val signatureJson = signatureVertexes.map { vertex =>
           significanceToJson(featureNames) (vertex) (significance(vertex.property("name").orElse("")))
@@ -315,7 +326,7 @@ object GeneFacet extends LazyLogging {
         Process eval puts(line)
       }
       y.runLog.run
-      Ok(jNumber(1))
+      Ok(jNum(1))
 
     case GET -> Root / "gaea" / "vertex" / name =>
       val vertex = graph.V.has(Name, name).head

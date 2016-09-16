@@ -201,17 +201,44 @@ object Signature {
     extractLevels(levelPairs)
   }
 
-  def variantSignificance(graph: TitanGraph) (features: Seq[String]): Map[String, Double] = {
+  case class DistributionQuartiles(size: Integer, min: Double, lower: Double, median: Double, upper: Double, max: Double) {
+  }
+
+  case class SignificanceDistribution(significance: Double, feature: DistributionQuartiles, background: DistributionQuartiles) {
+  }
+
+  def distributionQuartiles(distribution: Array[Double]): DistributionQuartiles = {
+    val size = distribution.size
+    val quartile = size / 4;
+    val min = distribution(0)
+    val lower = distribution(quartile)
+    val median = distribution(quartile * 2)
+    val upper = distribution(quartile * 3)
+    val max = distribution(size - 1)
+
+    new DistributionQuartiles(size, min, lower, median, upper, max)
+  }
+
+  def significanceDistribution(significance: Double, featureDistribution: Array[Double], backgroundDistribution: Array[Double]): SignificanceDistribution = {
+    val featureQuartiles = distributionQuartiles(featureDistribution)
+    val backgroundQuartiles = distributionQuartiles(backgroundDistribution)
+    new SignificanceDistribution(significance, featureQuartiles, backgroundQuartiles)
+  }
+
+  def variantSignificance(graph: TitanGraph) (features: Seq[String]): Map[String, SignificanceDistribution] = {
     val variants = variantLevels(graph) (features)
     variants.map { variant =>
       val featureLevels = variant._2
       val back = background(variant._1)
       val backgroundLevels = shear[Double](featureLevels, back)
-      val p = ks.kolmogorovSmirnovTest(backgroundLevels.toArray, featureLevels.toArray, true)
+      val featureArray = featureLevels.toArray
+      val backgroundArray = backgroundLevels.toArray
+      val p = ks.kolmogorovSmirnovTest(backgroundArray, featureArray, true)
 
       println("background: " + backgroundLevels.size + " - first: " + backgroundLevels.head + " - levels: " + featureLevels.size + " - total: " + back.toSet.size + " - shorn: " + back.toSet.diff(featureLevels.toSet).size)
 
-      (variant._1, p)
+      val quartiles = significanceDistribution(p, featureArray, backgroundArray)
+      (variant._1, quartiles)
     }
   }
 
