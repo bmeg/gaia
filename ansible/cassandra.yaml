@@ -1,0 +1,47 @@
+---
+- hosts: cassandra
+  remote_user: ubuntu
+  tasks:
+    - name: adding cassandra sources to apt
+      become: true
+      lineinfile:
+        dest: /etc/apt/sources.list.d/cassandra.sources.list
+        create: true
+        line: "{{ item }}"
+        insertafter: EOF
+        state: present
+        regexp: "{{ item }}"
+      with_items:
+        - 'deb http://www.apache.org/dist/cassandra/debian 22x main'
+        - 'deb-src http://www.apache.org/dist/cassandra/debian 22x main'
+    - name: adding cassandra keys to gpg
+      shell: "{{ item }}"
+      with_items:
+        - 'gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D'
+        - 'gpg --export --armor F758CE318D77295D | sudo apt-key add -'
+        - 'gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00'
+        - 'gpg --export --armor 2B5C1B00 | sudo apt-key add -'
+        - 'gpg --keyserver pgp.mit.edu --recv-keys 0353B12C'
+        - 'gpg --export --armor 0353B12C | sudo apt-key add -'
+    - name: installing cassandra from apt
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      become: true
+      with_items:
+        - openjdk-8-jdk
+        - cassandra
+    - name: updating cassandra configuration
+      become: true
+      lineinfile:
+        dest: /etc/cassandra/cassandra.yaml
+        state: present
+        regexp: '^(start_rpc: )(false)$'
+        line: '\1true'
+        backrefs: true
+    - name: reloading cassandra
+      become: true
+      service:
+        name: cassandra
+        state: restarted
