@@ -53,7 +53,11 @@ object GaeaConsumer {
       val records = consumer.poll(10000)
       records.asScala.foreach( record => {
         println("topic = " + record.topic + ", offset = " + record.offset.toString + ", value = " + record.value.take(20));
-        handle(record)
+        try {
+          handle(record)
+        } catch {
+          case e: Throwable => println("failed! " + e.getMessage)
+        }
       })
     }
   }
