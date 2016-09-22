@@ -328,18 +328,42 @@ object GeneFacet extends LazyLogging {
       y.runLog.run
       Ok(jNum(1))
 
-    case GET -> Root / "gaea" / "vertex" / name =>
-      val vertex = graph.V.has(Name, name).head
-      val o = vertex.out().value(Name).toList()
-      val i = vertex.in().value(Name).toList()
-      val out = Map[String,Json](
-        "type" -> vertex.label().asJson,
-        "properties" -> mapToJson(vertex.valueMap),
-        "out" -> o.asJson,
-        "in" -> i.asJson
-      )
+    case GET -> Root / "gaea" / "vertex" / "explore" =>
+      Ok(VertexHtml.layout(VertexHtml.vertex).toString)
+        .withContentType(Some(`Content-Type`(`text/html`)))
 
-      Ok(out.asJson)
+    case GET -> Root / "gaea" / "vertex" / "find" / name =>
+      try {
+        val vertex = graph.V.has(Name, name).head
+        val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("name"))
+        val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("name"))
+
+        val out = Map[String, Json](
+          "type" -> vertex.label.asJson,
+          "properties" -> mapToJson(vertex.valueMap),
+          "in" -> inEdges.asJson,
+          "out" -> outEdges.asJson
+        )
+
+        Ok(out.asJson)
+      }
+
+      catch {
+        case _: Throwable => Ok(Map[String, Json]().asJson)
+      }
+
+    // case GET -> Root / "gaea" / "vertex" / name =>
+    //   val vertex = graph.V.has(Name, name).head
+    //   val o = vertex.out().value(Name).toList()
+    //   val i = vertex.in().value(Name).toList()
+    //   val out = Map[String,Json](
+    //     "type" -> vertex.label().asJson,
+    //     "properties" -> mapToJson(vertex.valueMap),
+    //     "out" -> o.asJson,
+    //     "in" -> i.asJson
+    //   )
+
+    //   Ok(out.asJson)
 
     case request @ POST -> Root / "gaea" / "console" =>
       request.as[Json].flatMap { query =>
