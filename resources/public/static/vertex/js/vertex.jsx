@@ -2,8 +2,8 @@ var snipPrefix = function(s) {
   return s.substring(s.indexOf(':') + 1);
 }
 
-var exploreVertex = function(page, gid) {
-  var url = "/gaea/vertex/find/" + gid;
+var exploreVertex = function(page, name) {
+  var url = "/gaea/vertex/find/" + name;
 
   $.ajax({
     url: url,
@@ -42,7 +42,7 @@ var VertexEdge = React.createClass({
 
   render: function() {
     return (
-      <li onClick={this.props.navigate(this.props.gid)}>{snipPrefix(this.props.gid)}</li>
+      <li onClick={this.props.navigate(this.props.name)}>{snipPrefix(this.props.name)}</li>
     )
   }
 });
@@ -55,7 +55,7 @@ var VertexEdges = React.createClass({
   render: function() {
     var edges = this;
     var edgeList = this.props.edges.map(function(edge) {
-      return <VertexEdge key={edge} gid={edge} navigate={edges.props.navigate} />
+      return <VertexEdge key={edge} name={edge} navigate={edges.props.navigate} />
     })
 
     var prefix = this.props.edges[0].split(':')[0]
@@ -79,7 +79,7 @@ var AlternateView = React.createClass({
   render: function() {
     var page = this;
     return (
-      <div onClick={this.props.navigate(this.props.back)}>{this.props.vertex.properties.gid}</div>
+      <div onClick={this.props.navigate(this.props.back)}>{this.props.vertex.properties.name}</div>
     )
   }
 });
@@ -106,7 +106,7 @@ var VertexView = React.createClass({
 
     return (
       <div>
-        <h2>Showing {this.props.vertex.type} vertex {snipPrefix(this.props.vertex.properties.gid)}</h2>
+        <h2>Showing {this.props.vertex.type} vertex {snipPrefix(this.props.vertex.properties.name)}</h2>
         <div className="vertex-properties">
           {properties}
         </div>
@@ -134,17 +134,17 @@ var VertexInput = React.createClass({
   },
 
   changeInput: function(event) {
-    var gid = event.target.value;
-    this.setState({input: gid, back: this.state.input});
-    exploreVertex(this, gid);
+    var name = event.target.value;
+    this.setState({input: name, back: this.state.input});
+    exploreVertex(this, name);
   },
 
   render: function() {
     var page = this;
-    var navigate = function(gid) {
+    var navigate = function(name) {
       return function() {
-        page.setState({input: gid, back: page.state.input, lastMatch: gid});
-        exploreVertex(page, gid);
+        page.setState({input: name, back: page.state.input, lastMatch: name});
+        exploreVertex(page, name);
       }
     };
 
@@ -161,8 +161,8 @@ var VertexInput = React.createClass({
       <div>
         <form onChange={(e) => this.changeInput(e)}>
           <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <label className="mdl-textfield__label" htmlFor="vertex-gid-input">Enter a vertex GID</label>
-            <input id="vertex-gid-input" type="text" name="gid" className="mdl-textfield__input" />
+            <label className="mdl-textfield__label" htmlFor="vertex-name-input">Enter a vertex name</label>
+            <input id="vertex-name-input" type="text" name="name" className="mdl-textfield__input" />
           </div>
         </form>
         {vertex}

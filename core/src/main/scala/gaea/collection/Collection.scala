@@ -24,6 +24,13 @@ object Collection {
     items.groupBy((a) => a).map((t) => (t._1 -> t._2.size)).toMap
   }
 
+  def groupAs[A, B, C](items: Iterable[A]) (key: A => B) (value: A => C): Map[B, List[C]] = {
+    items.foldLeft(Map[B, List[C]]()) { (group, item) =>
+      val k = key(item)
+      group + (k -> (value(item) :: group.getOrElse(k, List[C]())))
+    }
+  }
+
   def shear[A](blade: Seq[A], sheep: Seq[A]): List[A] = {
     // only works with sorted seqs where the blade is a sublist of the sheep
     sheep.foldLeft((blade, List[A]())) { (wool, sheep) =>
