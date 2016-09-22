@@ -6,6 +6,7 @@ import gaea.convoy.Ingest
 import gaea.feature.Feature
 import gaea.signature.Signature
 import gaea.collection.Collection._
+import gaea.html.VertexHtml
 
 import org.http4s._
 import org.http4s.server._
