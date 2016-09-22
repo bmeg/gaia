@@ -30,7 +30,8 @@ libraryDependencies ++= Seq(
   "org.http4s"                 %% "http4s-argonaut"     % "0.12.4",
   "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0",
   "com.typesafe.scala-logging" %% "scala-logging"       % "3.1.0",
-  "org.scala-debugger"         %% "scala-debugger-api"  % "1.0.0"
+  "org.scala-debugger"         %% "scala-debugger-api"  % "1.0.0",
+  "com.lihaoyi"                %% "scalatags"           % "0.6.0"
   // "com.trueaccord.scalapb"  %% "scalapb-json4s"      % "0.1.1"
 )
 

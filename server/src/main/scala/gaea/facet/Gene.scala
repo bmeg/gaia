@@ -11,6 +11,8 @@ import gaea.html.VertexHtml
 import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
+import org.http4s.MediaType._
+import org.http4s.headers.{`Content-Type`, `Content-Length`}
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
