@@ -18,8 +18,6 @@ libraryDependencies ++= Seq(
 
   "org.json4s"                 %% "json4s-native"       % "3.3.0",
   "org.json4s"                 %% "json4s-jackson"      % "3.3.0",
-  "org.scalanlp"               %% "breeze"              % "0.12",
-  "org.scalanlp"               %% "breeze-natives"      % "0.12",
   "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0",
   
   "org.apache.kafka"           %  "kafka-clients"       % "0.10.0.1"
