@@ -3,6 +3,7 @@ package gaea.client
 import java.util.{Properties, UUID}
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import gaea.io.JsonIO
 import org.apache.kafka.clients.producer.{KafkaProducer, Producer, ProducerRecord}
 //import org.apache.kafka.clients.producer.ProducerConfig
 
@@ -26,7 +27,7 @@ class ConnectionConfig {
 class GaeaClient(var config: ConnectionConfig) {
 
   val GAEA_IMPORT_TOPIC = "gaea-import"
-
+  val jsonio = new JsonIO()
   var producer : Producer[String,String] = null
 
   def kafkaProducerConnect(): Producer[String,String] = {
@@ -41,9 +42,8 @@ class GaeaClient(var config: ConnectionConfig) {
   }
 
 
-  def addMessage(message: Any) = {
-    val mapper = new ObjectMapper()
-    val json = mapper.writeValueAsString(message)
+  def addMessage(message: java.util.Map[Object,Object]) = {
+    val json = jsonio.WriteMap(message)
     if (producer == null) {
       producer = kafkaProducerConnect()
     }
