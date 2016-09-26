@@ -13,7 +13,7 @@ class JsonIO {
     return o
   }
 
-  def Write(message: Any) : String = {
+  def WriteMap(message: java.util.Map[Object,Object]) : String = {
     val json = mapper.writeValueAsString(message)
     return json
   }
