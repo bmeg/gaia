@@ -32,7 +32,6 @@ class GaeaClient(var config: ConnectionConfig) {
   def kafkaProducerConnect(): Producer[String,String] = {
     val props = new java.util.HashMap[String,Object]()
     props.put("bootstrap.servers", config.kafkaURL)
-
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
@@ -42,17 +41,18 @@ class GaeaClient(var config: ConnectionConfig) {
   }
 
 
-  def addMessage(message: Object) = {
+  def addMessage(message: Any) = {
     val mapper = new ObjectMapper()
     val json = mapper.writeValueAsString(message)
     if (producer == null) {
       producer = kafkaProducerConnect()
     }
+    printf("SEnding: %s", json)
     producer.send(new ProducerRecord[String, String](GAEA_IMPORT_TOPIC, UUID.randomUUID().toString, json))
   }
 
   def close() = {
-    if (producer == null) {
+    if (producer != null) {
       producer.close()
     }
   }

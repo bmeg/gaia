@@ -1,8 +1,8 @@
 package gaea.app
 
-import org.json4s.native.JsonMethods.parse
 import scala.io.Source
-import gaea.client.{GaeaClient,ConnectionConfig}
+import gaea.client.{ConnectionConfig, GaeaClient}
+import gaea.io.JsonIO
 
 
 object Import {
@@ -10,9 +10,10 @@ object Import {
     var config = new ConnectionConfig().Kafka(args(0))
     val conn = new GaeaClient(config)
 
+    val io = new JsonIO()
+
     Source.fromFile(args(1)).getLines().foreach( x => {
-      val y = parse(x)
-      printf("Sending: %s", y)
+      val y = io.ReadMap(x)
       conn.addMessage(y)
     })
 

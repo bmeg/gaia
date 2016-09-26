@@ -20,7 +20,10 @@ libraryDependencies ++= Seq(
   "org.json4s"                 %% "json4s-jackson"      % "3.3.0",
   "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0",
   
-  "org.apache.kafka"           %  "kafka-clients"       % "0.10.0.1"
+  "org.apache.kafka"           %  "kafka-clients"       % "0.10.0.1",
+
+  "org.scalactic"              %% "scalactic"           % "3.0.0",
+  "org.scalatest"              %% "scalatest"           % "3.0.0" % "test"
 )
 
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
