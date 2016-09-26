@@ -36,7 +36,7 @@ class GaeaClient(var config: ConnectionConfig) {
     props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
 
-    props.put("partitioner.class", "example.producer.SimplePartitioner")
+    //props.put("partitioner.class", "example.producer.SimplePartitioner")
     val producer = new KafkaProducer[String, String](props)
     return producer
   }
