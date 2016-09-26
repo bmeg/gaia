@@ -8,3 +8,4 @@ env:
 
 script:
   - cd $CI_HOME && sbt compile
+  - sbt test
