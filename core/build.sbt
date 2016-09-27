@@ -21,6 +21,7 @@ libraryDependencies ++= Seq(
   "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0",
   
   "org.apache.kafka"           %  "kafka-clients"       % "0.10.0.1",
+  "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
 
   "org.scalactic"              %% "scalactic"           % "3.0.0",
   "org.scalatest"              %% "scalatest"           % "3.0.0" % "test"
