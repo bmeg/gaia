@@ -2,16 +2,10 @@
 package gaea.test.client
 
 
-import java.io.File
-
 import gaea.client.{ConnectionConfig, GaeaClient}
 import gaea.io.JsonIO
 import gaea.test.KafkaSuite
-import org.scalatest._
-
-import scala.collection.JavaConverters._
 import scala.io.Source
-
 
 
 class ClientSuite extends KafkaSuite {
@@ -30,6 +24,6 @@ class ClientSuite extends KafkaSuite {
         conn.addMessage(y)
       })
     })
-    
+
   }
 }

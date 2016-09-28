@@ -24,7 +24,9 @@ libraryDependencies ++= Seq(
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
 
   "org.scalactic"              %% "scalactic"           % "3.0.0",
-  "org.scalatest"              %% "scalatest"           % "3.0.0" % "test"
+  "org.scalatest"              %% "scalatest"           % "3.0.0" % "test",
+
+  "org.cassandraunit"          %  "cassandra-unit"      % "3.0.0.1" % "test"
 )
 
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"

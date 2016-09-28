@@ -1,0 +1,28 @@
+
+cluster_name: 'Test Cluster'
+
+data_file_directories:
+    - target/embeddedCassandra/data
+
+saved_caches_directory: target/embeddedCassandra/saved_caches
+
+
+commitlog_sync: periodic
+commitlog_sync_period_in_ms: 10000
+partitioner: org.apache.cassandra.dht.Murmur3Partitioner
+endpoint_snitch: SimpleSnitch
+
+commitlog_directory: target/embeddedCassandra/commitlog
+hints_directory: target/embeddedCassandra/hints
+
+seed_provider:
+    - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+      parameters:
+          - seeds: "127.0.0.1"
+
+
+listen_address: 127.0.0.1
+
+rpc_address: localhost
+# port for Thrift to listen for clients on
+rpc_port: 91710
