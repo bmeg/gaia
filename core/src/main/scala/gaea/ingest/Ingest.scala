@@ -117,7 +117,10 @@ object Ingest {
       field._2 match {
         case JObject(obj) =>
           propertiesPattern.findFirstMatchIn(key).map(_.subgroups) match {
-            case None => setProperty(vertex) ((key, new JString(write(obj))))
+            case None => {
+              val serial = write(JObject(obj))
+              setProperty(vertex) ((key, new JString(serial)))
+            }
             case Some(matches) => setProperties(vertex) (matches.head) (obj)
           }
         case JArray(arr) =>
