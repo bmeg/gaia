@@ -14,24 +14,28 @@ import java.io.File
 object Frame {
   implicit val formats = DefaultFormats
 
-  class FrameBuilder(header: List[String], data: List[List[String]]) {
-    def addVertex(default: String) (rowField: String) (dataField: String) (vertex: Vertex): FrameBuilder = {
+  class FrameBuilder(header: List[String], data: List[List[String]], default: String, rowField: String, dataField: String) {
+    def addVertex(vertex: Vertex): FrameBuilder = {
       val id = vertex.value[String](rowField)
       val values = hydrate(vertex) (dataField)
-      val newKeys = header.toSet.diff(values.keys.toSet).toList
+      val newKeys = values.keys.toSet.diff(header.toSet).toList
       val newHeader = header ++ newKeys
-      val row = id +: header.drop(1).map(column => values.get(column).map(_.toString).getOrElse(default))
-      val newData = row +: data
-      new FrameBuilder(newHeader, newData)
+      val row = id :: header.map(column => values.get(column).map(_.toString).getOrElse(default))
+      val newData = row :: data
+      new FrameBuilder(newHeader, newData, default, rowField, dataField)
     }
 
     def finish(): Seq[Seq[String]] = {
-      header +: data
+      val output = (rowField :: header) :: data
+      val headerSize = data.head.size
+      output.map { line =>
+        line ++ List.fill(headerSize - line.size) (default)
+      }
     }
   }
 
-  def emptyBuilder(): FrameBuilder = {
-    new FrameBuilder(List[String]("id"), List[List[String]]())
+  def emptyBuilder(default: String) (rowField: String) (dataField: String): FrameBuilder = {
+    new FrameBuilder(List[String](), List[List[String]](), default, rowField, dataField)
   }
 
   def hydrate(vertex: Vertex) (key: String): Map[String, Double] = {
@@ -40,16 +44,14 @@ object Frame {
   }
 
   def convertFrame(default: String) (vertexes: Seq[Vertex]) (rowField: String) (dataField: String): Seq[Seq[String]] = {
-    vertexes.foldLeft(emptyBuilder()) { (frame, vertex) =>
-      frame.addVertex(default) (rowField) (dataField) (vertex)
+    vertexes.foldLeft(emptyBuilder(default) (rowField) (dataField)) { (frame, vertex) =>
+      frame.addVertex(vertex)
     }.finish()
   }
 
   def renderTSV(default: String) (data: Seq[Seq[String]]): String = {
-    val headerSize = data.head.size
     data.map { line =>
-      val fullLine = line ++ List.fill(headerSize - line.size) (default)
-      val joined = fullLine.mkString("\t")
+      line.mkString("\t")
     }.mkString("\n")
   }
 
