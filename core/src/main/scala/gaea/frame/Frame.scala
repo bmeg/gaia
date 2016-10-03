@@ -1,13 +1,10 @@
 package gaea.frame
 
-import gaea.titan.Titan
-
 import gremlin.scala._
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
-import com.thinkaurelius.titan.core.TitanGraph
 import java.lang.{Long => Llong}
 import java.io.File
 

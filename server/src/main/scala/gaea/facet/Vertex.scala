@@ -1,6 +1,7 @@
 package gaea.facet
 
 import gaea.titan.Titan
+import gaea.graph.GaeaGraph
 import gaea.ingest.Ingest
 import gaea.collection.Collection._
 import gaea.html.VertexHtml
@@ -22,8 +23,7 @@ import org.http4s.argonaut._
 
 import scala.collection.JavaConversions._
 
-object VertexFacet extends LazyLogging {
-  lazy val graph = Titan.connection
+case class VertexFacet(root: String) extends GaeaFacet with LazyLogging {
   val Gid = Key[String]("gid")
 
   def mapToJson(properties: Map[String, Any]) : Json = {
@@ -32,15 +32,13 @@ object VertexFacet extends LazyLogging {
     } ).asJson
   }
 
-  def countVertexes(graph: TitanGraph): Map[String, Long] = {
+  def countVertexes(graph: GaeaGraph): Map[String, Long] = {
     val counts = graph.V.traversal.label.groupCount.toList.get(0)
     val labels = counts.keySet.toList.asInstanceOf[List[String]]
     labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
       countMap + (label.toString -> counts.get(label))
     }
   }
-
-  lazy val vertexCounts = countVertexes(graph)
 
   val example = """[{"vertex": "Gene"},
  {"has": {"symbol": ["AHI3", "HOIK4L"]}},
@@ -55,37 +53,39 @@ object VertexFacet extends LazyLogging {
  {"as": "signatureStep"},
  {"select": ["signatureStep", "levelStep", "expressionStep"]}]"""
 
-  val service = HttpService {
-    case GET -> Root / "counts" =>
-      Ok(vertexCounts.asJson)
+  def service(graph: GaeaGraph): HttpService = {
+    HttpService {
+      // case GET -> Root / "counts" =>
+      //   Ok(vertexCounts.asJson)
 
-    case GET -> Root / "explore" =>
-      Ok(VertexHtml.layout(VertexHtml.vertex).toString)
-        .withContentType(Some(`Content-Type`(`text/html`)))
+      case GET -> Root / "explore" =>
+        Ok(VertexHtml.layout(VertexHtml.vertex).toString)
+          .withContentType(Some(`Content-Type`(`text/html`)))
 
-    case GET -> Root / "find" / gid =>
-      try {
-        val vertex = graph.V.has(Gid, gid).head
-        val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("gid"))
-        val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("gid"))
+      case GET -> Root / "find" / gid =>
+        try {
+          val vertex = graph.V.has(Gid, gid).head
+          val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("gid"))
+          val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("gid"))
 
-        val out = Map[String, Json](
-          "type" -> vertex.label.asJson,
-          "properties" -> mapToJson(vertex.valueMap),
-          "in" -> inEdges.asJson,
-          "out" -> outEdges.asJson
-        )
+          val out = Map[String, Json](
+            "type" -> vertex.label.asJson,
+            "properties" -> mapToJson(vertex.valueMap),
+            "in" -> inEdges.asJson,
+            "out" -> outEdges.asJson
+          )
 
-        Ok(out.asJson)
-      }
+          Ok(out.asJson)
+        }
 
-      catch {
-        case _: Throwable => Ok(Map[String, Json]().asJson)
-      }
+        catch {
+          case _: Throwable => Ok(Map[String, Json]().asJson)
+        }
 
-    case request @ POST -> Root / "query" =>
-      request.as[Json].flatMap { query =>
-        Ok("yellow".asJson)
-      }
+      case request @ POST -> Root / "query" =>
+        request.as[Json].flatMap { query =>
+          Ok("yellow".asJson)
+        }
+    }
   }
 }

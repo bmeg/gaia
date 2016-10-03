@@ -8,23 +8,24 @@ scalaVersion := "2.11.8"
 conflictManager := ConflictManager.strict.copy(organization = "com.esotericsoftware.*")
 
 libraryDependencies ++= Seq(
-  "com.thinkaurelius.titan"    %  "titan-core"          % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"    %  "titan-cassandra"     % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"    %  "titan-es"            % "1.1.0-SNAPSHOT",
-  "org.apache.tinkerpop"       %  "gremlin-core"        % "3.1.1-incubating",
-  "com.google.protobuf"        %  "protobuf-java"       % "3.0.0-beta-2",
-  "com.google.protobuf"        %  "protoc"              % "3.0.0-beta-2",
-  "org.scala-lang"             %  "scala-compiler"      % "2.11.8",
+  "com.thinkaurelius.titan"    %  "titan-core"               % "1.1.0-SNAPSHOT",
+  "com.thinkaurelius.titan"    %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
+  "com.thinkaurelius.titan"    %  "titan-es"                 % "1.1.0-SNAPSHOT",
+  "org.apache.tinkerpop"       %  "gremlin-core"             % "3.1.1-incubating",
+  "com.google.protobuf"        %  "protobuf-java"            % "3.0.0-beta-2",
+  "com.google.protobuf"        %  "protoc"                   % "3.0.0-beta-2",
+  "org.scala-lang"             %  "scala-compiler"           % "2.11.8",
 
-  "org.json4s"                 %% "json4s-native"       % "3.3.0",
-  "org.json4s"                 %% "json4s-jackson"      % "3.3.0",
-  "com.michaelpollmeier"       %% "gremlin-scala"       % "3.1.2-incubating.0",
+  "org.json4s"                 %% "json4s-native"            % "3.3.0",
+  "org.json4s"                 %% "json4s-jackson"           % "3.3.0",
+  "com.michaelpollmeier"       %% "gremlin-scala"            % "3.1.2-incubating.0",
   
-  "org.apache.kafka"           %  "kafka-clients"       % "0.10.0.1",
+  "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
+  "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
 
-  "org.scalactic"              %% "scalactic"           % "3.0.0",
-  "org.scalatest"              %% "scalatest"           % "3.0.0" % "test"
+  "org.scalactic"              %% "scalactic"                % "3.0.0",
+  "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
 )
 
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"

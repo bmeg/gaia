@@ -4,10 +4,10 @@ import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
 
-object GaeaFacets {
-  val facets = List[Tuple2[String, HttpService]](
-    ("/vertex/", VertexFacet.service),
-    ("/message/", MessageFacet.service) // ,
+object BaseFacets {
+  val facets = List[GaeaFacet](
+    new VertexFacet("/vertex/"),
+    new MessageFacet("/message/")
     // ("/console/", ConsoleFacet.service)
   )
 }

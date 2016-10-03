@@ -1,7 +1,7 @@
 package gaea.kafka
 
 import gaea.ingest.Ingest
-import gaea.titan.Titan
+import gaea.graph._
 
 import scala.io.Source
 import org.json4s._
@@ -31,7 +31,7 @@ object GaeaProducer {
 }
 
 object GaeaConsumer {
-  def buildConsumer(server: String, groupID: String, topics: Seq[String]): KafkaConsumer[String, String] = {
+  def buildConsumer(server: String) (groupID: String) (topics: Seq[String]): KafkaConsumer[String, String] = {
     val props = new Properties()
     props.put("bootstrap.servers", server)
     props.put("group.id", groupID)
@@ -76,10 +76,8 @@ class Spout(server: String) {
   }
 }
 
-class Ingestor(server: String, groupID: String, topics: Seq[String]) {
-  val consumer = GaeaConsumer.buildConsumer(server, groupID, topics)
-  val graph = Titan.defaultGraph()
-
+class Ingestor(graph: GaeaGraph) (server: String) (groupID: String) (topics: Seq[String]) {
+  val consumer = GaeaConsumer.buildConsumer(server) (groupID) (topics)
   def ingest(): Unit = {
     GaeaConsumer.run(consumer, record => Ingest.ingestVertex(graph) (parse(record.value)))
   }

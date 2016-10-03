@@ -1,7 +1,6 @@
 package gaea.ingest
 
-import gaea.titan.Titan
-
+import gaea.graph._
 import gremlin.scala._
 
 import java.lang.{Long => Llong}
@@ -9,7 +8,6 @@ import java.io.File
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
-import com.thinkaurelius.titan.core.TitanGraph
 
 object Ingest {
   val edgesPattern = "(.*)Edges$".r
@@ -64,23 +62,9 @@ object Ingest {
     }
   }
 
-  def retryCommit(graph: TitanGraph) (times: Integer): Unit = {
-    if (times == 0) {
-      println("TRANSACTION FAILED!")
-    } else {
-      try {
-        graph.tx.commit()
-      } catch {
-        case ex: Exception => {
-          retryCommit(graph) (times - 1)
-        }
-      }
-    }
-  }
-
-  def findVertex(graph: TitanGraph) (label: String) (gid: String): Vertex = {
-    val vertex = Titan.namedVertex(graph) (label) (gid)
-    Titan.associateType(graph) (vertex) (label)
+  def findVertex(graph: GaeaGraph) (label: String) (gid: String): Vertex = {
+    val vertex = graph.namedVertex(label) (gid)
+    graph.associateType(vertex) (label)
     vertex
   }
 
@@ -106,7 +90,7 @@ object Ingest {
     }
   }
 
-  def ingestVertex(graph: TitanGraph) (json: JValue): Vertex = {
+  def ingestVertex(graph: GaeaGraph) (json: JValue): Vertex = {
     val data = json.asInstanceOf[JObject]
     val gid = stringFor(data) ("gid")
     val label = uncapitalize(stringFor(data) ("type"))
@@ -127,9 +111,9 @@ object Ingest {
           edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
             for (value <- arr) {
               val edge = value.asInstanceOf[JString].s
-              val label = Titan.labelPrefix(edge)
+              val label = Gid.labelPrefix(edge)
               if (label != "") {
-                Titan.associateOut(graph) (vertex) (edgeMatch.group(1)) (label) (edge)
+                graph.associateOut(vertex) (edgeMatch.group(1)) (label) (edge)
               }
             }
           }
@@ -138,7 +122,7 @@ object Ingest {
       }
     }
 
-    retryCommit(graph) (5)
+    graph.commit()
     vertex
   }
 }
