@@ -17,14 +17,22 @@ object Frame {
       val values = hydrate(vertex) (dataField)
       val newKeys = values.keys.toSet.diff(header.toSet).toList
       val newHeader = header ++ newKeys
-      val row = id :: header.map(column => values.get(column).map(_.toString).getOrElse(default))
+      val row = id :: newHeader.map(column => values.get(column).map(_.toString).getOrElse(default))
       val newData = row :: data
+
+      println(id)
+      println(values.toString)
+      println(newKeys)
+      println(newHeader)
+      println(row)
+      println(newData)
+
       new FrameBuilder(newHeader, newData, default, rowField, dataField)
     }
 
     def finish(): Seq[Seq[String]] = {
       val output = (rowField :: header) :: data
-      val headerSize = data.head.size
+      val headerSize = output.head.size
       output.map { line =>
         line ++ List.fill(headerSize - line.size) (default)
       }
