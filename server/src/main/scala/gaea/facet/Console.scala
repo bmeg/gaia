@@ -1,7 +1,7 @@
 package gaea.facet
 
-import gaea.titan.Titan
-import gaea.titan.Console
+import gaea.graph._
+import gaea.eval.Console
 
 import org.http4s._
 import org.http4s.server._
@@ -16,30 +16,34 @@ import com.typesafe.scalalogging._
 import _root_.argonaut._, Argonaut._
 import org.http4s.argonaut._
 
-object ConsoleFacet extends LazyLogging {
-  val service = HttpService {
-    case request @ POST -> Root / "query" =>
-      request.as[Json].flatMap { query =>
-        val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
-        val line = queryLens.get(query).getOrElse("")
+case class ConsoleFacet(root: String) extends GaeaFacet with LazyLogging {
+  def service(graph: GaeaGraph): HttpService = {
+    val console = new Console(graph)
 
-        println(line)
+    HttpService {
+      case request @ POST -> Root / "query" =>
+        request.as[Json].flatMap { query =>
+          val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
+          val line = queryLens.get(query).getOrElse("")
 
-        val result = Console.interpret[Any](line) match {
-          case Right(result) => result
-          case Left(error) => error
+          println(line)
+
+          val result = console.interpret[Any](line) match {
+            case Right(result) => result
+            case Left(error) => error
+          }
+
+          // val result = try {
+          //   Console.interpret[Any](line).toString
+          // } catch {
+          //   case e: Throwable => println(e.getCause); println(e.printStackTrace); e.getMessage();
+          //     // .replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+          // }
+
+          println(result)
+
+          Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
         }
-
-        // val result = try {
-        //   Console.interpret[Any](line).toString
-        // } catch {
-        //   case e: Throwable => println(e.getCause); println(e.printStackTrace); e.getMessage();
-        //     // .replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
-        // }
-
-        println(result)
-
-        Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
-      }
+    }
   }
 }

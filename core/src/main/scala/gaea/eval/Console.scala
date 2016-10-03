@@ -1,15 +1,13 @@
-package gaea.titan
+package gaea.eval
 
-import gaea.eval.Eval
-import gaea.eval.Repl
+import gaea.graph._
 import gremlin.scala._
 
-object Console {
-  val graph = Titan.defaultGraph()
+class Console(graph: GaeaGraph) {
   initializeRepl()
 
   def eval[T](query: String): T = {
-    val context = "import gremlin.scala._; import gaea.titan.Console._; "
+    val context = "import gremlin.scala._; import gaea.eval.Console._; "
     Eval.eval[T](context + query)
   }
 
@@ -23,6 +21,6 @@ object Console {
   }
 
   def vertexesOfType(typeName: String): GremlinScala[Vertex, shapeless.HNil] = {
-    Titan.typeQuery(graph) (typeName)
+    graph.typeQuery(typeName)
   }
 }
