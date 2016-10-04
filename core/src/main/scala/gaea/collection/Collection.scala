@@ -1,5 +1,7 @@
 package gaea.collection
 
+import scala.collection.mutable
+
 object Collection {
   def dotProduct(coefficients: Vector[Double]) (intercept: Double) (value: Vector[Double]): Double = {
     coefficients.zip(value).foldLeft(intercept) ((total, dot) => total + dot._1 * dot._2)
@@ -45,5 +47,9 @@ object Collection {
         (blade, flock :+ sheep)
       }
     }._2
+  }
+
+  def memoize[I, O](f: I => O): collection.Map[I, O] = new mutable.HashMap[I, O]() {self =>
+    override def apply(key: I) = self.synchronized(getOrElseUpdate(key, f(key)))
   }
 }
