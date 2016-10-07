@@ -38,8 +38,8 @@ object GaeaConsumer {
     props.put("auto.offset.reset", "earliest")
     props.put("enable.auto.commit", "true")
     props.put("auto.commit.interval.ms", "1000")
-    props.put("request.timeout.ms", "70000")
-    props.put("session.timeout.ms", "60000")
+    props.put("request.timeout.ms", "140000")
+    props.put("session.timeout.ms", "120000")
     props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
     props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer")
 
