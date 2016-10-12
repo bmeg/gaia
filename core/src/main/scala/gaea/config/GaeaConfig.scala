@@ -49,4 +49,9 @@ object GaeaConfig {
     val yaml = raw.parseYaml
     yaml.convertTo[GaeaConfig]
   }
+
+  def defaultGraph(): GaeaGraph = {
+    val config = GaeaConfig.readConfig("resources/config/gaea.yaml")
+    config.connectToGraph(config.graph).get
+  }
 }

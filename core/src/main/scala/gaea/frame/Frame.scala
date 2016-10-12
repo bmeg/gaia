@@ -9,6 +9,7 @@ import java.lang.{Long => Llong}
 import java.io.File
 
 object Frame {
+  // apparently you need to say this if you want to write JSON
   implicit val formats = DefaultFormats
 
   class FrameBuilder(header: List[String], data: List[List[String]], default: String, rowField: String, dataField: String) {
