@@ -17,6 +17,13 @@ def action_dump(args):
         
 
 
+def action_list(args):
+    consumer = KafkaConsumer(bootstrap_servers=args.server)
+
+    for msg in consumer.topics():
+        print msg
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
@@ -27,6 +34,10 @@ if __name__ == "__main__":
     parser_dump.add_argument("channel")
     parser_dump.add_argument("--group", default=None)
     parser_dump.set_defaults(func=action_dump)
+
+    parser_list = subparsers.add_parser('list')
+    parser_list.add_argument("server")
+    parser_list.set_defaults(func=action_list)
 
     args = parser.parse_args()
     func = args.func
