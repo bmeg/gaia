@@ -21,13 +21,6 @@ object Frame {
       val row = id :: newHeader.map(column => values.get(column).map(_.toString).getOrElse(default))
       val newData = row :: data
 
-      println(id)
-      println(values.toString)
-      println(newKeys)
-      println(newHeader)
-      println(row)
-      println(newData)
-
       new FrameBuilder(newHeader, newData, default, rowField, dataField)
     }
 
@@ -55,7 +48,7 @@ object Frame {
     }.finish()
   }
 
-  def renderTSV(default: String) (data: Seq[Seq[String]]): String = {
+  def renderTSV(data: Seq[Seq[String]]): String = {
     data.map { line =>
       line.mkString("\t")
     }.mkString("\n")
@@ -63,6 +56,6 @@ object Frame {
 
   def renderFrame(default: String) (vertexes: Seq[Vertex]) (rowField: String) (dataField: String): String = {
     val frame = convertFrame(default) (vertexes) (rowField) (dataField)
-    renderTSV(default) (frame)
+    renderTSV(frame)
   }
 }
