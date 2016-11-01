@@ -5,9 +5,6 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
-import java.lang.{Long => Llong}
-import java.io.File
-
 object Frame {
   // apparently you need to say this if you want to write JSON
   implicit val formats = DefaultFormats
