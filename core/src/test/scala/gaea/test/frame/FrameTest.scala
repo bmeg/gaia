@@ -1,6 +1,5 @@
 package gaea.test.frame
 
-import gaea.config._
 import gaea.graph._
 import gaea.frame.Frame
 import gaea.test.TestGraph

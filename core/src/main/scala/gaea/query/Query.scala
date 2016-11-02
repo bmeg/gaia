@@ -34,7 +34,8 @@ abstract class Operation {
 
 case class VertexOperation(vertex: String) extends Operation {
   def operate(graph: GaeaGraph): GremlinVertex = {
-    graph.graph.V.hasLabel(vertex)
+    graph.typeQuery(vertex)
+    // graph.graph.V.hasLabel(vertex)
   }
 }
 
