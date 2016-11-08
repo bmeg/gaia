@@ -5,6 +5,8 @@ import org.json4s._
 import org.json4s.jackson.JsonMethods._
 import org.json4s.jackson.Serialization.write
 
+import java.io._
+
 object Frame {
   // apparently you need to say this if you want to write JSON
   implicit val formats = DefaultFormats
@@ -54,5 +56,17 @@ object Frame {
   def renderFrame(default: String) (vertexes: Seq[Vertex]) (rowField: String) (dataField: String): String = {
     val frame = convertFrame(default) (vertexes) (rowField) (dataField)
     renderTSV(frame)
+  }
+
+  def writeString(path: String) (content: String): Unit = {
+    val file = new File(path)
+    val writer = new BufferedWriter(new FileWriter(file))
+    writer.write(content)
+    writer.close()
+  }
+
+  def writeFrame(path: String) (default: String) (vertexes: Seq[Vertex]) (rowField: String) (dataField: String): Unit = {
+    val frame = renderFrame(default) (vertexes) (rowField) (dataField)
+    writeString(path) (frame)
   }
 }
