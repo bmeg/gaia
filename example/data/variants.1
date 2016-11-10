@@ -1,3 +1,29 @@
 {"type": "Individual", "gid": "individual:X", "barcode": "X"}
 {"type": "Biosample", "gid": "biosample:X-normal", "barcode": "X-normal", "sampleType": "normal", "sampleOfEdges": ["individual:X"]}
 {"type": "Biosample", "gid": "biosample:X-tumor", "barcode": "X-tumor", "sampleType": "tumor", "sampleOfEdges": ["individual:X"]}
+{"type": "VariantCall", "gid": "variantCall:T", "variantType": "SNP", "referenceAllele": "T", "tumorSampleEdges": ["biosample:X-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:C", "variantType": "SNP", "referenceAllele": "C", "tumorSampleEdges": ["biosample:X-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:G", "variantType": "SNP", "referenceAllele": "G", "tumorSampleEdges": ["biosample:X-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:A", "variantType": "SNP", "referenceAllele": "A", "tumorSampleEdges": ["biosample:X-tumor"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:T", "effectOfEdges": ["variantCall:T"], "inGeneEdges": ["gene:DOOM"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:C", "effectOfEdges": ["variantCall:C"], "inGeneEdges": ["gene:TREE"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:G", "effectOfEdges": ["variantCall:G"], "inGeneEdges": ["gene:BALL"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:A", "effectOfEdges": ["variantCall:A"], "inGeneEdges": ["gene:CONE"]}
+{"type": "Gene", "gid": "gene:DOOM", "symbol": "DOOM"}
+{"type": "GeneSynonym", "gid": "geneSynonym:DOOM", "symbol": "DOOM", "synonymForEdges": ["gene:DOOM"]}
+{"type": "Gene", "gid": "gene:TREE", "symbol": "TREE"}
+{"type": "GeneSynonym", "gid": "geneSynonym:TREE", "symbol": "TREE", "synonymForEdges": ["gene:TREE"]}
+{"type": "Gene", "gid": "gene:BALL", "symbol": "BALL"}
+{"type": "GeneSynonym", "gid": "geneSynonym:BALL", "symbol": "BALL", "synonymForEdges": ["gene:BALL"]}
+{"type": "Gene", "gid": "gene:CONE", "symbol": "CONE"}
+{"type": "GeneSynonym", "gid": "geneSynonym:CONE", "symbol": "CONE", "synonymForEdges": ["gene:CONE"]}
+{"type": "Individual", "gid": "individual:Y", "barcode": "Y"}
+{"type": "Biosample", "gid": "biosample:Y-normal", "barcode": "Y-normal", "sampleType": "normal", "sampleOfEdges": ["individual:Y"]}
+{"type": "Biosample", "gid": "biosample:Y-tumor", "barcode": "Y-tumor", "sampleType": "tumor", "sampleOfEdges": ["individual:Y"]}
+{"type": "VariantCall", "gid": "variantCall:tt", "variantType": "SNP", "referenceAllele": "T", "tumorSampleEdges": ["biosample:Y-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:cc", "variantType": "SNP", "referenceAllele": "C", "tumorSampleEdges": ["biosample:Y-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:gg", "variantType": "SNP", "referenceAllele": "G", "tumorSampleEdges": ["biosample:Y-tumor"]}
+{"type": "VariantCall", "gid": "variantCall:aa", "variantType": "SNP", "referenceAllele": "A", "tumorSampleEdges": ["biosample:Y-tumor"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:tt", "effectOfEdges": ["variantCall:tt"], "inGeneEdges": ["gene:DOOM"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:cc", "effectOfEdges": ["variantCall:cc"], "inGeneEdges": ["gene:TREE"]}
+{"type": "VariantCallEffect", "gid": "variantCallEffect:aa", "effectOfEdges": ["variantCall:aa"], "inGeneEdges": ["gene:CONE"]}
