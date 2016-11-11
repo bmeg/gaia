@@ -2,39 +2,50 @@ package gaea.query
 
 import gaea.graph._
 
-import gremlin.scala._
 import shapeless._
 import shapeless.ops.hlist.RightFolder
 
-// sealed abstract class GaeaStatement
+import gremlin.scala._
+import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 // case class VertexQuery(vertex: String) extends GaeaStatement
-// case class AsQuery(as: String) extends GaeaStatement
 // case class InQuery(in: String) extends GaeaStatement
 // case class OutQuery(out: String) extends GaeaStatement
 // case class InEdgeQuery(edge: String) extends GaeaStatement
 // case class OutEdgeQuery(edge: String) extends GaeaStatement
 // case class InVertexQuery(vertex: String) extends GaeaStatement
 // case class OutVertexQuery(vertex: String) extends GaeaStatement
-// case class SelectQuery(steps: List[String]) extends GaeaStatement
 
+// case class SelectQuery(steps: List[String]) extends GaeaStatement
+// case class AsQuery(as: String) extends GaeaStatement
 // case class WithinQuery(property: String, within: List[String])
 // case class HasQuery(has: List[WithinQuery]) extends GaeaStatement
-
-// case class GaeaQuery(statements: List[GaeaStatement]) {
-//   def execute(graph: GaeaGraph) {
-    
-//   }
-// }
 
 abstract class Operation {
   type GremlinVertex = GremlinScala[Vertex, HNil]
   type GremlinEdge = GremlinScala[Edge, HNil]
+
+  val gids = collection.mutable.Map[String, Key[String]]()
+
+  def findGid(key: String): Key[String] = {
+    gids.get(key).getOrElse {
+      val gid = Key[String](key)
+      gids(key) = gid
+      gid
+    }
+  }
 }
 
 case class VertexOperation(vertex: String) extends Operation {
   def operate(graph: GaeaGraph): GremlinVertex = {
     graph.typeQuery(vertex)
+  }
+}
+
+case class HasOperation(key: String, values: List[String]) extends Operation {
+  def operate(vertex: GremlinVertex): GremlinVertex = {
+    val gid = findGid(key)
+    vertex.has(gid, within(values:_*))
   }
 }
 
@@ -80,6 +91,7 @@ trait ApplyOperationDefault extends Poly2 {
 
 object ApplyOperation extends ApplyOperationDefault {
   implicit def vertex[T, L <: HList] = at[VertexOperation, GaeaGraph] ((t, acc) => t.operate(acc))
+  implicit def has[T, L <: HList] = at[HasOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
   implicit def in[T, L <: HList] = at[InOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
   implicit def out[T, L <: HList] = at[OutOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
   implicit def inEdge[T, L <: HList] = at[InEdgeOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
