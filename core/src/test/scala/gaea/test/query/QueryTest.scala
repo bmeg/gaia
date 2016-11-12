@@ -26,10 +26,10 @@ class QueryTest extends FunSuite {
     assert(result.head.value[String]("type") == "Biosample")
   }
 
-  // test("as") {
-  //   val operations = AsOperation(sampleStep) :: HasOperation("barcode", List("X-normal", "Y-tumor")) :: InOperation("sampleOf") :: VertexOperation("individual") :: HNil
-  //   val result = Operation.process(operations, graph).toList
-  //   assert(result.size == 2)
-  //   assert(result.head.value[String]("type") == "Biosample")
-  // }
+  test("as") {
+    val operations = AsOperation(sampleStep) :: HasOperation("barcode", List("X-normal", "Y-tumor")) :: InOperation("sampleOf") :: VertexOperation("individual") :: HNil
+    val result = Operation.process(operations, graph).toList
+    assert(result.size == 2)
+    assert(result.head.value[String]("type") == "Biosample")
+  }
 }
