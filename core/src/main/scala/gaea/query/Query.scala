@@ -15,11 +15,11 @@ import org.apache.tinkerpop.gremlin.process.traversal.P._
 // case class OutEdgeQuery(edge: String) extends GaeaStatement
 // case class InVertexQuery(vertex: String) extends GaeaStatement
 // case class OutVertexQuery(vertex: String) extends GaeaStatement
+// case class WithinQuery(property: String, within: List[String])
+// case class HasQuery(has: List[WithinQuery]) extends GaeaStatement
 
 // case class SelectQuery(steps: List[String]) extends GaeaStatement
 // case class AsQuery(as: String) extends GaeaStatement
-// case class WithinQuery(property: String, within: List[String])
-// case class HasQuery(has: List[WithinQuery]) extends GaeaStatement
 
 abstract class Operation {
   type GremlinVertex = GremlinScala[Vertex, HNil]
@@ -42,12 +42,18 @@ case class VertexOperation(vertex: String) extends Operation {
   }
 }
 
-case class HasOperation(key: String, values: List[String]) extends Operation {
+case class HasOperation[M](key: String, values: List[M]) extends Operation {
   def operate(vertex: GremlinVertex): GremlinVertex = {
-    val gid = findGid(key)
+    val gid = Key[M](key)
     vertex.has(gid, within(values:_*))
   }
 }
+
+// case class AsOperation[A](step: StepLabel[A]) extends Operation {
+//   def operate(g: GremlinScala[A, HNil]): GremlinScala[A, HNil] = {
+//     g.as(step)
+//   }
+// }
 
 case class InOperation(in: String) extends Operation {
   def operate(vertex: GremlinVertex): GremlinVertex = {
@@ -91,7 +97,8 @@ trait ApplyOperationDefault extends Poly2 {
 
 object ApplyOperation extends ApplyOperationDefault {
   implicit def vertex[T, L <: HList] = at[VertexOperation, GaeaGraph] ((t, acc) => t.operate(acc))
-  implicit def has[T, L <: HList] = at[HasOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
+  implicit def has[M, T, L <: HList] = at[HasOperation[M], GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
+  // implicit def as[A, T, L <: HList] = at[AsOperation[A], GremlinScala[A, HNil]] ((t, acc) => t.operate(acc))
   implicit def in[T, L <: HList] = at[InOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
   implicit def out[T, L <: HList] = at[OutOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
   implicit def inEdge[T, L <: HList] = at[InEdgeOperation, GremlinScala[Vertex, HNil]] ((t, acc) => t.operate(acc))
