@@ -1,0 +1,1967 @@
+[info] Loading project definition from /Users/rspangler/Code/gaea/project
+[info] Set current project to gaea (in build file:/Users/rspangler/Code/gaea/)
+[warn] Credentials file /Users/rspangler/.ivy2/.credentials does not exist
+[warn] Credentials file /Users/rspangler/.ivy2/.credentials does not exist
+[warn] Credentials file /Users/rspangler/.ivy2/.credentials does not exist
+[warn] There may be incompatibilities among your library dependencies.
+[warn] Here are some of the libraries that were evicted:
+[warn] 	* org.json4s:json4s-jackson_2.11:3.3.0 -> 3.5.0
+[warn] Run 'evicted' to see detailed eviction warnings
+[info] Compiling 1 Scala source to /Users/rspangler/Code/gaea/core/target/scala-2.11/classes...
+[warn] /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala:104: abstract type pattern M is unchecked since it is eliminated by erasure
+[warn]         case HasOperation(has, within: M) => anvil = {
+[warn]                                        ^
+[warn] /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala:102: match may not be exhaustive.
+[warn] It would fail on the following inputs: AsOperation(_), HasOperation(_, List(_)), HasOperation(_, Nil)
+[warn]       operation match {
+[warn]       ^
+TREE: anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+TREE: {
+  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+}
+TREE: anvil = {
+  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+}
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: matchEnd12(anvil = {
+  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+})
+TREE: {
+  <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+  matchEnd12(anvil = {
+    val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+    anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+  })
+}
+TREE: if (within.isInstanceOf[M])
+  {
+    <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+    matchEnd12(anvil = {
+      val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+      anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+    })
+  }
+else
+  case15()
+TREE: {
+  val has: String = x3.has;
+  val within: List[Any] = x3.within;
+  if (within.isInstanceOf[M])
+    {
+      <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+      matchEnd12(anvil = {
+        val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+        anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+      })
+    }
+  else
+    case15()
+}
+TREE: {
+  <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+  {
+    val has: String = x3.has;
+    val within: List[Any] = x3.within;
+    if (within.isInstanceOf[M])
+      {
+        <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+        matchEnd12(anvil = {
+          val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+          anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+        })
+      }
+    else
+      case15()
+  }
+}
+TREE: if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+  {
+    <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+    {
+      val has: String = x3.has;
+      val within: List[Any] = x3.within;
+      if (within.isInstanceOf[M])
+        {
+          <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+          matchEnd12(anvil = {
+            val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+            anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+          })
+        }
+      else
+        case15()
+    }
+  }
+else
+  case15()
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: case14(){
+  if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+    {
+      <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+      {
+        val has: String = x3.has;
+        val within: List[Any] = x3.within;
+        if (within.isInstanceOf[M])
+          {
+            <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+            matchEnd12(anvil = {
+              val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+              anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+            })
+          }
+        else
+          case15()
+      }
+    }
+  else
+    case15()
+}
+TREE: {
+  case <synthetic> val x1: gaea.query.Operation = operation;
+  case13(){
+    if (x1.isInstanceOf[gaea.query.VertexOperation])
+      {
+        <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+        {
+          val vertex: String = x2.vertex;
+          matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+        }
+      }
+    else
+      case14()
+  };
+  case14(){
+    if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+      {
+        <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+        {
+          val has: String = x3.has;
+          val within: List[Any] = x3.within;
+          if (within.isInstanceOf[M])
+            {
+              <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+              matchEnd12(anvil = {
+                val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+              })
+            }
+          else
+            case15()
+        }
+      }
+    else
+      case15()
+  };
+  case15(){
+    if (x1.isInstanceOf[gaea.query.InOperation])
+      {
+        <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+        {
+          val in: String = x4.in;
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        }
+      }
+    else
+      case16()
+  };
+  case16(){
+    if (x1.isInstanceOf[gaea.query.OutOperation])
+      {
+        <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+        {
+          val out: String = x5.out;
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        }
+      }
+    else
+      case17()
+  };
+  case17(){
+    if (x1.isInstanceOf[gaea.query.InVertexOperation])
+      matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+    else
+      case18()
+  };
+  case18(){
+    if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+      matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+    else
+      case19()
+  };
+  case19(){
+    if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+      matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+    else
+      case20()
+  };
+  case20(){
+    if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+      matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+    else
+      case21()
+  };
+  case21(){
+    matchEnd12(throw new MatchError(x1))
+  };
+  matchEnd12(x: Unit){
+    x
+  }
+}
+TREE: {
+  {
+    case <synthetic> val x1: gaea.query.Operation = operation;
+    case13(){
+      if (x1.isInstanceOf[gaea.query.VertexOperation])
+        {
+          <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+          {
+            val vertex: String = x2.vertex;
+            matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+          }
+        }
+      else
+        case14()
+    };
+    case14(){
+      if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+        {
+          <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+          {
+            val has: String = x3.has;
+            val within: List[Any] = x3.within;
+            if (within.isInstanceOf[M])
+              {
+                <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                matchEnd12(anvil = {
+                  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                })
+              }
+            else
+              case15()
+          }
+        }
+      else
+        case15()
+    };
+    case15(){
+      if (x1.isInstanceOf[gaea.query.InOperation])
+        {
+          <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+          {
+            val in: String = x4.in;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case16()
+    };
+    case16(){
+      if (x1.isInstanceOf[gaea.query.OutOperation])
+        {
+          <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+          {
+            val out: String = x5.out;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case17()
+    };
+    case17(){
+      if (x1.isInstanceOf[gaea.query.InVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case18()
+    };
+    case18(){
+      if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case19()
+    };
+    case19(){
+      if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case20()
+    };
+    case20(){
+      if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case21()
+    };
+    case21(){
+      matchEnd12(throw new MatchError(x1))
+    };
+    matchEnd12(x: Unit){
+      x
+    }
+  };
+  anvil
+}
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: ((operation: gaea.query.Operation) => {
+  {
+    case <synthetic> val x1: gaea.query.Operation = operation;
+    case13(){
+      if (x1.isInstanceOf[gaea.query.VertexOperation])
+        {
+          <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+          {
+            val vertex: String = x2.vertex;
+            matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+          }
+        }
+      else
+        case14()
+    };
+    case14(){
+      if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+        {
+          <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+          {
+            val has: String = x3.has;
+            val within: List[Any] = x3.within;
+            if (within.isInstanceOf[M])
+              {
+                <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                matchEnd12(anvil = {
+                  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                })
+              }
+            else
+              case15()
+          }
+        }
+      else
+        case15()
+    };
+    case15(){
+      if (x1.isInstanceOf[gaea.query.InOperation])
+        {
+          <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+          {
+            val in: String = x4.in;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case16()
+    };
+    case16(){
+      if (x1.isInstanceOf[gaea.query.OutOperation])
+        {
+          <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+          {
+            val out: String = x5.out;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case17()
+    };
+    case17(){
+      if (x1.isInstanceOf[gaea.query.InVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case18()
+    };
+    case18(){
+      if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case19()
+    };
+    case19(){
+      if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case20()
+    };
+    case20(){
+      if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case21()
+    };
+    case21(){
+      matchEnd12(throw new MatchError(x1))
+    };
+    matchEnd12(x: Unit){
+      x
+    }
+  };
+  anvil
+})
+TRANSFORM: null
+TREE: GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+  {
+    case <synthetic> val x1: gaea.query.Operation = operation;
+    case13(){
+      if (x1.isInstanceOf[gaea.query.VertexOperation])
+        {
+          <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+          {
+            val vertex: String = x2.vertex;
+            matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+          }
+        }
+      else
+        case14()
+    };
+    case14(){
+      if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+        {
+          <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+          {
+            val has: String = x3.has;
+            val within: List[Any] = x3.within;
+            if (within.isInstanceOf[M])
+              {
+                <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                matchEnd12(anvil = {
+                  val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                })
+              }
+            else
+              case15()
+          }
+        }
+      else
+        case15()
+    };
+    case15(){
+      if (x1.isInstanceOf[gaea.query.InOperation])
+        {
+          <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+          {
+            val in: String = x4.in;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case16()
+    };
+    case16(){
+      if (x1.isInstanceOf[gaea.query.OutOperation])
+        {
+          <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+          {
+            val out: String = x5.out;
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          }
+        }
+      else
+        case17()
+    };
+    case17(){
+      if (x1.isInstanceOf[gaea.query.InVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case18()
+    };
+    case18(){
+      if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+      else
+        case19()
+    };
+    case19(){
+      if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case20()
+    };
+    case20(){
+      if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+        matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+      else
+        case21()
+    };
+    case21(){
+      matchEnd12(throw new MatchError(x1))
+    };
+    matchEnd12(x: Unit){
+      x
+    }
+  };
+  anvil
+}))
+TREE: {
+  var anvil: Any = graph;
+  GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+    {
+      case <synthetic> val x1: gaea.query.Operation = operation;
+      case13(){
+        if (x1.isInstanceOf[gaea.query.VertexOperation])
+          {
+            <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+            {
+              val vertex: String = x2.vertex;
+              matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+            }
+          }
+        else
+          case14()
+      };
+      case14(){
+        if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+          {
+            <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+            {
+              val has: String = x3.has;
+              val within: List[Any] = x3.within;
+              if (within.isInstanceOf[M])
+                {
+                  <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                  matchEnd12(anvil = {
+                    val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                    anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                  })
+                }
+              else
+                case15()
+            }
+          }
+        else
+          case15()
+      };
+      case15(){
+        if (x1.isInstanceOf[gaea.query.InOperation])
+          {
+            <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+            {
+              val in: String = x4.in;
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            }
+          }
+        else
+          case16()
+      };
+      case16(){
+        if (x1.isInstanceOf[gaea.query.OutOperation])
+          {
+            <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+            {
+              val out: String = x5.out;
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            }
+          }
+        else
+          case17()
+      };
+      case17(){
+        if (x1.isInstanceOf[gaea.query.InVertexOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+        else
+          case18()
+      };
+      case18(){
+        if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+        else
+          case19()
+      };
+      case19(){
+        if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        else
+          case20()
+      };
+      case20(){
+        if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        else
+          case21()
+      };
+      case21(){
+        matchEnd12(throw new MatchError(x1))
+      };
+      matchEnd12(x: Unit){
+        x
+      }
+    };
+    anvil
+  }));
+  anvil.asInstanceOf[R]
+}
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: def operate[In <: shapeless.HList, R, M, G](graph: gaea.graph.GaeaGraph)(implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[G,shapeless.HNil]]): R = {
+  var anvil: Any = graph;
+  GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+    {
+      case <synthetic> val x1: gaea.query.Operation = operation;
+      case13(){
+        if (x1.isInstanceOf[gaea.query.VertexOperation])
+          {
+            <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+            {
+              val vertex: String = x2.vertex;
+              matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+            }
+          }
+        else
+          case14()
+      };
+      case14(){
+        if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+          {
+            <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+            {
+              val has: String = x3.has;
+              val within: List[Any] = x3.within;
+              if (within.isInstanceOf[M])
+                {
+                  <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                  matchEnd12(anvil = {
+                    val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                    anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                  })
+                }
+              else
+                case15()
+            }
+          }
+        else
+          case15()
+      };
+      case15(){
+        if (x1.isInstanceOf[gaea.query.InOperation])
+          {
+            <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+            {
+              val in: String = x4.in;
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            }
+          }
+        else
+          case16()
+      };
+      case16(){
+        if (x1.isInstanceOf[gaea.query.OutOperation])
+          {
+            <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+            {
+              val out: String = x5.out;
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            }
+          }
+        else
+          case17()
+      };
+      case17(){
+        if (x1.isInstanceOf[gaea.query.InVertexOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+        else
+          case18()
+      };
+      case18(){
+        if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+        else
+          case19()
+      };
+      case19(){
+        if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        else
+          case20()
+      };
+      case20(){
+        if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+          matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+        else
+          case21()
+      };
+      case21(){
+        matchEnd12(throw new MatchError(x1))
+      };
+      matchEnd12(x: Unit){
+        x
+      }
+    };
+    anvil
+  }));
+  anvil.asInstanceOf[R]
+}
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: AnyRef with Product with Serializable {
+  <caseaccessor> <paramaccessor> private[this] val query: List[gaea.query.Operation] = _;
+  <stable> <caseaccessor> <accessor> <paramaccessor> def query: List[gaea.query.Operation] = GaeaQuery.this.query;
+  def <init>(query: List[gaea.query.Operation]): gaea.query.GaeaQuery = {
+    GaeaQuery.super.<init>();
+    ()
+  };
+  def operate[In <: shapeless.HList, R, M, G](graph: gaea.graph.GaeaGraph)(implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[G,shapeless.HNil]]): R = {
+    var anvil: Any = graph;
+    GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+      {
+        case <synthetic> val x1: gaea.query.Operation = operation;
+        case13(){
+          if (x1.isInstanceOf[gaea.query.VertexOperation])
+            {
+              <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+              {
+                val vertex: String = x2.vertex;
+                matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+              }
+            }
+          else
+            case14()
+        };
+        case14(){
+          if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+            {
+              <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+              {
+                val has: String = x3.has;
+                val within: List[Any] = x3.within;
+                if (within.isInstanceOf[M])
+                  {
+                    <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                    matchEnd12(anvil = {
+                      val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                      anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                    })
+                  }
+                else
+                  case15()
+              }
+            }
+          else
+            case15()
+        };
+        case15(){
+          if (x1.isInstanceOf[gaea.query.InOperation])
+            {
+              <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+              {
+                val in: String = x4.in;
+                matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+              }
+            }
+          else
+            case16()
+        };
+        case16(){
+          if (x1.isInstanceOf[gaea.query.OutOperation])
+            {
+              <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+              {
+                val out: String = x5.out;
+                matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+              }
+            }
+          else
+            case17()
+        };
+        case17(){
+          if (x1.isInstanceOf[gaea.query.InVertexOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+          else
+            case18()
+        };
+        case18(){
+          if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+          else
+            case19()
+        };
+        case19(){
+          if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          else
+            case20()
+        };
+        case20(){
+          if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          else
+            case21()
+        };
+        case21(){
+          matchEnd12(throw new MatchError(x1))
+        };
+        matchEnd12(x: Unit){
+          x
+        }
+      };
+      anvil
+    }));
+    anvil.asInstanceOf[R]
+  };
+  <synthetic> def copy(query: List[gaea.query.Operation] = query): gaea.query.GaeaQuery = new GaeaQuery(query);
+  <synthetic> def copy$default$1: List[gaea.query.Operation] = GaeaQuery.this.query;
+  override <synthetic> def productPrefix: String = "GaeaQuery";
+  <synthetic> def productArity: Int = 1;
+  <synthetic> def productElement(x$1: Int): Any = {
+    case <synthetic> val x1: Int = x$1;
+    x1 match {
+      case 0 => GaeaQuery.this.query
+      case _ => throw new IndexOutOfBoundsException(x$1.toString())
+    }
+  };
+  override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](GaeaQuery.this);
+  <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.GaeaQuery]();
+  override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(GaeaQuery.this);
+  override <synthetic> def toString(): String = ScalaRunTime.this._toString(GaeaQuery.this);
+  override <synthetic> def equals(x$1: Any): Boolean = GaeaQuery.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.GaeaQuery])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+    <synthetic> val GaeaQuery$1: gaea.query.GaeaQuery = x$1.asInstanceOf[gaea.query.GaeaQuery];
+    GaeaQuery.this.query.==(GaeaQuery$1.query).&&(GaeaQuery$1.canEqual(GaeaQuery.this))
+  }))
+}
+TRANSFORM: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+TREE: case class GaeaQuery extends AnyRef with Product with Serializable {
+  <caseaccessor> <paramaccessor> private[this] val query: List[gaea.query.Operation] = _;
+  <stable> <caseaccessor> <accessor> <paramaccessor> def query: List[gaea.query.Operation] = GaeaQuery.this.query;
+  def <init>(query: List[gaea.query.Operation]): gaea.query.GaeaQuery = {
+    GaeaQuery.super.<init>();
+    ()
+  };
+  def operate[In <: shapeless.HList, R, M, G](graph: gaea.graph.GaeaGraph)(implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[G,shapeless.HNil]]): R = {
+    var anvil: Any = graph;
+    GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+      {
+        case <synthetic> val x1: gaea.query.Operation = operation;
+        case13(){
+          if (x1.isInstanceOf[gaea.query.VertexOperation])
+            {
+              <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+              {
+                val vertex: String = x2.vertex;
+                matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+              }
+            }
+          else
+            case14()
+        };
+        case14(){
+          if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+            {
+              <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+              {
+                val has: String = x3.has;
+                val within: List[Any] = x3.within;
+                if (within.isInstanceOf[M])
+                  {
+                    <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                    matchEnd12(anvil = {
+                      val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                      anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                    })
+                  }
+                else
+                  case15()
+              }
+            }
+          else
+            case15()
+        };
+        case15(){
+          if (x1.isInstanceOf[gaea.query.InOperation])
+            {
+              <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+              {
+                val in: String = x4.in;
+                matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+              }
+            }
+          else
+            case16()
+        };
+        case16(){
+          if (x1.isInstanceOf[gaea.query.OutOperation])
+            {
+              <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+              {
+                val out: String = x5.out;
+                matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+              }
+            }
+          else
+            case17()
+        };
+        case17(){
+          if (x1.isInstanceOf[gaea.query.InVertexOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+          else
+            case18()
+        };
+        case18(){
+          if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+          else
+            case19()
+        };
+        case19(){
+          if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          else
+            case20()
+        };
+        case20(){
+          if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+            matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+          else
+            case21()
+        };
+        case21(){
+          matchEnd12(throw new MatchError(x1))
+        };
+        matchEnd12(x: Unit){
+          x
+        }
+      };
+      anvil
+    }));
+    anvil.asInstanceOf[R]
+  };
+  <synthetic> def copy(query: List[gaea.query.Operation] = query): gaea.query.GaeaQuery = new GaeaQuery(query);
+  <synthetic> def copy$default$1: List[gaea.query.Operation] = GaeaQuery.this.query;
+  override <synthetic> def productPrefix: String = "GaeaQuery";
+  <synthetic> def productArity: Int = 1;
+  <synthetic> def productElement(x$1: Int): Any = {
+    case <synthetic> val x1: Int = x$1;
+    x1 match {
+      case 0 => GaeaQuery.this.query
+      case _ => throw new IndexOutOfBoundsException(x$1.toString())
+    }
+  };
+  override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](GaeaQuery.this);
+  <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.GaeaQuery]();
+  override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(GaeaQuery.this);
+  override <synthetic> def toString(): String = ScalaRunTime.this._toString(GaeaQuery.this);
+  override <synthetic> def equals(x$1: Any): Boolean = GaeaQuery.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.GaeaQuery])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+    <synthetic> val GaeaQuery$1: gaea.query.GaeaQuery = x$1.asInstanceOf[gaea.query.GaeaQuery];
+    GaeaQuery.this.query.==(GaeaQuery$1.query).&&(GaeaQuery$1.canEqual(GaeaQuery.this))
+  }))
+}
+TRANSFORM: null
+TREE: package gaea.query {
+  import gaea.graph._;
+  import shapeless._;
+  import shapeless.ops.hlist.RightFolder;
+  import shapeless.ops.hlist.Prepend;
+  import gremlin.scala._;
+  import org.apache.tinkerpop.gremlin.process.traversal.P;
+  sealed abstract trait Operation extends scala.AnyRef;
+  case class VertexOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val vertex: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def vertex: String = VertexOperation.this.vertex;
+    def <init>(vertex: String): gaea.query.VertexOperation = {
+      VertexOperation.super.<init>();
+      ()
+    };
+    def operate(input: gaea.graph.GaeaGraph): gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HNil] = input.typeQuery(VertexOperation.this.vertex);
+    <synthetic> def copy(vertex: String = vertex): gaea.query.VertexOperation = new VertexOperation(vertex);
+    <synthetic> def copy$default$1: String = VertexOperation.this.vertex;
+    override <synthetic> def productPrefix: String = "VertexOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => VertexOperation.this.vertex
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](VertexOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.VertexOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(VertexOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(VertexOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = VertexOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.VertexOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val VertexOperation$1: gaea.query.VertexOperation = x$1.asInstanceOf[gaea.query.VertexOperation];
+      VertexOperation.this.vertex.==(VertexOperation$1.vertex).&&(VertexOperation$1.canEqual(VertexOperation.this))
+    }))
+  };
+  <synthetic> object VertexOperation extends scala.runtime.AbstractFunction1[String,gaea.query.VertexOperation] with Serializable {
+    def <init>(): gaea.query.VertexOperation.type = {
+      VertexOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "VertexOperation";
+    case <synthetic> def apply(vertex: String): gaea.query.VertexOperation = new VertexOperation(vertex);
+    case <synthetic> def unapply(x$0: gaea.query.VertexOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.vertex);
+    <synthetic> private def readResolve(): Object = query.this.VertexOperation
+  };
+  case class HasOperation[M] extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val has: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def has: String = HasOperation.this.has;
+    <caseaccessor> <paramaccessor> private[this] val within: List[M] = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def within: List[M] = HasOperation.this.within;
+    def <init>(has: String, within: List[M]): gaea.query.HasOperation[M] = {
+      HasOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels] = {
+      val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](HasOperation.this.has);
+      input.has[M](gid, org.apache.tinkerpop.gremlin.process.traversal.P.within[M]((HasOperation.this.within: _*)))(scala.this.Predef.$conforms[gremlin.scala.Vertex])
+    };
+    <synthetic> def copy[M](has: String = has, within: List[M] = within): gaea.query.HasOperation[M] = new gaea.query.HasOperation[M](has, within);
+    <synthetic> def copy$default$1[M]: String = HasOperation.this.has;
+    <synthetic> def copy$default$2[M]: List[M] = HasOperation.this.within;
+    override <synthetic> def productPrefix: String = "HasOperation";
+    <synthetic> def productArity: Int = 2;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => HasOperation.this.has
+        case 1 => HasOperation.this.within
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](HasOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.HasOperation[_]]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(HasOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(HasOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = HasOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.HasOperation[M]])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val HasOperation$1: gaea.query.HasOperation[M] = x$1.asInstanceOf[gaea.query.HasOperation[M]];
+      HasOperation.this.has.==(HasOperation$1.has).&&(HasOperation.this.within.==(HasOperation$1.within)).&&(HasOperation$1.canEqual(HasOperation.this))
+    }))
+  };
+  <synthetic> object HasOperation extends AnyRef with Serializable {
+    def <init>(): gaea.query.HasOperation.type = {
+      HasOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "HasOperation";
+    case <synthetic> def apply[M](has: String, within: List[M]): gaea.query.HasOperation[M] = new gaea.query.HasOperation[M](has, within);
+    case <synthetic> def unapply[M](x$0: gaea.query.HasOperation[M]): Option[(String, List[M])] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[(String, List[M])](scala.Tuple2.apply[String, List[M]](x$0.has, x$0.within));
+    <synthetic> private def readResolve(): Object = query.this.HasOperation
+  };
+  case class AsOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val as: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def as: String = AsOperation.this.as;
+    def <init>(as: String): gaea.query.AsOperation = {
+      AsOperation.super.<init>();
+      ()
+    };
+    def operate[A, In <: shapeless.HList](input: gremlin.scala.GremlinScala[A,In])(implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[A,shapeless.HNil]]): gremlin.scala.GremlinScala[A,p.Out] = input.as(AsOperation.this.as)(p);
+    <synthetic> def copy(as: String = as): gaea.query.AsOperation = new AsOperation(as);
+    <synthetic> def copy$default$1: String = AsOperation.this.as;
+    override <synthetic> def productPrefix: String = "AsOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => AsOperation.this.as
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](AsOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.AsOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(AsOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(AsOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = AsOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.AsOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val AsOperation$1: gaea.query.AsOperation = x$1.asInstanceOf[gaea.query.AsOperation];
+      AsOperation.this.as.==(AsOperation$1.as).&&(AsOperation$1.canEqual(AsOperation.this))
+    }))
+  };
+  <synthetic> object AsOperation extends scala.runtime.AbstractFunction1[String,gaea.query.AsOperation] with Serializable {
+    def <init>(): gaea.query.AsOperation.type = {
+      AsOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "AsOperation";
+    case <synthetic> def apply(as: String): gaea.query.AsOperation = new AsOperation(as);
+    case <synthetic> def unapply(x$0: gaea.query.AsOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.as);
+    <synthetic> private def readResolve(): Object = query.this.AsOperation
+  };
+  case class InOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val in: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def in: String = InOperation.this.in;
+    def <init>(in: String): gaea.query.InOperation = {
+      InOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels] = input.in(InOperation.this.in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]);
+    <synthetic> def copy(in: String = in): gaea.query.InOperation = new InOperation(in);
+    <synthetic> def copy$default$1: String = InOperation.this.in;
+    override <synthetic> def productPrefix: String = "InOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => InOperation.this.in
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](InOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.InOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(InOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(InOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = InOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.InOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val InOperation$1: gaea.query.InOperation = x$1.asInstanceOf[gaea.query.InOperation];
+      InOperation.this.in.==(InOperation$1.in).&&(InOperation$1.canEqual(InOperation.this))
+    }))
+  };
+  <synthetic> object InOperation extends scala.runtime.AbstractFunction1[String,gaea.query.InOperation] with Serializable {
+    def <init>(): gaea.query.InOperation.type = {
+      InOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "InOperation";
+    case <synthetic> def apply(in: String): gaea.query.InOperation = new InOperation(in);
+    case <synthetic> def unapply(x$0: gaea.query.InOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.in);
+    <synthetic> private def readResolve(): Object = query.this.InOperation
+  };
+  case class OutOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val out: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def out: String = OutOperation.this.out;
+    def <init>(out: String): gaea.query.OutOperation = {
+      OutOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels] = input.out(OutOperation.this.out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]);
+    <synthetic> def copy(out: String = out): gaea.query.OutOperation = new OutOperation(out);
+    <synthetic> def copy$default$1: String = OutOperation.this.out;
+    override <synthetic> def productPrefix: String = "OutOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => OutOperation.this.out
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](OutOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.OutOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(OutOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(OutOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = OutOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.OutOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val OutOperation$1: gaea.query.OutOperation = x$1.asInstanceOf[gaea.query.OutOperation];
+      OutOperation.this.out.==(OutOperation$1.out).&&(OutOperation$1.canEqual(OutOperation.this))
+    }))
+  };
+  <synthetic> object OutOperation extends scala.runtime.AbstractFunction1[String,gaea.query.OutOperation] with Serializable {
+    def <init>(): gaea.query.OutOperation.type = {
+      OutOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "OutOperation";
+    case <synthetic> def apply(out: String): gaea.query.OutOperation = new OutOperation(out);
+    case <synthetic> def unapply(x$0: gaea.query.OutOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.out);
+    <synthetic> private def readResolve(): Object = query.this.OutOperation
+  };
+  case class InEdgeOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val inEdge: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def inEdge: String = InEdgeOperation.this.inEdge;
+    def <init>(inEdge: String): gaea.query.InEdgeOperation = {
+      InEdgeOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Edge,Labels] = input.inE(InEdgeOperation.this.inEdge)(scala.this.Predef.$conforms[gremlin.scala.Vertex]);
+    <synthetic> def copy(inEdge: String = inEdge): gaea.query.InEdgeOperation = new InEdgeOperation(inEdge);
+    <synthetic> def copy$default$1: String = InEdgeOperation.this.inEdge;
+    override <synthetic> def productPrefix: String = "InEdgeOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => InEdgeOperation.this.inEdge
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](InEdgeOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.InEdgeOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(InEdgeOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(InEdgeOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = InEdgeOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val InEdgeOperation$1: gaea.query.InEdgeOperation = x$1.asInstanceOf[gaea.query.InEdgeOperation];
+      InEdgeOperation.this.inEdge.==(InEdgeOperation$1.inEdge).&&(InEdgeOperation$1.canEqual(InEdgeOperation.this))
+    }))
+  };
+  <synthetic> object InEdgeOperation extends scala.runtime.AbstractFunction1[String,gaea.query.InEdgeOperation] with Serializable {
+    def <init>(): gaea.query.InEdgeOperation.type = {
+      InEdgeOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "InEdgeOperation";
+    case <synthetic> def apply(inEdge: String): gaea.query.InEdgeOperation = new InEdgeOperation(inEdge);
+    case <synthetic> def unapply(x$0: gaea.query.InEdgeOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.inEdge);
+    <synthetic> private def readResolve(): Object = query.this.InEdgeOperation
+  };
+  case class OutEdgeOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val outEdge: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def outEdge: String = OutEdgeOperation.this.outEdge;
+    def <init>(outEdge: String): gaea.query.OutEdgeOperation = {
+      OutEdgeOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Edge,Labels] = input.outE(OutEdgeOperation.this.outEdge)(scala.this.Predef.$conforms[gremlin.scala.Vertex]);
+    <synthetic> def copy(outEdge: String = outEdge): gaea.query.OutEdgeOperation = new OutEdgeOperation(outEdge);
+    <synthetic> def copy$default$1: String = OutEdgeOperation.this.outEdge;
+    override <synthetic> def productPrefix: String = "OutEdgeOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => OutEdgeOperation.this.outEdge
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](OutEdgeOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.OutEdgeOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(OutEdgeOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(OutEdgeOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = OutEdgeOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val OutEdgeOperation$1: gaea.query.OutEdgeOperation = x$1.asInstanceOf[gaea.query.OutEdgeOperation];
+      OutEdgeOperation.this.outEdge.==(OutEdgeOperation$1.outEdge).&&(OutEdgeOperation$1.canEqual(OutEdgeOperation.this))
+    }))
+  };
+  <synthetic> object OutEdgeOperation extends scala.runtime.AbstractFunction1[String,gaea.query.OutEdgeOperation] with Serializable {
+    def <init>(): gaea.query.OutEdgeOperation.type = {
+      OutEdgeOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "OutEdgeOperation";
+    case <synthetic> def apply(outEdge: String): gaea.query.OutEdgeOperation = new OutEdgeOperation(outEdge);
+    case <synthetic> def unapply(x$0: gaea.query.OutEdgeOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.outEdge);
+    <synthetic> private def readResolve(): Object = query.this.OutEdgeOperation
+  };
+  case class InVertexOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val inVertex: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def inVertex: String = InVertexOperation.this.inVertex;
+    def <init>(inVertex: String): gaea.query.InVertexOperation = {
+      InVertexOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Edge,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels] = input.inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]);
+    <synthetic> def copy(inVertex: String = inVertex): gaea.query.InVertexOperation = new InVertexOperation(inVertex);
+    <synthetic> def copy$default$1: String = InVertexOperation.this.inVertex;
+    override <synthetic> def productPrefix: String = "InVertexOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => InVertexOperation.this.inVertex
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](InVertexOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.InVertexOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(InVertexOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(InVertexOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = InVertexOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.InVertexOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val InVertexOperation$1: gaea.query.InVertexOperation = x$1.asInstanceOf[gaea.query.InVertexOperation];
+      InVertexOperation.this.inVertex.==(InVertexOperation$1.inVertex).&&(InVertexOperation$1.canEqual(InVertexOperation.this))
+    }))
+  };
+  <synthetic> object InVertexOperation extends scala.runtime.AbstractFunction1[String,gaea.query.InVertexOperation] with Serializable {
+    def <init>(): gaea.query.InVertexOperation.type = {
+      InVertexOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "InVertexOperation";
+    case <synthetic> def apply(inVertex: String): gaea.query.InVertexOperation = new InVertexOperation(inVertex);
+    case <synthetic> def unapply(x$0: gaea.query.InVertexOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.inVertex);
+    <synthetic> private def readResolve(): Object = query.this.InVertexOperation
+  };
+  case class OutVertexOperation extends AnyRef with gaea.query.Operation with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val outVertex: String = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def outVertex: String = OutVertexOperation.this.outVertex;
+    def <init>(outVertex: String): gaea.query.OutVertexOperation = {
+      OutVertexOperation.super.<init>();
+      ()
+    };
+    def operate[Labels <: shapeless.HList](input: gremlin.scala.GremlinScala[gremlin.scala.Edge,Labels]): gremlin.scala.GremlinScala[gremlin.scala.Vertex,Labels] = input.outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]);
+    <synthetic> def copy(outVertex: String = outVertex): gaea.query.OutVertexOperation = new OutVertexOperation(outVertex);
+    <synthetic> def copy$default$1: String = OutVertexOperation.this.outVertex;
+    override <synthetic> def productPrefix: String = "OutVertexOperation";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => OutVertexOperation.this.outVertex
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](OutVertexOperation.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.OutVertexOperation]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(OutVertexOperation.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(OutVertexOperation.this);
+    override <synthetic> def equals(x$1: Any): Boolean = OutVertexOperation.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val OutVertexOperation$1: gaea.query.OutVertexOperation = x$1.asInstanceOf[gaea.query.OutVertexOperation];
+      OutVertexOperation.this.outVertex.==(OutVertexOperation$1.outVertex).&&(OutVertexOperation$1.canEqual(OutVertexOperation.this))
+    }))
+  };
+  <synthetic> object OutVertexOperation extends scala.runtime.AbstractFunction1[String,gaea.query.OutVertexOperation] with Serializable {
+    def <init>(): gaea.query.OutVertexOperation.type = {
+      OutVertexOperation.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "OutVertexOperation";
+    case <synthetic> def apply(outVertex: String): gaea.query.OutVertexOperation = new OutVertexOperation(outVertex);
+    case <synthetic> def unapply(x$0: gaea.query.OutVertexOperation): Option[String] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[String](x$0.outVertex);
+    <synthetic> private def readResolve(): Object = query.this.OutVertexOperation
+  };
+  case class GaeaQuery extends AnyRef with Product with Serializable {
+    <caseaccessor> <paramaccessor> private[this] val query: List[gaea.query.Operation] = _;
+    <stable> <caseaccessor> <accessor> <paramaccessor> def query: List[gaea.query.Operation] = GaeaQuery.this.query;
+    def <init>(query: List[gaea.query.Operation]): gaea.query.GaeaQuery = {
+      GaeaQuery.super.<init>();
+      ()
+    };
+    def operate[In <: shapeless.HList, R, M, G](graph: gaea.graph.GaeaGraph)(implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[G,shapeless.HNil]]): R = {
+      var anvil: Any = graph;
+      GaeaQuery.this.query.foreach[Any](((operation: gaea.query.Operation) => {
+        {
+          case <synthetic> val x1: gaea.query.Operation = operation;
+          case13(){
+            if (x1.isInstanceOf[gaea.query.VertexOperation])
+              {
+                <synthetic> val x2: gaea.query.VertexOperation = (x1.asInstanceOf[gaea.query.VertexOperation]: gaea.query.VertexOperation);
+                {
+                  val vertex: String = x2.vertex;
+                  matchEnd12(anvil = anvil.asInstanceOf[gaea.graph.GaeaGraph].typeQuery(vertex))
+                }
+              }
+            else
+              case14()
+          };
+          case14(){
+            if (x1.isInstanceOf[gaea.query.HasOperation[Any]])
+              {
+                <synthetic> val x3: gaea.query.HasOperation[Any] = (x1.asInstanceOf[gaea.query.HasOperation[Any]]: gaea.query.HasOperation[Any]);
+                {
+                  val has: String = x3.has;
+                  val within: List[Any] = x3.within;
+                  if (within.isInstanceOf[M])
+                    {
+                      <synthetic> val x10: List[Any] with M = (within.asInstanceOf[List[Any] with M]: List[Any] with M);
+                      matchEnd12(anvil = {
+                        val gid: gremlin.scala.Key[M] = gremlin.scala.Key.apply[M](has);
+                        anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+                      })
+                    }
+                  else
+                    case15()
+                }
+              }
+            else
+              case15()
+          };
+          case15(){
+            if (x1.isInstanceOf[gaea.query.InOperation])
+              {
+                <synthetic> val x4: gaea.query.InOperation = (x1.asInstanceOf[gaea.query.InOperation]: gaea.query.InOperation);
+                {
+                  val in: String = x4.in;
+                  matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].in(in)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+                }
+              }
+            else
+              case16()
+          };
+          case16(){
+            if (x1.isInstanceOf[gaea.query.OutOperation])
+              {
+                <synthetic> val x5: gaea.query.OutOperation = (x1.asInstanceOf[gaea.query.OutOperation]: gaea.query.OutOperation);
+                {
+                  val out: String = x5.out;
+                  matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].out(out)(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+                }
+              }
+            else
+              case17()
+          };
+          case17(){
+            if (x1.isInstanceOf[gaea.query.InVertexOperation])
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].inV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+            else
+              case18()
+          };
+          case18(){
+            if (x1.isInstanceOf[gaea.query.OutVertexOperation])
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Edge,shapeless.HList]].outV()(scala.this.Predef.$conforms[gremlin.scala.Edge]))
+            else
+              case19()
+          };
+          case19(){
+            if (x1.isInstanceOf[gaea.query.InEdgeOperation])
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].inE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            else
+              case20()
+          };
+          case20(){
+            if (x1.isInstanceOf[gaea.query.OutEdgeOperation])
+              matchEnd12(anvil = anvil.asInstanceOf[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HList]].outE()(scala.this.Predef.$conforms[gremlin.scala.Vertex]))
+            else
+              case21()
+          };
+          case21(){
+            matchEnd12(throw new MatchError(x1))
+          };
+          matchEnd12(x: Unit){
+            x
+          }
+        };
+        anvil
+      }));
+      anvil.asInstanceOf[R]
+    };
+    <synthetic> def copy(query: List[gaea.query.Operation] = query): gaea.query.GaeaQuery = new GaeaQuery(query);
+    <synthetic> def copy$default$1: List[gaea.query.Operation] = GaeaQuery.this.query;
+    override <synthetic> def productPrefix: String = "GaeaQuery";
+    <synthetic> def productArity: Int = 1;
+    <synthetic> def productElement(x$1: Int): Any = {
+      case <synthetic> val x1: Int = x$1;
+      x1 match {
+        case 0 => GaeaQuery.this.query
+        case _ => throw new IndexOutOfBoundsException(x$1.toString())
+      }
+    };
+    override <synthetic> def productIterator: Iterator[Any] = runtime.this.ScalaRunTime.typedProductIterator[Any](GaeaQuery.this);
+    <synthetic> def canEqual(x$1: Any): Boolean = x$1.$isInstanceOf[gaea.query.GaeaQuery]();
+    override <synthetic> def hashCode(): Int = ScalaRunTime.this._hashCode(GaeaQuery.this);
+    override <synthetic> def toString(): String = ScalaRunTime.this._toString(GaeaQuery.this);
+    override <synthetic> def equals(x$1: Any): Boolean = GaeaQuery.this.eq(x$1.asInstanceOf[Object]).||({
+  case <synthetic> val x1: Any = x$1;
+  case5(){
+    if (x1.isInstanceOf[gaea.query.GaeaQuery])
+      matchEnd4(true)
+    else
+      case6()
+  };
+  case6(){
+    matchEnd4(false)
+  };
+  matchEnd4(x: Boolean){
+    x
+  }
+}.&&({
+      <synthetic> val GaeaQuery$1: gaea.query.GaeaQuery = x$1.asInstanceOf[gaea.query.GaeaQuery];
+      GaeaQuery.this.query.==(GaeaQuery$1.query).&&(GaeaQuery$1.canEqual(GaeaQuery.this))
+    }))
+  };
+  <synthetic> object GaeaQuery extends scala.runtime.AbstractFunction1[List[gaea.query.Operation],gaea.query.GaeaQuery] with Serializable {
+    def <init>(): gaea.query.GaeaQuery.type = {
+      GaeaQuery.super.<init>();
+      ()
+    };
+    final override <synthetic> def toString(): String = "GaeaQuery";
+    case <synthetic> def apply(query: List[gaea.query.Operation]): gaea.query.GaeaQuery = new GaeaQuery(query);
+    case <synthetic> def unapply(x$0: gaea.query.GaeaQuery): Option[List[gaea.query.Operation]] = if (x$0.==(null))
+      scala.this.None
+    else
+      Some.apply[List[gaea.query.Operation]](x$0.query);
+    <synthetic> private def readResolve(): Object = query.this.GaeaQuery
+  };
+  abstract trait ApplyOperationDefault extends AnyRef with shapeless.Poly2 {
+    def /*ApplyOperationDefault*/$init$(): Unit = {
+      ()
+    };
+    implicit def default[T, L <: shapeless.HList]: ApplyOperationDefault.this.Case[T,L]{type Result = L} = ApplyOperationDefault.this.at[T, L].apply[L](((x$1: T, acc: L) => acc))
+  };
+  object ApplyOperation extends AnyRef with gaea.query.ApplyOperationDefault {
+    def <init>(): gaea.query.ApplyOperation.type = {
+      ApplyOperation.super.<init>();
+      ()
+    };
+    implicit def vertex[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.VertexOperation,gaea.graph.GaeaGraph]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HNil]} = ApplyOperation.this.at[gaea.query.VertexOperation, gaea.graph.GaeaGraph].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,shapeless.HNil]](((t: gaea.query.VertexOperation, acc: gaea.graph.GaeaGraph) => t.operate(acc)));
+    implicit def has[M, T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.HasOperation[M],gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]} = ApplyOperation.this.at[gaea.query.HasOperation[M], gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]](((t: gaea.query.HasOperation[M], acc: gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]) => t.operate[S](acc)));
+    implicit def as[A, T, L <: shapeless.HList, In <: shapeless.HList](implicit p: shapeless.ops.hlist.Prepend[In,shapeless.::[A,shapeless.HNil]]): gaea.query.ApplyOperation.Case[gaea.query.AsOperation,gremlin.scala.GremlinScala[A,In]]{type Result = gremlin.scala.GremlinScala[A,p.Out]} = ApplyOperation.this.at[gaea.query.AsOperation, gremlin.scala.GremlinScala[A,In]].apply[gremlin.scala.GremlinScala[A,p.Out]](((t: gaea.query.AsOperation, acc: gremlin.scala.GremlinScala[A,In]) => t.operate[A, In](acc)(p)));
+    implicit def in[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.InOperation,gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]} = ApplyOperation.this.at[gaea.query.InOperation, gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]](((t: gaea.query.InOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]) => t.operate[S](acc)));
+    implicit def out[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.OutOperation,gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]} = ApplyOperation.this.at[gaea.query.OutOperation, gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]](((t: gaea.query.OutOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]) => t.operate[S](acc)));
+    implicit def inEdge[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.InEdgeOperation,gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Edge,S]} = ApplyOperation.this.at[gaea.query.InEdgeOperation, gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Edge,S]](((t: gaea.query.InEdgeOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]) => t.operate[S](acc)));
+    implicit def outEdge[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.OutEdgeOperation,gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Edge,S]} = ApplyOperation.this.at[gaea.query.OutEdgeOperation, gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Edge,S]](((t: gaea.query.OutEdgeOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]) => t.operate[S](acc)));
+    implicit def inVertex[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.InVertexOperation,gremlin.scala.GremlinScala[gremlin.scala.Edge,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]} = ApplyOperation.this.at[gaea.query.InVertexOperation, gremlin.scala.GremlinScala[gremlin.scala.Edge,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]](((t: gaea.query.InVertexOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Edge,S]) => t.operate[S](acc)));
+    implicit def outVertex[T, L <: shapeless.HList, S <: shapeless.HList]: gaea.query.ApplyOperation.Case[gaea.query.OutVertexOperation,gremlin.scala.GremlinScala[gremlin.scala.Edge,S]]{type Result = gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]} = ApplyOperation.this.at[gaea.query.OutVertexOperation, gremlin.scala.GremlinScala[gremlin.scala.Edge,S]].apply[gremlin.scala.GremlinScala[gremlin.scala.Vertex,S]](((t: gaea.query.OutVertexOperation, acc: gremlin.scala.GremlinScala[gremlin.scala.Edge,S]) => t.operate[S](acc)));
+    <synthetic> private def readResolve(): Object = query.this.ApplyOperation
+  };
+  object Operation extends scala.AnyRef {
+    def <init>(): gaea.query.Operation.type = {
+      Operation.super.<init>();
+      ()
+    };
+    def process[Input, Output, A <: shapeless.HList](operations: A, input: Input)(implicit folder: shapeless.ops.hlist.RightFolder.Aux[A,Input,gaea.query.ApplyOperation.type,Output]): Output = shapeless.this.HList.hlistOps[A](operations).foldRight[Input](input)(ApplyOperation)(folder)
+  }
+}
+java.lang.AssertionError: assertion failed: 
+  anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+     while compiling: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+        during phase: superaccessors
+     library version: version 2.11.8
+    compiler version: version 2.11.8
+  reconstructed args: -bootclasspath /Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/classes:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar -classpath /Users/rspangler/Code/gaea/core/target/scala-2.11/classes:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/lib/tools.jar:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-core/1.1.0-SNAPSHOT/titan-core-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/commons-configuration/commons-configuration/jars/commons-configuration-1.10.jar:/Users/rspangler/.ivy2/cache/commons-lang/commons-lang/jars/commons-lang-2.5.jar:/Users/rspangler/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar:/Users/rspangler/.ivy2/cache/org.javatuples/javatuples/jars/javatuples-1.2.jar:/Users/rspangler/.ivy2/cache/com.carrotsearch/hppc/jars/hppc-0.7.1.jar:/Users/rspangler/.ivy2/cache/com.jcabi/jcabi-manifests/jars/jcabi-manifests-1.1.jar:/Users/rspangler/.ivy2/cache/com.jcabi/jcabi-log/jars/jcabi-log-0.14.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-groovy/jars/gremlin-groovy-3.1.1-incubating.jar:/Users/rspangler/.ivy2/cache/org.apache.ivy/ivy/jars/ivy-2.3.0.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy/jars/groovy-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-groovysh/jars/groovy-groovysh-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-console/jars/groovy-console-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-templates/jars/groovy-templates-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-xml/jars/groovy-xml-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-swing/jars/groovy-swing-2.4.5.jar:/Users/rspangler/.ivy2/cache/jline/jline/jars/jline-2.11.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-json/jars/groovy-json-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-jsr223/jars/groovy-jsr223-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.3.1.jar:/Users/rspangler/.ivy2/cache/org.mindrot/jbcrypt/jars/jbcrypt-0.3m.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/tinkergraph-gremlin/jars/tinkergraph-gremlin-3.1.1-incubating.jar:/Users/rspangler/.ivy2/cache/org.glassfish/javax.json/bundles/javax.json-1.0.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-core/bundles/metrics-core-3.0.1.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-ganglia/bundles/metrics-ganglia-3.0.1.jar:/Users/rspangler/.ivy2/cache/info.ganglia.gmetric4j/gmetric4j/jars/gmetric4j-1.0.3.jar:/Users/rspangler/.ivy2/cache/org.acplt/oncrpc/jars/oncrpc-1.0.7.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-graphite/bundles/metrics-graphite-3.0.1.jar:/Users/rspangler/.ivy2/cache/org.reflections/reflections/jars/reflections-0.9.9-RC1.jar:/Users/rspangler/.ivy2/cache/com.google.guava/guava/bundles/guava-18.0.jar:/Users/rspangler/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.0-GA.jar:/Users/rspangler/.ivy2/cache/dom4j/dom4j/jars/dom4j-1.6.1.jar:/Users/rspangler/.ivy2/cache/xml-apis/xml-apis/jars/xml-apis-1.3.04.jar:/Users/rspangler/.ivy2/cache/com.spatial4j/spatial4j/bundles/spatial4j-0.4.1.jar:/Users/rspangler/.ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar:/Users/rspangler/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.3.jar:/Users/rspangler/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.7.jar:/Users/rspangler/.ivy2/cache/com.github.stephenc.high-scale-lib/high-scale-lib/jars/high-scale-lib-1.1.4.jar:/Users/rspangler/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-3.0.0.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-cassandra/1.1.0-SNAPSHOT/titan-cassandra-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.2.jar:/Users/rspangler/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.2.jar:/Users/rspangler/.ivy2/cache/org.apache.cassandra/cassandra-all/jars/cassandra-all-2.1.9.jar:/Users/rspangler/.ivy2/cache/com.ning/compress-lzf/bundles/compress-lzf-0.8.4.jar:/Users/rspangler/.ivy2/cache/commons-cli/commons-cli/jars/commons-cli-1.1.jar:/Users/rspangler/.ivy2/cache/org.apache.commons/commons-math3/jars/commons-math3-3.2.jar:/Users/rspangler/.ivy2/cache/com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/jars/concurrentlinkedhashmap-lru-1.3.jar:/Users/rspangler/.ivy2/cache/org.antlr/antlr/jars/antlr-3.5.2.jar:/Users/rspangler/.ivy2/cache/org.antlr/antlr-runtime/jars/antlr-runtime-3.5.2.jar:/Users/rspangler/.ivy2/cache/org.antlr/ST4/jars/ST4-4.0.8.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jackson/jackson-core-asl/jars/jackson-core-asl-1.9.2.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jackson/jackson-mapper-asl/jars/jackson-mapper-asl-1.9.2.jar:/Users/rspangler/.ivy2/cache/com.googlecode.json-simple/json-simple/jars/json-simple-1.1.jar:/Users/rspangler/.ivy2/cache/com.boundary/high-scale-lib/jars/high-scale-lib-1.0.6.jar:/Users/rspangler/.ivy2/cache/com.yammer.metrics/metrics-core/jars/metrics-core-2.2.0.jar:/Users/rspangler/.ivy2/cache/com.addthis.metrics/reporter-config/jars/reporter-config-2.1.0.jar:/Users/rspangler/.ivy2/cache/org.hibernate/hibernate-validator/jars/hibernate-validator-4.3.0.Final.jar:/Users/rspangler/.ivy2/cache/javax.validation/validation-api/jars/validation-api-1.0.0.GA.jar:/Users/rspangler/.ivy2/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.1.0.CR2.jar:/Users/rspangler/.ivy2/cache/com.thinkaurelius.thrift/thrift-server/jars/thrift-server-0.3.7.jar:/Users/rspangler/.ivy2/cache/com.lmax/disruptor/jars/disruptor-3.0.1.jar:/Users/rspangler/.ivy2/cache/org.apache.thrift/libthrift/jars/libthrift-0.9.2.jar:/Users/rspangler/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.2.5.jar:/Users/rspangler/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.2.4.jar:/Users/rspangler/.ivy2/cache/junit/junit/jars/junit-4.6.jar:/Users/rspangler/.ivy2/cache/com.clearspring.analytics/stream/jars/stream-2.5.2.jar:/Users/rspangler/.ivy2/cache/it.unimi.dsi/fastutil/jars/fastutil-6.5.7.jar:/Users/rspangler/.ivy2/cache/net.sf.supercsv/super-csv/jars/super-csv-2.1.0.jar:/Users/rspangler/.ivy2/cache/org.apache.cassandra/cassandra-thrift/jars/cassandra-thrift-2.1.9.jar:/Users/rspangler/.ivy2/cache/net.java.dev.jna/jna/jars/jna-4.0.0.jar:/Users/rspangler/.ivy2/cache/com.github.jbellis/jamm/jars/jamm-0.3.0.jar:/Users/rspangler/.ivy2/cache/io.netty/netty-all/jars/netty-all-4.0.23.Final.jar:/Users/rspangler/.ivy2/cache/commons-pool/commons-pool/jars/commons-pool-1.6.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-core/jars/astyanax-core-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-thrift/jars/astyanax-thrift-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-cassandra/jars/astyanax-cassandra-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-recipes/jars/astyanax-recipes-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.eaio.uuid/uuid/jars/uuid-3.2.jar:/Users/rspangler/.ivy2/cache/org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-csv/bundles/org.apache.servicemix.bundles.commons-csv-1.0-r706900_3.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jettison/jettison/bundles/jettison-1.2.jar:/Users/rspangler/.ivy2/cache/stax/stax-api/jars/stax-api-1.0.1.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-es/1.1.0-SNAPSHOT/titan-es-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/org.elasticsearch/elasticsearch/jars/elasticsearch-1.5.1.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-core/jars/lucene-core-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-analyzers-common/jars/lucene-analyzers-common-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-queries/jars/lucene-queries-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-memory/jars/lucene-memory-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-highlighter/jars/lucene-highlighter-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-queryparser/jars/lucene-queryparser-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-sandbox/jars/lucene-sandbox-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-suggest/jars/lucene-suggest-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-misc/jars/lucene-misc-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-join/jars/lucene-join-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-grouping/jars/lucene-grouping-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-spatial/jars/lucene-spatial-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.ow2.asm/asm/jars/asm-4.1.jar:/Users/rspangler/.ivy2/cache/org.ow2.asm/asm-commons/jars/asm-commons-4.1.jar:/Users/rspangler/.ivy2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-3.0.0-beta-2.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-native_2.11/jars/json4s-native_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-core_2.11/jars/json4s-core_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-ast_2.11/jars/json4s-ast_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-scalap_2.11/jars/json4s-scalap_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/com.thoughtworks.paranamer/paranamer/bundles/paranamer-2.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.5.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-jackson_2.11/jars/json4s-jackson_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.6.2.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.6.0.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.6.2.jar:/Users/rspangler/.ivy2/cache/com.michaelpollmeier/gremlin-scala_2.11/jars/gremlin-scala_2.11-3.1.2-incubating.0.jar:/Users/rspangler/.ivy2/cache/com.michaelpollmeier/macros_2.11/jars/macros_2.11-3.1.2-incubating.0.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-core/jars/gremlin-core-3.1.2-incubating.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-shaded/jars/gremlin-shaded-3.1.2-incubating.jar:/Users/rspangler/.ivy2/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.7.19.jar:/Users/rspangler/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.17.jar:/Users/rspangler/.ivy2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.19.jar:/Users/rspangler/.ivy2/cache/com.chuusai/shapeless_2.11/bundles/shapeless_2.11-2.3.0.jar:/Users/rspangler/.ivy2/cache/org.typelevel/macro-compat_2.11/jars/macro-compat_2.11-1.1.1.jar:/Users/rspangler/.ivy2/cache/org.apache.kafka/kafka-clients/jars/kafka-clients-0.10.0.1.jar:/Users/rspangler/.ivy2/cache/net.jpountz.lz4/lz4/jars/lz4-1.3.0.jar:/Users/rspangler/.ivy2/cache/org.xerial.snappy/snappy-java/bundles/snappy-java-1.1.2.6.jar:/Users/rspangler/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.21.jar:/Users/rspangler/.ivy2/cache/net.jcazevedo/moultingyaml_2.11/jars/moultingyaml_2.11-0.3.0.jar:/Users/rspangler/.ivy2/cache/com.github.nscala-time/nscala-time_2.11/jars/nscala-time_2.11-2.12.0.jar:/Users/rspangler/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.9.3.jar:/Users/rspangler/.ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.2.jar:/Users/rspangler/.ivy2/cache/org.yaml/snakeyaml/bundles/snakeyaml-1.17.jar:/Users/rspangler/.ivy2/cache/org.scalactic/scalactic_2.11/bundles/scalactic_2.11-3.0.0.jar
+
+  last tree to typer: Ident(x)
+       tree position: line 96 of /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+            tree tpe: Boolean
+              symbol: value x
+   symbol definition: x: Boolean (a TermSymbol)
+      symbol package: <none>
+       symbol owners: value x
+           call site: method operate in class GaeaQuery in package query
+
+== Source file context for tree position ==
+
+    93 }
+    94 
+    95 case class GaeaQuery(query: List[Operation]) {
+    96   def operate[In <: HList, R, M, G]
+    97     (graph: GaeaGraph)
+    98     (implicit p: Prepend[In, ::[G, HNil]]): R = {
+    99     var anvil: Any = graph
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:358)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1386)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$transformArgs$1.apply(SuperAccessors.scala:112)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$transformArgs$1.apply(SuperAccessors.scala:109)
+	at scala.reflect.internal.TreeInfo$$anonfun$mapMethodParamsAndArgs$1.apply(TreeInfo.scala:231)
+	at scala.reflect.internal.TreeInfo$$anonfun$mapMethodParamsAndArgs$1.apply(TreeInfo.scala:231)
+	at scala.reflect.internal.util.Collections$class.foreach2(Collections.scala:221)
+	at scala.reflect.internal.SymbolTable.foreach2(SymbolTable.scala:16)
+	at scala.reflect.internal.TreeInfo.foreachMethodParamAndArg(TreeInfo.scala:245)
+	at scala.reflect.internal.TreeInfo.mapMethodParamsAndArgs(TreeInfo.scala:231)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transformArgs(SuperAccessors.scala:109)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:359)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1368)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1368)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1421)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2589)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2587)
+	at scala.collection.immutable.List.loop$1(List.scala:173)
+	at scala.collection.immutable.List.mapConserve(List.scala:189)
+	at scala.reflect.api.Trees$Transformer.transformStats(Trees.scala:2587)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2589)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2587)
+	at scala.collection.immutable.List.loop$1(List.scala:173)
+	at scala.collection.immutable.List.mapConserve(List.scala:189)
+	at scala.reflect.api.Trees$Transformer.transformStats(Trees.scala:2587)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:362)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$transformArgs$1.apply(SuperAccessors.scala:112)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$transformArgs$1.apply(SuperAccessors.scala:109)
+	at scala.reflect.internal.TreeInfo$$anonfun$mapMethodParamsAndArgs$1.apply(TreeInfo.scala:231)
+	at scala.reflect.internal.TreeInfo$$anonfun$mapMethodParamsAndArgs$1.apply(TreeInfo.scala:231)
+	at scala.reflect.internal.util.Collections$class.foreach2(Collections.scala:221)
+	at scala.reflect.internal.SymbolTable.foreach2(SymbolTable.scala:16)
+	at scala.reflect.internal.TreeInfo.foreachMethodParamAndArg(TreeInfo.scala:245)
+	at scala.reflect.internal.TreeInfo.mapMethodParamsAndArgs(TreeInfo.scala:231)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transformArgs(SuperAccessors.scala:109)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:359)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2589)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2587)
+	at scala.collection.immutable.List.loop$1(List.scala:173)
+	at scala.collection.immutable.List.mapConserve(List.scala:189)
+	at scala.reflect.api.Trees$Transformer.transformStats(Trees.scala:2587)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1366)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.internal.Trees$$anonfun$itransform$2.apply(Trees.scala:1363)
+	at scala.reflect.internal.Trees$$anonfun$itransform$2.apply(Trees.scala:1361)
+	at scala.reflect.api.Trees$Transformer.atOwner(Trees.scala:2600)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:30)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.atOwner(SuperAccessors.scala:392)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:25)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:17)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1360)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformTrees$1.apply(Trees.scala:2559)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformTrees$1.apply(Trees.scala:2559)
+	at scala.collection.immutable.List.loop$1(List.scala:173)
+	at scala.collection.immutable.List.mapConserve(List.scala:189)
+	at scala.reflect.api.Trees$Transformer.transformTrees(Trees.scala:2559)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$6.apply(SuperAccessors.scala:226)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer$$anonfun$6.apply(SuperAccessors.scala:226)
+	at scala.reflect.api.Trees$Transformer.atOwner(Trees.scala:2600)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:30)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.atOwner(SuperAccessors.scala:392)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transformTemplate$1(SuperAccessors.scala:226)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:231)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer.transformTemplate(Trees.scala:2563)
+	at scala.reflect.internal.Trees$$anonfun$itransform$4.apply(Trees.scala:1408)
+	at scala.reflect.internal.Trees$$anonfun$itransform$4.apply(Trees.scala:1407)
+	at scala.reflect.api.Trees$Transformer.atOwner(Trees.scala:2600)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:30)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.atOwner(SuperAccessors.scala:392)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:25)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:17)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1406)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:44)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transformClassDef$1(SuperAccessors.scala:208)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:210)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2589)
+	at scala.reflect.api.Trees$Transformer$$anonfun$transformStats$1.apply(Trees.scala:2587)
+	at scala.collection.immutable.List.loop$1(List.scala:173)
+	at scala.collection.immutable.List.mapConserve(List.scala:189)
+	at scala.reflect.api.Trees$Transformer.transformStats(Trees.scala:2587)
+	at scala.reflect.internal.Trees$$anonfun$itransform$7.apply(Trees.scala:1426)
+	at scala.reflect.internal.Trees$$anonfun$itransform$7.apply(Trees.scala:1426)
+	at scala.reflect.api.Trees$Transformer.atOwner(Trees.scala:2600)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:30)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.atOwner(SuperAccessors.scala:392)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:25)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:17)
+	at scala.reflect.internal.Trees$class.itransform(Trees.scala:1425)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.internal.SymbolTable.itransform(SymbolTable.scala:16)
+	at scala.reflect.api.Trees$Transformer.transform(Trees.scala:2555)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.scala$tools$nsc$transform$TypingTransformers$TypingTransformer$$super$transform(TypingTransformers.scala:40)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer$$anonfun$transform$2.apply(TypingTransformers.scala:42)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer$$anonfun$transform$2.apply(TypingTransformers.scala:42)
+	at scala.reflect.api.Trees$Transformer.atOwner(Trees.scala:2600)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.atOwner(TypingTransformers.scala:30)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.atOwner(SuperAccessors.scala:392)
+	at scala.tools.nsc.transform.TypingTransformers$TypingTransformer.transform(TypingTransformers.scala:42)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:367)
+	at scala.tools.nsc.typechecker.SuperAccessors$SuperAccTransformer.transform(SuperAccessors.scala:71)
+	at scala.tools.nsc.ast.Trees$Transformer.transformUnit(Trees.scala:147)
+	at scala.tools.nsc.transform.Transform$Phase.apply(Transform.scala:30)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$applyPhase$1.apply$mcV$sp(Global.scala:440)
+	at scala.tools.nsc.Global$GlobalPhase.withCurrentUnit(Global.scala:431)
+	at scala.tools.nsc.Global$GlobalPhase.applyPhase(Global.scala:440)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$run$1.apply(Global.scala:398)
+	at scala.tools.nsc.Global$GlobalPhase$$anonfun$run$1.apply(Global.scala:398)
+	at scala.collection.Iterator$class.foreach(Iterator.scala:893)
+	at scala.collection.AbstractIterator.foreach(Iterator.scala:1336)
+	at scala.tools.nsc.Global$GlobalPhase.run(Global.scala:398)
+	at scala.tools.nsc.Global$Run.compileUnitsInternal(Global.scala:1501)
+	at scala.tools.nsc.Global$Run.compileUnits(Global.scala:1486)
+	at scala.tools.nsc.Global$Run.compileSources(Global.scala:1481)
+	at scala.tools.nsc.Global$Run.compile(Global.scala:1582)
+	at xsbt.CachedCompiler0.run(CompilerInterface.scala:116)
+	at xsbt.CachedCompiler0.run(CompilerInterface.scala:95)
+	at xsbt.CompilerInterface.run(CompilerInterface.scala:26)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at sbt.compiler.AnalyzingCompiler.call(AnalyzingCompiler.scala:101)
+	at sbt.compiler.AnalyzingCompiler.compile(AnalyzingCompiler.scala:47)
+	at sbt.compiler.AnalyzingCompiler.compile(AnalyzingCompiler.scala:41)
+	at sbt.compiler.AggressiveCompile$$anonfun$3$$anonfun$compileScala$1$1.apply$mcV$sp(AggressiveCompile.scala:97)
+	at sbt.compiler.AggressiveCompile$$anonfun$3$$anonfun$compileScala$1$1.apply(AggressiveCompile.scala:97)
+	at sbt.compiler.AggressiveCompile$$anonfun$3$$anonfun$compileScala$1$1.apply(AggressiveCompile.scala:97)
+	at sbt.compiler.AggressiveCompile.sbt$compiler$AggressiveCompile$$timed(AggressiveCompile.scala:162)
+	at sbt.compiler.AggressiveCompile$$anonfun$3.compileScala$1(AggressiveCompile.scala:96)
+	at sbt.compiler.AggressiveCompile$$anonfun$3.apply(AggressiveCompile.scala:139)
+	at sbt.compiler.AggressiveCompile$$anonfun$3.apply(AggressiveCompile.scala:86)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:38)
+	at sbt.inc.IncrementalCompile$$anonfun$doCompile$1.apply(Compile.scala:36)
+	at sbt.inc.IncrementalCommon.cycle(IncrementalCommon.scala:31)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:39)
+	at sbt.inc.Incremental$$anonfun$1.apply(Incremental.scala:38)
+	at sbt.inc.Incremental$.manageClassfiles(Incremental.scala:66)
+	at sbt.inc.Incremental$.compile(Incremental.scala:38)
+	at sbt.inc.IncrementalCompile$.apply(Compile.scala:26)
+	at sbt.compiler.AggressiveCompile.compile2(AggressiveCompile.scala:153)
+	at sbt.compiler.AggressiveCompile.compile1(AggressiveCompile.scala:70)
+	at sbt.compiler.AggressiveCompile.apply(AggressiveCompile.scala:45)
+	at sbt.Compiler$.apply(Compiler.scala:74)
+	at sbt.Compiler$.apply(Compiler.scala:65)
+	at sbt.Defaults$.sbt$Defaults$$compileTaskImpl(Defaults.scala:789)
+	at sbt.Defaults$$anonfun$compileTask$1.apply(Defaults.scala:781)
+	at sbt.Defaults$$anonfun$compileTask$1.apply(Defaults.scala:781)
+	at scala.Function1$$anonfun$compose$1.apply(Function1.scala:47)
+	at sbt.$tilde$greater$$anonfun$$u2219$1.apply(TypeFunctions.scala:40)
+	at sbt.std.Transform$$anon$4.work(System.scala:63)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:226)
+	at sbt.Execute$$anonfun$submit$1$$anonfun$apply$1.apply(Execute.scala:226)
+	at sbt.ErrorHandling$.wideConvert(ErrorHandling.scala:17)
+	at sbt.Execute.work(Execute.scala:235)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:226)
+	at sbt.Execute$$anonfun$submit$1.apply(Execute.scala:226)
+	at sbt.ConcurrentRestrictions$$anon$4$$anonfun$1.apply(ConcurrentRestrictions.scala:159)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:28)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:745)
+[error] (core/compile:compile) java.lang.AssertionError: assertion failed: 
+[error]   anvil.asInstanceOf[GremlinScala[Vertex, HList]].has(gid, P.within((x10: _*)))
+[error]      while compiling: /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+[error]         during phase: superaccessors
+[error]      library version: version 2.11.8
+[error]     compiler version: version 2.11.8
+[error]   reconstructed args: -bootclasspath /Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/jre/classes:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.11.8.jar -classpath /Users/rspangler/Code/gaea/core/target/scala-2.11/classes:/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home/lib/tools.jar:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-compiler/jars/scala-compiler-2.11.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang/scala-reflect/jars/scala-reflect-2.11.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang.modules/scala-parser-combinators_2.11/bundles/scala-parser-combinators_2.11-1.0.4.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-core/1.1.0-SNAPSHOT/titan-core-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/commons-configuration/commons-configuration/jars/commons-configuration-1.10.jar:/Users/rspangler/.ivy2/cache/commons-lang/commons-lang/jars/commons-lang-2.5.jar:/Users/rspangler/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar:/Users/rspangler/.ivy2/cache/org.javatuples/javatuples/jars/javatuples-1.2.jar:/Users/rspangler/.ivy2/cache/com.carrotsearch/hppc/jars/hppc-0.7.1.jar:/Users/rspangler/.ivy2/cache/com.jcabi/jcabi-manifests/jars/jcabi-manifests-1.1.jar:/Users/rspangler/.ivy2/cache/com.jcabi/jcabi-log/jars/jcabi-log-0.14.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-groovy/jars/gremlin-groovy-3.1.1-incubating.jar:/Users/rspangler/.ivy2/cache/org.apache.ivy/ivy/jars/ivy-2.3.0.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy/jars/groovy-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-groovysh/jars/groovy-groovysh-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-console/jars/groovy-console-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-templates/jars/groovy-templates-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-xml/jars/groovy-xml-2.4.5.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-swing/jars/groovy-swing-2.4.5.jar:/Users/rspangler/.ivy2/cache/jline/jline/jars/jline-2.11.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-json/jars/groovy-json-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.codehaus.groovy/groovy-jsr223/jars/groovy-jsr223-2.4.5-indy.jar:/Users/rspangler/.ivy2/cache/org.apache.commons/commons-lang3/jars/commons-lang3-3.3.1.jar:/Users/rspangler/.ivy2/cache/org.mindrot/jbcrypt/jars/jbcrypt-0.3m.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/tinkergraph-gremlin/jars/tinkergraph-gremlin-3.1.1-incubating.jar:/Users/rspangler/.ivy2/cache/org.glassfish/javax.json/bundles/javax.json-1.0.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-core/bundles/metrics-core-3.0.1.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-ganglia/bundles/metrics-ganglia-3.0.1.jar:/Users/rspangler/.ivy2/cache/info.ganglia.gmetric4j/gmetric4j/jars/gmetric4j-1.0.3.jar:/Users/rspangler/.ivy2/cache/org.acplt/oncrpc/jars/oncrpc-1.0.7.jar:/Users/rspangler/.ivy2/cache/com.codahale.metrics/metrics-graphite/bundles/metrics-graphite-3.0.1.jar:/Users/rspangler/.ivy2/cache/org.reflections/reflections/jars/reflections-0.9.9-RC1.jar:/Users/rspangler/.ivy2/cache/com.google.guava/guava/bundles/guava-18.0.jar:/Users/rspangler/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.18.0-GA.jar:/Users/rspangler/.ivy2/cache/dom4j/dom4j/jars/dom4j-1.6.1.jar:/Users/rspangler/.ivy2/cache/xml-apis/xml-apis/jars/xml-apis-1.3.04.jar:/Users/rspangler/.ivy2/cache/com.spatial4j/spatial4j/bundles/spatial4j-0.4.1.jar:/Users/rspangler/.ivy2/cache/commons-collections/commons-collections/jars/commons-collections-3.2.1.jar:/Users/rspangler/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.3.jar:/Users/rspangler/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.7.jar:/Users/rspangler/.ivy2/cache/com.github.stephenc.high-scale-lib/high-scale-lib/jars/high-scale-lib-1.1.4.jar:/Users/rspangler/.ivy2/cache/com.google.code.findbugs/jsr305/jars/jsr305-3.0.0.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-cassandra/1.1.0-SNAPSHOT/titan-cassandra-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/ch.qos.logback/logback-classic/jars/logback-classic-1.1.2.jar:/Users/rspangler/.ivy2/cache/ch.qos.logback/logback-core/jars/logback-core-1.1.2.jar:/Users/rspangler/.ivy2/cache/org.apache.cassandra/cassandra-all/jars/cassandra-all-2.1.9.jar:/Users/rspangler/.ivy2/cache/com.ning/compress-lzf/bundles/compress-lzf-0.8.4.jar:/Users/rspangler/.ivy2/cache/commons-cli/commons-cli/jars/commons-cli-1.1.jar:/Users/rspangler/.ivy2/cache/org.apache.commons/commons-math3/jars/commons-math3-3.2.jar:/Users/rspangler/.ivy2/cache/com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/jars/concurrentlinkedhashmap-lru-1.3.jar:/Users/rspangler/.ivy2/cache/org.antlr/antlr/jars/antlr-3.5.2.jar:/Users/rspangler/.ivy2/cache/org.antlr/antlr-runtime/jars/antlr-runtime-3.5.2.jar:/Users/rspangler/.ivy2/cache/org.antlr/ST4/jars/ST4-4.0.8.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jackson/jackson-core-asl/jars/jackson-core-asl-1.9.2.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jackson/jackson-mapper-asl/jars/jackson-mapper-asl-1.9.2.jar:/Users/rspangler/.ivy2/cache/com.googlecode.json-simple/json-simple/jars/json-simple-1.1.jar:/Users/rspangler/.ivy2/cache/com.boundary/high-scale-lib/jars/high-scale-lib-1.0.6.jar:/Users/rspangler/.ivy2/cache/com.yammer.metrics/metrics-core/jars/metrics-core-2.2.0.jar:/Users/rspangler/.ivy2/cache/com.addthis.metrics/reporter-config/jars/reporter-config-2.1.0.jar:/Users/rspangler/.ivy2/cache/org.hibernate/hibernate-validator/jars/hibernate-validator-4.3.0.Final.jar:/Users/rspangler/.ivy2/cache/javax.validation/validation-api/jars/validation-api-1.0.0.GA.jar:/Users/rspangler/.ivy2/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.1.0.CR2.jar:/Users/rspangler/.ivy2/cache/com.thinkaurelius.thrift/thrift-server/jars/thrift-server-0.3.7.jar:/Users/rspangler/.ivy2/cache/com.lmax/disruptor/jars/disruptor-3.0.1.jar:/Users/rspangler/.ivy2/cache/org.apache.thrift/libthrift/jars/libthrift-0.9.2.jar:/Users/rspangler/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.2.5.jar:/Users/rspangler/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.2.4.jar:/Users/rspangler/.ivy2/cache/junit/junit/jars/junit-4.6.jar:/Users/rspangler/.ivy2/cache/com.clearspring.analytics/stream/jars/stream-2.5.2.jar:/Users/rspangler/.ivy2/cache/it.unimi.dsi/fastutil/jars/fastutil-6.5.7.jar:/Users/rspangler/.ivy2/cache/net.sf.supercsv/super-csv/jars/super-csv-2.1.0.jar:/Users/rspangler/.ivy2/cache/org.apache.cassandra/cassandra-thrift/jars/cassandra-thrift-2.1.9.jar:/Users/rspangler/.ivy2/cache/net.java.dev.jna/jna/jars/jna-4.0.0.jar:/Users/rspangler/.ivy2/cache/com.github.jbellis/jamm/jars/jamm-0.3.0.jar:/Users/rspangler/.ivy2/cache/io.netty/netty-all/jars/netty-all-4.0.23.Final.jar:/Users/rspangler/.ivy2/cache/commons-pool/commons-pool/jars/commons-pool-1.6.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-core/jars/astyanax-core-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-thrift/jars/astyanax-thrift-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-cassandra/jars/astyanax-cassandra-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.netflix.astyanax/astyanax-recipes/jars/astyanax-recipes-3.8.0.jar:/Users/rspangler/.ivy2/cache/com.eaio.uuid/uuid/jars/uuid-3.2.jar:/Users/rspangler/.ivy2/cache/org.apache.servicemix.bundles/org.apache.servicemix.bundles.commons-csv/bundles/org.apache.servicemix.bundles.commons-csv-1.0-r706900_3.jar:/Users/rspangler/.ivy2/cache/org.codehaus.jettison/jettison/bundles/jettison-1.2.jar:/Users/rspangler/.ivy2/cache/stax/stax-api/jars/stax-api-1.0.1.jar:/Users/rspangler/.m2/repository/com/thinkaurelius/titan/titan-es/1.1.0-SNAPSHOT/titan-es-1.1.0-SNAPSHOT.jar:/Users/rspangler/.ivy2/cache/org.elasticsearch/elasticsearch/jars/elasticsearch-1.5.1.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-core/jars/lucene-core-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-analyzers-common/jars/lucene-analyzers-common-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-queries/jars/lucene-queries-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-memory/jars/lucene-memory-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-highlighter/jars/lucene-highlighter-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-queryparser/jars/lucene-queryparser-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-sandbox/jars/lucene-sandbox-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-suggest/jars/lucene-suggest-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-misc/jars/lucene-misc-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-join/jars/lucene-join-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-grouping/jars/lucene-grouping-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.apache.lucene/lucene-spatial/jars/lucene-spatial-4.10.4.jar:/Users/rspangler/.ivy2/cache/org.ow2.asm/asm/jars/asm-4.1.jar:/Users/rspangler/.ivy2/cache/org.ow2.asm/asm-commons/jars/asm-commons-4.1.jar:/Users/rspangler/.ivy2/cache/com.google.protobuf/protobuf-java/bundles/protobuf-java-3.0.0-beta-2.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-native_2.11/jars/json4s-native_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-core_2.11/jars/json4s-core_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-ast_2.11/jars/json4s-ast_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-scalap_2.11/jars/json4s-scalap_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/com.thoughtworks.paranamer/paranamer/bundles/paranamer-2.8.jar:/Users/rspangler/.ivy2/cache/org.scala-lang.modules/scala-xml_2.11/bundles/scala-xml_2.11-1.0.5.jar:/Users/rspangler/.ivy2/cache/org.json4s/json4s-jackson_2.11/jars/json4s-jackson_2.11-3.3.0.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-databind/bundles/jackson-databind-2.6.2.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-annotations/bundles/jackson-annotations-2.6.0.jar:/Users/rspangler/.ivy2/cache/com.fasterxml.jackson.core/jackson-core/bundles/jackson-core-2.6.2.jar:/Users/rspangler/.ivy2/cache/com.michaelpollmeier/gremlin-scala_2.11/jars/gremlin-scala_2.11-3.1.2-incubating.0.jar:/Users/rspangler/.ivy2/cache/com.michaelpollmeier/macros_2.11/jars/macros_2.11-3.1.2-incubating.0.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-core/jars/gremlin-core-3.1.2-incubating.jar:/Users/rspangler/.ivy2/cache/org.apache.tinkerpop/gremlin-shaded/jars/gremlin-shaded-3.1.2-incubating.jar:/Users/rspangler/.ivy2/cache/org.slf4j/slf4j-log4j12/jars/slf4j-log4j12-1.7.19.jar:/Users/rspangler/.ivy2/cache/log4j/log4j/bundles/log4j-1.2.17.jar:/Users/rspangler/.ivy2/cache/org.slf4j/jcl-over-slf4j/jars/jcl-over-slf4j-1.7.19.jar:/Users/rspangler/.ivy2/cache/com.chuusai/shapeless_2.11/bundles/shapeless_2.11-2.3.0.jar:/Users/rspangler/.ivy2/cache/org.typelevel/macro-compat_2.11/jars/macro-compat_2.11-1.1.1.jar:/Users/rspangler/.ivy2/cache/org.apache.kafka/kafka-clients/jars/kafka-clients-0.10.0.1.jar:/Users/rspangler/.ivy2/cache/net.jpountz.lz4/lz4/jars/lz4-1.3.0.jar:/Users/rspangler/.ivy2/cache/org.xerial.snappy/snappy-java/bundles/snappy-java-1.1.2.6.jar:/Users/rspangler/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.7.21.jar:/Users/rspangler/.ivy2/cache/net.jcazevedo/moultingyaml_2.11/jars/moultingyaml_2.11-0.3.0.jar:/Users/rspangler/.ivy2/cache/com.github.nscala-time/nscala-time_2.11/jars/nscala-time_2.11-2.12.0.jar:/Users/rspangler/.ivy2/cache/joda-time/joda-time/jars/joda-time-2.9.3.jar:/Users/rspangler/.ivy2/cache/org.joda/joda-convert/jars/joda-convert-1.2.jar:/Users/rspangler/.ivy2/cache/org.yaml/snakeyaml/bundles/snakeyaml-1.17.jar:/Users/rspangler/.ivy2/cache/org.scalactic/scalactic_2.11/bundles/scalactic_2.11-3.0.0.jar
+[error] 
+[error]   last tree to typer: Ident(x)
+[error]        tree position: line 96 of /Users/rspangler/Code/gaea/core/src/main/scala/gaea/query/Query.scala
+[error]             tree tpe: Boolean
+[error]               symbol: value x
+[error]    symbol definition: x: Boolean (a TermSymbol)
+[error]       symbol package: <none>
+[error]        symbol owners: value x
+[error]            call site: method operate in class GaeaQuery in package query
+[error] 
+[error] == Source file context for tree position ==
+[error] 
+[error]     93 }
+[error]     94 
+[error]     95 case class GaeaQuery(query: List[Operation]) {
+[error]     96   def operate[In <: HList, R, M, G]
+[error]     97     (graph: GaeaGraph)
+[error]     98     (implicit p: Prepend[In, ::[G, HNil]]): R = {
+[error]     99     var anvil: Any = graph
+[error] Total time: 4 s, completed Nov 23, 2016 5:45:10 PM

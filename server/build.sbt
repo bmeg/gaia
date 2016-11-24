@@ -24,11 +24,16 @@ libraryDependencies ++= Seq(
   "org.http4s"                 %% "http4s-blaze-server"    % "0.12.4",
   "org.http4s"                 %% "http4s-dsl"             % "0.12.4",
   "org.http4s"                 %% "http4s-argonaut"        % "0.12.4",
+  "org.json4s"                 %% "json4s-jackson"         % "3.5.0",
   "com.typesafe.scala-logging" %% "scala-logging"          % "3.1.0",
   "org.scala-debugger"         %% "scala-debugger-api"     % "1.0.0",
   "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1",
-  "com.lihaoyi"                %% "scalatags"              % "0.6.0"
+  "com.lihaoyi"                %% "scalatags"              % "0.6.0",
     // "com.trueaccord.scalapb"  %% "scalapb-json4s"         % "0.1.1"
+
+  "org.scalactic"              %% "scalactic"                % "3.0.0",
+  "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
+
 )
 
 libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"

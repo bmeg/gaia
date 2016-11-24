@@ -4,6 +4,7 @@ import gaea.graph.GaeaGraph
 import gaea.ingest.Ingest
 import gaea.collection.Collection._
 import gaea.html.VertexHtml
+import gaea.query._
 
 import org.http4s._
 import org.http4s.server._
@@ -30,14 +31,6 @@ case class VertexFacet(root: String) extends GaeaFacet with LazyLogging {
     } ).asJson
   }
 
-  def countVertexes(graph: GaeaGraph): Map[String, Long] = {
-    val counts = graph.V.traversal.label.groupCount.toList.get(0)
-    val labels = counts.keySet.toList.asInstanceOf[List[String]]
-    labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
-      countMap + (label.toString -> counts.get(label))
-    }
-  }
-
   val example = """[{"vertex": "Gene"},
  {"has": {"symbol": ["AHI3", "HOIK4L"]}},
  {"in": "inGene"},
@@ -50,6 +43,14 @@ case class VertexFacet(root: String) extends GaeaFacet with LazyLogging {
  {"outV": ""},
  {"as": "signatureStep"},
  {"select": ["signatureStep", "levelStep", "expressionStep"]}]"""
+
+  def countVertexes(graph: GaeaGraph): Map[String, Long] = {
+    val counts = graph.V.traversal.label.groupCount.toList.get(0)
+    val labels = counts.keySet.toList.asInstanceOf[List[String]]
+    labels.foldLeft(Map[String, Long]()) { (countMap, label) =>
+      countMap + (label.toString -> counts.get(label))
+    }
+  }
 
   def service(graph: GaeaGraph): HttpService = {
     HttpService {
