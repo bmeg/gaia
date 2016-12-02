@@ -2,7 +2,7 @@ package gaea.facet
 
 import gaea.graph._
 // import gaea.query._
-import leprechaun._
+// import leprechaun._
 
 import org.json4s._
 import org.json4s.jackson._

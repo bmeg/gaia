@@ -7,6 +7,7 @@ version := "0.0.2-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+resolvers += "OSS Sonatype" at "https://repo1.maven.org/maven2/"
 
 resolvers ++= Seq(
   "Akka Repository" at "http://repo.akka.io/releases/",
@@ -16,14 +17,17 @@ resolvers ++= Seq(
   "GAEA Depends Repo" at "https://github.com/bmeg/gaea-depends/raw/master/"
 )
 
+val http4sVersion = "0.15.0a"
+
 libraryDependencies ++= Seq(
   "com.google.code.gson"       %  "gson"                   % "2.6.2",
   "com.google.protobuf"        %  "protobuf-java"          % "3.0.0-beta-2",
   "ch.qos.logback"             %  "logback-classic"        % "1.1.2",
 
-  "org.http4s"                 %% "http4s-blaze-server"    % "0.12.4",
-  "org.http4s"                 %% "http4s-dsl"             % "0.12.4",
-  "org.http4s"                 %% "http4s-argonaut"        % "0.12.4",
+  "org.http4s"                 %% "http4s-core"            % http4sVersion,
+  "org.http4s"                 %% "http4s-blaze-server"    % http4sVersion,
+  "org.http4s"                 %% "http4s-dsl"             % http4sVersion,
+  "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
   "org.json4s"                 %% "json4s-jackson"         % "3.5.0",
   "com.typesafe.scala-logging" %% "scala-logging"          % "3.1.0",
   "org.scala-debugger"         %% "scala-debugger-api"     % "1.0.0",
@@ -49,21 +53,21 @@ publishTo := {
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 
-mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
-  {
-    case PathList("com", "esotericsoftware", xs @ _*) => MergeStrategy.first
-    case PathList("javax", "servlet", xs @ _*) => MergeStrategy.first
-    case PathList("org", "w3c", xs @ _*) => MergeStrategy.first
-    case PathList("org", "apache", "commons", "logging", xs @ _* ) => MergeStrategy.first
-    case "about.html"     => MergeStrategy.discard
-    case "reference.conf" => MergeStrategy.concat
-    case "log4j.properties"     => MergeStrategy.concat
-    //case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
-    case "META-INF/services/org.apache.hadoop.fs.FileSystem" => MergeStrategy.concat
-    case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case x => MergeStrategy.first
-  }
-}
+// mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
+//   {
+//     case PathList("com", "esotericsoftware", xs @ _*) => MergeStrategy.first
+//     case PathList("javax", "servlet", xs @ _*) => MergeStrategy.first
+//     case PathList("org", "w3c", xs @ _*) => MergeStrategy.first
+//     case PathList("org", "apache", "commons", "logging", xs @ _* ) => MergeStrategy.first
+//     case "about.html"     => MergeStrategy.discard
+//     case "reference.conf" => MergeStrategy.concat
+//     case "log4j.properties"     => MergeStrategy.concat
+//     //case PathList("META-INF", "MANIFEST.MF") => MergeStrategy.discard
+//     case "META-INF/services/org.apache.hadoop.fs.FileSystem" => MergeStrategy.concat
+//     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
+//     case x => MergeStrategy.first
+//   }
+// }
 
 
 

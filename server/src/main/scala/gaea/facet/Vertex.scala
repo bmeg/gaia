@@ -4,7 +4,7 @@ import gaea.graph.GaeaGraph
 import gaea.ingest.Ingest
 import gaea.collection.Collection._
 import gaea.html.VertexHtml
-// import gaea.query._
+import gaea.query._
 
 import org.http4s._
 import org.http4s.server._
@@ -85,9 +85,9 @@ case class VertexFacet(root: String) extends GaeaFacet with LazyLogging {
       case request @ POST -> Root / "query" =>
         request.as[String].flatMap { raw =>
           println(raw)
-          val query = leprechaun.Query.fromString(raw)
-          val result: GremlinScala[Vertex, HList] = query.operate(graph.graph)
-          Ok(result.toList.map(v => mapToJson(v.valueMap)).asJson)
+          val query = GaeaQuery.parse(raw)
+          val result = query.execute(graph)
+          Ok(GaeaQuery.renderJson(result))
         }
     }
   }

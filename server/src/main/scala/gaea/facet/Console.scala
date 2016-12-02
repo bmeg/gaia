@@ -23,26 +23,27 @@ case class ConsoleFacet(root: String) extends GaeaFacet with LazyLogging {
     HttpService {
       case request @ POST -> Root / "query" =>
         request.as[Json].flatMap { query =>
-          val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
-          val line = queryLens.get(query).getOrElse("")
+          // val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
+          // val line = queryLens.get(query).getOrElse("")
 
-          println(line)
+          // println(line)
 
-          val result = console.interpret[Any](line) match {
-            case Right(result) => result
-            case Left(error) => error
-          }
-
-          // val result = try {
-          //   Console.interpret[Any](line).toString
-          // } catch {
-          //   case e: Throwable => println(e.getCause); println(e.printStackTrace); e.getMessage();
-          //     // .replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+          // val result = console.interpret[Any](line) match {
+          //   case Right(result) => result
+          //   case Left(error) => error
           // }
 
-          println(result)
+          // // val result = try {
+          // //   Console.interpret[Any](line).toString
+          // // } catch {
+          // //   case e: Throwable => println(e.getCause); println(e.printStackTrace); e.getMessage();
+          // //     // .replaceAll("scala.tools.reflect.ToolBoxError: reflective compilation has failed:", "")
+          // // }
 
-          Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
+          // println(result)
+
+          // Ok(("result" -> jString(result.toString)) ->: jEmptyObject)
+          Ok("what")
         }
     }
   }
