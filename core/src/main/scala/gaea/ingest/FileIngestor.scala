@@ -1,4 +1,3 @@
-
 package gaea.api.ingest
 
 import gaea.api.Ingestor
@@ -17,15 +16,15 @@ class FileIngestor(file: String) extends Ingestor {
 
   override def start() = {
     new Thread(new Runnable {
-        var io = new JsonIO
-        def run() = {
-          Source.fromFile(file).getLines().foreach(x => {
-            onMessage(io.ReadMap(x))
-          })
-          if (onClose != null) {
-            onClose(0)
-          }
+      var io = new JsonIO
+      def run() = {
+        Source.fromFile(file).getLines().foreach(x => {
+          onMessage(io.ReadMap(x))
+        })
+        if (onClose != null) {
+          onClose(0)
         }
+      }
     }).start()
   }
 

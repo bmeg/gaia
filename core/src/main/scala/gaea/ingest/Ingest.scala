@@ -3,11 +3,13 @@ package gaea.ingest
 import gaea.graph._
 import gremlin.scala._
 
-import java.lang.{Long => Llong}
-import java.io.File
+import scala.io.Source
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
-import org.json4s.jackson.Serialization.write
+import org.json4s.jackson.Serialization.{write}
+
+import java.lang.{Long => Llong}
+import java.io.File
 
 object Ingest {
   val edgesPattern = "(.*)Edges$".r
@@ -124,5 +126,12 @@ object Ingest {
 
     graph.commit()
     vertex
+  }
+
+  def ingestFile(graph: GaeaGraph) (path: String): Unit = {
+    for (line <- Source.fromFile(path).getLines) {
+      val json = parse(line)
+      ingestVertex(graph) (json)
+    }
   }
 }
