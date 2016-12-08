@@ -1,5 +1,5 @@
 organization  := "io.bmeg"
-name := "gaea-core"
+name := "gaia-core"
 
 version := "0.0.3-SNAPSHOT"
 
@@ -35,7 +35,7 @@ resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
   "Twitter Maven Repo" at "http://maven.twttr.com",
-  "GAEA Depends Repo" at "https://github.com/bmeg/gaea-depends/raw/master/"
+  "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
 publishTo := {

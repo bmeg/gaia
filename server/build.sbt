@@ -2,7 +2,7 @@
 // PB.protobufSettings
 
 organization := "io.bmeg"
-name := "gaea-server"
+name := "gaia-server"
 version := "0.0.3-SNAPSHOT"
 
 scalaVersion := "2.11.8"
@@ -14,7 +14,7 @@ resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
   "Twitter Maven Repo" at "http://maven.twttr.com",
-  "GAEA Depends Repo" at "https://github.com/bmeg/gaea-depends/raw/master/"
+  "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
 val http4sVersion = "0.15.0a"

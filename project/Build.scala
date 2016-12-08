@@ -1,6 +1,6 @@
 import sbt._
 
-object GaeaBuild extends Build {
+object GaiaBuild extends Build {
   lazy val server = RootProject(file("server"))
 }
 
