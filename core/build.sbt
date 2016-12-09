@@ -1,7 +1,7 @@
 organization  := "io.bmeg"
-name := "gaea-core"
+name := "gaia-core"
 
-version := "0.0.2-SNAPSHOT"
+version := "0.0.3-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -23,6 +23,7 @@ libraryDependencies ++= Seq(
   "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
   "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
+  "io.bmeg"                    %% "ophion"                   % "0.0.1-SNAPSHOT",
 
   "org.scalactic"              %% "scalactic"                % "3.0.0",
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
@@ -34,7 +35,7 @@ resolvers ++= Seq(
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
   "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
   "Twitter Maven Repo" at "http://maven.twttr.com",
-  "GAEA Depends Repo" at "https://github.com/bmeg/gaea-depends/raw/master/"
+  "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
 publishTo := {
