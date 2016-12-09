@@ -2,7 +2,7 @@
 
 Focal point for gathering and analyzing biomedical evidence as a graph.
 
-![GAIA](https://github.com/bmeg/gaia/blob/gaia/resources/gaia.jpg)
+![GAIA](https://github.com/bmeg/gaia/blob/master/resources/gaia.jpg)
 
 ## Usage
 
