@@ -18,7 +18,7 @@ mvn clean install -DskipTests=true -Paurelius-release -Dgpg.skip=true
 Then, fire up the server using sbt:
 
 ```
-sbt run
+sbt server/run
 ```
 
-Then navigate to [http://localhost:11223/gene/hello](http://localhost:11223/gene/hello)
+Then navigate to [http://localhost:11223](http://localhost:11223)
