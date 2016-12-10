@@ -2,6 +2,7 @@ package gaia.graph.titan
 
 import gaia.config._
 import gaia.graph._
+import gaia.schema._
 
 import scala.util.Try
 import gremlin.scala._
@@ -22,9 +23,13 @@ class GaiaTitan(config: GaiaGraphConfig) extends GaiaGraph {
   }
 
   lazy val connection = connect()
-
   def graph(): Graph = {
     connection
+  }
+
+  lazy val persistedSchema = GraphSchema.assemble(List[GaiaVertex](), List[GaiaEdge]())
+  def schema: GraphSchema = {
+    persistedSchema
   }
 
   def retryCommit(times: Integer): Unit = {

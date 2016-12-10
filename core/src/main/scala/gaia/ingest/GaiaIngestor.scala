@@ -1,6 +1,6 @@
 package gaia.ingest
 
-import gaia.graph._
+import scala.io.Source
 
 trait GaiaIngestor {
   def ingestMessage(message: String)

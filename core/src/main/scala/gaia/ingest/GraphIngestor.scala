@@ -12,6 +12,8 @@ import org.json4s.jackson.Serialization.{write}
 import java.lang.{Long => Llong}
 import java.io.File
 
+import scala.collection.JavaConversions._
+
 case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
@@ -28,22 +30,9 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     newkey.asInstanceOf[Key[T]]
   }
 
-  def listFiles(dir: String): List[File] = {
-    val d = new File(dir)
-    if (d.exists) {
-      if (d.isDirectory) {
-        d.listFiles.filter(_.isFile).toList
-      } else {
-        List[File](d)
-      }
-    } else {
-      List[File]()
-    }
-  }
-
-  def parseJson(raw: String): JValue = {
-    parse(raw)
-  }
+  // def parseJson(raw: String): JValue = {
+  //   parse(raw)
+  // }
 
   def stringFor(obj: JObject) (key: String): String = {
     (obj \\ key).asInstanceOf[JString].s
@@ -130,8 +119,8 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
   }
 
   def ingestMessage(message: String) {
-    val json = parse(line)
-    val vertex = ingestVertex(graph) (json)
+    val json = parse(message)
+    val vertex = ingestVertex(json)
   }
 
   // def ingestFile(graph: GaiaGraph) (path: String): GaiaGraph = {
@@ -141,4 +130,10 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
 
   //   graph
   // }
+}
+
+object GraphIngestor {
+  def parseJson(raw: String): JValue = {
+    parse(raw)
+  }
 }
