@@ -109,6 +109,7 @@ object Ingest {
             }
             case Some(matches) => setProperties(vertex) (matches.head) (obj)
           }
+
         case JArray(arr) =>
           edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
             for (value <- arr) {
