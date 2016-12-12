@@ -32,9 +32,8 @@ To get Gaia up and running, clone this repo, then run
 
     ./bin/gaia init
 
-This lays the initial foundation for running the db. Then you can issue a series of `ingest` commands to get data in your graph:
+This lays the initial foundation for running the db. Then you can issue a series of `ingest` commands to get data in your graph (hugo contains the gene name and gene synonym graph):
 
-    # hugo contains the gene name and gene synonym graph
     ./bin/gaia ingest --url http://bmeg.io/data/hugo
 
 Once you have ingested everything you need, you can start Gaia with the `start` command:
