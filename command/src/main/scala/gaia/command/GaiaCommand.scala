@@ -12,15 +12,18 @@ object GaiaCommand extends App {
 
   object Arguments extends ScallopConf(args) {
     val migrate = new Subcommand("migrate") {
-      val config = trailArg[String]("config", required=false)
+      val config = opt[String]("config", required=false)
     }
 
     val ingest = new Subcommand("ingest") {
-      val config = trailArg[String]("config", required=false)
+      val config = opt[String]("config", required=false)
+      val kafka = opt[String]("kafka", required=false)
+      val file = opt[String]("file", required=false)
+      val url = opt[String]("url", required=false)
     }
 
     val start = new Subcommand("start") {
-      val config = trailArg[String]("config", required=false)
+      val config = opt[String]("config", required=false)
     }
 
     addSubcommand(migrate)
@@ -38,6 +41,7 @@ object GaiaCommand extends App {
 
   def migrate() {
     val graph = connect(Arguments.migrate.config)
+
     if (graph.isSuccess) {
       GaiaMigrations.runMigrations(graph.get)
       println("migrations complete!")
@@ -49,7 +53,17 @@ object GaiaCommand extends App {
   }
 
   def ingest() {
-    println("ingest: " + Arguments.ingest.config)
+    val graph = connect(Arguments.ingest.config)
+
+    if (graph.isSuccess) {
+      if (Arguments.ingest.file != None) {
+        println("file!")
+      }
+    } else {
+      println("failed to open graph! " + Arguments.ingest.config.getOrElse(defaultConfig))
+    }
+
+    Runtime.getRuntime.halt(0)
   }
 
   def start() {
