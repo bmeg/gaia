@@ -5,21 +5,22 @@ import gaia.graph._
 
 import org.rogach.scallop._
 
+import scala.util.Try
+
 object GaiaCommand extends App {
-  println(args.getClass)
-  println(args.toString)
+  val defaultConfig = "resources/config/gaia.yaml"
 
   object Arguments extends ScallopConf(args) {
     val migrate = new Subcommand("migrate") {
-      val config = trailArg[String]()
+      val config = trailArg[String]("config", required=false)
     }
 
     val ingest = new Subcommand("ingest") {
-      val config = trailArg[String]()
+      val config = trailArg[String]("config", required=false)
     }
 
     val start = new Subcommand("start") {
-      val config = trailArg[String]()
+      val config = trailArg[String]("config", required=false)
     }
 
     addSubcommand(migrate)
@@ -29,8 +30,22 @@ object GaiaCommand extends App {
     verify()
   }
   
+  def connect(path: ScallopOption[String]): Try[GaiaGraph] = {
+    val configPath = path.getOrElse(defaultConfig)
+    val config = GaiaConfig.readConfig(configPath)
+    config.connectToGraph(config.graph)
+  }
+
   def migrate() {
-    println("migrate: " + Arguments.migrate.config)
+    val graph = connect(Arguments.migrate.config)
+    if (graph.isSuccess) {
+      GaiaMigrations.runMigrations(graph.get)
+      println("migrations complete!")
+    } else {
+      println("failed to open graph! " + Arguments.migrate.config.getOrElse(defaultConfig))
+    }
+
+    Runtime.getRuntime.halt(0)
   }
 
   def ingest() {
@@ -55,13 +70,5 @@ object GaiaCommand extends App {
     case Some(Arguments.start) => start()
     case Some(_) => unknown()
     case None => help()
-  }
-
-  val config = GaiaConfig.readConfig("resources/config/gaia.yaml")
-  val graph = config.connectToGraph(config.graph)
-  if (graph.isSuccess) {
-    println("success!")
-  } else {
-    println("failed to connect to graph: " + config.graph.toString)
   }
 }

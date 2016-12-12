@@ -28,7 +28,6 @@ libraryDependencies ++= Seq(
   "org.http4s"                 %% "http4s-blaze-server"    % http4sVersion,
   "org.http4s"                 %% "http4s-dsl"             % http4sVersion,
   "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
-  "org.json4s"                 %% "json4s-jackson"         % "3.5.0",
   "com.typesafe.scala-logging" %% "scala-logging"          % "3.1.0",
   "org.scala-debugger"         %% "scala-debugger-api"     % "1.0.0",
   "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1",
@@ -40,7 +39,7 @@ libraryDependencies ++= Seq(
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
 )
 
-libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
+// libraryDependencies += "org.slf4j" % "slf4j-simple" % "1.6.4"
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
