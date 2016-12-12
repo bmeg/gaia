@@ -1,4 +1,3 @@
-
 package gaia.schema
 
 import java.io.FileInputStream
@@ -20,10 +19,7 @@ class Notation(input: String) {
 }
 
 object ProtoParse {
-
-
   def main(args: Array[String]) = {
-
     val tmpfile = "/tmp/gaia.proto" //TODO: Fix this
     Runtime.getRuntime.exec(Array[String]("protoc", "-o", tmpfile, "--include_source_info", args(0) )).waitFor
 

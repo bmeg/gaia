@@ -1,7 +1,8 @@
 package gaia.kafka
 
-import gaia.ingest.Ingest
+import gaia.ingest.GraphIngestor
 import gaia.graph._
+import gaia.file._
 
 import scala.io.Source
 import org.json4s._
@@ -65,9 +66,8 @@ object GaiaConsumer {
 
 class Spout(server: String) {
   val producer = GaiaProducer.buildProducer(server)
-
   def spout(path: String, topic: String): Unit = {
-    for (file <- Ingest.listFiles(path)) {
+    for (file <- listFiles(path)) {
       println("processing file " + file.getName)
       for (line <- Source.fromFile(file).getLines()) {
         GaiaProducer.send(producer, topic, line)
@@ -77,8 +77,9 @@ class Spout(server: String) {
 }
 
 class Ingestor(graph: GaiaGraph) (server: String) (groupID: String) (topics: Seq[String]) {
+  val ingestor = GraphIngestor(graph)
   val consumer = GaiaConsumer.buildConsumer(server) (groupID) (topics)
   def ingest(): Unit = {
-    GaiaConsumer.run(consumer, record => Ingest.ingestVertex(graph) (parse(record.value)))
+    GaiaConsumer.run(consumer, record => ingestor.ingestMessage(record.value))
   }
 }

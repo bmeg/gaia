@@ -14,11 +14,11 @@ case class GaiaGraphConfig(
   database: String = "tinkergraph",
   host: String = "localhost",
   keyspace: String = "gaia"
-) {}
+)
 
 case class GaiaServerConfig(
   port: Int = 11223
-) {}
+)
 
 case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
   def connectToGraph(config: GaiaGraphConfig): Try[GaiaGraph] = {

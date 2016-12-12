@@ -1,7 +1,6 @@
 package gaia.facet
 
 import gaia.graph.GaiaGraph
-import gaia.ingest.Ingest
 import gaia.collection.Collection._
 import gaia.html.VertexHtml
 import gaia.query._

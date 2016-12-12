@@ -2,6 +2,7 @@ package gaia.graph.tinkergraph
 
 import gaia.config._
 import gaia.graph._
+import gaia.schema._
 
 import scala.util.Try
 
@@ -15,9 +16,13 @@ class GaiaTinkergraph(config: GaiaGraphConfig) extends GaiaGraph {
   }
 
   lazy val connection = connect()
-
-  def graph(): Graph = {
+  def graph: Graph = {
     connection
+  }
+
+  lazy val persistedSchema = GraphSchema.assemble(List[GaiaVertex](), List[GaiaEdge]())
+  def schema: GraphSchema = {
+    persistedSchema
   }
 
   def makeIndex(name: String) (keys: Map[String, Class[_]]): Try[Unit] = {
