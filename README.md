@@ -4,7 +4,7 @@ Focal point for gathering and analyzing biomedical evidence as a graph.
 
 ![GAIA](https://github.com/bmeg/gaia/blob/master/resources/gaia.jpg)
 
-## about
+## motivation
 
 Gaia is an event, query and analysis engine built on the Tinkerpop graph db interface. It has three primary concepts: Schemas, Facets and Agents.
 
