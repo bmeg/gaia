@@ -30,10 +30,6 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     newkey.asInstanceOf[Key[T]]
   }
 
-  // def parseJson(raw: String): JValue = {
-  //   parse(raw)
-  // }
-
   def stringFor(obj: JObject) (key: String): String = {
     (obj \\ key).asInstanceOf[JString].s
   }
@@ -119,17 +115,11 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
   }
 
   def ingestMessage(message: String) {
+    println(message)
     val json = parse(message)
+    println(json)
     val vertex = ingestVertex(json)
   }
-
-  // def ingestFile(graph: GaiaGraph) (path: String): GaiaGraph = {
-  //   for (line <- Source.fromFile(path).getLines) {
-  //     ingestMessage(graph) (line)
-  //   }
-
-  //   graph
-  // }
 }
 
 object GraphIngestor {

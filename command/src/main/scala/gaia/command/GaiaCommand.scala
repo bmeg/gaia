@@ -2,6 +2,7 @@ package gaia.command
 
 import gaia.config._
 import gaia.graph._
+import gaia.ingest._
 
 import org.rogach.scallop._
 
@@ -33,14 +34,14 @@ object GaiaCommand extends App {
     verify()
   }
   
-  def connect(path: ScallopOption[String]): Try[GaiaGraph] = {
+  def connect(path: Option[String]): Try[GaiaGraph] = {
     val configPath = path.getOrElse(defaultConfig)
     val config = GaiaConfig.readConfig(configPath)
     config.connectToGraph(config.graph)
   }
 
   def migrate() {
-    val graph = connect(Arguments.migrate.config)
+    val graph = connect(Arguments.migrate.config.toOption)
 
     if (graph.isSuccess) {
       GaiaMigrations.runMigrations(graph.get)
@@ -53,11 +54,15 @@ object GaiaCommand extends App {
   }
 
   def ingest() {
-    val graph = connect(Arguments.ingest.config)
+    val graph = connect(Arguments.ingest.config.toOption)
 
     if (graph.isSuccess) {
-      if (Arguments.ingest.file != None) {
-        println("file!")
+      Arguments.ingest.file.toOption match {
+        case Some(file) => {
+          val ingestor = new GraphIngestor(graph.get)
+          ingestor.ingestFile(Arguments.ingest.file.getOrElse(""))
+          println("ingested file " + Arguments.ingest.file)
+        }
       }
     } else {
       println("failed to open graph! " + Arguments.ingest.config.getOrElse(defaultConfig))
@@ -67,7 +72,7 @@ object GaiaCommand extends App {
   }
 
   def start() {
-    println("start: " + Arguments.start.config)
+    println("start: " + Arguments.start.config.toOption)
   }
 
   def unknown() {
