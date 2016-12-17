@@ -1,7 +1,7 @@
 package gaia.facet
 
 import gaia.graph._
-import gaia.ingest.Ingest
+import gaia.ingest._
 import gaia.collection.Collection._
 
 import org.http4s._
@@ -24,16 +24,16 @@ import scalaz.concurrent.Task
 import scala.collection.JavaConversions._
 
 case class MessageFacet(root: String) extends GaiaFacet with LazyLogging {
-  def ingestMessage(graph: GaiaGraph) (line: String): Task[Vertex] = Task {
-    val json = Ingest.parseJson(line)
-    Ingest.ingestVertex(graph) (json)
+  def ingestMessage(ingestor: GaiaIngestor) (line: String): Task[Unit] = Task {
+    ingestor.ingestMessage(line)
   }
 
   def service(graph: GaiaGraph): HttpService = {
+    val ingestor = GraphIngestor(graph)
     HttpService {
       case request @ POST -> Root / "ingest" =>
         val messages = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>
-          Process eval ingestMessage(graph) (line)
+          Process eval ingestMessage(ingestor) (line)
         }
 
         messages.runLog.run

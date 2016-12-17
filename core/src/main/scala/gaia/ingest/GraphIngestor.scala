@@ -1,6 +1,7 @@
 package gaia.ingest
 
 import gaia.graph._
+import gaia.schema._
 import gremlin.scala._
 
 import scala.io.Source
@@ -11,7 +12,9 @@ import org.json4s.jackson.Serialization.{write}
 import java.lang.{Long => Llong}
 import java.io.File
 
-object Ingest {
+import scala.collection.JavaConversions._
+
+case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -27,22 +30,9 @@ object Ingest {
     newkey.asInstanceOf[Key[T]]
   }
 
-  def listFiles(dir: String): List[File] = {
-    val d = new File(dir)
-    if (d.exists) {
-      if (d.isDirectory) {
-        d.listFiles.filter(_.isFile).toList
-      } else {
-        List[File](d)
-      }
-    } else {
-      List[File]()
-    }
-  }
-
-  def parseJson(raw: String): JValue = {
-    parse(raw)
-  }
+  // def parseJson(raw: String): JValue = {
+  //   parse(raw)
+  // }
 
   def stringFor(obj: JObject) (key: String): String = {
     (obj \\ key).asInstanceOf[JString].s
@@ -92,7 +82,7 @@ object Ingest {
     }
   }
 
-  def ingestVertex(graph: GaiaGraph) (json: JValue): Vertex = {
+  def ingestVertex(json: JValue): Vertex = {
     val data = json.asInstanceOf[JObject]
     val gid = stringFor(data) ("gid")
     val label = uncapitalize(stringFor(data) ("type"))
@@ -128,10 +118,22 @@ object Ingest {
     vertex
   }
 
-  def ingestFile(graph: GaiaGraph) (path: String): Unit = {
-    for (line <- Source.fromFile(path).getLines) {
-      val json = parse(line)
-      ingestVertex(graph) (json)
-    }
+  def ingestMessage(message: String) {
+    val json = parse(message)
+    val vertex = ingestVertex(json)
+  }
+
+  // def ingestFile(graph: GaiaGraph) (path: String): GaiaGraph = {
+  //   for (line <- Source.fromFile(path).getLines) {
+  //     ingestMessage(graph) (line)
+  //   }
+
+  //   graph
+  // }
+}
+
+object GraphIngestor {
+  def parseJson(raw: String): JValue = {
+    parse(raw)
   }
 }

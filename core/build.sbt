@@ -1,7 +1,7 @@
 organization  := "io.bmeg"
 name := "gaia-core"
 
-version := "0.0.3-SNAPSHOT"
+version := "0.0.4-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -15,21 +15,22 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"        %  "protobuf-java"            % "3.0.0-beta-2",
   "com.google.protobuf"        %  "protoc"                   % "3.0.0-beta-2",
   "org.scala-lang"             %  "scala-compiler"           % "2.11.8",
+  // "org.slf4j"                  %  "slf4j-nop"                % "1.7.21",
 
-  "org.json4s"                 %% "json4s-native"            % "3.3.0",
-  "org.json4s"                 %% "json4s-jackson"           % "3.3.0",
+  // "org.json4s"                 %% "json4s-native"            % "3.3.0",
+  // "org.json4s"                 %% "json4s-jackson"           % "3.3.0",
   "com.michaelpollmeier"       %% "gremlin-scala"            % "3.1.2-incubating.0",
   
   "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
   "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
-  "io.bmeg"                    %% "ophion"                   % "0.0.1-SNAPSHOT",
+  "io.bmeg"                    %% "ophion"                   % "0.0.2-SNAPSHOT",
 
   "org.scalactic"              %% "scalactic"                % "3.0.0",
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
-)
+).map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
-resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
 resolvers ++= Seq(
   "Akka Repository" at "http://repo.akka.io/releases/",
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",

@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+
+enum FieldAction {
+  NOTHING = 0;
+  RENAME = 1;
+  RENDER_MAP_TO_PROPERTIES = 2;
+  STORE_MAP = 3;
+  CREATE_EDGE = 4;
+}
+
+message EdgeCreator {
+  string dst_field_type = 1;
+  string dst_field_match = 2;
+}
+
+message VertexRename {
+  
+}
+
+message FieldProcess {
+  string name = 1;
+  FieldAction action = 2;
+  oneof arguments {
+    EdgeCreator edge_creator = 3;
+    VertexRename vertex_rename = 4;
+  }
+}
+
+message GIDFormat {
+  
+}
+
+message MessageConvert {
+  string type = 1;
+  repeated FieldProcess process = 2;
+}

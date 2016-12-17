@@ -1,8 +1,9 @@
 package gaia.graph
 
-import scala.util.Try
-import gremlin.scala._
+import gaia.schema._
 
+import gremlin.scala._
+import scala.util.Try
 import org.apache.tinkerpop.gremlin.structure.Graph
 
 object Gid extends Key[String]("gid") {
@@ -26,14 +27,14 @@ object Gid extends Key[String]("gid") {
 }
 
 trait GaiaGraph {
-  // val graph
-  val Symbol = Key[String]("symbol")
-
   def graph(): Graph
+  def schema(): GraphSchema
+
   def makeIndex(name: String) (keys: Map[String, Class[_]]): Try[Unit]
   def makeIndexes(spec: Map[String, Map[String, Class[_]]]): Try[Unit]
-
   def commit(): Unit
+
+  val Symbol = Key[String]("symbol")
 
   def V(): GremlinScala[Vertex,shapeless.HNil] = {
     graph.V
