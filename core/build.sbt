@@ -49,6 +49,8 @@ publishTo := {
 
 credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
+test in assembly := {}
+
 mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
   {
     case PathList("com", "esotericsoftware", xs @ _*) => MergeStrategy.first
