@@ -1,10 +1,12 @@
 package gaia.command
 
+import gaia.api.ingest.FileIngestor
 import gaia.config._
 import gaia.graph._
-
+import gaia.ingest.GraphIngestor
 import org.rogach.scallop._
 
+import scala.io.Source
 import scala.util.Try
 
 object GaiaCommand extends App {
@@ -57,7 +59,10 @@ object GaiaCommand extends App {
 
     if (graph.isSuccess) {
       if (Arguments.ingest.file != None) {
-        println("file!")
+        val fing = new GraphIngestor(graph.get)
+        Source.fromFile(Arguments.ingest.file.toOption.get).getLines().foreach(x => {
+          fing.ingestMessage(x)
+        })
       }
     } else {
       println("failed to open graph! " + Arguments.ingest.config.getOrElse(defaultConfig))
