@@ -18,7 +18,9 @@ message Person {
   repeated string friends = 4;
   repeated string employer = 5;
   repeated string nick_names = 6;
-  repeated Pet pets = 7;
+  map<string, string> movie_genre_favorite = 7;
+  repeated Pet pets = 8;
+  string spouse = 9;
 }
 
 enum BusinessType {
