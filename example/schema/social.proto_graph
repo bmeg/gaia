@@ -16,3 +16,12 @@
     - name: pets
       action: CREATE_LINKED_VERTEX
       edge_type: hasPet
+    - name: spouse
+      action: CREATE_EDGE
+      edge_creator:
+        dst_message_type: Person
+        dst_field_match: id
+    - name: movie_genre_favorite
+      action: FLATTEN_MAP
+    - name: bio_stats
+      action: SERIALIZE

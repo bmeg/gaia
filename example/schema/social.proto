@@ -21,6 +21,7 @@ message Person {
   map<string, string> movie_genre_favorite = 7;
   repeated Pet pets = 8;
   string spouse = 9;
+  map<string, string> bio_stats = 10;
 }
 
 enum BusinessType {
