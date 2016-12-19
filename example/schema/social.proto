@@ -1,0 +1,33 @@
+
+syntax = "proto3";
+
+
+message Pet {
+  enum Species {
+    DOG = 1;
+    CAT = 2;
+  }
+  string name = 1;
+  Species species = 2;
+}
+
+message Person {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  repeated string friends = 4;
+  repeated string employer = 5;
+  repeated string nick_names = 6;
+  repeated Pet pets = 7;
+}
+
+enum BusinessType {
+  RESTAURANT  = 1;
+  SCHOOL = 2;
+  GYM = 3;
+}
+
+message Business {
+  string name = 1;
+  BusinessType type = 2;
+}

@@ -1,0 +1,18 @@
+
+- type: Person
+  gid_format:
+    field_selection: id
+  process:
+    - name: friends
+      action: CREATE_EDGE
+      edge_creator:
+        dst_message_type: Person
+        dst_field_match: id
+    - name: employer
+      action: CREATE_EDGE
+      edge_creator:
+        dst_message_type: Business
+        dst_field_match: name
+    - name: pets
+      action: CREATE_LINKED_VERTEX
+      edge_type: hasPet

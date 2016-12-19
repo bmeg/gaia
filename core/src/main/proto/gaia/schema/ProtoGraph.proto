@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+package gaia.schema;
 
 enum FieldAction {
   NOTHING = 0;
@@ -10,7 +11,7 @@ enum FieldAction {
 }
 
 message EdgeCreator {
-  string dst_field_type = 1;
+  string dst_message_type = 1;
   string dst_field_match = 2;
 }
 
@@ -28,10 +29,11 @@ message FieldProcess {
 }
 
 message GIDFormat {
-  
+  string field_selection = 1;
 }
 
 message MessageConvert {
   string type = 1;
-  repeated FieldProcess process = 2;
+  GIDFormat gid_format = 2;
+  repeated FieldProcess process = 3;
 }

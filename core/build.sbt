@@ -12,8 +12,9 @@ libraryDependencies ++= Seq(
   "com.thinkaurelius.titan"    %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
   "com.thinkaurelius.titan"    %  "titan-es"                 % "1.1.0-SNAPSHOT",
   "org.apache.tinkerpop"       %  "gremlin-core"             % "3.1.1-incubating",
-  "com.google.protobuf"        %  "protobuf-java"            % "3.0.0-beta-2",
-  "com.google.protobuf"        %  "protoc"                   % "3.0.0-beta-2",
+  "com.google.protobuf"        %  "protobuf-java"            % "3.1.0",
+  "com.google.protobuf"        %  "protobuf-java-util"       % "3.1.0",
+  "com.google.protobuf"        %  "protoc"                   % "3.1.0",
   "org.scala-lang"             %  "scala-compiler"           % "2.11.8",
   // "org.slf4j"                  %  "slf4j-nop"                % "1.7.21",
 
