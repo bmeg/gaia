@@ -1,24 +1,36 @@
 #!/bin/bash
 
-BDIR=$(cd $(dirname $0); pwd)
+BDIR=$(cd $(dirname $0); cd ../; pwd)
 
 
-num_jars=$(ls "$BDIR"/core/target/scala-*/ | grep "gaia-core-assembly-.*.jar" | wc -l)
+num_jars=$(ls "$BDIR"/command/target/scala-*/ | grep "gaia-command-assembly-.*.jar" | wc -l)
 
+function check_jar {
 if [ "$num_jars" -eq "0" ]; then
     echo "Failed to find BMEG assembly" >&2
     echo "You need to build the GAIA tools with 'sbt/sbt assembly' before running this program." >&2
     exit 1
 fi
-
-
-GAIA_BUILD_JAR=`ls $BDIR/core/target/scala-*/gaia-core-assembly-*.jar | head -n1`
+GAIA_BUILD_JAR=`ls $BDIR/command/target/scala-*/gaia-command-assembly-*.jar | head -n1`
 GAIA_MEM="-Xmx4g"
 GAIA_BASE_CMD="java $GAIA_MEM -cp $GAIA_BUILD_JAR"
+}
+
 
 CMD=$1
 shift
 
 case $CMD in
-load) $GAIA_BASE_CMD gaia.app.Import $@ ;;
+build)
+export JAVA_OPTS="-Xms256m -Xmx4g"
+sbt assembly
+;;
+init) 
+check_jar
+$GAIA_BASE_CMD gaia.command.GaiaCommand migrate $@ 
+;;
+ingest) 
+check_jar
+$GAIA_BASE_CMD gaia.command.GaiaCommand ingest $@ 
+;;
 esac
