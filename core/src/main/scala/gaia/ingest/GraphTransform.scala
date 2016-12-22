@@ -1,20 +1,12 @@
 package gaia.ingest
 
 import gaia.graph._
-import gaia.schema._
 import gremlin.scala._
-
-import scala.io.Source
 import org.json4s._
-import org.json4s.jackson.JsonMethods._
-import org.json4s.jackson.Serialization.{write}
-
-import java.lang.{Long => Llong}
-import java.io.File
-
+import org.json4s.jackson.Serialization.write
 import scala.collection.JavaConversions._
 
-case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
+case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -30,12 +22,8 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     newkey.asInstanceOf[Key[T]]
   }
 
-  // def parseJson(raw: String): JValue = {
-  //   parse(raw)
-  // }
-
-  def stringFor(obj: JObject) (key: String): String = {
-    (obj \\ key).asInstanceOf[JString].s
+  def stringFor(obj: java.util.Map[String,Object]) (key: String): String = {
+    (obj.get(key)).asInstanceOf[String]
   }
 
   def camelize(s: String): String = {
@@ -60,16 +48,16 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     vertex
   }
 
-  def setProperty(vertex: Vertex) (field: Tuple2[String, JValue]): Unit = {
+  def setProperty(vertex: Vertex) (field: Tuple2[String, Object]): Unit = {
     val key = camelize(field._1)
-    field._2 match {
-      case JString(value) =>
+    field._2.asInstanceOf[Any] match {
+      case value:String =>
         vertex.setProperty(findKey[String](key), value)
-      case JDouble(value) =>
+      case value:Double =>
         vertex.setProperty(findKey[Double](key), value)
-      case JBool(value) =>
+      case value:Boolean =>
         vertex.setProperty(findKey[Boolean](key), value)
-      case JInt(value) =>
+      case value:Int =>
         vertex.setProperty(findKey[Long](key), value.toLong)
       case _ =>
         println("Unsupported Key: " + key)
@@ -82,13 +70,21 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     }
   }
 
-  def ingestVertex(json: JValue): Vertex = {
-    val data = json.asInstanceOf[JObject]
+  def ingestVertex(data: java.util.Map[String,Object]): Vertex = {
+    //val data = json.asInstanceOf[JObject]
     val gid = stringFor(data) ("gid")
-    val label = uncapitalize(stringFor(data) ("type"))
+    if (gid == null) {
+      throw new TransformException("Unable to create GID")
+    }
+
+    val typeString = stringFor(data)("#type")
+    if (typeString == null) {
+      throw new TransformException("Untyped Message")
+    }
+    val label = uncapitalize(typeString)
     val vertex = findVertex(graph) (label) (gid)
 
-    for (field <- data.obj) {
+    for (field <- data.iterator) {
       val key = field._1
       field._2 match {
         case JObject(obj) =>
@@ -118,22 +114,9 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     vertex
   }
 
-  def ingestMessage(message: String) {
-    val json = parse(message)
-    val vertex = ingestVertex(json)
+  def ingestMessage(message: java.util.Map[String,Object]) {
+    val vertex = ingestVertex(message)
   }
 
-  // def ingestFile(graph: GaiaGraph) (path: String): GaiaGraph = {
-  //   for (line <- Source.fromFile(path).getLines) {
-  //     ingestMessage(graph) (line)
-  //   }
-
-  //   graph
-  // }
 }
 
-object GraphIngestor {
-  def parseJson(raw: String): JValue = {
-    parse(raw)
-  }
-}

@@ -24,12 +24,12 @@ import scalaz.concurrent.Task
 import scala.collection.JavaConversions._
 
 case class MessageFacet(root: String) extends GaiaFacet with LazyLogging {
-  def ingestMessage(ingestor: GaiaIngestor) (line: String): Task[Unit] = Task {
+  def ingestMessage(ingestor: MessageTransform)(line: String): Task[Unit] = Task {
     ingestor.ingestMessage(line)
   }
 
   def service(graph: GaiaGraph): HttpService = {
-    val ingestor = GraphIngestor(graph)
+    val ingestor = GraphTransform(graph)
     HttpService {
       case request @ POST -> Root / "ingest" =>
         val messages = request.bodyAsText.pipe(text.lines(1024 * 1024 * 64)).flatMap { line =>

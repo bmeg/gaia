@@ -1,6 +1,6 @@
 package gaia.kafka
 
-import gaia.ingest.GraphIngestor
+import gaia.ingest.GraphTransform
 import gaia.graph._
 import gaia.file._
 
@@ -77,7 +77,7 @@ class Spout(server: String) {
 }
 
 class Ingestor(graph: GaiaGraph) (server: String) (groupID: String) (topics: Seq[String]) {
-  val ingestor = GraphIngestor(graph)
+  val ingestor = GraphTransform(graph)
   val consumer = GaiaConsumer.buildConsumer(server) (groupID) (topics)
   def ingest(): Unit = {
     GaiaConsumer.run(consumer, record => ingestor.ingestMessage(record.value))

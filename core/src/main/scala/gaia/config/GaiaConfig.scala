@@ -54,4 +54,9 @@ object GaiaConfig {
     val config = GaiaConfig.readConfig("resources/config/gaia.yaml")
     config.connectToGraph(config.graph).get
   }
+
+  def memoryGraph() : GaiaGraph = {
+    val config = new GaiaConfig( new GaiaGraphConfig(), new GaiaServerConfig() )
+    config.connectToGraph(config.graph).get
+  }
 }

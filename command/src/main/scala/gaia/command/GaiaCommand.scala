@@ -3,7 +3,7 @@ package gaia.command
 import gaia.api.ingest.FileIngestor
 import gaia.config._
 import gaia.graph._
-import gaia.ingest.GraphIngestor
+import gaia.ingest.GraphTransform
 import org.rogach.scallop._
 
 import scala.io.Source
@@ -59,7 +59,7 @@ object GaiaCommand extends App {
 
     if (graph.isSuccess) {
       if (Arguments.ingest.file != None) {
-        val fing = new GraphIngestor(graph.get)
+        val fing = new GraphTransform(graph.get)
         Source.fromFile(Arguments.ingest.file.toOption.get).getLines().foreach(x => {
           fing.ingestMessage(x)
         })

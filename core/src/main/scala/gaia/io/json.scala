@@ -8,12 +8,12 @@ import scala.collection.mutable
 class JsonIO {
   val mapper = new ObjectMapper()
 
-  def ReadMap(text: String) : java.util.Map[Object,Object] = {
-    val o = mapper.readValue(text, classOf[java.util.Map[Object,Object]] )
+  def ReadMap(text: String) : java.util.Map[String,Object] = {
+    val o = mapper.readValue(text, classOf[java.util.Map[String,Object]] )
     return o
   }
 
-  def WriteMap(message: java.util.Map[Object,Object]) : String = {
+  def WriteMap(message: java.util.Map[String,Object]) : String = {
     val json = mapper.writeValueAsString(message)
     return json
   }

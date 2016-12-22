@@ -16,7 +16,7 @@ class IOSuite extends FunSuite {
 
   test("Write JSON") {
     val io = new JsonIO()
-    val i = new scala.collection.mutable.HashMap[Object,Object]()
+    val i = new scala.collection.mutable.HashMap[String,Object]()
     i.put("test", Int.box(1))
     val a = io.WriteMap(i.asJava)
     assert( a == """{"test":1}""" )
