@@ -3,16 +3,21 @@ package gaia
 import java.io.File
 
 package object file {
-  def listFiles(dir: String): List[File] = {
-    val d = new File(dir)
-    if (d.exists) {
-      if (d.isDirectory) {
-        d.listFiles.filter(_.isFile).toList
+  def directoryTree(dir: File): List[File] = {
+    if (dir.exists) {
+      if (dir.isDirectory) {
+        val files = dir.listFiles
+        files.filter(_.isFile).toList ++ files.filter(_.isDirectory).flatMap(directoryTree)
       } else {
-        List[File](d)
+        List[File](dir)
       }
     } else {
       List[File]()
     }
+  }
+
+  def listFiles(path: String): List[File] = {
+    val dir = new File(path)
+    directoryTree(dir)
   }
 }

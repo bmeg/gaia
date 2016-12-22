@@ -4,7 +4,6 @@ import scala.io.Source
 import gaia.client.{ConnectionConfig, GaiaClient}
 import gaia.io.JsonIO
 
-
 object Import {
   def main(args: Array[String]) = {
     var config = new ConnectionConfig().Kafka(args(0))
@@ -19,5 +18,4 @@ object Import {
 
     conn.close()
   }
-
 }
