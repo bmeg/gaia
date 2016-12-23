@@ -42,7 +42,7 @@ class GaiaClient(var config: ConnectionConfig) {
   }
 
 
-  def addMessage(message: java.util.Map[String,Object]) = {
+  def addMessage(message: Map[String,Any]) = {
     val json = jsonio.WriteMap(message)
     if (producer == null) {
       producer = kafkaProducerConnect()

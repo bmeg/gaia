@@ -16,6 +16,7 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"        %  "protobuf-java-util"       % "3.1.0",
   "com.google.protobuf"        %  "protoc"                   % "3.1.0",
   "org.scala-lang"             %  "scala-compiler"           % "2.11.8",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala"    % "2.8.4",
   // "org.slf4j"                  %  "slf4j-nop"                % "1.7.21",
 
   // "org.json4s"                 %% "json4s-native"            % "3.3.0",

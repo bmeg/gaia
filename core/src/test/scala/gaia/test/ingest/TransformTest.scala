@@ -3,7 +3,7 @@ package gaia.test.ingest
 import gaia.api.Ingestor
 import gaia.api.ingest.FileIngestor
 import gaia.config.GaiaConfig
-import gaia.ingest.GraphTransform
+import gaia.ingest.{GraphTransform, ProtoGrapher}
 import org.scalatest.FunSuite
 
 /**
@@ -16,8 +16,10 @@ class TransformTest extends FunSuite {
     val in : Ingestor = new FileIngestor("example/data/social.1")
 
     val graph = GaiaConfig.memoryGraph()
-    val trans = new GraphTransform(graph)
+    val protographer = ProtoGrapher.load("example/schema/social.proto_graph")
+    val trans = new GraphTransform(graph, protographer)
 
+    println(protographer.msgs)
     var messageCount = 0
     in.setMessageCallback( (x) => {
       trans.ingestMessage(x)

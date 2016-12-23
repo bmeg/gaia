@@ -33,6 +33,18 @@ public final class ProtoGraph {
      * <code>CREATE_EDGE = 4;</code>
      */
     CREATE_EDGE(4, 4),
+    /**
+     * <code>CREATE_LINKED_VERTEX = 5;</code>
+     */
+    CREATE_LINKED_VERTEX(5, 5),
+    /**
+     * <code>FLATTEN_MAP = 6;</code>
+     */
+    FLATTEN_MAP(6, 6),
+    /**
+     * <code>SERIALIZE = 7;</code>
+     */
+    SERIALIZE(7, 7),
     UNRECOGNIZED(-1, -1),
     ;
 
@@ -56,6 +68,18 @@ public final class ProtoGraph {
      * <code>CREATE_EDGE = 4;</code>
      */
     public static final int CREATE_EDGE_VALUE = 4;
+    /**
+     * <code>CREATE_LINKED_VERTEX = 5;</code>
+     */
+    public static final int CREATE_LINKED_VERTEX_VALUE = 5;
+    /**
+     * <code>FLATTEN_MAP = 6;</code>
+     */
+    public static final int FLATTEN_MAP_VALUE = 6;
+    /**
+     * <code>SERIALIZE = 7;</code>
+     */
+    public static final int SERIALIZE_VALUE = 7;
 
 
     public final int getNumber() {
@@ -73,6 +97,9 @@ public final class ProtoGraph {
         case 2: return RENDER_MAP_TO_PROPERTIES;
         case 3: return STORE_MAP;
         case 4: return CREATE_EDGE;
+        case 5: return CREATE_LINKED_VERTEX;
+        case 6: return FLATTEN_MAP;
+        case 7: return SERIALIZE;
         default: return null;
       }
     }
@@ -132,14 +159,14 @@ public final class ProtoGraph {
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional string dst_field_type = 1;</code>
+     * <code>optional string dst_message_type = 1;</code>
      */
-    java.lang.String getDstFieldType();
+    java.lang.String getDstMessageType();
     /**
-     * <code>optional string dst_field_type = 1;</code>
+     * <code>optional string dst_message_type = 1;</code>
      */
     com.google.protobuf.ByteString
-        getDstFieldTypeBytes();
+        getDstMessageTypeBytes();
 
     /**
      * <code>optional string dst_field_match = 2;</code>
@@ -163,7 +190,7 @@ public final class ProtoGraph {
       super(builder);
     }
     private EdgeCreator() {
-      dstFieldType_ = "";
+      dstMessageType_ = "";
       dstFieldMatch_ = "";
     }
 
@@ -194,7 +221,7 @@ public final class ProtoGraph {
             case 10: {
               String s = input.readStringRequireUtf8();
 
-              dstFieldType_ = s;
+              dstMessageType_ = s;
               break;
             }
             case 18: {
@@ -227,34 +254,34 @@ public final class ProtoGraph {
               gaia.schema.ProtoGraph.EdgeCreator.class, gaia.schema.ProtoGraph.EdgeCreator.Builder.class);
     }
 
-    public static final int DST_FIELD_TYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object dstFieldType_;
+    public static final int DST_MESSAGE_TYPE_FIELD_NUMBER = 1;
+    private volatile java.lang.Object dstMessageType_;
     /**
-     * <code>optional string dst_field_type = 1;</code>
+     * <code>optional string dst_message_type = 1;</code>
      */
-    public java.lang.String getDstFieldType() {
-      java.lang.Object ref = dstFieldType_;
+    public java.lang.String getDstMessageType() {
+      java.lang.Object ref = dstMessageType_;
       if (ref instanceof java.lang.String) {
         return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        dstFieldType_ = s;
+        dstMessageType_ = s;
         return s;
       }
     }
     /**
-     * <code>optional string dst_field_type = 1;</code>
+     * <code>optional string dst_message_type = 1;</code>
      */
     public com.google.protobuf.ByteString
-        getDstFieldTypeBytes() {
-      java.lang.Object ref = dstFieldType_;
+        getDstMessageTypeBytes() {
+      java.lang.Object ref = dstMessageType_;
       if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        dstFieldType_ = b;
+        dstMessageType_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -307,8 +334,8 @@ public final class ProtoGraph {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!getDstFieldTypeBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 1, dstFieldType_);
+      if (!getDstMessageTypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, dstMessageType_);
       }
       if (!getDstFieldMatchBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, dstFieldMatch_);
@@ -320,8 +347,8 @@ public final class ProtoGraph {
       if (size != -1) return size;
 
       size = 0;
-      if (!getDstFieldTypeBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, dstFieldType_);
+      if (!getDstMessageTypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, dstMessageType_);
       }
       if (!getDstFieldMatchBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, dstFieldMatch_);
@@ -437,7 +464,7 @@ public final class ProtoGraph {
       }
       public Builder clear() {
         super.clear();
-        dstFieldType_ = "";
+        dstMessageType_ = "";
 
         dstFieldMatch_ = "";
 
@@ -463,7 +490,7 @@ public final class ProtoGraph {
 
       public gaia.schema.ProtoGraph.EdgeCreator buildPartial() {
         gaia.schema.ProtoGraph.EdgeCreator result = new gaia.schema.ProtoGraph.EdgeCreator(this);
-        result.dstFieldType_ = dstFieldType_;
+        result.dstMessageType_ = dstMessageType_;
         result.dstFieldMatch_ = dstFieldMatch_;
         onBuilt();
         return result;
@@ -480,8 +507,8 @@ public final class ProtoGraph {
 
       public Builder mergeFrom(gaia.schema.ProtoGraph.EdgeCreator other) {
         if (other == gaia.schema.ProtoGraph.EdgeCreator.getDefaultInstance()) return this;
-        if (!other.getDstFieldType().isEmpty()) {
-          dstFieldType_ = other.dstFieldType_;
+        if (!other.getDstMessageType().isEmpty()) {
+          dstMessageType_ = other.dstMessageType_;
           onChanged();
         }
         if (!other.getDstFieldMatch().isEmpty()) {
@@ -514,71 +541,71 @@ public final class ProtoGraph {
         return this;
       }
 
-      private java.lang.Object dstFieldType_ = "";
+      private java.lang.Object dstMessageType_ = "";
       /**
-       * <code>optional string dst_field_type = 1;</code>
+       * <code>optional string dst_message_type = 1;</code>
        */
-      public java.lang.String getDstFieldType() {
-        java.lang.Object ref = dstFieldType_;
+      public java.lang.String getDstMessageType() {
+        java.lang.Object ref = dstMessageType_;
         if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           java.lang.String s = bs.toStringUtf8();
-          dstFieldType_ = s;
+          dstMessageType_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
-       * <code>optional string dst_field_type = 1;</code>
+       * <code>optional string dst_message_type = 1;</code>
        */
       public com.google.protobuf.ByteString
-          getDstFieldTypeBytes() {
-        java.lang.Object ref = dstFieldType_;
+          getDstMessageTypeBytes() {
+        java.lang.Object ref = dstMessageType_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
                   (java.lang.String) ref);
-          dstFieldType_ = b;
+          dstMessageType_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
         }
       }
       /**
-       * <code>optional string dst_field_type = 1;</code>
+       * <code>optional string dst_message_type = 1;</code>
        */
-      public Builder setDstFieldType(
+      public Builder setDstMessageType(
           java.lang.String value) {
         if (value == null) {
     throw new NullPointerException();
   }
   
-        dstFieldType_ = value;
+        dstMessageType_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional string dst_field_type = 1;</code>
+       * <code>optional string dst_message_type = 1;</code>
        */
-      public Builder clearDstFieldType() {
+      public Builder clearDstMessageType() {
         
-        dstFieldType_ = getDefaultInstance().getDstFieldType();
+        dstMessageType_ = getDefaultInstance().getDstMessageType();
         onChanged();
         return this;
       }
       /**
-       * <code>optional string dst_field_type = 1;</code>
+       * <code>optional string dst_message_type = 1;</code>
        */
-      public Builder setDstFieldTypeBytes(
+      public Builder setDstMessageTypeBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
         
-        dstFieldType_ = value;
+        dstMessageType_ = value;
         onChanged();
         return this;
       }
@@ -2003,6 +2030,16 @@ public final class ProtoGraph {
   public interface GIDFormatOrBuilder extends
       // @@protoc_insertion_point(interface_extends:gaia.schema.GIDFormat)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string field_selection = 1;</code>
+     */
+    java.lang.String getFieldSelection();
+    /**
+     * <code>optional string field_selection = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getFieldSelectionBytes();
   }
   /**
    * Protobuf type {@code gaia.schema.GIDFormat}
@@ -2016,6 +2053,7 @@ public final class ProtoGraph {
       super(builder);
     }
     private GIDFormat() {
+      fieldSelection_ = "";
     }
 
     @java.lang.Override
@@ -2027,6 +2065,7 @@ public final class ProtoGraph {
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry) {
       this();
+      int mutable_bitField0_ = 0;
       try {
         boolean done = false;
         while (!done) {
@@ -2039,6 +2078,12 @@ public final class ProtoGraph {
               if (!input.skipField(tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              String s = input.readStringRequireUtf8();
+
+              fieldSelection_ = s;
               break;
             }
           }
@@ -2065,6 +2110,40 @@ public final class ProtoGraph {
               gaia.schema.ProtoGraph.GIDFormat.class, gaia.schema.ProtoGraph.GIDFormat.Builder.class);
     }
 
+    public static final int FIELD_SELECTION_FIELD_NUMBER = 1;
+    private volatile java.lang.Object fieldSelection_;
+    /**
+     * <code>optional string field_selection = 1;</code>
+     */
+    public java.lang.String getFieldSelection() {
+      java.lang.Object ref = fieldSelection_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        fieldSelection_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string field_selection = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFieldSelectionBytes() {
+      java.lang.Object ref = fieldSelection_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        fieldSelection_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -2077,6 +2156,9 @@ public final class ProtoGraph {
 
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      if (!getFieldSelectionBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, fieldSelection_);
+      }
     }
 
     public int getSerializedSize() {
@@ -2084,6 +2166,9 @@ public final class ProtoGraph {
       if (size != -1) return size;
 
       size = 0;
+      if (!getFieldSelectionBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, fieldSelection_);
+      }
       memoizedSize = size;
       return size;
     }
@@ -2195,6 +2280,8 @@ public final class ProtoGraph {
       }
       public Builder clear() {
         super.clear();
+        fieldSelection_ = "";
+
         return this;
       }
 
@@ -2217,6 +2304,7 @@ public final class ProtoGraph {
 
       public gaia.schema.ProtoGraph.GIDFormat buildPartial() {
         gaia.schema.ProtoGraph.GIDFormat result = new gaia.schema.ProtoGraph.GIDFormat(this);
+        result.fieldSelection_ = fieldSelection_;
         onBuilt();
         return result;
       }
@@ -2232,6 +2320,10 @@ public final class ProtoGraph {
 
       public Builder mergeFrom(gaia.schema.ProtoGraph.GIDFormat other) {
         if (other == gaia.schema.ProtoGraph.GIDFormat.getDefaultInstance()) return this;
+        if (!other.getFieldSelection().isEmpty()) {
+          fieldSelection_ = other.fieldSelection_;
+          onChanged();
+        }
         onChanged();
         return this;
       }
@@ -2255,6 +2347,75 @@ public final class ProtoGraph {
             mergeFrom(parsedMessage);
           }
         }
+        return this;
+      }
+
+      private java.lang.Object fieldSelection_ = "";
+      /**
+       * <code>optional string field_selection = 1;</code>
+       */
+      public java.lang.String getFieldSelection() {
+        java.lang.Object ref = fieldSelection_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          fieldSelection_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string field_selection = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getFieldSelectionBytes() {
+        java.lang.Object ref = fieldSelection_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          fieldSelection_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string field_selection = 1;</code>
+       */
+      public Builder setFieldSelection(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        fieldSelection_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string field_selection = 1;</code>
+       */
+      public Builder clearFieldSelection() {
+        
+        fieldSelection_ = getDefaultInstance().getFieldSelection();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string field_selection = 1;</code>
+       */
+      public Builder setFieldSelectionBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        fieldSelection_ = value;
+        onChanged();
         return this;
       }
       public final Builder setUnknownFields(
@@ -2330,25 +2491,38 @@ public final class ProtoGraph {
         getTypeBytes();
 
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    boolean hasGidFormat();
+    /**
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    gaia.schema.ProtoGraph.GIDFormat getGidFormat();
+    /**
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    gaia.schema.ProtoGraph.GIDFormatOrBuilder getGidFormatOrBuilder();
+
+    /**
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     java.util.List<gaia.schema.ProtoGraph.FieldProcess> 
         getProcessList();
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     gaia.schema.ProtoGraph.FieldProcess getProcess(int index);
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     int getProcessCount();
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     java.util.List<? extends gaia.schema.ProtoGraph.FieldProcessOrBuilder> 
         getProcessOrBuilderList();
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     gaia.schema.ProtoGraph.FieldProcessOrBuilder getProcessOrBuilder(
         int index);
@@ -2400,9 +2574,22 @@ public final class ProtoGraph {
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+              gaia.schema.ProtoGraph.GIDFormat.Builder subBuilder = null;
+              if (gidFormat_ != null) {
+                subBuilder = gidFormat_.toBuilder();
+              }
+              gidFormat_ = input.readMessage(gaia.schema.ProtoGraph.GIDFormat.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(gidFormat_);
+                gidFormat_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
+            case 26: {
+              if (!((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
                 process_ = new java.util.ArrayList<gaia.schema.ProtoGraph.FieldProcess>();
-                mutable_bitField0_ |= 0x00000002;
+                mutable_bitField0_ |= 0x00000004;
               }
               process_.add(input.readMessage(gaia.schema.ProtoGraph.FieldProcess.parser(), extensionRegistry));
               break;
@@ -2416,7 +2603,7 @@ public final class ProtoGraph {
             new com.google.protobuf.InvalidProtocolBufferException(
                 e.getMessage()).setUnfinishedMessage(this));
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+        if (((mutable_bitField0_ & 0x00000004) == 0x00000004)) {
           process_ = java.util.Collections.unmodifiableList(process_);
         }
         makeExtensionsImmutable();
@@ -2469,35 +2656,56 @@ public final class ProtoGraph {
       }
     }
 
-    public static final int PROCESS_FIELD_NUMBER = 2;
+    public static final int GID_FORMAT_FIELD_NUMBER = 2;
+    private gaia.schema.ProtoGraph.GIDFormat gidFormat_;
+    /**
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    public boolean hasGidFormat() {
+      return gidFormat_ != null;
+    }
+    /**
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    public gaia.schema.ProtoGraph.GIDFormat getGidFormat() {
+      return gidFormat_ == null ? gaia.schema.ProtoGraph.GIDFormat.getDefaultInstance() : gidFormat_;
+    }
+    /**
+     * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+     */
+    public gaia.schema.ProtoGraph.GIDFormatOrBuilder getGidFormatOrBuilder() {
+      return getGidFormat();
+    }
+
+    public static final int PROCESS_FIELD_NUMBER = 3;
     private java.util.List<gaia.schema.ProtoGraph.FieldProcess> process_;
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     public java.util.List<gaia.schema.ProtoGraph.FieldProcess> getProcessList() {
       return process_;
     }
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     public java.util.List<? extends gaia.schema.ProtoGraph.FieldProcessOrBuilder> 
         getProcessOrBuilderList() {
       return process_;
     }
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     public int getProcessCount() {
       return process_.size();
     }
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     public gaia.schema.ProtoGraph.FieldProcess getProcess(int index) {
       return process_.get(index);
     }
     /**
-     * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+     * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
      */
     public gaia.schema.ProtoGraph.FieldProcessOrBuilder getProcessOrBuilder(
         int index) {
@@ -2519,8 +2727,11 @@ public final class ProtoGraph {
       if (!getTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 1, type_);
       }
+      if (gidFormat_ != null) {
+        output.writeMessage(2, getGidFormat());
+      }
       for (int i = 0; i < process_.size(); i++) {
-        output.writeMessage(2, process_.get(i));
+        output.writeMessage(3, process_.get(i));
       }
     }
 
@@ -2532,9 +2743,13 @@ public final class ProtoGraph {
       if (!getTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(1, type_);
       }
+      if (gidFormat_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, getGidFormat());
+      }
       for (int i = 0; i < process_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, process_.get(i));
+          .computeMessageSize(3, process_.get(i));
       }
       memoizedSize = size;
       return size;
@@ -2650,9 +2865,15 @@ public final class ProtoGraph {
         super.clear();
         type_ = "";
 
+        if (gidFormatBuilder_ == null) {
+          gidFormat_ = null;
+        } else {
+          gidFormat_ = null;
+          gidFormatBuilder_ = null;
+        }
         if (processBuilder_ == null) {
           process_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
         } else {
           processBuilder_.clear();
         }
@@ -2681,10 +2902,15 @@ public final class ProtoGraph {
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         result.type_ = type_;
+        if (gidFormatBuilder_ == null) {
+          result.gidFormat_ = gidFormat_;
+        } else {
+          result.gidFormat_ = gidFormatBuilder_.build();
+        }
         if (processBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          if (((bitField0_ & 0x00000004) == 0x00000004)) {
             process_ = java.util.Collections.unmodifiableList(process_);
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
           result.process_ = process_;
         } else {
@@ -2710,11 +2936,14 @@ public final class ProtoGraph {
           type_ = other.type_;
           onChanged();
         }
+        if (other.hasGidFormat()) {
+          mergeGidFormat(other.getGidFormat());
+        }
         if (processBuilder_ == null) {
           if (!other.process_.isEmpty()) {
             if (process_.isEmpty()) {
               process_ = other.process_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
               ensureProcessIsMutable();
               process_.addAll(other.process_);
@@ -2727,7 +2956,7 @@ public final class ProtoGraph {
               processBuilder_.dispose();
               processBuilder_ = null;
               process_ = other.process_;
-              bitField0_ = (bitField0_ & ~0x00000002);
+              bitField0_ = (bitField0_ & ~0x00000004);
               processBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getProcessFieldBuilder() : null;
@@ -2832,12 +3061,129 @@ public final class ProtoGraph {
         return this;
       }
 
+      private gaia.schema.ProtoGraph.GIDFormat gidFormat_ = null;
+      private com.google.protobuf.SingleFieldBuilder<
+          gaia.schema.ProtoGraph.GIDFormat, gaia.schema.ProtoGraph.GIDFormat.Builder, gaia.schema.ProtoGraph.GIDFormatOrBuilder> gidFormatBuilder_;
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public boolean hasGidFormat() {
+        return gidFormatBuilder_ != null || gidFormat_ != null;
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public gaia.schema.ProtoGraph.GIDFormat getGidFormat() {
+        if (gidFormatBuilder_ == null) {
+          return gidFormat_ == null ? gaia.schema.ProtoGraph.GIDFormat.getDefaultInstance() : gidFormat_;
+        } else {
+          return gidFormatBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public Builder setGidFormat(gaia.schema.ProtoGraph.GIDFormat value) {
+        if (gidFormatBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          gidFormat_ = value;
+          onChanged();
+        } else {
+          gidFormatBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public Builder setGidFormat(
+          gaia.schema.ProtoGraph.GIDFormat.Builder builderForValue) {
+        if (gidFormatBuilder_ == null) {
+          gidFormat_ = builderForValue.build();
+          onChanged();
+        } else {
+          gidFormatBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public Builder mergeGidFormat(gaia.schema.ProtoGraph.GIDFormat value) {
+        if (gidFormatBuilder_ == null) {
+          if (gidFormat_ != null) {
+            gidFormat_ =
+              gaia.schema.ProtoGraph.GIDFormat.newBuilder(gidFormat_).mergeFrom(value).buildPartial();
+          } else {
+            gidFormat_ = value;
+          }
+          onChanged();
+        } else {
+          gidFormatBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public Builder clearGidFormat() {
+        if (gidFormatBuilder_ == null) {
+          gidFormat_ = null;
+          onChanged();
+        } else {
+          gidFormat_ = null;
+          gidFormatBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public gaia.schema.ProtoGraph.GIDFormat.Builder getGidFormatBuilder() {
+        
+        onChanged();
+        return getGidFormatFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      public gaia.schema.ProtoGraph.GIDFormatOrBuilder getGidFormatOrBuilder() {
+        if (gidFormatBuilder_ != null) {
+          return gidFormatBuilder_.getMessageOrBuilder();
+        } else {
+          return gidFormat_ == null ?
+              gaia.schema.ProtoGraph.GIDFormat.getDefaultInstance() : gidFormat_;
+        }
+      }
+      /**
+       * <code>optional .gaia.schema.GIDFormat gid_format = 2;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          gaia.schema.ProtoGraph.GIDFormat, gaia.schema.ProtoGraph.GIDFormat.Builder, gaia.schema.ProtoGraph.GIDFormatOrBuilder> 
+          getGidFormatFieldBuilder() {
+        if (gidFormatBuilder_ == null) {
+          gidFormatBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              gaia.schema.ProtoGraph.GIDFormat, gaia.schema.ProtoGraph.GIDFormat.Builder, gaia.schema.ProtoGraph.GIDFormatOrBuilder>(
+                  getGidFormat(),
+                  getParentForChildren(),
+                  isClean());
+          gidFormat_ = null;
+        }
+        return gidFormatBuilder_;
+      }
+
       private java.util.List<gaia.schema.ProtoGraph.FieldProcess> process_ =
         java.util.Collections.emptyList();
       private void ensureProcessIsMutable() {
-        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+        if (!((bitField0_ & 0x00000004) == 0x00000004)) {
           process_ = new java.util.ArrayList<gaia.schema.ProtoGraph.FieldProcess>(process_);
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000004;
          }
       }
 
@@ -2845,7 +3191,7 @@ public final class ProtoGraph {
           gaia.schema.ProtoGraph.FieldProcess, gaia.schema.ProtoGraph.FieldProcess.Builder, gaia.schema.ProtoGraph.FieldProcessOrBuilder> processBuilder_;
 
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public java.util.List<gaia.schema.ProtoGraph.FieldProcess> getProcessList() {
         if (processBuilder_ == null) {
@@ -2855,7 +3201,7 @@ public final class ProtoGraph {
         }
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public int getProcessCount() {
         if (processBuilder_ == null) {
@@ -2865,7 +3211,7 @@ public final class ProtoGraph {
         }
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public gaia.schema.ProtoGraph.FieldProcess getProcess(int index) {
         if (processBuilder_ == null) {
@@ -2875,7 +3221,7 @@ public final class ProtoGraph {
         }
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder setProcess(
           int index, gaia.schema.ProtoGraph.FieldProcess value) {
@@ -2892,7 +3238,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder setProcess(
           int index, gaia.schema.ProtoGraph.FieldProcess.Builder builderForValue) {
@@ -2906,7 +3252,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder addProcess(gaia.schema.ProtoGraph.FieldProcess value) {
         if (processBuilder_ == null) {
@@ -2922,7 +3268,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder addProcess(
           int index, gaia.schema.ProtoGraph.FieldProcess value) {
@@ -2939,7 +3285,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder addProcess(
           gaia.schema.ProtoGraph.FieldProcess.Builder builderForValue) {
@@ -2953,7 +3299,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder addProcess(
           int index, gaia.schema.ProtoGraph.FieldProcess.Builder builderForValue) {
@@ -2967,7 +3313,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder addAllProcess(
           java.lang.Iterable<? extends gaia.schema.ProtoGraph.FieldProcess> values) {
@@ -2982,12 +3328,12 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder clearProcess() {
         if (processBuilder_ == null) {
           process_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
           processBuilder_.clear();
@@ -2995,7 +3341,7 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public Builder removeProcess(int index) {
         if (processBuilder_ == null) {
@@ -3008,14 +3354,14 @@ public final class ProtoGraph {
         return this;
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public gaia.schema.ProtoGraph.FieldProcess.Builder getProcessBuilder(
           int index) {
         return getProcessFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public gaia.schema.ProtoGraph.FieldProcessOrBuilder getProcessOrBuilder(
           int index) {
@@ -3025,7 +3371,7 @@ public final class ProtoGraph {
         }
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public java.util.List<? extends gaia.schema.ProtoGraph.FieldProcessOrBuilder> 
            getProcessOrBuilderList() {
@@ -3036,14 +3382,14 @@ public final class ProtoGraph {
         }
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public gaia.schema.ProtoGraph.FieldProcess.Builder addProcessBuilder() {
         return getProcessFieldBuilder().addBuilder(
             gaia.schema.ProtoGraph.FieldProcess.getDefaultInstance());
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public gaia.schema.ProtoGraph.FieldProcess.Builder addProcessBuilder(
           int index) {
@@ -3051,7 +3397,7 @@ public final class ProtoGraph {
             index, gaia.schema.ProtoGraph.FieldProcess.getDefaultInstance());
       }
       /**
-       * <code>repeated .gaia.schema.FieldProcess process = 2;</code>
+       * <code>repeated .gaia.schema.FieldProcess process = 3;</code>
        */
       public java.util.List<gaia.schema.ProtoGraph.FieldProcess.Builder> 
            getProcessBuilderList() {
@@ -3064,7 +3410,7 @@ public final class ProtoGraph {
           processBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               gaia.schema.ProtoGraph.FieldProcess, gaia.schema.ProtoGraph.FieldProcess.Builder, gaia.schema.ProtoGraph.FieldProcessOrBuilder>(
                   process_,
-                  ((bitField0_ & 0x00000002) == 0x00000002),
+                  ((bitField0_ & 0x00000004) == 0x00000004),
                   getParentForChildren(),
                   isClean());
           process_ = null;
@@ -3164,19 +3510,22 @@ public final class ProtoGraph {
   static {
     java.lang.String[] descriptorData = {
       "\n0core/src/main/proto/gaia/schema/ProtoG" +
-      "raph.proto\022\013gaia.schema\">\n\013EdgeCreator\022\026" +
-      "\n\016dst_field_type\030\001 \001(\t\022\027\n\017dst_field_matc" +
-      "h\030\002 \001(\t\"\016\n\014VertexRename\"\271\001\n\014FieldProcess" +
-      "\022\014\n\004name\030\001 \001(\t\022(\n\006action\030\002 \001(\0162\030.gaia.sc" +
-      "hema.FieldAction\0220\n\014edge_creator\030\003 \001(\0132\030" +
-      ".gaia.schema.EdgeCreatorH\000\0222\n\rvertex_ren" +
-      "ame\030\004 \001(\0132\031.gaia.schema.VertexRenameH\000B\013" +
-      "\n\targuments\"\013\n\tGIDFormat\"J\n\016MessageConve" +
-      "rt\022\014\n\004type\030\001 \001(\t\022*\n\007process\030\002 \003(\0132\031.gaia",
-      ".schema.FieldProcess*d\n\013FieldAction\022\013\n\007N" +
-      "OTHING\020\000\022\n\n\006RENAME\020\001\022\034\n\030RENDER_MAP_TO_PR" +
-      "OPERTIES\020\002\022\r\n\tSTORE_MAP\020\003\022\017\n\013CREATE_EDGE" +
-      "\020\004b\006proto3"
+      "raph.proto\022\013gaia.schema\"@\n\013EdgeCreator\022\030" +
+      "\n\020dst_message_type\030\001 \001(\t\022\027\n\017dst_field_ma" +
+      "tch\030\002 \001(\t\"\016\n\014VertexRename\"\271\001\n\014FieldProce" +
+      "ss\022\014\n\004name\030\001 \001(\t\022(\n\006action\030\002 \001(\0162\030.gaia." +
+      "schema.FieldAction\0220\n\014edge_creator\030\003 \001(\013" +
+      "2\030.gaia.schema.EdgeCreatorH\000\0222\n\rvertex_r" +
+      "ename\030\004 \001(\0132\031.gaia.schema.VertexRenameH\000" +
+      "B\013\n\targuments\"$\n\tGIDFormat\022\027\n\017field_sele" +
+      "ction\030\001 \001(\t\"v\n\016MessageConvert\022\014\n\004type\030\001 ",
+      "\001(\t\022*\n\ngid_format\030\002 \001(\0132\026.gaia.schema.GI" +
+      "DFormat\022*\n\007process\030\003 \003(\0132\031.gaia.schema.F" +
+      "ieldProcess*\236\001\n\013FieldAction\022\013\n\007NOTHING\020\000" +
+      "\022\n\n\006RENAME\020\001\022\034\n\030RENDER_MAP_TO_PROPERTIES" +
+      "\020\002\022\r\n\tSTORE_MAP\020\003\022\017\n\013CREATE_EDGE\020\004\022\030\n\024CR" +
+      "EATE_LINKED_VERTEX\020\005\022\017\n\013FLATTEN_MAP\020\006\022\r\n" +
+      "\tSERIALIZE\020\007b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3195,7 +3544,7 @@ public final class ProtoGraph {
     internal_static_gaia_schema_EdgeCreator_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_gaia_schema_EdgeCreator_descriptor,
-        new java.lang.String[] { "DstFieldType", "DstFieldMatch", });
+        new java.lang.String[] { "DstMessageType", "DstFieldMatch", });
     internal_static_gaia_schema_VertexRename_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_gaia_schema_VertexRename_fieldAccessorTable = new
@@ -3213,13 +3562,13 @@ public final class ProtoGraph {
     internal_static_gaia_schema_GIDFormat_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_gaia_schema_GIDFormat_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "FieldSelection", });
     internal_static_gaia_schema_MessageConvert_descriptor =
       getDescriptor().getMessageTypes().get(4);
     internal_static_gaia_schema_MessageConvert_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_gaia_schema_MessageConvert_descriptor,
-        new java.lang.String[] { "Type", "Process", });
+        new java.lang.String[] { "Type", "GidFormat", "Process", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

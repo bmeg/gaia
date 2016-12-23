@@ -3,7 +3,7 @@ package gaia.api
 
 trait Ingestor {
 
-  type MessageCallback = ( java.util.Map[String,Object] ) => Unit
+  type MessageCallback = ( Map[String,Any] ) => Unit
   type CloseCallback = (Int) => Unit
 
   def setMessageCallback( callback :MessageCallback )

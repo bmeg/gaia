@@ -8,6 +8,9 @@ enum FieldAction {
   RENDER_MAP_TO_PROPERTIES = 2;
   STORE_MAP = 3;
   CREATE_EDGE = 4;
+  CREATE_LINKED_VERTEX = 5;
+  FLATTEN_MAP = 6;
+  SERIALIZE = 7;
 }
 
 message EdgeCreator {

@@ -4,9 +4,10 @@ import gaia.graph._
 import gremlin.scala._
 import org.json4s._
 import org.json4s.jackson.Serialization.write
+
 import scala.collection.JavaConversions._
 
-case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
+case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends MessageTransform {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -22,7 +23,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     newkey.asInstanceOf[Key[T]]
   }
 
-  def stringFor(obj: java.util.Map[String,Object]) (key: String): String = {
+  def stringFor(obj: Map[String,Any]) (key: String): String = {
     (obj.get(key)).asInstanceOf[String]
   }
 
@@ -48,7 +49,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     vertex
   }
 
-  def setProperty(vertex: Vertex) (field: Tuple2[String, Object]): Unit = {
+  def setProperty(vertex: Vertex) (field: Tuple2[String, Any]): Unit = {
     val key = camelize(field._1)
     field._2.asInstanceOf[Any] match {
       case value:String =>
@@ -70,7 +71,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     }
   }
 
-  def ingestVertex(data: java.util.Map[String,Object]): Vertex = {
+  def ingestVertex(data: Map[String,Any]): Vertex = {
     //val data = json.asInstanceOf[JObject]
     val gid = stringFor(data) ("gid")
     if (gid == null) {
@@ -114,7 +115,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     vertex
   }
 
-  def ingestMessage(message: java.util.Map[String,Object]) {
+  def ingestMessage(message: Map[String,Any]) {
     val vertex = ingestVertex(message)
   }
 

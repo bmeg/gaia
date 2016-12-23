@@ -1,12 +1,8 @@
 package gaia.ingest
 
-import scala.io.Source
 
-class TransformException(x:String) extends Exception(x) {
-
-}
+class TransformException(x:String) extends Exception(x) {}
 
 trait MessageTransform {
-  def ingestMessage(message: java.util.Map[String,Object])
-
+  def ingestMessage(message: Map[String,Any])
 }

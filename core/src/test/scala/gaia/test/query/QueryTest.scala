@@ -9,7 +9,7 @@ import gremlin.scala._
 import org.scalatest._
 
 class QueryTest extends FunSuite {
-  val graph = TestGraph.read("example/data/variants.1")
+  val graph = TestGraph.read("example/data/variants.1", "example/schema/variants.proto_graph")
   val sampleStep = StepLabel[Vertex]()
 
 }
