@@ -17,9 +17,9 @@ class TransformTest extends FunSuite {
   test("Test File Based Ingestor and Transformation") {
     val in : Ingestor = new FileIngestor("example/data/social.1")
 
-    val graph = GaiaConfig.memoryGraph()
+    val gaia = GaiaConfig.memoryGraph()
     val protographer = ProtoGrapher.load("example/schema/social.proto_graph")
-    val trans = new GraphTransform(graph, protographer)
+    val trans = new GraphTransform(gaia, protographer)
 
     //println(protographer.msgs)
     var messageCount = 0
@@ -39,9 +39,15 @@ class TransformTest extends FunSuite {
       loopCount += 1
     }
 
+    /*
     graph.graph().vertices().asScala.foreach( x => {
       println(x.properties().asScala.mkString(","))
     })
+    */
+
+    val g = gaia.graph()
+
+    assert( g.traversal().V().has("firstName", "Alex").tryNext().get().property("lastName").value().asInstanceOf[String] == "Adams" )
 
     //TODO: put assert statements here
 
