@@ -3,8 +3,6 @@ package gaia.ingest
 import gaia.graph._
 import gaia.io.JsonIO
 import gremlin.scala._
-import org.json4s._
-import org.json4s.jackson.Serialization.write
 
 import scala.collection.JavaConversions._
 
@@ -12,7 +10,6 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
-  implicit val formats = DefaultFormats
 
   def findKey[T](key: String): Key[T] = {
     val newkey = keymap.get(key).getOrElse {
@@ -68,7 +65,7 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
     }
   }
 
-  def setProperties(vertex: Vertex) (prefix: String) (fields: List[Tuple2[String, JValue]]): Unit = {
+  def setProperties(vertex: Vertex) (prefix: String) (fields: List[Tuple2[String, Any]]): Unit = {
     for (field <- fields) {
       setProperty(vertex) ((prefix + "." + field._1, field._2))
     }
@@ -94,18 +91,17 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
     for (field <- data.iterator) {
       val key = field._1
       field._2 match {
-        case JObject(obj) =>
+        case obj:Map[String,Any] =>
           propertiesPattern.findFirstMatchIn(key).map(_.subgroups) match {
             case None => {
-              val serial = write(JObject(obj))
-              setProperty(vertex) ((key, new JString(serial)))
+              setProperty(vertex) ((key, JsonIO.writeMap(obj)))
             }
-            case Some(matches) => setProperties(vertex) (matches.head) (obj)
+            case Some(matches) => setProperties(vertex) (matches.head) (obj.toList)
           }
-        case JArray(arr) =>
+        case arr:List[Any] =>
           edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
             for (value <- arr) {
-              val edge = value.asInstanceOf[JString].s
+              val edge = value.asInstanceOf[String]
               val label = Gid.labelPrefix(edge)
               if (label != "") {
                 graph.associateOut(vertex) (edgeMatch.group(1)) (label) (edge)
