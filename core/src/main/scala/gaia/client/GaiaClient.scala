@@ -27,7 +27,6 @@ class ConnectionConfig {
 class GaiaClient(var config: ConnectionConfig) {
 
   val GAEA_IMPORT_TOPIC = "gaia-import"
-  val jsonio = new JsonIO()
   var producer : Producer[String,String] = null
 
   def kafkaProducerConnect(): Producer[String,String] = {
@@ -43,7 +42,7 @@ class GaiaClient(var config: ConnectionConfig) {
 
 
   def addMessage(message: Map[String,Any]) = {
-    val json = jsonio.WriteMap(message)
+    val json = JsonIO.writeMap(message)
     if (producer == null) {
       producer = kafkaProducerConnect()
     }

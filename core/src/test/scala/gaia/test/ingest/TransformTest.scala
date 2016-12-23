@@ -5,6 +5,8 @@ import gaia.api.ingest.FileIngestor
 import gaia.config.GaiaConfig
 import gaia.ingest.{GraphTransform, ProtoGrapher}
 import org.scalatest.FunSuite
+import scala.collection.JavaConverters._
+
 
 /**
   * Created by ellrott on 12/22/16.
@@ -19,7 +21,7 @@ class TransformTest extends FunSuite {
     val protographer = ProtoGrapher.load("example/schema/social.proto_graph")
     val trans = new GraphTransform(graph, protographer)
 
-    println(protographer.msgs)
+    //println(protographer.msgs)
     var messageCount = 0
     in.setMessageCallback( (x) => {
       trans.ingestMessage(x)
@@ -37,7 +39,12 @@ class TransformTest extends FunSuite {
       loopCount += 1
     }
 
+    graph.graph().vertices().asScala.foreach( x => {
+      println(x.properties().asScala.mkString(","))
+    })
 
-    assert(messageCount == 2)
+    //TODO: put assert statements here
+
+
   }
 }

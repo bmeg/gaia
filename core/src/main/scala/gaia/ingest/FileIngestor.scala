@@ -16,10 +16,9 @@ class FileIngestor(file: String) extends Ingestor {
 
   override def start() = {
     new Thread(new Runnable {
-      var io = new JsonIO
       def run() = {
         Source.fromFile(file).getLines().foreach(x => {
-          onMessage(io.ReadMap(x))
+          onMessage(JsonIO.readMap(x))
         })
         if (onClose != null) {
           onClose(0)

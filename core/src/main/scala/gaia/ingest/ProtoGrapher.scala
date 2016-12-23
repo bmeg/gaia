@@ -19,8 +19,21 @@ import scala.collection.mutable
 import collection.JavaConverters._
 
 
-class ProtoGrapher(val msgs: List[ProtoGraph.MessageConvert]) {
+class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
+  def getGID(msg: Map[String,Any]) : String = {
+    if (convert == null) {
+      return "gid"
+    }
+    if (convert.getGidFormat.getFieldSelection == null) {
+      return "gid"
+    }
+    msg.get(convert.getGidFormat.getFieldSelection).get.asInstanceOf[String]
+  }
+}
 
+class ProtoGrapher(conv: List[ProtoGraph.MessageConvert]) {
+  val converters = conv.map(x=>(x.getType,x)).toMap
+  def getConverter(t:String) = new ProtoGraphMessageParser(converters.getOrElse(t,null))
 }
 
 object ProtoGrapher {
@@ -31,8 +44,6 @@ object ProtoGrapher {
     parser.merge(message, b)
     return b.build()
   }
-
-
 
   def load(path: String) : ProtoGrapher = {
     val mapper = new ObjectMapper()

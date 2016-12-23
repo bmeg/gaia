@@ -10,10 +10,8 @@ object Import {
     var config = new ConnectionConfig().Kafka(args(0))
     val conn = new GaiaClient(config)
 
-    val io = new JsonIO()
-
     Source.fromFile(args(1)).getLines().foreach( x => {
-      val y = io.ReadMap(x)
+      val y = JsonIO.readMap(x)
       conn.addMessage(y)
     })
 

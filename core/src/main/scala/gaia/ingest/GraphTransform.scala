@@ -1,6 +1,7 @@
 package gaia.ingest
 
 import gaia.graph._
+import gaia.io.JsonIO
 import gremlin.scala._
 import org.json4s._
 import org.json4s.jackson.Serialization.write
@@ -24,7 +25,7 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   }
 
   def stringFor(obj: Map[String,Any]) (key: String): String = {
-    (obj.get(key)).asInstanceOf[String]
+    (obj.get(key).get).asInstanceOf[String]
   }
 
   def camelize(s: String): String = {
@@ -51,7 +52,7 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
 
   def setProperty(vertex: Vertex) (field: Tuple2[String, Any]): Unit = {
     val key = camelize(field._1)
-    field._2.asInstanceOf[Any] match {
+    field._2 match {
       case value:String =>
         vertex.setProperty(findKey[String](key), value)
       case value:Double =>
@@ -60,8 +61,10 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
         vertex.setProperty(findKey[Boolean](key), value)
       case value:Int =>
         vertex.setProperty(findKey[Long](key), value.toLong)
+      case value:List[Any] =>
+        vertex.setProperty(findKey[String](key), JsonIO.writeList(value)  )
       case _ =>
-        println("Unsupported Key: " + key)
+        println("Unsupported Key: " + key, field._2)
     }
   }
 
@@ -72,13 +75,16 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   }
 
   def ingestVertex(data: Map[String,Any]): Vertex = {
+
+    val typeString = stringFor(data)("#type")
+    val c = protoGrapher.getConverter(typeString)
+
     //val data = json.asInstanceOf[JObject]
-    val gid = stringFor(data) ("gid")
+    val gid = c.getGID(data)
     if (gid == null) {
       throw new TransformException("Unable to create GID")
     }
 
-    val typeString = stringFor(data)("#type")
     if (typeString == null) {
       throw new TransformException("Untyped Message")
     }
