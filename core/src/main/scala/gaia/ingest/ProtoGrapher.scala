@@ -9,15 +9,22 @@ import java.io.FileInputStream
 import com.google.protobuf.util.JsonFormat
 import gaia.io.JsonIO
 import gaia.schema.ProtoGraph
-import gaia.schema.ProtoGraph.MessageConvert
+import gaia.schema.ProtoGraph.{FieldAction, MessageConvert}
 import org.yaml.snakeyaml.Yaml
-
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.databind.ObjectMapper
+
 import scala.collection.mutable
 import collection.JavaConverters._
 
+
+class MessageVertexQuery(
+  var queryField : String = null,
+  var dstLabel: String = null,
+  var dstField : String = null,
+  var edgeLabel: String = null
+) {}
 
 class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
   def getGID(msg: Map[String,Any]) : String = {
@@ -29,6 +36,30 @@ class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
     }
     msg.get(convert.getGidFormat.getFieldSelection).get.asInstanceOf[String]
   }
+
+  def getDestVertices() : Iterator[MessageVertexQuery] = {
+    if (convert == null) {
+      return Iterator[MessageVertexQuery]()
+    }
+    convert.getProcessList.asScala.filter( x => x.getAction == FieldAction.CREATE_EDGE ).map( x => {
+      new MessageVertexQuery(
+        queryField=x.getName,
+        edgeLabel=x.getEdgeCreator.getEdgeType,
+        dstLabel=x.getEdgeCreator.getDstMessageType,
+        dstField=x.getEdgeCreator.getDstFieldMatch
+      )
+    }).toIterator
+  }
+
+  def getFieldAction(name: String) : ProtoGraph.FieldAction = {
+    if (name == "#type") return FieldAction.NOTHING
+    if (convert == null) return FieldAction.NOTHING
+    val o = convert.getProcessList.asScala.filter( x => x.getName == name ).toList
+    if (o.size == 0) return FieldAction.STORE
+    return o.head.getAction
+
+  }
+
 }
 
 class ProtoGrapher(conv: List[ProtoGraph.MessageConvert]) {

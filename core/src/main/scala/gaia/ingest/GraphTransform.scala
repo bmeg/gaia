@@ -2,6 +2,7 @@ package gaia.ingest
 
 import gaia.graph._
 import gaia.io.JsonIO
+import gaia.schema.ProtoGraph.FieldAction
 import gremlin.scala._
 
 import scala.collection.JavaConversions._
@@ -72,47 +73,61 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   }
 
   def ingestVertex(data: Map[String,Any]): Vertex = {
-
+    //FIXME: for now, determining the message type is a bit hard coded
     val typeString = stringFor(data)("#type")
-    val c = protoGrapher.getConverter(typeString)
+    if (typeString == null) {
+      throw new TransformException("Untyped Message")
+    }
 
-    //val data = json.asInstanceOf[JObject]
-    val gid = c.getGID(data)
+    //Get the ProtoGrapher instance for this message type
+    //It will be responsible for reading the protograph message and
+    //determining which operations will happen to the message
+    val conv = protoGrapher.getConverter(typeString)
+
+    //Determine the GID from the message
+    val gid = conv.getGID(data)
     if (gid == null) {
       throw new TransformException("Unable to create GID")
     }
 
-    if (typeString == null) {
-      throw new TransformException("Untyped Message")
-    }
+    //Start decorating the vertex
     val label = uncapitalize(typeString)
     val vertex = findVertex(graph) (label) (gid)
 
+    //check the protograph description for edges that need to be created
+    conv.getDestVertices().foreach( x => {
+      val edge = x.edgeLabel
+      val label = Gid.labelPrefix(edge)  //what edge label
+      val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
+      if (query.isDefined) {
+        query.get match {
+          case value: String =>
+            //if we found a string, use it
+            graph.associateOut(vertex)(value)(x.dstLabel)(edge)
+          case value: List[String] =>
+            value.foreach(y => {
+              //if we found a list, cycle through each one and process
+              graph.associateOut(vertex)(y)(x.dstLabel)(edge)
+            })
+        }
+      }
+    })
+
+    //for each field in the message, determine what to do with it
     for (field <- data.iterator) {
       val key = field._1
-      field._2 match {
-        case obj:Map[String,Any] =>
-          propertiesPattern.findFirstMatchIn(key).map(_.subgroups) match {
-            case None => {
-              setProperty(vertex) ((key, JsonIO.writeMap(obj)))
-            }
-            case Some(matches) => setProperties(vertex) (matches.head) (obj.toList)
-          }
-        case arr:List[Any] =>
-          edgesPattern.findAllIn(key).matchData.foreach { edgeMatch =>
-            for (value <- arr) {
-              val edge = value.asInstanceOf[String]
-              val label = Gid.labelPrefix(edge)
-              if (label != "") {
-                graph.associateOut(vertex) (edgeMatch.group(1)) (label) (edge)
-              }
-            }
+      conv.getFieldAction(key) match {
+        case FieldAction.STORE => setProperty(vertex) (field)
+        case FieldAction.SERIALIZE =>
+          field._2 match {
+            case obj: Map[String, Any] =>
+              setProperty(vertex)((key, JsonIO.writeMap(obj)))
+            case arr: List[Any] =>
+              setProperty(vertex)((key, JsonIO.writeList(arr)))
           }
         case _ =>
-          setProperty(vertex) (field)
       }
     }
-
     graph.commit()
     vertex
   }

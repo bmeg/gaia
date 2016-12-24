@@ -39,16 +39,19 @@ class TransformTest extends FunSuite {
       loopCount += 1
     }
 
-    /*
-    graph.graph().vertices().asScala.foreach( x => {
-      println(x.properties().asScala.mkString(","))
-    })
-    */
-
     val g = gaia.graph()
+
+
+    g.vertices().asScala.foreach( x => {
+      println(x.id(), x.properties().asScala.mkString(","))
+    })
+    g.edges().asScala.foreach( x => {
+      println(x)
+    })
 
     assert( g.traversal().V().has("firstName", "Alex").tryNext().get().property("lastName").value().asInstanceOf[String] == "Adams" )
 
+    println(g.traversal().V().outE().toList )
     //TODO: put assert statements here
 
 

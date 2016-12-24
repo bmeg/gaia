@@ -4,18 +4,20 @@ package gaia.schema;
 
 enum FieldAction {
   NOTHING = 0;
-  RENAME = 1;
-  RENDER_MAP_TO_PROPERTIES = 2;
-  STORE_MAP = 3;
-  CREATE_EDGE = 4;
-  CREATE_LINKED_VERTEX = 5;
-  FLATTEN_MAP = 6;
-  SERIALIZE = 7;
+  STORE = 1;
+  RENAME = 2;
+  RENDER_MAP_TO_PROPERTIES = 3;
+  STORE_MAP = 4;
+  CREATE_EDGE = 5;
+  CREATE_LINKED_VERTEX = 6;
+  FLATTEN_MAP = 7;
+  SERIALIZE = 8;
 }
 
 message EdgeCreator {
-  string dst_message_type = 1;
-  string dst_field_match = 2;
+  string edge_type = 1;
+  string dst_message_type = 2;
+  string dst_field_match = 3;
 }
 
 message VertexRename {
