@@ -17,7 +17,9 @@
         dst_field_match: name
     - name: pets
       action: CREATE_LINKED_VERTEX
-      edge_type: hasPet
+      edge_creator:
+        edge_type: hasPet
+        dst_message_type: Pet
     - name: spouse
       action: CREATE_EDGE
       edge_creator:
@@ -27,3 +29,6 @@
       action: FLATTEN_MAP
     - name: bio_stats
       action: SERIALIZE
+- type: Pet
+  gid_format:
+    field_selection: name

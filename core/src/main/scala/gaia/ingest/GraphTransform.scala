@@ -5,7 +5,7 @@ import gaia.io.JsonIO
 import gaia.schema.ProtoGraph.FieldAction
 import gremlin.scala._
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends MessageTransform {
   val edgesPattern = "(.*)Edges$".r
@@ -96,7 +96,7 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
 
     //check the protograph description for edges that need to be created
     conv.getDestVertices().foreach( x => {
-      printf("Add edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
+      //printf("Add edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
       val edge = x.edgeLabel
       val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
       if (query.isDefined) {
@@ -106,12 +106,33 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
             graph.associateOut(src=vertex, dstLabel=x.dstLabel, edgeLabel=edge, dstGid=value)
           case value: List[String] =>
             value.foreach(y => {
-              printf("Adding Edge %s %s\n", y, edge )
+              //printf("Adding Edge %s %s\n", y, edge )
               //if we found a list, cycle through each one and process
               graph.associateOut(src=vertex, dstGid=y, dstLabel=x.dstLabel, edgeLabel = edge)
             })
         }
       }
+    })
+
+    conv.getChildVertices().foreach( x => {
+      //printf("Add Child Edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
+      val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
+      if (query.isDefined) {
+        query.get match {
+          case value: List[Map[String,Any]] =>
+            value.foreach(y => {
+              val u = y.updated("#type", x.dstLabel)
+              println("Ingest", u)
+              val v = ingestVertex(u)
+              println("Vertex", v.properties().asScala.mkString(","))
+              //if we found a list, cycle through each one and process
+              graph.associateOut(src = vertex, dstGid = v.property(Gid).value(), dstLabel = x.dstLabel, edgeLabel = x.edgeLabel)
+            })
+          case _ =>
+            println("Should probably do something here")
+        }
+      }
+
     })
 
     //for each field in the message, determine what to do with it

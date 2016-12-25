@@ -25,6 +25,7 @@ class MessageVertexQuery(
   var edgeLabel: String = null
 ) {}
 
+
 class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
   def getGID(msg: Map[String,Any]) : String = {
     if (convert == null) {
@@ -36,6 +37,10 @@ class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
     msg.get(convert.getGidFormat.getFieldSelection).get.asInstanceOf[String]
   }
 
+  /// List out the edge creation requests
+  /// These provide the query format, which needs to be searched on the graph to
+  /// find unique matches to determine the destination vertex for the edges to be
+  /// created
   def getDestVertices() : Iterator[MessageVertexQuery] = {
     if (convert == null) {
       return Iterator[MessageVertexQuery]()
@@ -49,6 +54,21 @@ class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
     }).toIterator
   }
 
+  /// Create additional vertices that encoded inside of the message
+  def getChildVertices() : Iterator[MessageVertexQuery] = {
+    if (convert == null) {
+      return Iterator[MessageVertexQuery]()
+    }
+    convert.getProcessList.asScala.filter( x => x.getAction == FieldAction.CREATE_LINKED_VERTEX ).map( x => {
+      new MessageVertexQuery(
+        queryField=x.getName,
+        edgeLabel = x.getEdgeCreator.getEdgeType,
+        dstLabel = x.getEdgeCreator.getDstMessageType
+      )
+    }).toIterator
+  }
+
+  /// For a given field name, determine the action to be taken
   def getFieldAction(name: String) : ProtoGraph.FieldAction = {
     if (name == "#type") return FieldAction.NOTHING
     if (convert == null) return FieldAction.NOTHING
