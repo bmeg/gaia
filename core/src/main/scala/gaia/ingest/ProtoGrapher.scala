@@ -22,7 +22,6 @@ import collection.JavaConverters._
 class MessageVertexQuery(
   var queryField : String = null,
   var dstLabel: String = null,
-  var dstField : String = null,
   var edgeLabel: String = null
 ) {}
 
@@ -45,8 +44,7 @@ class ProtoGraphMessageParser(val convert:ProtoGraph.MessageConvert) {
       new MessageVertexQuery(
         queryField=x.getName,
         edgeLabel=x.getEdgeCreator.getEdgeType,
-        dstLabel=x.getEdgeCreator.getDstMessageType,
-        dstField=x.getEdgeCreator.getDstFieldMatch
+        dstLabel=x.getEdgeCreator.getDstMessageType
       )
     }).toIterator
   }

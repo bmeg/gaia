@@ -6,11 +6,13 @@
     - name: friends
       action: CREATE_EDGE
       edge_creator:
+        edge_type: hasFriend
         dst_message_type: Person
         dst_field_match: id
     - name: employer
       action: CREATE_EDGE
       edge_creator:
+        edge_type: employer
         dst_message_type: Business
         dst_field_match: name
     - name: pets

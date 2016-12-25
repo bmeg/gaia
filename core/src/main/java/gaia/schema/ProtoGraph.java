@@ -179,23 +179,21 @@ public final class ProtoGraph {
 
     /**
      * <code>optional string dst_message_type = 2;</code>
+     *
+     * <pre>
+     *  string dst_field_match = 3;
+     * </pre>
      */
     java.lang.String getDstMessageType();
     /**
      * <code>optional string dst_message_type = 2;</code>
+     *
+     * <pre>
+     *  string dst_field_match = 3;
+     * </pre>
      */
     com.google.protobuf.ByteString
         getDstMessageTypeBytes();
-
-    /**
-     * <code>optional string dst_field_match = 3;</code>
-     */
-    java.lang.String getDstFieldMatch();
-    /**
-     * <code>optional string dst_field_match = 3;</code>
-     */
-    com.google.protobuf.ByteString
-        getDstFieldMatchBytes();
   }
   /**
    * Protobuf type {@code gaia.schema.EdgeCreator}
@@ -211,7 +209,6 @@ public final class ProtoGraph {
     private EdgeCreator() {
       edgeType_ = "";
       dstMessageType_ = "";
-      dstFieldMatch_ = "";
     }
 
     @java.lang.Override
@@ -248,12 +245,6 @@ public final class ProtoGraph {
               String s = input.readStringRequireUtf8();
 
               dstMessageType_ = s;
-              break;
-            }
-            case 26: {
-              String s = input.readStringRequireUtf8();
-
-              dstFieldMatch_ = s;
               break;
             }
           }
@@ -318,6 +309,10 @@ public final class ProtoGraph {
     private volatile java.lang.Object dstMessageType_;
     /**
      * <code>optional string dst_message_type = 2;</code>
+     *
+     * <pre>
+     *  string dst_field_match = 3;
+     * </pre>
      */
     public java.lang.String getDstMessageType() {
       java.lang.Object ref = dstMessageType_;
@@ -333,6 +328,10 @@ public final class ProtoGraph {
     }
     /**
      * <code>optional string dst_message_type = 2;</code>
+     *
+     * <pre>
+     *  string dst_field_match = 3;
+     * </pre>
      */
     public com.google.protobuf.ByteString
         getDstMessageTypeBytes() {
@@ -342,40 +341,6 @@ public final class ProtoGraph {
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
         dstMessageType_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int DST_FIELD_MATCH_FIELD_NUMBER = 3;
-    private volatile java.lang.Object dstFieldMatch_;
-    /**
-     * <code>optional string dst_field_match = 3;</code>
-     */
-    public java.lang.String getDstFieldMatch() {
-      java.lang.Object ref = dstFieldMatch_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        dstFieldMatch_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>optional string dst_field_match = 3;</code>
-     */
-    public com.google.protobuf.ByteString
-        getDstFieldMatchBytes() {
-      java.lang.Object ref = dstFieldMatch_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        dstFieldMatch_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -400,9 +365,6 @@ public final class ProtoGraph {
       if (!getDstMessageTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessage.writeString(output, 2, dstMessageType_);
       }
-      if (!getDstFieldMatchBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, dstFieldMatch_);
-      }
     }
 
     public int getSerializedSize() {
@@ -415,9 +377,6 @@ public final class ProtoGraph {
       }
       if (!getDstMessageTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(2, dstMessageType_);
-      }
-      if (!getDstFieldMatchBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, dstFieldMatch_);
       }
       memoizedSize = size;
       return size;
@@ -534,8 +493,6 @@ public final class ProtoGraph {
 
         dstMessageType_ = "";
 
-        dstFieldMatch_ = "";
-
         return this;
       }
 
@@ -560,7 +517,6 @@ public final class ProtoGraph {
         gaia.schema.ProtoGraph.EdgeCreator result = new gaia.schema.ProtoGraph.EdgeCreator(this);
         result.edgeType_ = edgeType_;
         result.dstMessageType_ = dstMessageType_;
-        result.dstFieldMatch_ = dstFieldMatch_;
         onBuilt();
         return result;
       }
@@ -582,10 +538,6 @@ public final class ProtoGraph {
         }
         if (!other.getDstMessageType().isEmpty()) {
           dstMessageType_ = other.dstMessageType_;
-          onChanged();
-        }
-        if (!other.getDstFieldMatch().isEmpty()) {
-          dstFieldMatch_ = other.dstFieldMatch_;
           onChanged();
         }
         onChanged();
@@ -686,6 +638,10 @@ public final class ProtoGraph {
       private java.lang.Object dstMessageType_ = "";
       /**
        * <code>optional string dst_message_type = 2;</code>
+       *
+       * <pre>
+       *  string dst_field_match = 3;
+       * </pre>
        */
       public java.lang.String getDstMessageType() {
         java.lang.Object ref = dstMessageType_;
@@ -701,6 +657,10 @@ public final class ProtoGraph {
       }
       /**
        * <code>optional string dst_message_type = 2;</code>
+       *
+       * <pre>
+       *  string dst_field_match = 3;
+       * </pre>
        */
       public com.google.protobuf.ByteString
           getDstMessageTypeBytes() {
@@ -717,6 +677,10 @@ public final class ProtoGraph {
       }
       /**
        * <code>optional string dst_message_type = 2;</code>
+       *
+       * <pre>
+       *  string dst_field_match = 3;
+       * </pre>
        */
       public Builder setDstMessageType(
           java.lang.String value) {
@@ -730,6 +694,10 @@ public final class ProtoGraph {
       }
       /**
        * <code>optional string dst_message_type = 2;</code>
+       *
+       * <pre>
+       *  string dst_field_match = 3;
+       * </pre>
        */
       public Builder clearDstMessageType() {
         
@@ -739,6 +707,10 @@ public final class ProtoGraph {
       }
       /**
        * <code>optional string dst_message_type = 2;</code>
+       *
+       * <pre>
+       *  string dst_field_match = 3;
+       * </pre>
        */
       public Builder setDstMessageTypeBytes(
           com.google.protobuf.ByteString value) {
@@ -748,75 +720,6 @@ public final class ProtoGraph {
   checkByteStringIsUtf8(value);
         
         dstMessageType_ = value;
-        onChanged();
-        return this;
-      }
-
-      private java.lang.Object dstFieldMatch_ = "";
-      /**
-       * <code>optional string dst_field_match = 3;</code>
-       */
-      public java.lang.String getDstFieldMatch() {
-        java.lang.Object ref = dstFieldMatch_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          dstFieldMatch_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>optional string dst_field_match = 3;</code>
-       */
-      public com.google.protobuf.ByteString
-          getDstFieldMatchBytes() {
-        java.lang.Object ref = dstFieldMatch_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          dstFieldMatch_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>optional string dst_field_match = 3;</code>
-       */
-      public Builder setDstFieldMatch(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        dstFieldMatch_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string dst_field_match = 3;</code>
-       */
-      public Builder clearDstFieldMatch() {
-        
-        dstFieldMatch_ = getDefaultInstance().getDstFieldMatch();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional string dst_field_match = 3;</code>
-       */
-      public Builder setDstFieldMatchBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        dstFieldMatch_ = value;
         onChanged();
         return this;
       }
@@ -3652,23 +3555,22 @@ public final class ProtoGraph {
   static {
     java.lang.String[] descriptorData = {
       "\n0core/src/main/proto/gaia/schema/ProtoG" +
-      "raph.proto\022\013gaia.schema\"S\n\013EdgeCreator\022\021" +
+      "raph.proto\022\013gaia.schema\":\n\013EdgeCreator\022\021" +
       "\n\tedge_type\030\001 \001(\t\022\030\n\020dst_message_type\030\002 " +
-      "\001(\t\022\027\n\017dst_field_match\030\003 \001(\t\"\016\n\014VertexRe" +
-      "name\"\271\001\n\014FieldProcess\022\014\n\004name\030\001 \001(\t\022(\n\006a" +
-      "ction\030\002 \001(\0162\030.gaia.schema.FieldAction\0220\n" +
-      "\014edge_creator\030\003 \001(\0132\030.gaia.schema.EdgeCr" +
-      "eatorH\000\0222\n\rvertex_rename\030\004 \001(\0132\031.gaia.sc" +
-      "hema.VertexRenameH\000B\013\n\targuments\"$\n\tGIDF" +
-      "ormat\022\027\n\017field_selection\030\001 \001(\t\"v\n\016Messag",
-      "eConvert\022\014\n\004type\030\001 \001(\t\022*\n\ngid_format\030\002 \001" +
-      "(\0132\026.gaia.schema.GIDFormat\022*\n\007process\030\003 " +
-      "\003(\0132\031.gaia.schema.FieldProcess*\251\001\n\013Field" +
-      "Action\022\013\n\007NOTHING\020\000\022\t\n\005STORE\020\001\022\n\n\006RENAME" +
-      "\020\002\022\034\n\030RENDER_MAP_TO_PROPERTIES\020\003\022\r\n\tSTOR" +
-      "E_MAP\020\004\022\017\n\013CREATE_EDGE\020\005\022\030\n\024CREATE_LINKE" +
-      "D_VERTEX\020\006\022\017\n\013FLATTEN_MAP\020\007\022\r\n\tSERIALIZE" +
-      "\020\010b\006proto3"
+      "\001(\t\"\016\n\014VertexRename\"\271\001\n\014FieldProcess\022\014\n\004" +
+      "name\030\001 \001(\t\022(\n\006action\030\002 \001(\0162\030.gaia.schema" +
+      ".FieldAction\0220\n\014edge_creator\030\003 \001(\0132\030.gai" +
+      "a.schema.EdgeCreatorH\000\0222\n\rvertex_rename\030" +
+      "\004 \001(\0132\031.gaia.schema.VertexRenameH\000B\013\n\tar" +
+      "guments\"$\n\tGIDFormat\022\027\n\017field_selection\030" +
+      "\001 \001(\t\"v\n\016MessageConvert\022\014\n\004type\030\001 \001(\t\022*\n",
+      "\ngid_format\030\002 \001(\0132\026.gaia.schema.GIDForma" +
+      "t\022*\n\007process\030\003 \003(\0132\031.gaia.schema.FieldPr" +
+      "ocess*\251\001\n\013FieldAction\022\013\n\007NOTHING\020\000\022\t\n\005ST" +
+      "ORE\020\001\022\n\n\006RENAME\020\002\022\034\n\030RENDER_MAP_TO_PROPE" +
+      "RTIES\020\003\022\r\n\tSTORE_MAP\020\004\022\017\n\013CREATE_EDGE\020\005\022" +
+      "\030\n\024CREATE_LINKED_VERTEX\020\006\022\017\n\013FLATTEN_MAP" +
+      "\020\007\022\r\n\tSERIALIZE\020\010b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3687,7 +3589,7 @@ public final class ProtoGraph {
     internal_static_gaia_schema_EdgeCreator_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_gaia_schema_EdgeCreator_descriptor,
-        new java.lang.String[] { "EdgeType", "DstMessageType", "DstFieldMatch", });
+        new java.lang.String[] { "EdgeType", "DstMessageType", });
     internal_static_gaia_schema_VertexRename_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_gaia_schema_VertexRename_fieldAccessorTable = new

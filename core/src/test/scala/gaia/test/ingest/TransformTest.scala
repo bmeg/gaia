@@ -42,6 +42,9 @@ class TransformTest extends FunSuite {
     val g = gaia.graph()
 
 
+    /*
+    //Debugging print statements, will delete these someday
+
     g.vertices().asScala.foreach( x => {
       println(x.id(), x.properties().asScala.mkString(","))
     })
@@ -49,11 +52,17 @@ class TransformTest extends FunSuite {
       println(x)
     })
 
-    assert( g.traversal().V().has("firstName", "Alex").tryNext().get().property("lastName").value().asInstanceOf[String] == "Adams" )
+    g.traversal().V().has("firstName", "Alex").out("hasFriend").toList.asScala.foreach( x => {
+      println( "Friend",  x.properties().asScala.mkString(","))
+    })
+    println(g.traversal().V().has("firstName", "Alex").out("hasFriend").has("firstName", "Cynthia").toList)
+    */
 
-    println(g.traversal().V().outE().toList )
-    //TODO: put assert statements here
+    //println("pets", g.traversal().V().has("firstName", "Cynthia").out("hasPet").toList)
 
+    assert(g.traversal().V().has("firstName", "Alex").tryNext().get().property("lastName").value().asInstanceOf[String] == "Adams")
+    assert(g.traversal().V().has("firstName", "Alex").out("hasFriend").has("firstName", "Cynthia").toList.size() == 1)
+    //assert(g.traversal().V().has("firstName", "Cynthia").out("hasPet"))
 
   }
 }

@@ -17,7 +17,7 @@ enum FieldAction {
 message EdgeCreator {
   string edge_type = 1;
   string dst_message_type = 2;
-  string dst_field_match = 3;
+//  string dst_field_match = 3;
 }
 
 message VertexRename {

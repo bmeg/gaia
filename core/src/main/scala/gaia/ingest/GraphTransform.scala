@@ -43,7 +43,7 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   }
 
   def findVertex(graph: GaiaGraph) (label: String) (gid: String): Vertex = {
-    val vertex = graph.namedVertex(label) (gid)
+    val vertex = graph.namedVertex(label, gid)
     graph.associateType(vertex) (label)
     vertex
   }
@@ -96,18 +96,19 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
 
     //check the protograph description for edges that need to be created
     conv.getDestVertices().foreach( x => {
+      printf("Add edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
       val edge = x.edgeLabel
-      val label = Gid.labelPrefix(edge)  //what edge label
       val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
       if (query.isDefined) {
         query.get match {
           case value: String =>
             //if we found a string, use it
-            graph.associateOut(vertex)(value)(x.dstLabel)(edge)
+            graph.associateOut(src=vertex, dstLabel=x.dstLabel, edgeLabel=edge, dstGid=value)
           case value: List[String] =>
             value.foreach(y => {
+              printf("Adding Edge %s %s\n", y, edge )
               //if we found a list, cycle through each one and process
-              graph.associateOut(vertex)(y)(x.dstLabel)(edge)
+              graph.associateOut(src=vertex, dstGid=y, dstLabel=x.dstLabel, edgeLabel = edge)
             })
         }
       }
