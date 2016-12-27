@@ -41,6 +41,10 @@ resolvers ++= Seq(
   "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
+PB.targets in Compile := Seq(
+  scalapb.gen() -> (sourceManaged in Compile).value
+)
+
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
   if (isSnapshot.value)
