@@ -1,13 +1,14 @@
 package gaia.ingest
 
 import gaia.graph._
+import gaia.schema._
 import gaia.io.JsonIO
 import gaia.schema.ProtoGraph.FieldAction
 import gremlin.scala._
 
 import scala.collection.JavaConverters._
 
-case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends MessageTransform {
+case class GraphTransform(graph: GaiaGraph, schema: GaiaSchema) extends MessageTransform {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -73,60 +74,60 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
   }
 
   def ingestVertex(data: Map[String,Any]): Vertex = {
-    //FIXME: for now, determining the message type is a bit hard coded
+    // FIXME: for now, determining the message type is a bit hard coded
     val typeString = stringFor(data)("#type")
     if (typeString == null) {
       throw new TransformException("Untyped Message")
     }
 
-    //Get the ProtoGrapher instance for this message type
-    //It will be responsible for reading the protograph message and
-    //determining which operations will happen to the message
-    val conv = protoGrapher.getConverter(typeString)
+    // Get the ProtoGrapher instance for this message type
+    // It will be responsible for reading the protograph message and
+    // determining which operations will happen to the message
+    val converter = schema.protograph.converterFor(typeString)
 
-    //Determine the GID from the message
-    val gid = conv.getGID(data)
+    // Determine the GID from the message
+    val gid = converter.gid(data)
     if (gid == null) {
       throw new TransformException("Unable to create GID")
     }
 
-    //Start decorating the vertex
+    // Start decorating the vertex
     val label = uncapitalize(typeString)
     val vertex = findVertex(graph) (label) (gid)
 
-    //check the protograph description for edges that need to be created
-    conv.getDestVertices().foreach( x => {
-      //printf("Add edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
-      val edge = x.edgeLabel
-      val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
+    // check the protograph description for edges that need to be created
+    converter.destinations().foreach { destination =>
+      // printf("Add edge: %s %s %s\n", destination.queryField, destination.edgeLabel, destination.dstLabel)
+      val edge = destination.edgeLabel
+      val query = data.get(destination.queryField) // query the current message to determine how to find the dest vertex
       if (query.isDefined) {
         query.get match {
           case value: String =>
-            //if we found a string, use it
-            graph.associateOut(src=vertex, dstLabel=x.dstLabel, edgeLabel=edge, dstGid=value)
+            // if we found a string, use it
+            graph.associateOut(vertex) (edge) (destination.dstLabel) (value)
           case value: List[String] =>
-            value.foreach(y => {
-              //printf("Adding Edge %s %s\n", y, edge )
-              //if we found a list, cycle through each one and process
-              graph.associateOut(src=vertex, dstGid=y, dstLabel=x.dstLabel, edgeLabel = edge)
-            })
+            value.foreach { y =>
+              // printf("Adding Edge %s %s\n", y, edge )
+              // if we found a list, cycle through each one and process
+              graph.associateOut(vertex) (edge) (destination.dstLabel) (y)
+            }
         }
       }
-    })
+    }
 
-    conv.getChildVertices().foreach( x => {
-      //printf("Add Child Edge: %s %s %s\n", x.queryField, x.edgeLabel, x.dstLabel)
-      val query = data.get(x.queryField) //query the current message to determine how to find the dest vertex
+    converter.children().foreach( child => {
+      // printf("Add Child Edge: %s %s %s\n", child.queryField, child.edgeLabel, child.dstLabel)
+      val query = data.get(child.queryField) // query the current message to determine how to find the dest vertex
       if (query.isDefined) {
         query.get match {
           case value: List[Map[String,Any]] =>
             value.foreach(y => {
-              val u = y.updated("#type", x.dstLabel)
+              val u = y.updated("#type", child.dstLabel)
               println("Ingest", u)
               val v = ingestVertex(u)
               println("Vertex", v.properties().asScala.mkString(","))
-              //if we found a list, cycle through each one and process
-              graph.associateOut(src = vertex, dstGid = v.property(Gid).value(), dstLabel = x.dstLabel, edgeLabel = x.edgeLabel)
+              // if we found a list, cycle through each one and process
+              graph.associateOut(vertex) (child.edgeLabel) (child.dstLabel) (v.property(Gid).value())
             })
           case _ =>
             println("Should probably do something here")
@@ -135,10 +136,10 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
 
     })
 
-    //for each field in the message, determine what to do with it
+    // for each field in the message, determine what to do with it
     for (field <- data.iterator) {
       val key = field._1
-      conv.getFieldAction(key) match {
+      converter.fieldActionFor(key) match {
         case FieldAction.STORE => setProperty(vertex) (field)
         case FieldAction.SERIALIZE =>
           field._2 match {
@@ -154,9 +155,8 @@ case class GraphTransform(graph: GaiaGraph, protoGrapher: ProtoGrapher) extends 
     vertex
   }
 
-  def ingestMessage(message: Map[String,Any]) {
+  def transform(message: Map[String,Any]) {
     val vertex = ingestVertex(message)
   }
-
 }
 

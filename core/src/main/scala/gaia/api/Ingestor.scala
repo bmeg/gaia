@@ -1,8 +1,6 @@
 package gaia.api
 
-
 trait Ingestor {
-
   type MessageCallback = ( Map[String,Any] ) => Unit
   type CloseCallback = (Int) => Unit
 
@@ -11,5 +9,4 @@ trait Ingestor {
 
   def start()
   def stop()
-
 }

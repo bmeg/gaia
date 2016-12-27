@@ -5,7 +5,6 @@ import gaia.io.JsonIO
 
 import scala.io.Source
 
-
 class FileIngestor(file: String) extends Ingestor {
   var onMessage : MessageCallback = null
   var onClose : CloseCallback = null

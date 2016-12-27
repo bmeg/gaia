@@ -50,7 +50,7 @@ trait GaiaGraph {
     query.toList.headOption
   }
 
-  def namedVertex(label: String, gid: String): Vertex = {
+  def namedVertex(label: String) (gid: String): Vertex = {
     graph.V.has(Gid, gid).headOption.getOrElse {
       graph + (label, Gid -> gid)
     }
@@ -64,20 +64,20 @@ trait GaiaGraph {
     typeQuery(typ).toList
   }
 
-  def associateOut(src: Vertex, edgeLabel: String, dstLabel: String, dstGid: String): Boolean = {
-    if (src.out(edgeLabel).has(Gid, dstGid).toList.isEmpty) {
-      val dst = namedVertex(dstLabel, dstGid)
-      src --- (edgeLabel) --> dst
+  def associateOut(from: Vertex) (edge: String) (toLabel: String) (toGid: String): Boolean = {
+    if (from.out(edge).has(Gid, toGid).toList.isEmpty) {
+      val to = namedVertex(toLabel) (toGid)
+      from --- (edge) --> to
       true
     } else {
       false
     }
   }
 
-  def associateIn(dst: Vertex, edgeLabel: String, srcLabel: String, srcGid: String): Boolean = {
-    if (dst.in(edgeLabel).has(Gid, srcGid).toList.isEmpty) {
-      val src = namedVertex(srcLabel, srcGid)
-      dst <-- (edgeLabel) --- src
+  def associateIn(from: Vertex) (edge: String) (toLabel: String) (toGid: String): Boolean = {
+    if (from.in(edge).has(Gid, toGid).toList.isEmpty) {
+      val to = namedVertex(toLabel) (toGid)
+      from <-- (edge) --- to
       true
     } else {
       false

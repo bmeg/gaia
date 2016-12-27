@@ -23,7 +23,7 @@ case class MessageVertexQuery(queryField: String, edgeLabel: String, dstLabel: S
 // case class MessageConverter(label: String, gidFormat: String, processors: List[])
 
 class ProtoGraphMessageParser(val convert: MessageConvert) {
-  def getGID(msg: Map[String,Any]): String = {
+  def gid(msg: Map[String,Any]): String = {
     // if (convert == null) {
     //   return "gid"
     // }
@@ -37,7 +37,7 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
   /// These provide the query format, which needs to be searched on the graph to
   /// find unique matches to determine the destination vertex for the edges to be
   /// created
-  def getDestVertices(): Iterator[MessageVertexQuery] = {
+  def destinations(): Iterator[MessageVertexQuery] = {
     // if (convert == null) {
     //   return Iterator[MessageVertexQuery]()
     // }
@@ -47,7 +47,7 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
   }
 
   /// Create additional vertices that encoded inside of the message
-  def getChildVertices(): Iterator[MessageVertexQuery] = {
+  def children(): Iterator[MessageVertexQuery] = {
     // if (convert == null) {
     //   return Iterator[MessageVertexQuery]()
     // }
@@ -57,7 +57,7 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
   }
 
   /// For a given field name, determine the action to be taken
-  def getFieldAction(name: String): FieldAction = {
+  def fieldActionFor(name: String): FieldAction = {
     // if (convert == null) return FieldAction.NOTHING
     if (name == "#type") {
       FieldAction.NOTHING
@@ -75,8 +75,8 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
 class ProtoGrapher(converters: List[MessageConvert]) {
   val converterMap = converters.map(x => (x.getType, x)).toMap
 
-  def getConverter(t: String): ProtoGraphMessageParser = {
-    new ProtoGraphMessageParser(converterMap.getOrElse(t, null))
+  def converterFor(typ: String): ProtoGraphMessageParser = {
+    new ProtoGraphMessageParser(converterMap.getOrElse(typ, null))
   }
 }
 
