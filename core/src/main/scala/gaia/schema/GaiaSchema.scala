@@ -1,12 +1,12 @@
 package gaia.schema
 
-import gaia.ingest.ProtoGrapher
+import gaia.ingest.Protographer
 
-case class GaiaSchema(types: GraphSchema, protograph: ProtoGrapher)
+case class GaiaSchema(types: GraphSchema, protograph: Protographer)
 
 object GaiaSchema {
   def load(protopath: String): GaiaSchema = {
-    val protograph = ProtoGrapher.load(protopath)
+    val protograph = Protographer.load(protopath)
     val types = GraphSchema.assemble(List[GaiaVertex](), List[GaiaEdge]())
     new GaiaSchema(types, protograph)
   }

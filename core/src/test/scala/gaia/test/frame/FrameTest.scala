@@ -7,7 +7,7 @@ import gaia.test.TestGraph
 import org.scalatest._
 
 class FrameTest extends FunSuite {
-  val graph = TestGraph.read("example/data/expressions.1", "example/schema/expression.proto_graph")
+  val graph = TestGraph.read("example/data/expressions.1", "example/schema/expression.protograph")
 
   test("hydrating serialized vector") {
     val vertex = graph.typeQuery("geneExpression").head

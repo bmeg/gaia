@@ -5,8 +5,8 @@ package gaia.ingest
   */
 
 import gaia.io.JsonIO
-import gaia.schema.ProtoGraph
-import gaia.schema.ProtoGraph.{FieldAction, MessageConvert}
+import gaia.schema.Protograph
+import gaia.schema.Protograph.{FieldAction, MessageConvert}
 
 import java.io.FileInputStream
 import com.google.protobuf.util.JsonFormat
@@ -22,7 +22,7 @@ case class MessageVertexQuery(queryField: String, edgeLabel: String, dstLabel: S
 // case class FieldProcessor(name: String)
 // case class MessageConverter(label: String, gidFormat: String, processors: List[])
 
-class ProtoGraphMessageParser(val convert: MessageConvert) {
+class ProtographMessageParser(val convert: MessageConvert) {
   def gid(msg: Map[String,Any]): String = {
     // if (convert == null) {
     //   return "gid"
@@ -73,15 +73,15 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
   }
 }
 
-class ProtoGrapher(converters: List[MessageConvert]) {
+class Protographer(converters: List[MessageConvert]) {
   val converterMap = converters.map(x => (x.getType, x)).toMap
 
-  def converterFor(typ: String): ProtoGraphMessageParser = {
-    new ProtoGraphMessageParser(converterMap.getOrElse(typ, null))
+  def converterFor(typ: String): ProtographMessageParser = {
+    new ProtographMessageParser(converterMap.getOrElse(typ, null))
   }
 }
 
-object ProtoGrapher {
+object Protographer {
   def parseJSON(message: String): MessageConvert = {
     val b = MessageConvert.newBuilder()
     val parser = JsonFormat.parser().ignoringUnknownFields()
@@ -89,7 +89,7 @@ object ProtoGrapher {
     b.build()
   }
 
-  def load(path: String): ProtoGrapher = {
+  def load(path: String): Protographer = {
     val mapper = new ObjectMapper()
 
     val yaml = new Yaml()
@@ -99,6 +99,6 @@ object ProtoGrapher {
       parseJSON(s)
     }
 
-    new ProtoGrapher(mlist.toList)
+    new Protographer(mlist.toList)
   }
 }

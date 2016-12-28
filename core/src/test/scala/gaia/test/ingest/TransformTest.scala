@@ -5,24 +5,22 @@ import gaia.api.ingest.FileIngestor
 import gaia.config.GaiaConfig
 import gaia.schema.GaiaSchema
 import gaia.graph.GaiaGraph
-import gaia.ingest.{GraphTransform, ProtoGrapher}
+import gaia.ingest.{GraphTransform, Protographer}
 import org.scalatest.FunSuite
 import scala.collection.JavaConverters._
-
 
 /**
   * Created by ellrott on 12/22/16.
   */
+
 class TransformTest extends FunSuite {
-
-
   test("Test File Based Ingestor and Transformation") {
     val in: Ingestor = new FileIngestor("example/data/social.1")
-    val gaia: GaiaGraph = GaiaConfig.memoryGraph("example/schema/social.proto_graph")
+    val gaia: GaiaGraph = GaiaConfig.memoryGraph("example/schema/social.protograph")
 
-    // val protographer = ProtoGrapher.load("example/schema/social.proto_graph")
+    // val protographer = Protographer.load("example/schema/social.proto_graph")
 
-    // case class TestSchema(protograph: ProtoGrapher) extends GaiaSchema
+    // case class TestSchema(protograph: Protographer) extends GaiaSchema
     // val schema = new TestSchema(protographer)
 
     val transform = new GraphTransform(gaia)

@@ -3,7 +3,7 @@ package gaia.ingest
 import gaia.graph._
 import gaia.schema._
 import gaia.io.JsonIO
-import gaia.schema.ProtoGraph.FieldAction
+import gaia.schema.Protograph.FieldAction
 import gremlin.scala._
 
 import scala.collection.JavaConverters._
@@ -80,7 +80,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
       throw new TransformException("Untyped Message")
     }
 
-    // Get the ProtoGrapher instance for this message type
+    // Get the Protographer instance for this message type
     // It will be responsible for reading the protograph message and
     // determining which operations will happen to the message
     val converter = graph.schema.protograph.converterFor(typeString)
