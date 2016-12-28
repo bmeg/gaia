@@ -30,6 +30,7 @@ class ProtoGraphMessageParser(val convert: MessageConvert) {
     // if (convert.getGidFormat.getFieldSelection == null) {
     //   return "gid"
     // }
+    println(msg.toString)
     msg.get(convert.getGidFormat.getFieldSelection).get.asInstanceOf[String]
   }
 

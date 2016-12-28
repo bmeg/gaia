@@ -13,7 +13,8 @@ import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 case class GaiaGraphConfig(
   database: String = "tinkergraph",
   host: String = "localhost",
-  keyspace: String = "gaia"
+  keyspace: String = "gaia",
+  protograph: String = "default"
 )
 
 case class GaiaServerConfig(
@@ -36,7 +37,7 @@ case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
 }
 
 object GaiaConfigProtocol extends DefaultYamlProtocol {
-  implicit val graphFormat = yamlFormat3(GaiaGraphConfig.apply)
+  implicit val graphFormat = yamlFormat4(GaiaGraphConfig.apply)
   implicit val serverFormat = yamlFormat1(GaiaServerConfig.apply)
   implicit val configFormat = yamlFormat2(GaiaConfig.apply)
 }
@@ -55,8 +56,8 @@ object GaiaConfig {
     config.connectToGraph(config.graph).get
   }
 
-  def memoryGraph() : GaiaGraph = {
-    val config = new GaiaConfig( new GaiaGraphConfig(), new GaiaServerConfig() )
+  def memoryGraph(protograph: String = "default"): GaiaGraph = {
+    val config = new GaiaConfig(new GaiaGraphConfig(protograph=protograph), new GaiaServerConfig())
     config.connectToGraph(config.graph).get
   }
 }

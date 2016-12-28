@@ -10,7 +10,7 @@ class IOSuite extends FunSuite {
   test("Parse JSON") {
     var input = """{ "test" : 1 }"""
     val o = JsonIO.readMap(input)
-    assert( o.get("test") == 1 )
+    assert( o.get("test") == Some(1) )
   }
 
   test("Write JSON") {
@@ -19,5 +19,4 @@ class IOSuite extends FunSuite {
     val a = JsonIO.writeMap(i.toMap)
     assert( a == """{"test":1}""" )
   }
-
 }

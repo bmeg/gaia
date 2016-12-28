@@ -8,7 +8,7 @@ import gremlin.scala._
 
 import scala.collection.JavaConverters._
 
-case class GraphTransform(graph: GaiaGraph, schema: GaiaSchema) extends MessageTransform {
+case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
   val edgesPattern = "(.*)Edges$".r
   val propertiesPattern = "(.*)Properties$".r
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -44,7 +44,7 @@ case class GraphTransform(graph: GaiaGraph, schema: GaiaSchema) extends MessageT
   }
 
   def findVertex(graph: GaiaGraph) (label: String) (gid: String): Vertex = {
-    val vertex = graph.namedVertex(label, gid)
+    val vertex = graph.namedVertex(label) (gid)
     graph.associateType(vertex) (label)
     vertex
   }
@@ -83,10 +83,11 @@ case class GraphTransform(graph: GaiaGraph, schema: GaiaSchema) extends MessageT
     // Get the ProtoGrapher instance for this message type
     // It will be responsible for reading the protograph message and
     // determining which operations will happen to the message
-    val converter = schema.protograph.converterFor(typeString)
+    val converter = graph.schema.protograph.converterFor(typeString)
 
     // Determine the GID from the message
     val gid = converter.gid(data)
+    println("GID: " + gid)
     if (gid == null) {
       throw new TransformException("Unable to create GID")
     }

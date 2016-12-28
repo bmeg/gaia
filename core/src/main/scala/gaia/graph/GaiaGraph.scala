@@ -28,7 +28,7 @@ object Gid extends Key[String]("gid") {
 
 trait GaiaGraph {
   def graph(): Graph
-  def schema(): GraphSchema
+  def schema(): GaiaSchema
 
   def makeIndex(name: String) (keys: Map[String, Class[_]]): Try[Unit]
   def makeIndexes(spec: Map[String, Map[String, Class[_]]]): Try[Unit]

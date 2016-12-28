@@ -20,10 +20,15 @@ class GaiaTinkergraph(config: GaiaGraphConfig) extends GaiaGraph {
     connection
   }
 
-  lazy val persistedSchema = GraphSchema.assemble(List[GaiaVertex](), List[GaiaEdge]())
-  def schema: GraphSchema = {
+  lazy val persistedSchema: GaiaSchema = GaiaSchema.load(config.protograph)
+  def schema: GaiaSchema = {
     persistedSchema
   }
+
+  // lazy val persistedSchema = GraphSchema.assemble(List[GaiaVertex](), List[GaiaEdge]())
+  // def schema: GraphSchema = {
+  //   persistedSchema
+  // }
 
   def makeIndex(name: String) (keys: Map[String, Class[_]]): Try[Unit] = {
     Try {}

@@ -2,5 +2,6 @@ graph:
   database: titan
   host: localhost
   keyspace: gaia
+  protograph: example/schema/social.protograph
 server:
   port: 11223
