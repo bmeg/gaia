@@ -32,6 +32,8 @@ libraryDependencies ++= Seq(
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
+libraryDependencies += "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"
+
 resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
 resolvers ++= Seq(
   "Akka Repository" at "http://repo.akka.io/releases/",
@@ -40,6 +42,8 @@ resolvers ++= Seq(
   "Twitter Maven Repo" at "http://maven.twttr.com",
   "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
+
+PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
 
 PB.targets in Compile := Seq(
   scalapb.gen() -> (sourceManaged in Compile).value

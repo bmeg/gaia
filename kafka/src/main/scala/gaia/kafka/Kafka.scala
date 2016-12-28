@@ -80,6 +80,6 @@ class Ingestor(graph: GaiaGraph) (server: String) (groupID: String) (topics: Seq
   val ingestor = GraphTransform(graph)
   val consumer = GaiaConsumer.buildConsumer(server) (groupID) (topics)
   def ingest(): Unit = {
-    GaiaConsumer.run(consumer, record => ingestor.ingestMessage(record.value))
+    GaiaConsumer.run(consumer, record => ingestor.transform(record.value))
   }
 }
