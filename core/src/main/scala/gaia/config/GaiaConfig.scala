@@ -11,14 +11,14 @@ import net.jcazevedo.moultingyaml._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 
 case class GaiaGraphConfig(
-  database: Option[String], // = "tinkergraph",
-  host: Option[String], //  = "localhost",
-  keyspace: Option[String] //  = "gaia"
+  database: Option[String],
+  host: Option[String],
+  keyspace: Option[String]
 )
 
 case class GaiaServerConfig(
-  port: Option[Int] // = 11223
-  // facets: Map[String, String] = Map[String, String]()
+  port: Option[Int],
+  facets: Option[Map[String, String]]
 )
 
 case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
@@ -38,7 +38,7 @@ case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
 
 object GaiaConfigProtocol extends DefaultYamlProtocol {
   implicit val graphFormat = yamlFormat3(GaiaGraphConfig.apply)
-  implicit val serverFormat = yamlFormat1(GaiaServerConfig.apply)
+  implicit val serverFormat = yamlFormat2(GaiaServerConfig.apply)
   implicit val configFormat = yamlFormat2(GaiaConfig.apply)
 }
 
