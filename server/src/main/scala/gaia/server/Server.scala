@@ -19,6 +19,7 @@ object GaiaServer {
     val qualifiedName = if (!className.contains(".")) className else "gaia.facet." + className
     val constructor = Class.forName(qualifiedName).getConstructor(classOf[String])
     val enveloped = envelopPath(path)
+    println(qualifiedName + " at " + enveloped)
     constructor.newInstance(enveloped).asInstanceOf[GaiaFacet]
   }
 
@@ -27,6 +28,7 @@ object GaiaServer {
   }
 
   def start(config: GaiaServerConfig) (graph: GaiaGraph): Unit = {
+    println("registering facets ---------")
     val facets = GaiaServer.findFacets(config.facets.getOrElse(Map[String, String]()))
     val blaze = BlazeBuilder.bindHttp(config.port.getOrElse(11223))
     val mounted = (BaseFacets.facets ++ facets).foldLeft(blaze) { (blaze, facet) =>
