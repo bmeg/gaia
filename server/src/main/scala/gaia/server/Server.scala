@@ -36,14 +36,18 @@ object GaiaServer {
     val static = mounted.mountService(StaticFacet.service, "/")
     static.run.awaitShutdown()
   }
+
+  def startServer(configPath: String) {
+    val config = GaiaConfig.readConfig(configPath)
+    val graph = config.connectToGraph(config.graph)
+    if (graph.isSuccess) {
+      start(config.server) (graph.get)
+    } else {
+      println("failed to connect to graph: " + config.graph.toString)
+    }
+  }
 }
 
 object GaiaFoundation extends App {
-  val config = GaiaConfig.readConfig("resources/config/gaia.yaml")
-  val graph = config.connectToGraph(config.graph)
-  if (graph.isSuccess) {
-    GaiaServer.start(config.server) (graph.get)
-  } else {
-    println("failed to connect to graph: " + config.graph.toString)
-  }
+  GaiaServer.startServer("resources/config/gaia.yaml")
 }
