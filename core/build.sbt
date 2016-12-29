@@ -43,11 +43,11 @@ resolvers ++= Seq(
   "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
-PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
+// PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
 
-PB.targets in Compile := Seq(
-  scalapb.gen() -> (sourceManaged in Compile).value
-)
+// PB.targets in Compile := Seq(
+//   scalapb.gen() -> (sourceManaged in Compile).value
+// )
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
