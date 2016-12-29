@@ -11,19 +11,20 @@ import net.jcazevedo.moultingyaml._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 
 case class GaiaGraphConfig(
-  database: String = "tinkergraph",
-  host: String = "localhost",
-  keyspace: String = "gaia"
+  database: Option[String], // = "tinkergraph",
+  host: Option[String], //  = "localhost",
+  keyspace: Option[String] //  = "gaia"
 )
 
 case class GaiaServerConfig(
-  port: Int = 11223
+  port: Option[Int] // = 11223
+  // facets: Map[String, String] = Map[String, String]()
 )
 
 case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
   def connectToGraph(config: GaiaGraphConfig): Try[GaiaGraph] = {
     Try {
-      val database = config.database
+      val database = config.database.getOrElse("tinkergraph")
       if (database == "tinkergraph") {
         new GaiaTinkergraph(config)
       } else if (database == "titan") {

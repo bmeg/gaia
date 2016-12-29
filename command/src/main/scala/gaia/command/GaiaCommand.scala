@@ -57,11 +57,19 @@ object GaiaCommand extends App {
     val graph = connect(Arguments.ingest.config.toOption)
 
     if (graph.isSuccess) {
+      val ingestor = new GraphIngestor(graph.get)
+
       Arguments.ingest.file.toOption match {
         case Some(file) => {
-          val ingestor = new GraphIngestor(graph.get)
-          ingestor.ingestFile(Arguments.ingest.file.getOrElse(""))
-          println("ingested file " + Arguments.ingest.file)
+          ingestor.ingestFile(file)
+          println("ingested file " + file)
+        }
+      }
+
+      Arguments.ingest.url.toOption match {
+        case Some(url) => {
+          ingestor.ingestUrl(url)
+          println("ingested url " + url)
         }
       }
     } else {
