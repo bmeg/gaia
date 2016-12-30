@@ -3,6 +3,7 @@ package gaia.command
 import gaia.config._
 import gaia.graph._
 import gaia.ingest._
+import gaia.server._
 
 import org.rogach.scallop._
 
@@ -80,7 +81,7 @@ object GaiaCommand extends App {
   }
 
   def start() {
-    println("start: " + Arguments.start.config.toOption)
+    GaiaServer.startServer(Arguments.start.config.toOption.getOrElse(defaultConfig))
   }
 
   def unknown() {
