@@ -16,7 +16,7 @@ object GaiaServer {
   }
 
   def findFacet(className: String) (path: String): GaiaFacet = {
-    val qualifiedName = if (!className.contains(".")) className else "gaia.facet." + className
+    val qualifiedName = if (className.contains(".")) className else "gaia.facet." + className
     val constructor = Class.forName(qualifiedName).getConstructor(classOf[String])
     val enveloped = envelopPath(path)
     println(qualifiedName + " at " + enveloped)
