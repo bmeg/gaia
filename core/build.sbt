@@ -1,7 +1,7 @@
 organization  := "io.bmeg"
 name := "gaia-core"
 
-version := "0.0.4-SNAPSHOT"
+version := "0.0.5-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -24,7 +24,7 @@ libraryDependencies ++= Seq(
   "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
   "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
-  "io.bmeg"                    %% "ophion"                   % "0.0.2-SNAPSHOT",
+  "io.bmeg"                    %% "ophion"                   % "0.0.5-SNAPSHOT",
 
   "org.scalactic"              %% "scalactic"                % "3.0.0",
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
