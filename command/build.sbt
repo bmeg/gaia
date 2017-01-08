@@ -1,6 +1,6 @@
 organization := "io.bmeg"
 name := "gaia-command"
-version := "0.0.4-SNAPSHOT"
+version := "0.0.5-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
