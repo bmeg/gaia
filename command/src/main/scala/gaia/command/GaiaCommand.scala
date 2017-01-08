@@ -13,7 +13,7 @@ object GaiaCommand extends App {
   val defaultConfig = "resources/config/gaia.yaml"
 
   object Arguments extends ScallopConf(args) {
-    val migrate = new Subcommand("migrate") {
+    val init = new Subcommand("init") {
       val config = opt[String]("config", required=false)
     }
 
@@ -28,27 +28,35 @@ object GaiaCommand extends App {
       val config = opt[String]("config", required=false)
     }
 
-    addSubcommand(migrate)
     addSubcommand(ingest)
     addSubcommand(start)
+    addSubcommand(init)
 
     verify()
   }
   
+  def loadConfig(path: String): GaiaConfig = {
+    GaiaConfig.readConfig(path)
+  }
+
   def connect(path: Option[String]): Try[GaiaGraph] = {
     val configPath = path.getOrElse(defaultConfig)
-    val config = GaiaConfig.readConfig(configPath)
+    val config = loadConfig(configPath)
     config.connectToGraph(config.graph)
   }
 
-  def migrate() {
-    val graph = connect(Arguments.migrate.config.toOption)
+  def init() {
+    val configPath = Arguments.init.config.toOption.getOrElse(defaultConfig)
+    val config = loadConfig(configPath)
+    val graph = config.connectToGraph(config.graph)
 
     if (graph.isSuccess) {
+      val migrations = GaiaMigrations.findMigrations(config.graph.migrations.getOrElse(List[String]()))
+      GaiaMigrations.registerMigrations(migrations)
       GaiaMigrations.runMigrations(graph.get)
       println("migrations complete!")
     } else {
-      println("failed to open graph! " + Arguments.migrate.config.getOrElse(defaultConfig))
+      println("failed to open graph! " + configPath)
     }
 
     Runtime.getRuntime.halt(0)
@@ -93,7 +101,7 @@ object GaiaCommand extends App {
   }
 
   Arguments.subcommand match {
-    case Some(Arguments.migrate) => migrate()
+    case Some(Arguments.init) => init()
     case Some(Arguments.ingest) => ingest()
     case Some(Arguments.start) => start()
     case Some(_) => unknown()

@@ -13,7 +13,8 @@ import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 case class GaiaGraphConfig(
   database: Option[String],
   host: Option[String],
-  keyspace: Option[String]
+  keyspace: Option[String],
+  migrations: Option[List[String]]
 )
 
 case class GaiaServerConfig(
@@ -37,7 +38,7 @@ case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
 }
 
 object GaiaConfigProtocol extends DefaultYamlProtocol {
-  implicit val graphFormat = yamlFormat3(GaiaGraphConfig.apply)
+  implicit val graphFormat = yamlFormat4(GaiaGraphConfig.apply)
   implicit val serverFormat = yamlFormat2(GaiaServerConfig.apply)
   implicit val configFormat = yamlFormat2(GaiaConfig.apply)
 }

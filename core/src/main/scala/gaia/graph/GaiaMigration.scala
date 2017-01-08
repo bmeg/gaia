@@ -1,6 +1,7 @@
 package gaia.graph
 
 import gremlin.scala._
+import scala.reflect.runtime.universe
 
 trait GaiaMigration {
   def signature: String
@@ -25,8 +26,19 @@ object GaiaMigrations {
   val allMigrations = scala.collection.mutable.ListBuffer.empty[GaiaMigration]
   allMigrations += BaseMigration
 
-  def registerMigrations(migrations: List[GaiaMigration]) = {
+  def registerMigrations(migrations: Seq[GaiaMigration]) = {
     allMigrations ++= migrations
+  }
+
+  def findMigration(name: String): GaiaMigration = {
+    val qualified = if (name.contains(".")) name else "gaia.graph.migration." + name
+    val runtimeMirror = universe.runtimeMirror(getClass.getClassLoader)
+    val module = runtimeMirror.staticModule(qualified)
+    runtimeMirror.reflectModule(module).asInstanceOf[GaiaMigration]
+  }
+
+  def findMigrations(names: Seq[String]): Seq[GaiaMigration] = {
+    names.map(findMigration)
   }
 
   def runMigrations(graph: GaiaGraph) = {
