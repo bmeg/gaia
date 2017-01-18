@@ -1,6 +1,5 @@
 package gaia.io
 
-
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -10,16 +9,15 @@ object JsonIO {
   val mapper = new ObjectMapper()
   mapper.registerModule(DefaultScalaModule)
 
-  def readMap(text: String) : Map[String,Any] = {
+  def readMap(text: String): Map[String,Any] = {
     mapper.readValue(text, classOf[Map[String,Any]] )
   }
 
-  def writeMap(message: Map[String,Any]) : String = {
+  def writeMap(message: Map[String,Any]): String = {
     mapper.writeValueAsString(message)
   }
 
-  def writeList(message: List[Any]) : String = {
+  def writeList(message: List[Any]): String = {
     mapper.writeValueAsString(message)
   }
-
 }

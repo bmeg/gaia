@@ -3,6 +3,7 @@ package gaia.kafka
 import gaia.ingest.GraphTransform
 import gaia.graph._
 import gaia.file._
+import gaia.io.JsonIO
 
 import scala.io.Source
 import org.json4s._
@@ -77,9 +78,9 @@ class Spout(server: String) {
 }
 
 class Ingestor(graph: GaiaGraph) (server: String) (groupID: String) (topics: Seq[String]) {
-  val ingestor = GraphTransform(graph)
+  val transform = GraphTransform(graph)
   val consumer = GaiaConsumer.buildConsumer(server) (groupID) (topics)
   def ingest(): Unit = {
-    GaiaConsumer.run(consumer, record => ingestor.transform(record.value))
+    GaiaConsumer.run(consumer, record => transform.transform(JsonIO.readMap(record.value)))
   }
 }

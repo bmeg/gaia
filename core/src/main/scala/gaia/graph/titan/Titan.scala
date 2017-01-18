@@ -27,7 +27,7 @@ class GaiaTitan(config: GaiaGraphConfig) extends GaiaGraph {
     connection
   }
 
-  lazy val persistedSchema: GaiaSchema = GaiaSchema.load(config.protograph)
+  lazy val persistedSchema: GaiaSchema = GaiaSchema.load(config.protograph.getOrElse("default"))
   def schema: GaiaSchema = {
     persistedSchema
   }

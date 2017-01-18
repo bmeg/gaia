@@ -72,11 +72,6 @@ object GaiaCommand extends App {
 
       Arguments.ingest.file.toOption match {
         case Some(file) => {
-<<<<<<< HEAD
-          val ingestor = new GraphTransform(graph.get)
-          ingestor.ingestFile(file)
-          println("ingested file " + file)
-=======
           ingestor.ingestFile(file)
           println("ingested file " + file)
         }
@@ -86,7 +81,6 @@ object GaiaCommand extends App {
         case Some(url) => {
           ingestor.ingestUrl(url)
           println("ingested url " + url)
->>>>>>> 5812d89b64571348c6364e6190a527c1b3a85d99
         }
       }
     } else {

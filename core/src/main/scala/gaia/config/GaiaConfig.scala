@@ -11,16 +11,16 @@ import net.jcazevedo.moultingyaml._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 
 case class GaiaGraphConfig(
-  database: Option[String],
-  host: Option[String],
-  keyspace: Option[String],
-  migrations: Option[List[String]],
-  protograph: Option[String]
+  database: Option[String] = None,
+  host: Option[String] = None,
+  keyspace: Option[String] = None,
+  migrations: Option[List[String]] = None,
+  protograph: Option[String] = None
 )
 
 case class GaiaServerConfig(
-  port: Option[Int],
-  facets: Option[Map[String, String]]
+  port: Option[Int] = None,
+  facets: Option[Map[String, String]] = None
 )
 
 case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
@@ -59,7 +59,7 @@ object GaiaConfig {
   }
 
   def memoryGraph(protograph: String = "default"): GaiaGraph = {
-    val config = new GaiaConfig(new GaiaGraphConfig(protograph=Some(protograph)), new GaiaServerConfig())
+    val config = new GaiaConfig(GaiaGraphConfig(protograph=Some(protograph)), GaiaServerConfig())
     config.connectToGraph(config.graph).get
   }
 }
