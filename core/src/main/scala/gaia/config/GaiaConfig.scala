@@ -11,20 +11,22 @@ import net.jcazevedo.moultingyaml._
 import net.jcazevedo.moultingyaml.DefaultYamlProtocol._
 
 case class GaiaGraphConfig(
-  database: String = "tinkergraph",
-  host: String = "localhost",
-  keyspace: String = "gaia",
-  protograph: String = "default"
+  database: Option[String],
+  host: Option[String],
+  keyspace: Option[String],
+  migrations: Option[List[String]],
+  protograph: Option[String]
 )
 
 case class GaiaServerConfig(
-  port: Int = 11223
+  port: Option[Int],
+  facets: Option[Map[String, String]]
 )
 
 case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
   def connectToGraph(config: GaiaGraphConfig): Try[GaiaGraph] = {
     Try {
-      val database = config.database
+      val database = config.database.getOrElse("tinkergraph")
       if (database == "tinkergraph") {
         new GaiaTinkergraph(config)
       } else if (database == "titan") {
@@ -37,8 +39,8 @@ case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
 }
 
 object GaiaConfigProtocol extends DefaultYamlProtocol {
-  implicit val graphFormat = yamlFormat4(GaiaGraphConfig.apply)
-  implicit val serverFormat = yamlFormat1(GaiaServerConfig.apply)
+  implicit val graphFormat = yamlFormat5(GaiaGraphConfig.apply)
+  implicit val serverFormat = yamlFormat2(GaiaServerConfig.apply)
   implicit val configFormat = yamlFormat2(GaiaConfig.apply)
 }
 
@@ -57,7 +59,7 @@ object GaiaConfig {
   }
 
   def memoryGraph(protograph: String = "default"): GaiaGraph = {
-    val config = new GaiaConfig(new GaiaGraphConfig(protograph=protograph), new GaiaServerConfig())
+    val config = new GaiaConfig(new GaiaGraphConfig(protograph=Some(protograph)), new GaiaServerConfig())
     config.connectToGraph(config.graph).get
   }
 }

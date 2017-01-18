@@ -18,6 +18,12 @@ trait GaiaIngestor {
     ingestFile(new File(path))
   }
 
+  def ingestUrl(url: String) {
+    for (line <- Source.fromURL(url).getLines) {
+      ingestMessage(line)
+    }
+  }
+
   def ingestDirectory(path: String) {
     listFiles(path).foreach(ingestFile)
   }

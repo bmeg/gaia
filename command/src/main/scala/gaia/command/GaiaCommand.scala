@@ -4,6 +4,7 @@ import gaia.api.ingest.FileIngestor
 import gaia.config._
 import gaia.graph._
 import gaia.ingest._
+import gaia.server._
 
 import org.rogach.scallop._
 
@@ -14,7 +15,7 @@ object GaiaCommand extends App {
   val defaultConfig = "resources/config/gaia.yaml"
 
   object Arguments extends ScallopConf(args) {
-    val migrate = new Subcommand("migrate") {
+    val init = new Subcommand("init") {
       val config = opt[String]("config", required=false)
     }
 
@@ -29,27 +30,35 @@ object GaiaCommand extends App {
       val config = opt[String]("config", required=false)
     }
 
-    addSubcommand(migrate)
     addSubcommand(ingest)
     addSubcommand(start)
+    addSubcommand(init)
 
     verify()
   }
   
+  def loadConfig(path: String): GaiaConfig = {
+    GaiaConfig.readConfig(path)
+  }
+
   def connect(path: Option[String]): Try[GaiaGraph] = {
     val configPath = path.getOrElse(defaultConfig)
-    val config = GaiaConfig.readConfig(configPath)
+    val config = loadConfig(configPath)
     config.connectToGraph(config.graph)
   }
 
-  def migrate() {
-    val graph = connect(Arguments.migrate.config.toOption)
+  def init() {
+    val configPath = Arguments.init.config.toOption.getOrElse(defaultConfig)
+    val config = loadConfig(configPath)
+    val graph = config.connectToGraph(config.graph)
 
     if (graph.isSuccess) {
+      val migrations = GaiaMigrations.findMigrations(config.graph.migrations.getOrElse(List[String]()))
+      GaiaMigrations.registerMigrations(migrations)
       GaiaMigrations.runMigrations(graph.get)
       println("migrations complete!")
     } else {
-      println("failed to open graph! " + Arguments.migrate.config.getOrElse(defaultConfig))
+      println("failed to open graph! " + configPath)
     }
 
     Runtime.getRuntime.halt(0)
@@ -59,11 +68,25 @@ object GaiaCommand extends App {
     val graph = connect(Arguments.ingest.config.toOption)
 
     if (graph.isSuccess) {
+      val ingestor = new GraphIngestor(graph.get)
+
       Arguments.ingest.file.toOption match {
         case Some(file) => {
+<<<<<<< HEAD
           val ingestor = new GraphTransform(graph.get)
           ingestor.ingestFile(file)
           println("ingested file " + file)
+=======
+          ingestor.ingestFile(file)
+          println("ingested file " + file)
+        }
+      }
+
+      Arguments.ingest.url.toOption match {
+        case Some(url) => {
+          ingestor.ingestUrl(url)
+          println("ingested url " + url)
+>>>>>>> 5812d89b64571348c6364e6190a527c1b3a85d99
         }
       }
     } else {
@@ -74,7 +97,7 @@ object GaiaCommand extends App {
   }
 
   def start() {
-    println("start: " + Arguments.start.config.toOption)
+    GaiaServer.startServer(Arguments.start.config.toOption.getOrElse(defaultConfig))
   }
 
   def unknown() {
@@ -86,7 +109,7 @@ object GaiaCommand extends App {
   }
 
   Arguments.subcommand match {
-    case Some(Arguments.migrate) => migrate()
+    case Some(Arguments.init) => init()
     case Some(Arguments.ingest) => ingest()
     case Some(Arguments.start) => start()
     case Some(_) => unknown()

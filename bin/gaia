@@ -4,7 +4,7 @@ import argparse
 import subprocess
 
 def migrate(args):
-    subprocess.call('sbt --error "command/run migrate --config ' + args.configuration + '"', shell=True)
+    subprocess.call('sbt --error "command/run migrate --config ' + args.config + '"', shell=True)
 
 def ingest(args):
     shell = ['sbt "command/run ingest --config ', args.config]
@@ -25,7 +25,10 @@ def ingest(args):
     print('ingest ' + str(args))
 
 def start(args):
-    print('start ' + str(args))
+    try:
+        subprocess.call('sbt --error "command/run start --config ' + args.config + '"', shell=True)
+    except:
+        None
 
 def parse_args():
     parser = argparse.ArgumentParser()

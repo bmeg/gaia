@@ -9,8 +9,28 @@ import org.http4s.server._
 import org.http4s.server.blaze.BlazeBuilder
 
 object GaiaServer {
-  def start(config: GaiaServerConfig) (graph: GaiaGraph) (facets: Seq[GaiaFacet]): Unit = {
-    val blaze = BlazeBuilder.bindHttp(config.port)
+  def envelopPath(path: String): String = {
+    val prefix = if (path.charAt(0) != '/') '/' else ""
+    val suffix = if (path.charAt(path.length - 1) != '/') '/' else ""
+    prefix + path + suffix
+  }
+
+  def findFacet(className: String) (path: String): GaiaFacet = {
+    val qualifiedName = if (className.contains(".")) className else "gaia.facet." + className
+    val constructor = Class.forName(qualifiedName).getConstructor(classOf[String])
+    val enveloped = envelopPath(path)
+    println(qualifiedName + " at " + enveloped)
+    constructor.newInstance(enveloped).asInstanceOf[GaiaFacet]
+  }
+
+  def findFacets(facetConfig: Map[String, String]): List[GaiaFacet] = {
+    facetConfig.map(facet => findFacet(facet._1) (facet._2)).toList
+  }
+
+  def start(config: GaiaServerConfig) (graph: GaiaGraph): Unit = {
+    println("registering facets ---------")
+    val facets = GaiaServer.findFacets(config.facets.getOrElse(Map[String, String]()))
+    val blaze = BlazeBuilder.bindHttp(config.port.getOrElse(11223))
     val mounted = (BaseFacets.facets ++ facets).foldLeft(blaze) { (blaze, facet) =>
       blaze.mountService(facet.service(graph), "/gaia" + facet.root)
     }
@@ -18,14 +38,18 @@ object GaiaServer {
     val static = mounted.mountService(StaticFacet.service, "/")
     static.run.awaitShutdown()
   }
+
+  def startServer(configPath: String) {
+    val config = GaiaConfig.readConfig(configPath)
+    val graph = config.connectToGraph(config.graph)
+    if (graph.isSuccess) {
+      start(config.server) (graph.get)
+    } else {
+      println("failed to connect to graph: " + config.graph.toString)
+    }
+  }
 }
 
 object GaiaFoundation extends App {
-  val config = GaiaConfig.readConfig("resources/config/gaia.yaml")
-  val graph = config.connectToGraph(config.graph)
-  if (graph.isSuccess) {
-    GaiaServer.start(config.server) (graph.get) (List[GaiaFacet]())
-  } else {
-    println("failed to connect to graph: " + config.graph.toString)
-  }
+  GaiaServer.startServer("resources/config/gaia.yaml")
 }

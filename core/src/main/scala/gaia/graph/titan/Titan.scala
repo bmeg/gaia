@@ -16,8 +16,8 @@ class GaiaTitan(config: GaiaGraphConfig) extends GaiaGraph {
   def connect(): TitanGraph = {
     val base = new BaseConfiguration()
     base.setProperty("storage.backend", "cassandra")
-    base.setProperty("storage.hostname", config.host)
-    base.setProperty("storage.cassandra.keyspace", config.keyspace)
+    base.setProperty("storage.hostname", config.host.getOrElse("localhost"))
+    base.setProperty("storage.cassandra.keyspace", config.keyspace.getOrElse("gaia"))
 
     TitanFactory.open(base)
   }
