@@ -28,6 +28,7 @@ libraryDependencies ++= Seq(
   "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
   "io.bmeg"                    %% "ophion"                   % "0.0.5-SNAPSHOT",
 
+  "com.trueaccord.scalapb"     %% "scalapb-json4s"           % "0.1.6",
   "org.scalactic"              %% "scalactic"                % "3.0.0",
   "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
@@ -43,11 +44,10 @@ resolvers ++= Seq(
   "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
-// PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
-
-// PB.targets in Compile := Seq(
-//   scalapb.gen() -> (sourceManaged in Compile).value
-// )
+PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
+PB.targets in Compile := Seq(
+  scalapb.gen() -> (sourceManaged in Compile).value
+)
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"

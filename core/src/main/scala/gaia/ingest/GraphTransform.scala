@@ -61,7 +61,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
       case value:Int =>
         vertex.setProperty(findKey[Long](key), value.toLong)
       case value:List[Any] =>
-        vertex.setProperty(findKey[String](key), JsonIO.writeList(value)  )
+        vertex.setProperty(findKey[String](key), JsonIO.writeList(value))
       case _ =>
         println("Unsupported Key: " + key, field._2)
     }
@@ -134,7 +134,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
             println("Should probably do something here")
         }
       }
-
     })
 
     // for each field in the message, determine what to do with it
@@ -152,6 +151,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
         case _ =>
       }
     }
+
     graph.commit()
     vertex
   }

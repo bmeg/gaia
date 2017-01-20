@@ -31,7 +31,8 @@ class ProtographMessageParser(val convert: MessageConvert) {
     //   return "gid"
     // }
     println(msg.toString)
-    msg.get(convert.getGidFormat.getFieldSelection).get.asInstanceOf[String]
+    
+    msg.get(convert.gidFormat.format).get.asInstanceOf[String]
   }
 
   /// List out the edge creation requests

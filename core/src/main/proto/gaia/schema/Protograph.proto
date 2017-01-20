@@ -34,7 +34,7 @@ message FieldProcess {
 }
 
 message GIDFormat {
-  string field_selection = 1;
+  string format = 1;
 }
 
 message MessageConvert {
