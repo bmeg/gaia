@@ -2,43 +2,71 @@ syntax = "proto3";
 
 package gaia.schema;
 
-enum FieldAction {
-  NOTHING = 0;
-  STORE = 1;
-  RENAME = 2;
-  RENDER_MAP_TO_PROPERTIES = 3;
-  STORE_MAP = 4;
-  CREATE_EDGE = 5;
-  CREATE_LINKED_VERTEX = 6;
-  FLATTEN_MAP = 7;
-  SERIALIZE = 8;
+// enum FieldAction {
+//   NOTHING = 0;
+//   STORE = 1;
+//   RENAME = 2;
+//   RENDER_MAP_TO_PROPERTIES = 3;
+//   STORE_MAP = 4;
+//   CREATE_EDGE = 5;
+//   CREATE_LINKED_VERTEX = 6;
+//   FLATTEN_MAP = 7;
+//   SERIALIZE = 8;
+// }
+
+message SingleEdge {
+    string edge_label = 1;
+    string destination_label = 2;
+    //  string dst_field_match = 3;
 }
 
-message EdgeCreator {
-  string edge_type = 1;
-  string dst_message_type = 2;
-//  string dst_field_match = 3;
+message RepeatedEdges {
+    string edge_label = 1;
+    string destination_label = 2;
+    //  string dst_field_match = 3;
 }
 
-message VertexRename {
-  
+message RenameProperty {
+    string rename = 1;
 }
 
-message FieldProcess {
-  string name = 1;
-  FieldAction action = 2;
-  oneof arguments {
-    EdgeCreator edge_creator = 3;
-    VertexRename vertex_rename = 4;
-  }
+message SerializeMap {
+    string serialized_name = 1;
+}
+
+message SpliceMap {
+    string prefix = 1;
+}
+
+message NestedVertex {
+    string label = 1;
+    string outer_id = 2;
+}
+
+message JoinList {
+    string delimiter = 1;
+}
+
+message FieldAction {
+    string name = 1;
+    //  FieldAction action = 2;
+    oneof action {
+        SingleEdge single_edge = 3;
+        RepeatedEdges repeated_edges = 4;
+        RenameProperty rename_property = 5;
+        SerializeMap serialize_map = 6;
+        SpliceMap splice_map = 7;
+        NestedVertex nested_vertex = 8;
+        JoinList join_list = 9;
+    }
 }
 
 message GIDFormat {
-  string format = 1;
+    string format = 1;
 }
 
-message MessageConvert {
-  string type = 1;
-  GIDFormat gid_format = 2;
-  repeated FieldProcess process = 3;
+message ProcessMessage {
+    string label = 1;
+    GIDFormat gid_format = 2;
+    repeated FieldAction process = 3;
 }
