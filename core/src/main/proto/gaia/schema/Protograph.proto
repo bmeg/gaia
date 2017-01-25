@@ -39,12 +39,21 @@ message SpliceMap {
 }
 
 message NestedVertex {
-    string label = 1;
-    string outer_id = 2;
+    string edge_label = 1;
+    string destination_label = 2;
+    string outer_id = 3;
 }
 
 message JoinList {
     string delimiter = 1;
+}
+
+message Ignore {
+    string meaningless = 1;
+}
+
+message Store {
+    string meaningful = 1;
 }
 
 message FieldAction {
@@ -58,15 +67,13 @@ message FieldAction {
         SpliceMap splice_map = 7;
         NestedVertex nested_vertex = 8;
         JoinList join_list = 9;
+        Store store = 10;
+        Ignore ignore = 11;
     }
-}
-
-message GIDFormat {
-    string format = 1;
 }
 
 message ProcessMessage {
     string label = 1;
-    GIDFormat gid_format = 2;
+    string gid_format = 2;
     repeated FieldAction process = 3;
 }

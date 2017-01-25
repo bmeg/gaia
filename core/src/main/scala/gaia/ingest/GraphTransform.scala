@@ -98,37 +98,37 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
 
     // check the protograph description for edges that need to be created
     converter.destinations().foreach { destination =>
-      // printf("Add edge: %s %s %s\n", destination.queryField, destination.edgeLabel, destination.dstLabel)
+      // printf("Add edge: %s %s %s\n", destination.queryField, destination.edgeLabel, destination.destinationLabel)
       val edge = destination.edgeLabel
       val query = data.get(destination.queryField) // query the current message to determine how to find the dest vertex
       if (query.isDefined) {
         query.get match {
           case value: String =>
             // if we found a string, use it
-            graph.associateOut(vertex) (edge) (destination.dstLabel) (value)
+            graph.associateOut(vertex) (edge) (destination.destinationLabel) (value)
           case value: List[String] =>
             value.foreach { y =>
               // printf("Adding Edge %s %s\n", y, edge )
               // if we found a list, cycle through each one and process
-              graph.associateOut(vertex) (edge) (destination.dstLabel) (y)
+              graph.associateOut(vertex) (edge) (destination.destinationLabel) (y)
             }
         }
       }
     }
 
     converter.children().foreach( child => {
-      // printf("Add Child Edge: %s %s %s\n", child.queryField, child.edgeLabel, child.dstLabel)
+      // printf("Add Child Edge: %s %s %s\n", child.queryField, child.edgeLabel, child.destinationLabel)
       val query = data.get(child.queryField) // query the current message to determine how to find the dest vertex
       if (query.isDefined) {
         query.get match {
           case value: List[Map[String,Any]] =>
             value.foreach(y => {
-              val u = y.updated("#type", child.dstLabel)
+              val u = y.updated("#type", child.destinationLabel)
               println("Ingest", u)
               val v = ingestVertex(u)
               println("Vertex", v.properties().asScala.mkString(","))
               // if we found a list, cycle through each one and process
-              graph.associateOut(vertex) (child.edgeLabel) (child.dstLabel) (v.property(Gid).value())
+              graph.associateOut(vertex) (child.edgeLabel) (child.destinationLabel) (v.property(Gid).value())
             })
           case _ =>
             println("Should probably do something here")
@@ -136,21 +136,21 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
       }
     })
 
-    // for each field in the message, determine what to do with it
-    for (field <- data.iterator) {
-      val key = field._1
-      converter.fieldActionFor(key) match {
-        case FieldAction.STORE => setProperty(vertex) (field)
-        case FieldAction.SERIALIZE =>
-          field._2 match {
-            case obj: Map[String, Any] =>
-              setProperty(vertex)((key, JsonIO.writeMap(obj)))
-            case arr: List[Any] =>
-              setProperty(vertex)((key, JsonIO.writeList(arr)))
-          }
-        case _ =>
-      }
-    }
+    // // for each field in the message, determine what to do with it
+    // for (field <- data.iterator) {
+    //   val key = field._1
+    //   converter.fieldActionFor(key) match {
+    //     case FieldAction.STORE => setProperty(vertex) (field)
+    //     case FieldAction.SERIALIZE =>
+    //       field._2 match {
+    //         case obj: Map[String, Any] =>
+    //           setProperty(vertex)((key, JsonIO.writeMap(obj)))
+    //         case arr: List[Any] =>
+    //           setProperty(vertex)((key, JsonIO.writeList(arr)))
+    //       }
+    //     case _ =>
+    //   }
+    // }
 
     graph.commit()
     vertex

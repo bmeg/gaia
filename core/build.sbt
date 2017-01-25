@@ -26,7 +26,7 @@ libraryDependencies ++= Seq(
   "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
   "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
   "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
-  "io.bmeg"                    %% "ophion"                   % "0.0.5-SNAPSHOT",
+  "io.bmeg"                    %% "ophion"                   % "0.0.5",
 
   "com.trueaccord.scalapb"     %% "scalapb-json4s"           % "0.1.6",
   "org.scalactic"              %% "scalactic"                % "3.0.0",
