@@ -95,10 +95,13 @@ class CamelCaseSerializer extends JsonSerializer[String] {
     Character.toUpperCase(s.charAt(0)) + s.substring(1)
   }
 
+  def camelize(s: String): String = {
+    val parts = s.split("_").toList
+    (parts.head :: parts.tail.map(capitalize)).mkString
+  }
+
   def serialize(value: String, gen: JsonGenerator, serializers: SerializerProvider) {
-    val parts = value.split("_").toList
-    val key = (parts.head :: parts.tail.map(capitalize)).mkString
-    gen.writeFieldName(key)
+    gen.writeFieldName(camelize(value))
   }
 }
 
