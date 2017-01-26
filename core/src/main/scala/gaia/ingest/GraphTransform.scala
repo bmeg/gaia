@@ -140,7 +140,8 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     val protograph = graph.schema.protograph.transformFor(label)
 
     // Determine the GID from the message
-    val gid = graph.schema.protograph.gid(data)
+    val gid = protograph.gid(data)
+    val global = data + ("gid" -> gid)
     println("GID: " + gid)
     // if (gid == null) {
     //   throw new TransformException("Unable to create GID")
@@ -149,20 +150,20 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     // Start decorating the vertex
     val vertex = findVertex(graph) (label) (gid)
 
-    val protovertex = protograph.actions.foldLeft(vertex) { (vertex, action) =>
+    val protovertex = protograph.transform.actions.foldLeft(vertex) { (vertex, action) =>
       action.action match {
-        case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (data) (action.field)
-        case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (data) (action.field)
-        case Action.RenameProperty(field) => renameProperty(vertex) (field) (data) (action.field)
-        case Action.SerializeMap(map) => serializeMap(vertex) (map) (data) (action.field)
-        case Action.SpliceMap(map) => spliceMap(vertex) (map) (data) (action.field)
-        case Action.InnerVertex(inner) => innerVertex(graph) (vertex) (inner) (data) (action.field)
-        case Action.JoinList(list) => joinList(vertex) (list) (data) (action.field)
-        case Action.IgnoreField(empty) => ignoreField(vertex) (data) (action.field)
+        case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (global) (action.field)
+        case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
+        case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
+        case Action.SerializeMap(map) => serializeMap(vertex) (map) (global) (action.field)
+        case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)
+        case Action.InnerVertex(inner) => innerVertex(graph) (vertex) (inner) (global) (action.field)
+        case Action.JoinList(list) => joinList(vertex) (list) (global) (action.field)
+        case Action.IgnoreField(empty) => ignoreField(vertex) (global) (action.field)
       }
     }
 
-    val remaining = protograph.actions.map(_.field).foldLeft(data) ((data, field) =>
+    val remaining = protograph.transform.actions.map(_.field).foldLeft(global) ((data, field) =>
       data - field
     )
 

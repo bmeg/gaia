@@ -7,6 +7,7 @@ package gaia.ingest
 import gaia.io.JsonIO
 import gaia.schema.Protograph
 import gaia.schema.Protograph.{FieldAction, TransformMessage}
+import gaia.file.mustache._
 
 import java.io.FileInputStream
 // import com.google.protobuf.util.JsonFormat
@@ -22,80 +23,31 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 
 import com.trueaccord.scalapb.json.JsonFormat
 
-case class MessageVertexQuery(queryField: String, edgeLabel: String, destinationLabel: String)
-// case class FieldProcessor(name: String)
-// case class MessageConverter(label: String, gid: String, processors: List[])
+class GidTemplate(template: String) extends Mustache(template) {
+  def join(l: List[_]) = l.map(_.toString).mkString(",")
+}
 
-class ProtographMessageParser(val transform: TransformMessage) {
-  def gid(message: Map[String,Any]): String = {
-    // if (convert == null) {
-    //   return "gid"
-    // }
-    // if (convert.getGidFormat.getFieldSelection == null) {
-    //   return "gid"
-    // }
-
-    println(message.toString)
-    message.get(transform.gid).get.asInstanceOf[String]
+case class ProtographTransform(transform: TransformMessage, template: GidTemplate) {
+  def gid(data: Map[String, Any]): String = {
+    data.get("gid").getOrElse {
+      template.render(data)
+    }.asInstanceOf[String]
   }
+}
 
-  /// List out the edge creation requests
-  /// These provide the query format, which needs to be searched on the graph to
-  /// find unique matches to determine the destination vertex for the edges to be
-  /// created
-  def destinations(): Seq[MessageVertexQuery] = {
-    // if (convert == null) {
-    //   return Iterator[MessageVertexQuery]()
-    // }
-
-    transform.actions.filter(_.action.isSingleEdge).map { step => 
-      val edge = step.action.singleEdge.get
-      new MessageVertexQuery(step.field, edge.edgeLabel, edge.destinationLabel)
-    }
+object ProtographTransform {
+  def toProtograph(transform: TransformMessage): ProtographTransform = {
+    ProtographTransform(transform, new GidTemplate(transform.gid))
   }
-
-  /// Create additional vertices that encoded inside of the message
-  def children(): Seq[MessageVertexQuery] = {
-    // if (convert == null) {
-    //   return Iterator[MessageVertexQuery]()
-    // }
-
-    transform.actions.filter(_.action.isInnerVertex).map { step =>
-      val edge = step.action.innerVertex.get
-      new MessageVertexQuery(step.field, edge.edgeLabel, edge.destinationLabel)
-    }
-  }
-
-  // /// For a given field name, determine the action to be taken
-  // def fieldActionFor(name: String): FieldAction.Action = {
-  //   // if (convert == null) return FieldAction.NOTHING
-  //   if (name == "#type") {
-  //     FieldAction.Action.Ignore("nothing")
-  //   } else {
-  //     val actions = convert.transform.filter(_.name == name)
-  //     if (actions.size == 0) {
-  //       FieldAction.Action.Store("everything")
-  //     } else {
-  //       actions.head.action
-  //     }
-  //   }
-  // }
 }
 
 class Protographer(transforms: Seq[TransformMessage]) {
-  val transformMap = transforms.map(step => (step.label, step)).toMap
-  val defaultTransform = TransformMessage(label = "default", gid = "default:{gid}")
+  val transformMap = transforms.map(step => (step.label, ProtographTransform.toProtograph(step))).toMap
+  val default = TransformMessage(label = "default", gid = "default:{gid}")
+  val defaultTransform = ProtographTransform.toProtograph(default)
 
-  def converterFor(label: String): ProtographMessageParser = {
-    new ProtographMessageParser(transformMap.getOrElse(label, null))
-  }
-
-  def transformFor(label: String): TransformMessage = {
+  def transformFor(label: String): ProtographTransform = {
     transformMap.getOrElse(label, defaultTransform)
-  }
-
-  def gid(data: Map[String, Any]): String = {
-    ""
   }
 }
 
