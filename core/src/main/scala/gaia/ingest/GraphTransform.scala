@@ -80,8 +80,12 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
 
   def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Vertex = {
     data.get(field).map { gids =>
-      gids.asInstanceOf[List[String]].foreach { gid =>
-        graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+      println(gids)
+      println(gids.getClass)
+      gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
+        gidMap.values.foreach { gid =>
+          graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+        }
       }
     }
     vertex
@@ -120,6 +124,14 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
   }
 
   def innerVertex(graph: GaiaGraph) (vertex: Vertex) (inner: InnerVertex) (data: Map[String, Any]) (field: String): Vertex = {
+    data.get(field).map { nested =>
+      nested.asInstanceOf[List[Map[String, Any]]].map { nest =>
+        val embedded = nest + (inner.outerId -> data.get("gid").get)
+        val in = ingestVertex(inner.destinationLabel) (embedded)
+        val innerGid = in.value[String]("gid")
+        graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
+      }
+    }
     vertex
   }
 
@@ -142,10 +154,8 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     // Determine the GID from the message
     val gid = protograph.gid(data)
     val global = data + ("gid" -> gid)
+
     println("GID: " + gid)
-    // if (gid == null) {
-    //   throw new TransformException("Unable to create GID")
-    // }
 
     // Start decorating the vertex
     val vertex = findVertex(graph) (label) (gid)
