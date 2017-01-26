@@ -2,28 +2,14 @@ syntax = "proto3";
 
 package gaia.schema;
 
-// enum FieldAction {
-//   NOTHING = 0;
-//   STORE = 1;
-//   RENAME = 2;
-//   RENDER_MAP_TO_PROPERTIES = 3;
-//   STORE_MAP = 4;
-//   CREATE_EDGE = 5;
-//   CREATE_LINKED_VERTEX = 6;
-//   FLATTEN_MAP = 7;
-//   SERIALIZE = 8;
-// }
-
 message SingleEdge {
     string edge_label = 1;
     string destination_label = 2;
-    //  string dst_field_match = 3;
 }
 
 message RepeatedEdges {
     string edge_label = 1;
     string destination_label = 2;
-    //  string dst_field_match = 3;
 }
 
 message RenameProperty {
@@ -38,7 +24,7 @@ message SpliceMap {
     string prefix = 1;
 }
 
-message NestedVertex {
+message InnerVertex {
     string edge_label = 1;
     string destination_label = 2;
     string outer_id = 3;
@@ -48,32 +34,26 @@ message JoinList {
     string delimiter = 1;
 }
 
-message Ignore {
-    string meaningless = 1;
-}
-
-message Store {
-    string meaningful = 1;
+message IgnoreField {
+    bool empty = 1;
 }
 
 message FieldAction {
-    string name = 1;
-    //  FieldAction action = 2;
+    string field = 1;
     oneof action {
         SingleEdge single_edge = 3;
         RepeatedEdges repeated_edges = 4;
         RenameProperty rename_property = 5;
         SerializeMap serialize_map = 6;
         SpliceMap splice_map = 7;
-        NestedVertex nested_vertex = 8;
+        InnerVertex inner_vertex = 8;
         JoinList join_list = 9;
-        Store store = 10;
-        Ignore ignore = 11;
+        IgnoreField ignore_field = 10;
     }
 }
 
-message ProcessMessage {
+message TransformMessage {
     string label = 1;
-    string gid_format = 2;
-    repeated FieldAction process = 3;
+    string gid = 2;
+    repeated FieldAction actions = 3;
 }

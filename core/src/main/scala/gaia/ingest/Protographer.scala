@@ -6,7 +6,7 @@ package gaia.ingest
 
 import gaia.io.JsonIO
 import gaia.schema.Protograph
-import gaia.schema.Protograph.{FieldAction, ProcessMessage}
+import gaia.schema.Protograph.{FieldAction, TransformMessage}
 
 import java.io.FileInputStream
 // import com.google.protobuf.util.JsonFormat
@@ -24,9 +24,9 @@ import com.trueaccord.scalapb.json.JsonFormat
 
 case class MessageVertexQuery(queryField: String, edgeLabel: String, destinationLabel: String)
 // case class FieldProcessor(name: String)
-// case class MessageConverter(label: String, gidFormat: String, processors: List[])
+// case class MessageConverter(label: String, gid: String, processors: List[])
 
-class ProtographMessageParser(val convert: ProcessMessage) {
+class ProtographMessageParser(val transform: TransformMessage) {
   def gid(message: Map[String,Any]): String = {
     // if (convert == null) {
     //   return "gid"
@@ -36,7 +36,7 @@ class ProtographMessageParser(val convert: ProcessMessage) {
     // }
 
     println(message.toString)
-    message.get(convert.gidFormat).get.asInstanceOf[String]
+    message.get(transform.gid).get.asInstanceOf[String]
   }
 
   /// List out the edge creation requests
@@ -48,9 +48,9 @@ class ProtographMessageParser(val convert: ProcessMessage) {
     //   return Iterator[MessageVertexQuery]()
     // }
 
-    convert.process.filter(_.action.isSingleEdge).map { step => 
+    transform.actions.filter(_.action.isSingleEdge).map { step => 
       val edge = step.action.singleEdge.get
-      new MessageVertexQuery(step.name, edge.edgeLabel, edge.destinationLabel)
+      new MessageVertexQuery(step.field, edge.edgeLabel, edge.destinationLabel)
     }
   }
 
@@ -60,9 +60,9 @@ class ProtographMessageParser(val convert: ProcessMessage) {
     //   return Iterator[MessageVertexQuery]()
     // }
 
-    convert.process.filter(_.action.isNestedVertex).map { step =>
-      val edge = step.action.nestedVertex.get
-      new MessageVertexQuery(step.name, edge.edgeLabel, edge.destinationLabel)
+    transform.actions.filter(_.action.isInnerVertex).map { step =>
+      val edge = step.action.innerVertex.get
+      new MessageVertexQuery(step.field, edge.edgeLabel, edge.destinationLabel)
     }
   }
 
@@ -72,7 +72,7 @@ class ProtographMessageParser(val convert: ProcessMessage) {
   //   if (name == "#type") {
   //     FieldAction.Action.Ignore("nothing")
   //   } else {
-  //     val actions = convert.process.filter(_.name == name)
+  //     val actions = convert.transform.filter(_.name == name)
   //     if (actions.size == 0) {
   //       FieldAction.Action.Store("everything")
   //     } else {
@@ -82,11 +82,20 @@ class ProtographMessageParser(val convert: ProcessMessage) {
   // }
 }
 
-class Protographer(converters: Seq[ProcessMessage]) {
-  val converterMap = converters.map(step => (step.label, step)).toMap
+class Protographer(transforms: Seq[TransformMessage]) {
+  val transformMap = transforms.map(step => (step.label, step)).toMap
+  val defaultTransform = TransformMessage(label = "default", gid = "default:{gid}")
 
-  def converterFor(typ: String): ProtographMessageParser = {
-    new ProtographMessageParser(converterMap.getOrElse(typ, null))
+  def converterFor(label: String): ProtographMessageParser = {
+    new ProtographMessageParser(transformMap.getOrElse(label, null))
+  }
+
+  def transformFor(label: String): TransformMessage = {
+    transformMap.getOrElse(label, defaultTransform)
+  }
+
+  def gid(data: Map[String, Any]): String = {
+    ""
   }
 }
 
@@ -112,15 +121,11 @@ object Protographer {
   val mapper = new ObjectMapper()
   mapper.registerModule(simpleModule);
 
-  def parseJSON(message: String): ProcessMessage = {
-    JsonFormat.fromJsonString[ProcessMessage](message)
-    // val b = ProcessMessage.newBuilder()
-    // val parser = JsonFormat.parser().ignoringUnknownFields()
-    // parser.merge(message, b)
-    // b.build()
+  def parseJSON(message: String): TransformMessage = {
+    JsonFormat.fromJsonString[TransformMessage](message)
   }
 
-  def load(path: String): List[ProcessMessage] = {
+  def load(path: String): List[TransformMessage] = {
     val yaml = new Yaml()
     val obj = yaml.load(new FileInputStream(path)).asInstanceOf[java.util.ArrayList[Any]]
     obj.asScala.toList.map { step =>
@@ -131,7 +136,7 @@ object Protographer {
   }
 
   def loadProtograph(path: String): Protographer = {
-    val process = load(path)
-    new Protographer(process)
+    val transforms = load(path)
+    new Protographer(transforms)
   }
 }

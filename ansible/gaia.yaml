@@ -1,0 +1,58 @@
+---
+- hosts: gaia
+  remote_user: ubuntu
+  tasks:
+    - name: installing dependencies from apt
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      become: true
+      with_items:
+        - openjdk-8-jdk
+        - zip
+        - unzip
+        - ruby
+    - name: setting up local bin
+      file:
+        path: /home/ubuntu/bin
+        state: directory
+    - name: setting local bin path
+      lineinfile:
+        dest: /home/ubuntu/.profile
+        line: export PATH=/home/ubuntu/bin:$PATH
+        insertafter: EOF
+        state: present
+        regexp: 'export PATH=/home/ubuntu/bin:\$PATH'
+    - name: installing maven 3
+      get_url:
+        url: https://bitbucket.org/mjensen/mvnvm/raw/master/mvn
+        dest: ~/bin/mvn
+        mode: 0755
+    - name: adding sbt sources to apt
+      lineinfile:
+        dest: /etc/apt/sources.list.d/sbt.list
+        create: yes
+        line: 'deb https://dl.bintray.com/sbt/debian /'
+        insertafter: EOF
+        state: present
+        regexp: 'deb https://dl.bintray.com/sbt/debian /'
+      become: true
+    - name: adding sbt key to apt
+      shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 642AC823
+      become: true
+    - name: installing sbt
+      apt:
+        name: sbt
+        state: present
+        update_cache: yes
+      become: true
+    - name: configuring git
+      command: "{{ item }}"
+      with_items:
+        - git config --global alias.co checkout
+        - git config --global alias.ci commit
+        - git config --global alias.st status
+        - git config --global alias.br branch
+    - name: cloning gaia-bmeg
+      command: git clone https://github.com/bmeg/gaia-bmeg.git
