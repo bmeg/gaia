@@ -8,9 +8,7 @@ import gremlin.scala._
 
 import scala.collection.JavaConverters._
 
-case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
-  val edgesPattern = "(.*)Edges$".r
-  val propertiesPattern = "(.*)Properties$".r
+case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIngestor {
   val keymap = collection.mutable.Map[String, Key[Any]]()
 
   def findKey[T](key: String): Key[T] = {
@@ -113,6 +111,11 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
   }
 
   def spliceMap(vertex: Vertex) (map: SpliceMap) (data: Map[String, Any]) (field: String): Vertex = {
+    data.get(field).map { inner =>
+      inner.asInstanceOf[Map[String, Any]].map { pair =>
+        setProperty(vertex) ((map.prefix + "." + pair._1, pair._2))
+      }
+    }
     vertex
   }
 
@@ -132,17 +135,9 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     vertex
   }
 
-  def ingestVertex(data: Map[String, Any]): Vertex = {
-    // FIXME: for now, determining the message type is a bit hard coded
-    val typeString = stringFor(data) ("#type")
-    if (typeString == null) {
-      throw new TransformException("message has unknown type")
-    }
-
-    // Get the Protographer instance for this message type
-    // It will be responsible for reading the protograph message and
-    // determining which operations will happen to the message
-    val protograph = graph.schema.protograph.transformFor(typeString)
+  def ingestVertex(label: String) (data: Map[String, Any]): Vertex = {
+    // find the transform description for vertexes with this label
+    val protograph = graph.schema.protograph.transformFor(label)
 
     // Determine the GID from the message
     val gid = graph.schema.protograph.gid(data)
@@ -152,7 +147,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
     // }
 
     // Start decorating the vertex
-    val label = uncapitalize(typeString)
     val vertex = findVertex(graph) (label) (gid)
 
     val protovertex = protograph.actions.foldLeft(vertex) { (vertex, action) =>
@@ -241,7 +235,13 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform {
   }
 
   def transform(message: Map[String,Any]) {
-    val vertex = ingestVertex(message)
+    val label = stringFor(message) ("#label")
+    val vertex = ingestVertex(label) (message)
+  }
+
+  def ingestMessage(label: String) (message: String) {
+    val map = JsonIO.readMap(message)
+    transform(map + ("#label" -> label))
   }
 }
 

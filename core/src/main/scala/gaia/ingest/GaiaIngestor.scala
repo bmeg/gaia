@@ -6,25 +6,29 @@ import scala.io.Source
 import java.io.File
 
 trait GaiaIngestor {
-  def ingestMessage(message: String)
+  def ingestMessage(label: String) (message: String)
 
-  def ingestFile(file: File) {
+  def ingestFile(label: String) (file: File) {
     for (line <- Source.fromFile(file).getLines) {
-      ingestMessage(line)
+      ingestMessage(label) (line)
     }
   }
 
-  def ingestFile(path: String) {
-    ingestFile(new File(path))
+  def ingestPath(label: String) (path: String) {
+    ingestFile(label) (new File(path))
   }
 
-  def ingestUrl(url: String) {
+  def ingestUrl(label: String) (url: String) {
     for (line <- Source.fromURL(url).getLines) {
-      ingestMessage(line)
+      ingestMessage(label) (line)
     }
   }
 
   def ingestDirectory(path: String) {
-    listFiles(path).foreach(ingestFile)
+    listFiles(path).foreach { file =>
+      val parts = file.getName.split(".")
+      val label = parts(parts.size - 2)
+      ingestFile(label) (file)
+    }
   }
 }

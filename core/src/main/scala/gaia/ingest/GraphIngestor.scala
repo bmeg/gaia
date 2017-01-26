@@ -114,7 +114,7 @@ case class GraphIngestor(graph: GaiaGraph) extends GaiaIngestor {
     vertex
   }
 
-  def ingestMessage(message: String) {
+  def ingestMessage(label: String) (message: String) {
     println(message)
     val json = parse(message)
     println(json)

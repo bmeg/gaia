@@ -2,6 +2,6 @@ graph:
   database: titan
   host: localhost
   keyspace: gaoa
-  protograph: example/schema/social.protograph
+  protograph: /Users/spanglry/Code/gaia-bmeg/bmeg.protograph.yml
 server:
   port: 11223
