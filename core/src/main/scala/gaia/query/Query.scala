@@ -30,9 +30,9 @@ case class GaiaQuery(query: Query) {
     val protograph = graph.schema.protograph.transformFor(view.`type`)
     val properties = protograph.transform.actions.foldLeft(view.properties) { (data, action) =>
       action.action match {
-        case Action.SerializeMap(map) => {
+        case Action.SerializeField(map) => {
           data.get(map.serializedName).map { serial =>
-            val unserial = JsonIO.readList(serial.asInstanceOf[String])
+            val unserial = JsonIO.read(serial.asInstanceOf[String])
             (data - map.serializedName) + (action.field -> unserial)
           }.getOrElse(data)
         }

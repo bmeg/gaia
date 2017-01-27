@@ -98,26 +98,10 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def anyJson(any: Any): String = {
-    any match {
-      case obj: Map[String, Any] => JsonIO.writeMap(obj)
-      case arr: List[Any] => JsonIO.writeList(arr)
-      case _ => ""
-    }
-  }
-
-  def serializeMap(vertex: Vertex) (map: SerializeMap) (data: Map[String, Any]) (field: String): Vertex = {
+  def serializeField(vertex: Vertex) (map: SerializeField) (data: Map[String, Any]) (field: String): Vertex = {
     data.get(field).map { inner =>
-      val json = JsonIO.writeMap(inner.asInstanceOf[Map[String, Any]]) // anyJson(inner)
+      val json = JsonIO.write(inner)
       setProperty(vertex) ((map.serializedName, json))
-    }
-    vertex
-  }
-
-  def serializeList(vertex: Vertex) (list: SerializeList) (data: Map[String, Any]) (field: String): Vertex = {
-    data.get(field).map { inner =>
-      val json = JsonIO.writeList(inner.asInstanceOf[List[Any]]) // anyJson(inner)
-      setProperty(vertex) ((list.serializedName, json))
     }
     vertex
   }
@@ -178,8 +162,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (global) (action.field)
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
-        case Action.SerializeMap(map) => serializeMap(vertex) (map) (global) (action.field)
-        case Action.SerializeList(list) => serializeList(vertex) (list) (global) (action.field)
+        case Action.SerializeField(map) => serializeField(vertex) (map) (global) (action.field)
         case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)
         case Action.InnerVertex(inner) => innerVertex(graph) (vertex) (inner) (global) (action.field)
         case Action.JoinList(list) => joinList(vertex) (list) (global) (action.field)
@@ -198,65 +181,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
 
     graph.commit()
     fullVertex
-
-    // // check the protograph description for edges that need to be created
-    // converter.destinations().foreach { destination =>
-    //   // printf("Add edge: %s %s %s\n", destination.queryField, destination.edgeLabel, destination.destinationLabel)
-    //   val edge = destination.edgeLabel
-    //   val query = data.get(destination.queryField) // query the current message to determine how to find the dest vertex
-    //   if (query.isDefined) {
-    //     query.get match {
-    //       case value: String =>
-    //         // if we found a string, use it
-    //         graph.associateOut(vertex) (edge) (destination.destinationLabel) (value)
-    //       case value: List[String] =>
-    //         value.foreach { y =>
-    //           // printf("Adding Edge %s %s\n", y, edge )
-    //           // if we found a list, cycle through each one and process
-    //           graph.associateOut(vertex) (edge) (destination.destinationLabel) (y)
-    //         }
-    //     }
-    //   }
-    // }
-
-    // converter.children().foreach( child => {
-    //   // printf("Add Child Edge: %s %s %s\n", child.queryField, child.edgeLabel, child.destinationLabel)
-    //   val query = data.get(child.queryField) // query the current message to determine how to find the dest vertex
-    //   if (query.isDefined) {
-    //     query.get match {
-    //       case value: List[Map[String,Any]] =>
-    //         value.foreach(y => {
-    //           val u = y.updated("#type", child.destinationLabel)
-    //           println("Ingest", u)
-    //           val v = ingestVertex(u)
-    //           println("Vertex", v.properties().asScala.mkString(","))
-    //           // if we found a list, cycle through each one and process
-    //           graph.associateOut(vertex) (child.edgeLabel) (child.destinationLabel) (v.property(Gid).value())
-    //         })
-    //       case _ =>
-    //         println("Should probably do something here")
-    //     }
-    //   }
-    // })
-
-    // // for each field in the message, determine what to do with it
-    // for (field <- data.iterator) {
-    //   val key = field._1
-    //   converter.fieldActionFor(key) match {
-    //     case FieldAction.STORE => setProperty(vertex) (field)
-    //     case FieldAction.SERIALIZE =>
-    //       field._2 match {
-    //         case obj: Map[String, Any] =>
-    //           setProperty(vertex)((key, JsonIO.writeMap(obj)))
-    //         case arr: List[Any] =>
-    //           setProperty(vertex)((key, JsonIO.writeList(arr)))
-    //       }
-    //     case _ =>
-    //   }
-    // }
-
-    // graph.commit()
-    // vertex
   }
 
   def transform(message: Map[String,Any]) {

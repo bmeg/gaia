@@ -4,10 +4,19 @@ import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.fasterxml.jackson.databind.ObjectMapper
 import scala.collection.mutable
+import scala.reflect._
 
 object JsonIO {
   val mapper = new ObjectMapper()
   mapper.registerModule(DefaultScalaModule)
+
+  def read[T: ClassTag](text: String): T = {
+    mapper.readValue(text, classTag[T].runtimeClass.asInstanceOf[Class[T]])
+  }
+
+  def write[T](message: T): String = {
+    mapper.writeValueAsString(message)
+  }
 
   def readMap(text: String): Map[String,Any] = {
     mapper.readValue(text, classOf[Map[String,Any]] )
