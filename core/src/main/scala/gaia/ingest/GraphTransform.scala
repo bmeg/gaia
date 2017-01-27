@@ -108,8 +108,16 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
 
   def serializeMap(vertex: Vertex) (map: SerializeMap) (data: Map[String, Any]) (field: String): Vertex = {
     data.get(field).map { inner =>
-      val json = anyJson(inner)
+      val json = JsonIO.writeMap(inner.asInstanceOf[Map[String, Any]]) // anyJson(inner)
       setProperty(vertex) ((map.serializedName, json))
+    }
+    vertex
+  }
+
+  def serializeList(vertex: Vertex) (list: SerializeList) (data: Map[String, Any]) (field: String): Vertex = {
+    data.get(field).map { inner =>
+      val json = JsonIO.writeList(inner.asInstanceOf[List[Any]]) // anyJson(inner)
+      setProperty(vertex) ((list.serializedName, json))
     }
     vertex
   }
@@ -143,7 +151,12 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def ignoreField(vertex: Vertex) (data: Map[String, Any]) (field: String): Vertex = {
+  def storeField(vertex: Vertex) (store: StoreField) (data: Map[String, Any]) (field: String): Vertex = {
+    if (store.store) {
+      data.get(field).map { inner =>
+        setProperty(vertex) ((field, inner))
+      }
+    }
     vertex
   }
 
@@ -166,10 +179,11 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
         case Action.SerializeMap(map) => serializeMap(vertex) (map) (global) (action.field)
+        case Action.SerializeList(list) => serializeList(vertex) (list) (global) (action.field)
         case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)
         case Action.InnerVertex(inner) => innerVertex(graph) (vertex) (inner) (global) (action.field)
         case Action.JoinList(list) => joinList(vertex) (list) (global) (action.field)
-        case Action.IgnoreField(empty) => ignoreField(vertex) (global) (action.field)
+        case Action.StoreField(store) => storeField(vertex) (store) (global) (action.field)
       }
     }
 

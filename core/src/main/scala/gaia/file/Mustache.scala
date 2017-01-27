@@ -5,6 +5,9 @@ import java.lang.reflect.{Field=>F,Method=>M}
 import scala.concurrent.{Await, Awaitable}
 import scala.concurrent.duration._
 
+// Thanks to Victor Bilyk (vspy) for this succinct mustache library
+// https://github.com/vspy/scala-mustache
+
 package gaia.file.mustache {
   case class MustacheParseException(line:Int, msg:String) 
     extends Exception("Line "+line+": "+msg)
