@@ -85,8 +85,10 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
         request.as[String].flatMap { raw =>
           println(raw)
           val query = GaiaQuery.parse(raw)
-          val result = query.execute(graph)
-          Ok(GaiaQuery.renderJson(result))
+          val json = query.executeJson(graph)
+          Ok(json)
+          // val result = query.execute(graph)
+          // Ok(GaiaQuery.renderJson(result))
         }
     }
   }

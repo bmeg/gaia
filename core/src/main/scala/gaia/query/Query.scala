@@ -1,7 +1,12 @@
 package gaia.query
 
 import gaia.graph._
+import gaia.io.JsonIO
+import gaia.schema.Protograph._
+import FieldAction.Action
+
 import ophion.Ophion._
+import gremlin.scala._
 
 import org.json4s._
 import org.json4s.jackson._
@@ -10,6 +15,8 @@ import org.json4s.jackson.JsonMethods._
 import scala.collection.JavaConversions._
 
 case class GaiaQuery(query: Query) {
+  implicit val formats = DefaultFormats
+
   def extractLabel: Option[String] = {
     query.query.head match {
       case LabelOperation(label) => Some(label)
@@ -17,11 +24,65 @@ case class GaiaQuery(query: Query) {
     }
   }
 
+  def translateVertex(graph: GaiaGraph) (vertex: Vertex): GraphView = {
+    val view: VertexDirect = GraphView.translateVertex(vertex).asInstanceOf[VertexDirect]
+    // val label = view.properties.get("#label").getOrElse("default").asInstanceOf[String]
+    val protograph = graph.schema.protograph.transformFor(view.`type`)
+    val properties = protograph.transform.actions.foldLeft(view.properties) { (data, action) =>
+      action.action match {
+        case Action.SerializeMap(map) => {
+          data.get(map.serializedName).map { serial =>
+            val unserial = JsonIO.readList(serial.asInstanceOf[String])
+            (data - map.serializedName) + (action.field -> unserial)
+          }.getOrElse(data)
+        }
+
+        case _ => data
+      }
+    }
+
+    VertexDirect(view.`type`, properties)
+  }
+
+  def queryResult(graph: GaiaGraph) (result: List[Any]): List[Any] = {
+    result.map { item =>
+      item match {
+        case item: Vertex => translateVertex(graph) (item)
+        case item: Edge => GraphView.translateEdge(item)
+        case item: java.util.HashMap[String, Any] => item.toMap
+        case item: java.util.LinkedHashMap[String, Any] => {
+          val map = item.toMap
+          map.mapValues { subitem =>
+            subitem match {
+              case item: Vertex => translateVertex(graph) (item)
+              case item: Edge => GraphView.translateEdge(item)
+              case item: java.util.HashMap[String, Any] => item.toMap
+              case _ => item
+            }
+          }
+        }
+
+        case _ => item
+      }
+    }
+  }
+
+  def resultJson(graph: GaiaGraph) (result: List[Any]): JValue = {
+    val translation = queryResult(graph) (result)
+    val output = Map("result" -> translation)
+    Extraction.decompose(output)
+  }
+
   def execute(graph: GaiaGraph): List[Any] = {
     extractLabel match {
       case Some(label) => query.interpret(graph.typeQuery(label).traversal).toList.toList
       case None => query.run(graph.graph)
     }
+  }
+
+  def executeJson(graph: GaiaGraph): String = {
+    val result = resultJson(graph) (execute(graph))
+    compact(render(result))
   }
 }
 

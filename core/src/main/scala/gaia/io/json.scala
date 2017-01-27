@@ -13,6 +13,10 @@ object JsonIO {
     mapper.readValue(text, classOf[Map[String,Any]] )
   }
 
+  def readList(text: String): List[Any] = {
+    mapper.readValue(text, classOf[List[Any]] )
+  }
+
   def writeMap(message: Map[String,Any]): String = {
     mapper.writeValueAsString(message)
   }
