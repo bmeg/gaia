@@ -85,11 +85,17 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
       gids.asInstanceOf[List[String]].foreach { gid =>
         graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
       }
-      // gids.asInstanceOf[List[Map[String, Strintg]]].foreach { gidMap =>
-      //   gidMap.values.foreach { gid =>
-      //     graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
-      //   }
-      // }
+    }
+    vertex
+  }
+
+  def unembedEdges(graph: GaiaGraph) (vertex: Vertex) (edges: EmbeddedEdges) (data: Map[String, Any]) (field: String): Vertex = {
+    data.get(field).map { gids =>
+      gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
+        gidMap.get(edges.embeddedIn).map { gid =>
+          graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+        }
+      }
     }
     vertex
   }
@@ -164,6 +170,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
       action.action match {
         case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (global) (action.field)
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
+        case Action.EmbeddedEdges(edges) => unembedEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
         case Action.SerializeField(map) => serializeField(vertex) (map) (global) (action.field)
         case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)

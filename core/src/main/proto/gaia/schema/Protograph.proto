@@ -12,6 +12,12 @@ message RepeatedEdges {
     string destination_label = 2;
 }
 
+message EmbeddedEdges {
+    string edge_label = 1;
+    string destination_label = 2;
+    string embedded_in = 3;
+}
+
 message RenameProperty {
     string rename = 1;
 }
@@ -43,8 +49,9 @@ message FieldAction {
     oneof action {
         SingleEdge single_edge = 3;
         RepeatedEdges repeated_edges = 4;
-        RenameProperty rename_property = 5;
-        SerializeField serialize_field = 6;
+        EmbeddedEdges embedded_edges = 5;
+        RenameProperty rename_property = 6;
+        SerializeField serialize_field = 7;
         SpliceMap splice_map = 8;
         InnerVertex inner_vertex = 9;
         JoinList join_list = 10;
