@@ -12,9 +12,6 @@ package gaia.file.mustache {
   case class MustacheParseException(line:Int, msg:String) 
     extends Exception("Line "+line+": "+msg)
 
-  /**
-   * view helper trait 
-   **/
   trait MustacheHelperSupport {
     private val contextLocal = new java.lang.ThreadLocal[Any]()
     private val renderLocal = new java.lang.ThreadLocal[Function1[String,String]]()
@@ -34,14 +31,7 @@ package gaia.file.mustache {
     }
   }
 
-  /**
-   * template
-   **/
-  class Mustache(
-    root: Token
-  ) extends MustacheHelperSupport 
-  {
-
+  class Mustache(root: Token) extends MustacheHelperSupport {
     def this (source:Source
               , open:String = "{{"
               , close:String = "}}") =
@@ -61,8 +51,7 @@ package gaia.file.mustache {
 
     private val compiledTemplate = root
 
-    val globals:Map[String,Any] = 
-      {
+    val globals:Map[String,Any] = {
         val excludedGlobals = List("wait","toString","hashCode","getClass","notify","notifyAll")
         Map( 
           (this.getClass().getMethods
@@ -392,19 +381,21 @@ package gaia.file.mustache {
         t.render(context, partials, callstack)
       }
 
-    def valueOf(key:String
-        , context:Any
-        , partials:Map[String,Mustache]
-        , callstack:List[Any]
-        , childrenString:String
-        , render: (Any, Map[String, Mustache],List[Any])=>(String)=>String
-    ):Any = 
-    {
+    def valueOf(key:String,
+                context:Any,
+                partials:Map[String,Mustache],
+                callstack:List[Any],
+                childrenString:String,
+                render: (Any, Map[String, Mustache], List[Any]) => (String) => String): Any = {
       val r = render(context, partials, callstack)
+      val wrappedEval = callstack.filter(_.isInstanceOf[Mustache]).asInstanceOf[List[Mustache]].foldLeft(() => {
+        eval(findInContext(context::callstack, key), childrenString, r)
+      }) ((f, e) => {
+        () => {
+          e.withContextAndRenderFn(context,r) (f())
+        }
+      })
 
-      val wrappedEval = 
-        callstack.filter(_.isInstanceOf[Mustache]).asInstanceOf[List[Mustache]].foldLeft(()=>{ eval(findInContext(context::callstack, key)
-              , childrenString, r) })( (f,e)=>{ ()=>{e.withContextAndRenderFn(context,r)(f())} } )
       wrappedEval() match {
         case None if (key == ".") => context
         case other => other
@@ -413,11 +404,9 @@ package gaia.file.mustache {
     
 
     @tailrec
-    private def eval(
-                  value:Any
-                  , childrenString:String
-                  , render:(String)=>String 
-    ):Any =
+    private def eval(value: Any,
+                     childrenString: String,
+                     render: (String) => String): Any =
       value match {
         case Some(someValue) => eval(someValue, childrenString, render)
 
@@ -427,7 +416,7 @@ package gaia.file.mustache {
         case f:Function0[_] => 
           eval(f(), childrenString, render)
 
-        case s:Seq[_] => s
+        case s:Seq[_] => s.mkString(",")
 
         case m:MapLike[_, _, _] => m
 

@@ -24,7 +24,10 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.trueaccord.scalapb.json.JsonFormat
 
 class GidTemplate(template: String) extends Mustache(template) {
-  def join(l: List[_]) = l.map(_.toString).mkString(",")
+  def join(l: List[Any]): String = {
+    println("joining " + l.toString)
+    l.map(_.toString).mkString(",")
+  }
 }
 
 case class ProtographTransform(transform: TransformMessage, template: GidTemplate) {
