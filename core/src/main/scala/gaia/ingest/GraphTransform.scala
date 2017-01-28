@@ -82,11 +82,14 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     data.get(field).map { gids =>
       println(gids)
       println(gids.getClass)
-      gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
-        gidMap.values.foreach { gid =>
-          graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
-        }
+      gids.asInstanceOf[List[String]].foreach { gid =>
+        graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
       }
+      // gids.asInstanceOf[List[Map[String, Strintg]]].foreach { gidMap =>
+      //   gidMap.values.foreach { gid =>
+      //     graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+      //   }
+      // }
     }
     vertex
   }
