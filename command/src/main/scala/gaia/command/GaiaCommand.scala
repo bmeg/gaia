@@ -21,8 +21,10 @@ object GaiaCommand extends App {
 
     val ingest = new Subcommand("ingest") {
       val config = opt[String]("config", required=false)
+      val label = opt[String]("label", required=false)
       val kafka = opt[String]("kafka", required=false)
       val file = opt[String]("file", required=false)
+      val dir = opt[String]("dir", required=false)
       val url = opt[String]("url", required=false)
     }
 
@@ -50,17 +52,7 @@ object GaiaCommand extends App {
   def init() {
     val configPath = Arguments.init.config.toOption.getOrElse(defaultConfig)
     val config = loadConfig(configPath)
-    val graph = config.connectToGraph(config.graph)
-
-    if (graph.isSuccess) {
-      val migrations = GaiaMigrations.findMigrations(config.graph.migrations.getOrElse(List[String]()))
-      GaiaMigrations.registerMigrations(migrations)
-      GaiaMigrations.runMigrations(graph.get)
-      println("migrations complete!")
-    } else {
-      println("failed to open graph! " + configPath)
-    }
-
+    GaiaMigrations.migrate(config)
     Runtime.getRuntime.halt(0)
   }
 
@@ -72,15 +64,17 @@ object GaiaCommand extends App {
 
       Arguments.ingest.file.toOption match {
         case Some(file) => {
-          ingestor.ingestFile(file)
-          println("ingested file " + file)
+          val label = Arguments.ingest.label.toOption.getOrElse(ingestor.findLabel(file))
+          ingestor.ingestPath(label, file)
+          println("ingested file " + file + " as " + label)
         }
       }
 
       Arguments.ingest.url.toOption match {
         case Some(url) => {
+          val label = Arguments.ingest.label.toOption.getOrElse(ingestor.findLabel(url))
           ingestor.ingestUrl(url)
-          println("ingested url " + url)
+          println("ingested url " + url + " as " + label)
         }
       }
     } else {

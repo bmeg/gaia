@@ -32,7 +32,7 @@ case class GaiaQuery(query: Query) {
       action.action match {
         case Action.SerializeField(map) => {
           data.get(map.serializedName).map { serial =>
-            val unserial = JsonIO.read(serial.asInstanceOf[String])
+            val unserial = JsonIO.read[Any](serial.asInstanceOf[String])
             (data - map.serializedName) + (action.field -> unserial)
           }.getOrElse(data)
         }
