@@ -1,0 +1,4 @@
+* add edge label step to ophion
+* generate visualization of protograph in d3
+* align signature code with protograph
+* create tests for protograph

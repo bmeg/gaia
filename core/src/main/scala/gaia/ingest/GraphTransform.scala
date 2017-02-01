@@ -80,8 +80,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
 
   def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Vertex = {
     data.get(field).map { gids =>
-      println(gids)
-      println(gids.getClass)
       gids.asInstanceOf[List[String]].foreach { gid =>
         graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
       }
