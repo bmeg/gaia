@@ -5,7 +5,6 @@ package gaia.protograph
   */
 
 import gaia.io.JsonIO
-import gaia.schema.Protograph
 import gaia.schema.Protograph.{FieldAction, TransformMessage}
 import gaia.file.mustache._
 
@@ -44,7 +43,7 @@ object ProtographTransform {
   }
 }
 
-class Protograph(transforms: Seq[TransformMessage]) {
+case class Protograph(transforms: Seq[TransformMessage]) {
   val transformMap = transforms.map(step => (step.label, ProtographTransform.toProtograph(step))).toMap
   val default = TransformMessage(label = "default", gid = "default:{gid}")
   val defaultTransform = ProtographTransform.toProtograph(default)

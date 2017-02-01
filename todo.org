@@ -1,4 +1,8 @@
+* ETL of existing data (TCGA, signatures)
+* talk to brian king about kafka/dirac, fill in kafka topics with bioschema messages
 * add edge label step to ophion
-* generate visualization of protograph in d3
+* fix gene viewer widget to work with new schema
+* add box plot to viz library and cohort page
+* generate visualization of protograph in d3/cytoscape
 * align signature code with protograph
 * create tests for protograph
