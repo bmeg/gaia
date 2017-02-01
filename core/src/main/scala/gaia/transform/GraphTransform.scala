@@ -1,6 +1,8 @@
-package gaia.ingest
+package gaia.transform
 
 import gaia.graph._
+import gaia.ingest._
+import gaia.protograph._
 import gaia.io.JsonIO
 import gaia.schema.Protograph._
 import FieldAction.Action

@@ -1,7 +1,7 @@
 package gaia.facet
 
 import gaia.graph._
-import gaia.ingest._
+import gaia.transform._
 import gaia.collection.Collection._
 import gaia.io.JsonIO
 

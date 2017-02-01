@@ -3,13 +3,14 @@ package gaia.test
 import gaia.config._
 import gaia.graph._
 import gaia.schema._
-import gaia.ingest.{GraphTransform, Protographer}
+import gaia.transform._
+import gaia.protograph._
 
 object TestGraph {
-  def read(path: String, protograph: String): GaiaGraph = {
+  def read(path: String): GaiaGraph = {
     val config = GaiaConfig.readConfig("resources/config/test.yaml")
     val graph = config.connectToGraph(config.graph).get
-    val ingestor = GraphTransform(graph)
+    val transform = GraphTransform(graph)
     graph
   }
 }

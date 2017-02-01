@@ -1,8 +1,8 @@
 package gaia.kafka
 
-import gaia.ingest.GraphTransform
-import gaia.graph._
 import gaia.file._
+import gaia.graph._
+import gaia.transform._
 import gaia.io.JsonIO
 
 import scala.io.Source

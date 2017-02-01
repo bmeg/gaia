@@ -1,4 +1,4 @@
-package gaia.ingest
+package gaia.protograph
 
 /**
   * Created by ellrott on 12/18/16.
@@ -44,7 +44,7 @@ object ProtographTransform {
   }
 }
 
-class Protographer(transforms: Seq[TransformMessage]) {
+class Protograph(transforms: Seq[TransformMessage]) {
   val transformMap = transforms.map(step => (step.label, ProtographTransform.toProtograph(step))).toMap
   val default = TransformMessage(label = "default", gid = "default:{gid}")
   val defaultTransform = ProtographTransform.toProtograph(default)
@@ -69,7 +69,7 @@ class CamelCaseSerializer extends JsonSerializer[String] {
   }
 }
 
-object Protographer {
+object Protograph {
   val simpleModule: SimpleModule = new SimpleModule();
   simpleModule.addKeySerializer(classOf[String], new CamelCaseSerializer());
 
@@ -90,8 +90,8 @@ object Protographer {
     }
   }
 
-  def loadProtograph(path: String): Protographer = {
+  def loadProtograph(path: String): Protograph = {
     val transforms = load(path)
-    new Protographer(transforms)
+    new Protograph(transforms)
   }
 }

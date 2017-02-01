@@ -1,8 +1,8 @@
 package gaia.command
 
-import gaia.api.ingest.FileIngestor
 import gaia.config._
 import gaia.graph._
+import gaia.transform._
 import gaia.ingest._
 import gaia.server._
 
@@ -60,7 +60,7 @@ object GaiaCommand extends App {
     val graph = connect(Arguments.ingest.config.toOption)
 
     if (graph.isSuccess) {
-      val ingestor = new GraphIngestor(graph.get)
+      val ingestor = new GraphTransform(graph.get)
 
       Arguments.ingest.file.toOption match {
         case Some(file) => {

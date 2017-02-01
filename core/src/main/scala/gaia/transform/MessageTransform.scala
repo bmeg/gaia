@@ -1,4 +1,4 @@
-package gaia.ingest
+package gaia.transform
 
 class TransformException(x:String) extends Exception(x) {}
 
