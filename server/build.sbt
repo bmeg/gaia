@@ -7,7 +7,7 @@ version := "0.0.7-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
-xresolvers += "OSS Sonatype" at "https://repo1.maven.org/maven2/"
+resolvers += "OSS Sonatype" at "https://repo1.maven.org/maven2/"
 
 resolvers ++= Seq(
   "Akka Repository" at "http://repo.akka.io/releases/",
