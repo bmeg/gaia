@@ -94,8 +94,6 @@ class GaiaCommand(release: String) {
       case Some("ingest") => ingest(command)
       case None => help(default)
     }
-
-    // Runtime.getRuntime.halt(0)
   }
 
   def execute(args: Seq[String]) {
