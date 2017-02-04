@@ -8,29 +8,29 @@ scalaVersion := "2.11.8"
 conflictManager := ConflictManager.strict.copy(organization = "com.esotericsoftware.*")
 
 libraryDependencies ++= Seq(
-  "com.thinkaurelius.titan"    %  "titan-core"               % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"    %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"    %  "titan-es"                 % "1.1.0-SNAPSHOT",
-  "org.apache.tinkerpop"       %  "gremlin-core"             % "3.1.1-incubating",
-  "com.google.protobuf"        %  "protobuf-java"            % "3.1.0",
-  "com.google.protobuf"        %  "protobuf-java-util"       % "3.1.0",
-  "com.google.protobuf"        %  "protoc"                   % "3.1.0",
-  "org.scala-lang"             %  "scala-compiler"           % "2.11.8",
-  "com.fasterxml.jackson.module" %% "jackson-module-scala"    % "2.8.4",
-  // "org.slf4j"                  %  "slf4j-nop"                % "1.7.21",
+  "io.bmeg"                      %% "ophion"                   % "0.0.5",
 
-  // "org.json4s"                 %% "json4s-native"            % "3.3.0",
-  // "org.json4s"                 %% "json4s-jackson"           % "3.3.0",
-  "com.michaelpollmeier"       %% "gremlin-scala"            % "3.1.2-incubating.0",
-  
-  "org.apache.kafka"           %  "kafka-clients"            % "0.10.0.1",
-  "net.manub"                  %% "scalatest-embedded-kafka" % "0.7.1" % "test",
-  "net.jcazevedo"              %% "moultingyaml"             % "0.3.0",
-  "io.bmeg"                    %% "ophion"                   % "0.0.5",
+  "com.fasterxml.jackson.module" %% "jackson-module-scala"     % "2.8.4",
+  "com.michaelpollmeier"         %% "gremlin-scala"            % "3.1.2-incubating.0",
+  "net.jcazevedo"                %% "moultingyaml"             % "0.3.0",
+  // "org.rogach"                   %% "scallop"                  % "2.0.5",
+  "com.github.scopt"             %% "scopt"                    % "3.5.0",
+  "com.trueaccord.scalapb"       %% "scalapb-json4s"           % "0.1.6",
+  "org.scalactic"                %% "scalactic"                % "3.0.0",
+  "org.scalatest"                %% "scalatest"                % "3.0.0" % "test",
 
-  "com.trueaccord.scalapb"     %% "scalapb-json4s"           % "0.1.6",
-  "org.scalactic"              %% "scalactic"                % "3.0.0",
-  "org.scalatest"              %% "scalatest"                % "3.0.0" % "test"
+  "org.scala-lang"               %  "scala-compiler"           % "2.11.8",
+  "org.apache.tinkerpop"         %  "gremlin-core"             % "3.1.1-incubating",
+  "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
+  "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
+  "com.google.protobuf"          %  "protoc"                   % "3.1.0",
+  "com.thinkaurelius.titan"      %  "titan-core"               % "1.1.0-SNAPSHOT",
+  "com.thinkaurelius.titan"      %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
+  "com.thinkaurelius.titan"      %  "titan-es"                 % "1.1.0-SNAPSHOT"
+  // "net.manub"                    %% "scalatest-embedded-kafka" % "0.7.1" % "test",
+  // "org.json4s"                   %% "json4s-native"            % "3.3.0",
+  // "org.json4s"                   %% "json4s-jackson"           % "3.3.0",
+
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
 libraryDependencies += "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"
