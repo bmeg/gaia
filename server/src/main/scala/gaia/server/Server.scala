@@ -50,6 +50,6 @@ object GaiaServer {
   }
 }
 
-object GaiaFoundation extends App {
-  GaiaServer.startServer("resources/config/gaia.yaml")
-}
+// object GaiaFoundation extends App {
+//   GaiaServer.startServer("resources/config/gaia.yaml")
+// }

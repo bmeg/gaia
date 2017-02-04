@@ -38,3 +38,8 @@ class GaiaServerCommand(release: String) extends GaiaCommand(release) {
     GaiaServer.startServer(command.get("config").get)
   }
 }
+
+object GaiaServerCommand extends App {
+  val parser = new GaiaServerCommand("0.0.7")
+  parser.execute(args)
+}
