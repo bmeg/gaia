@@ -13,7 +13,6 @@ libraryDependencies ++= Seq(
   "com.fasterxml.jackson.module" %% "jackson-module-scala"     % "2.8.4",
   "com.michaelpollmeier"         %% "gremlin-scala"            % "3.1.2-incubating.0",
   "net.jcazevedo"                %% "moultingyaml"             % "0.3.0",
-  // "org.rogach"                   %% "scallop"                  % "2.0.5",
   "com.github.scopt"             %% "scopt"                    % "3.5.0",
   "com.trueaccord.scalapb"       %% "scalapb-json4s"           % "0.1.6",
   "org.scalactic"                %% "scalactic"                % "3.0.0",
@@ -27,10 +26,8 @@ libraryDependencies ++= Seq(
   "com.thinkaurelius.titan"      %  "titan-core"               % "1.1.0-SNAPSHOT",
   "com.thinkaurelius.titan"      %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
   "com.thinkaurelius.titan"      %  "titan-es"                 % "1.1.0-SNAPSHOT"
-  // "net.manub"                    %% "scalatest-embedded-kafka" % "0.7.1" % "test",
   // "org.json4s"                   %% "json4s-native"            % "3.3.0",
   // "org.json4s"                   %% "json4s-jackson"           % "3.3.0",
-
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
 libraryDependencies += "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"

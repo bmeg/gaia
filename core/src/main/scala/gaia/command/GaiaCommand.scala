@@ -69,17 +69,17 @@ class GaiaCommand(release: String) {
     val graph = config.connectToGraph(config.graph)
 
     if (graph.isSuccess) {
-      val ingestor = new GraphTransform(graph.get)
+      val transform = new GraphTransform(graph.get)
 
       command.get("file").map { (file) =>
-        val label = command.get("label").getOrElse(ingestor.findLabel(file))
-        ingestor.ingestPath(label, file)
-        println("ingested file " + file + " as " + label)
+        val label = command.get("label").getOrElse(transform.findLabel(file))
+        println("ingesting file " + file + " as " + label)
+        transform.ingestPath(label, file)
       }
 
       command.get("url").map { (url) =>
-        val label = command.get("label").getOrElse(ingestor.findLabel(url))
-        ingestor.ingestUrl(label, url)
+        val label = command.get("label").getOrElse(transform.findLabel(url))
+        transform.ingestUrl(label, url)
         println("ingested url " + url + " as " + label)
       }
     } else {
@@ -105,4 +105,5 @@ class GaiaCommand(release: String) {
 object GaiaCommand extends App {
   val parser = new GaiaCommand("0.0.7")
   parser.execute(args)
+  Runtime.getRuntime.halt(0)
 }

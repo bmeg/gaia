@@ -9,8 +9,12 @@ trait GaiaIngestor {
   def ingestMessage(label: String) (message: String)
 
   def findLabel(s: String): String = {
-    val parts = s.split(".")
-    parts(parts.size - 2)
+    val parts = s.split('.')
+    if (parts.size > 1) {
+      parts(parts.size - 2)
+    } else {
+      s
+    }
   }
 
   def ingestFile(file: File) {
