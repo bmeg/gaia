@@ -4,5 +4,7 @@
 * fix gene viewer widget to work with new schema
 * add box plot to viz library and cohort page
 * generate visualization of protograph in d3/cytoscape
-* align signature code with protograph
+* setup agent interface
+* make agent for adding edges between samples and genes
+* align signature code with protograph, make an agent
 * create tests for protograph
