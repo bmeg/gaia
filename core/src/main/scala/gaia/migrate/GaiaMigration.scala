@@ -1,6 +1,7 @@
-package gaia.graph
+package gaia.migrate
 
 import gaia.config._
+import gaia.graph._
 import gremlin.scala._
 import scala.reflect.runtime.universe
 
@@ -25,16 +26,30 @@ object BaseMigration extends GaiaMigration {
   }
 }
 
-object GaiaMigrations {
-  def findMigration(name: String): GaiaMigration = {
-    val qualified = if (name.contains(".")) name else "gaia.graph.migration." + name
-    val runtimeMirror = universe.runtimeMirror(getClass.getClassLoader)
-    val module = runtimeMirror.staticModule(qualified)
-    runtimeMirror.reflectModule(module).asInstanceOf[GaiaMigration]
+case class MigrationMirror(symbol: String) extends GaiaMigration {
+  val qualified = if (symbol.contains(".")) symbol else "gaia.migration." + symbol
+  val mirror = universe.runtimeMirror(getClass.getClassLoader)
+  val module = mirror.staticModule(qualified)
+  val space = mirror.reflectModule(module)
+  val instance = mirror.reflect(space.instance)
+
+  val signatureSymbol = module.typeSignature.declarations.filter(_.name.toString() == "signature").head.asMethod
+  val signatureMethod = instance.reflectMethod(signatureSymbol)
+  val migrateSymbol = module.typeSignature.declarations.filter(_.name.toString() == "migrate").head.asMethod
+  val migrateMethod = instance.reflectMethod(migrateSymbol)
+
+  def signature: String = {
+    signatureMethod.apply().asInstanceOf[String]
   }
 
+  def migrate(graph: GaiaGraph) {
+    migrateMethod.apply(graph)
+  }
+}
+
+object GaiaMigrations {
   def findMigrations(names: Seq[String]): List[GaiaMigration] = {
-    names.map(findMigration).toList
+    names.map(name => MigrationMirror(name)).toList // findMigration).toList
   }
 
   def runMigrations(graph: GaiaGraph) (migrations: Seq[GaiaMigration]) = {

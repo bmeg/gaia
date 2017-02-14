@@ -4,6 +4,7 @@ import gaia.config._
 import gaia.graph._
 import gaia.transform._
 import gaia.ingest._
+import gaia.migrate._
 
 import scala.io.Source
 import scala.util.Try
