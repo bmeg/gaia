@@ -1,10 +1,19 @@
-* ETL of existing data (TCGA, signatures)
-* talk to brian king about kafka/dirac, fill in kafka topics with bioschema messages
-* add edge label step to ophion
-* fix gene viewer widget to work with new schema
-* add box plot to viz library and cohort page
-* generate visualization of protograph in d3/cytoscape
-* setup agent interface
-* make agent for adding edges between samples and genes
-* align signature code with protograph, make an agent
-* create tests for protograph
+* Data
+** talk to brian king about kafka/dirac, fill in kafka topics with bioschema messages
+** ETL of existing data (TCGA, signatures)
+** Make edges between samples and mutations (mutation summary)
+** Import SIF (pathways)
+* Ophion
+** add edge label step and write api to ophion
+* Visualization
+** fix query for gene viewer widget to work with new schema
+** add box plot to viz library and cohort page
+** generate visualization of protograph in d3/cytoscape, allow search from any starting point
+** cohort page: show what are the top 10 mutated genes in this cohort - bar chart
+** precalculate counts for each type, if there are less than 30 show drop down
+* Agents
+** setup agent interface
+** run Heskett's clustering agent
+** make agent for adding edges between samples and genes
+** align signature code with protograph, make an agent
+** create tests for protograph

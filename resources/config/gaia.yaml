@@ -1,7 +1,7 @@
 graph:
   database: titan
   host: localhost
-  keyspace: gaoa
+  keyspace: gaua
   protograph: ../gaia-bmeg/bmeg.protograph.yml
 server:
   port: 11223
