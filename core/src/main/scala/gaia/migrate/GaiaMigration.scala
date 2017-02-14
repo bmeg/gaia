@@ -27,7 +27,7 @@ object BaseMigration extends GaiaMigration {
 }
 
 case class MigrationMirror(symbol: String) extends GaiaMigration {
-  val qualified = if (symbol.contains(".")) symbol else "gaia.migration." + symbol
+  val qualified = if (symbol.contains(".")) symbol else "gaia.migrate." + symbol
   val mirror = universe.runtimeMirror(getClass.getClassLoader)
   val module = mirror.staticModule(qualified)
   val space = mirror.reflectModule(module)
