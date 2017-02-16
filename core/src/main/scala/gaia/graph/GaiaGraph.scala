@@ -1,6 +1,6 @@
 package gaia.graph
 
-import gaia.schema._
+import gaia.schema.GaiaSchema
 
 import gremlin.scala._
 import scala.util.Try

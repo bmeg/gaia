@@ -2,7 +2,7 @@ package gaia.graph.titan
 
 import gaia.config._
 import gaia.graph._
-import gaia.schema._
+import gaia.schema.GaiaSchema
 
 import scala.util.Try
 import gremlin.scala._

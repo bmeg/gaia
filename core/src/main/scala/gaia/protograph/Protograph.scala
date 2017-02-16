@@ -1,20 +1,16 @@
 package gaia.protograph
 
-/**
-  * Created by ellrott on 12/18/16.
-  */
-
 import gaia.io.JsonIO
-import gaia.schema.Protograph.{FieldAction, TransformMessage}
-import gaia.file.mustache._
+import gaia.schema.{Graph, Vertex, Edge}
+import gaia.schema.Protograph._
+import FieldAction.Action
+import gaia.file.mustache.Mustache
 
 import java.io.FileInputStream
-// import com.google.protobuf.util.JsonFormat
 import scala.collection.mutable
 import collection.JavaConverters._
 
 import org.yaml.snakeyaml.Yaml
-// import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.core.{JsonGenerator}
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper, JsonSerializer, SerializerProvider}
 import com.fasterxml.jackson.databind.module.SimpleModule
@@ -45,11 +41,38 @@ object ProtographTransform {
 
 case class Protograph(transforms: Seq[TransformMessage]) {
   val transformMap = transforms.map(step => (step.label, ProtographTransform.toProtograph(step))).toMap
-  val default = TransformMessage(label = "default", gid = "default:{gid}")
+  val default = TransformMessage(label = "default", gid = "default:{{gid}}")
   val defaultTransform = ProtographTransform.toProtograph(default)
 
   def transformFor(label: String): ProtographTransform = {
     transformMap.getOrElse(label, defaultTransform)
+  }
+
+  def graphStructure: Graph = {
+    val emptyGraph = (List[Vertex](), List[Edge]())
+    val (vertexes, edges) = transforms.foldLeft(emptyGraph) { (nodes, transform) =>
+      nodes match {
+        case (vertexes, previousEdges) =>
+          val gid = transform.label
+          val vertex = Vertex(gid=gid, label=transform.label)
+          val edges = transform.actions.foldLeft(List[Edge]()) { (edges, action) =>
+            action.action match {
+              case Action.SingleEdge(edge) =>
+                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case Action.RepeatedEdges(edge) =>
+                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case Action.EmbeddedEdges(edge) =>
+                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case Action.InnerVertex(edge) =>
+                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case _ => edges
+            }
+          }
+          (vertex :: vertexes, edges ++ previousEdges)
+      }
+    }
+
+    Graph.assemble(vertexes, edges)
   }
 }
 
