@@ -3,9 +3,14 @@ package gaia.facet
 import gaia.graph._
 import gaia.eval.Console
 
+import org.json4s._
+import org.json4s.jackson._
+import org.json4s.jackson.JsonMethods._
+
 import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
+import org.http4s.json4s.jackson._
 
 import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
@@ -13,8 +18,8 @@ import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 import com.typesafe.scalalogging._
-import _root_.argonaut._, Argonaut._
-import org.http4s.argonaut._
+// import _root_.argonaut._, Argonaut._
+// import org.http4s.argonaut._
 
 case class ConsoleFacet(root: String) extends GaiaFacet with LazyLogging {
   def service(graph: GaiaGraph): HttpService = {
@@ -22,7 +27,7 @@ case class ConsoleFacet(root: String) extends GaiaFacet with LazyLogging {
 
     HttpService {
       case request @ POST -> Root / "query" =>
-        request.as[Json].flatMap { query =>
+        request.as[JValue].flatMap { query =>
           // val queryLens = jObjectPL >=> jsonObjectPL("query") >=> jStringPL
           // val line = queryLens.get(query).getOrElse("")
 

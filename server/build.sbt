@@ -17,7 +17,7 @@ resolvers ++= Seq(
   "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
-val http4sVersion = "0.15.0a"
+val http4sVersion = "0.15.3"
 
 libraryDependencies ++= Seq(
   "com.google.code.gson"       %  "gson"                   % "2.6.2",
@@ -27,12 +27,12 @@ libraryDependencies ++= Seq(
   "org.http4s"                 %% "http4s-core"            % http4sVersion,
   "org.http4s"                 %% "http4s-blaze-server"    % http4sVersion,
   "org.http4s"                 %% "http4s-dsl"             % http4sVersion,
-  "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
+  "org.http4s"                 %% "http4s-json4s-jackson"  % http4sVersion,
+  // "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
   "com.typesafe.scala-logging" %% "scala-logging"          % "3.1.0",
   "org.scala-debugger"         %% "scala-debugger-api"     % "1.0.0",
-  "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1",
+  // "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1",
   "com.lihaoyi"                %% "scalatags"              % "0.6.0",
-
   "org.scalactic"              %% "scalactic"              % "3.0.0",
   "org.scalatest"              %% "scalatest"              % "3.0.0" % "test"
 )

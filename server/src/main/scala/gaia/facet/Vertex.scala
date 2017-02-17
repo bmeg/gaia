@@ -5,11 +5,16 @@ import gaia.collection.Collection._
 import gaia.html.VertexHtml
 import gaia.query._
 
+import org.json4s._
+import org.json4s.jackson._
+import org.json4s.jackson.JsonMethods._
+
 import org.http4s._
 import org.http4s.server._
 import org.http4s.dsl._
 import org.http4s.MediaType._
 import org.http4s.headers.{`Content-Type`, `Content-Length`}
+import org.http4s.json4s.jackson._
 
 import shapeless._
 import gremlin.scala._
@@ -17,18 +22,17 @@ import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 import com.typesafe.scalalogging._
-import _root_.argonaut._, Argonaut._
-import org.http4s.argonaut._
-
 import scala.collection.JavaConversions._
 
 case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
   val Gid = Key[String]("gid")
 
-  def mapToJson(properties: Map[String, Any]) : Json = {
-    properties.map( x => {
+  implicit val formats = Serialization.formats(NoTypeHints)
+
+  def mapToJson(properties: Map[String, Any]) : JValue = {
+    Extraction.decompose(properties.map( x => {
       ((x._1), (x._2.toString))
-    } ).asJson
+    }))
   }
 
   val example = """[{"vertex": "Gene"},
@@ -67,18 +71,18 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
           val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("gid"))
           val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("gid"))
 
-          val out = Map[String, Json](
-            "type" -> vertex.label.asJson,
+          val out = Map[String, JValue](
+            "type" -> Extraction.decompose(vertex.label),
             "properties" -> mapToJson(vertex.valueMap),
-            "in" -> inEdges.asJson,
-            "out" -> outEdges.asJson
+            "in" -> Extraction.decompose(inEdges),
+            "out" -> Extraction.decompose(outEdges)
           )
 
-          Ok(out.asJson)
+          Ok(Extraction.decompose(out))
         }
 
         catch {
-          case _: Throwable => Ok(Map[String, Json]().asJson)
+          case _: Throwable => Ok(Extraction.decompose(Map[String, JValue]()))
         }
 
       case request @ POST -> Root / "query" =>
@@ -87,8 +91,6 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
           val query = GaiaQuery.parse(raw)
           val json = query.executeJson(graph)
           Ok(json)
-          // val result = query.execute(graph)
-          // Ok(GaiaQuery.renderJson(result))
         }
     }
   }
