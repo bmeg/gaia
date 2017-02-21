@@ -125,13 +125,24 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
   }
 
   def innerVertex(graph: GaiaGraph) (vertex: Vertex) (inner: InnerVertex) (data: Map[String, Any]) (field: String): Vertex = {
+    def extract(nest: Map[String, Any]) {
+      val embedded = nest + (inner.outerId -> data.get("gid").get)
+      val in = ingestVertex(inner.destinationLabel) (embedded)
+      val innerGid = in.value[String]("gid")
+      graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
+    }
+
     data.get(field).map { nested =>
-      nested.asInstanceOf[List[Map[String, Any]]].map { nest =>
-        val embedded = nest + (inner.outerId -> data.get("gid").get)
-        val in = ingestVertex(inner.destinationLabel) (embedded)
-        val innerGid = in.value[String]("gid")
-        graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
+      nested match {
+        case inner: List[Map[String, Any]] => inner.map(extract)
+        case inner: Map[String, Any] => extract(inner)
       }
+      // nested.asInstanceOf[List[Map[String, Any]]].map { nest =>
+      //   val embedded = nest + (inner.outerId -> data.get("gid").get)
+      //   val in = ingestVertex(inner.destinationLabel) (embedded)
+      //   val innerGid = in.value[String]("gid")
+      //   graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
+      // }
     }
     vertex
   }

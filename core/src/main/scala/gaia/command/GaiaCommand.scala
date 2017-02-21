@@ -78,10 +78,16 @@ class GaiaCommand(release: String) {
         transform.ingestPath(label, file)
       }
 
+      command.get("dir").map { (dir) =>
+        val label = command.get("label").getOrElse(transform.findLabel(dir))
+        println("ingesting dir " + dir + " as " + label)
+        transform.ingestDirectory(dir)
+      }
+
       command.get("url").map { (url) =>
         val label = command.get("label").getOrElse(transform.findLabel(url))
+        println("ingesting url " + url + " as " + label)
         transform.ingestUrl(label, url)
-        println("ingested url " + url + " as " + label)
       }
     } else {
       println("failed to open graph! " + config)
