@@ -137,12 +137,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case inner: List[Map[String, Any]] => inner.map(extract)
         case inner: Map[String, Any] => extract(inner)
       }
-      // nested.asInstanceOf[List[Map[String, Any]]].map { nest =>
-      //   val embedded = nest + (inner.outerId -> data.get("gid").get)
-      //   val in = ingestVertex(inner.destinationLabel) (embedded)
-      //   val innerGid = in.value[String]("gid")
-      //   graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
-      // }
     }
     vertex
   }

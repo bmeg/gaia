@@ -6,7 +6,10 @@ import gaia.facet._
 
 import org.http4s._
 import org.http4s.server._
+import org.http4s.server.middleware.Timeout
 import org.http4s.server.blaze.BlazeBuilder
+
+import scala.concurrent.duration._
 
 object GaiaServer {
   def envelopPath(path: String): String = {
@@ -30,9 +33,10 @@ object GaiaServer {
   def start(config: GaiaServerConfig) (graph: GaiaGraph): Unit = {
     println("registering facets ---------")
     val facets = GaiaServer.findFacets(config.facets.getOrElse(Map[String, String]()))
-    val blaze = BlazeBuilder.bindHttp(config.port.getOrElse(11223))
+    val blaze = BlazeBuilder.bindHttp(config.port.getOrElse(11223)).withIdleTimeout(11.minutes)
     val mounted = (BaseFacets.facets ++ facets).foldLeft(blaze) { (blaze, facet) =>
-      blaze.mountService(facet.service(graph), "/gaia" + facet.root)
+      val timed = Timeout(10.minutes) (facet.service(graph))
+      blaze.mountService(timed, "/gaia" + facet.root)
     }
 
     val static = mounted.mountService(StaticFacet.service, "/")

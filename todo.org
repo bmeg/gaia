@@ -5,6 +5,8 @@
 ** Import SIF (pathways)
 * Ophion
 ** add edge label step and write api to ophion
+* Server
+** stream results as you get them
 * Visualization
 ** fix query for gene viewer widget to work with new schema
 ** add box plot to viz library and cohort page
