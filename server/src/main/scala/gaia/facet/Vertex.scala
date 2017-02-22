@@ -27,7 +27,7 @@ import scala.collection.mutable
 
 case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
   val Gid = Key[String]("gid")
-  val queries = mutable.Map[GaiaQuery, String]()
+  val queries = mutable.Map[String, String]()
 
   implicit val formats = Serialization.formats(NoTypeHints)
 
@@ -77,9 +77,12 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
       case request @ POST -> Root / "query" =>
         request.as[String].flatMap { raw =>
           println(raw)
-          val query = GaiaQuery.parse(raw)
-          val json = queries.get(query).getOrElse {
-            query.executeJson(graph)
+
+          val json = queries.get(raw).getOrElse {
+            val query = GaiaQuery.parse(raw)
+            val result = query.executeJson(graph)
+            queries(raw) = result
+            result
           }
 
           Ok(json)
