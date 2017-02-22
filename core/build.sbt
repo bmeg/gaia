@@ -8,7 +8,7 @@ scalaVersion := "2.11.8"
 conflictManager := ConflictManager.strict.copy(organization = "com.esotericsoftware.*")
 
 libraryDependencies ++= Seq(
-  "io.bmeg"                      %% "ophion"                   % "0.0.5",
+  "io.bmeg"                      %% "ophion"                   % "0.0.7-SNAPSHOT",
 
   "com.fasterxml.jackson.module" %% "jackson-module-scala"     % "2.8.4",
   "com.michaelpollmeier"         %% "gremlin-scala"            % "3.1.2-incubating.0",
