@@ -23,9 +23,11 @@ import org.apache.tinkerpop.gremlin.process.traversal.P._
 
 import com.typesafe.scalalogging._
 import scala.collection.JavaConversions._
+import scala.collection.mutable
 
 case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
   val Gid = Key[String]("gid")
+  val queries = mutable.Map[GaiaQuery, String]()
 
   implicit val formats = Serialization.formats(NoTypeHints)
 
@@ -34,19 +36,6 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
       ((x._1), (x._2.toString))
     }))
   }
-
-  val example = """[{"vertex": "Gene"},
- {"has": {"symbol": ["AHI3", "HOIK4L"]}},
- {"in": "inGene"},
- {"out": "effectOf"},
- {"out": "tumorSample"},
- {"in": "expressionFor"},
- {"as": "expressionStep"},
- {"inE": "appliesTo"},
- {"as": "levelStep"},
- {"outV": ""},
- {"as": "signatureStep"},
- {"select": ["signatureStep", "levelStep", "expressionStep"]}]"""
 
   def countVertexes(graph: GaiaGraph): Map[String, Long] = {
     val counts = graph.V.traversal.label.groupCount.toList.get(0)
@@ -89,7 +78,10 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
         request.as[String].flatMap { raw =>
           println(raw)
           val query = GaiaQuery.parse(raw)
-          val json = query.executeJson(graph)
+          val json = queries.get(query).getOrElse {
+            query.executeJson(graph)
+          }
+
           Ok(json)
         }
     }

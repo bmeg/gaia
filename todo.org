@@ -4,9 +4,11 @@
 ** Make edges between samples and mutations (mutation summary)
 ** Import SIF (pathways)
 * Ophion
+** add dedup
 ** add edge label step and write api to ophion
 * Server
 ** stream results as you get them
+** add memcache in front of server for queries
 * Visualization
 ** fix query for gene viewer widget to work with new schema
 ** add box plot to viz library and cohort page
