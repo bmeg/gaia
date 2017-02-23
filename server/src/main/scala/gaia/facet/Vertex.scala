@@ -60,9 +60,11 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
           val inEdges = groupAs[Edge, String, String](vertex.inE.toList) (_.label) (_.outVertex.value[String]("gid"))
           val outEdges = groupAs[Edge, String, String](vertex.outE.toList) (_.label) (_.inVertex.value[String]("gid"))
 
+          val translated = GaiaQuery.translateVertex(graph) (vertex)
           val out = Map[String, JValue](
             "type" -> Extraction.decompose(vertex.label),
-            "properties" -> mapToJson(vertex.valueMap),
+            "properties" -> Extraction.decompose(translated.properties),
+            // "properties" -> mapToJson(vertex.valueMap),
             "in" -> Extraction.decompose(inEdges),
             "out" -> Extraction.decompose(outEdges)
           )

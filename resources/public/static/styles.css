@@ -332,3 +332,7 @@ a {
 .hidden {
   display: none;
 }
+
+.edge-label {
+  color: #22aaee;
+}

@@ -24,7 +24,28 @@ case class GaiaQuery(query: Query) {
     }
   }
 
-  def translateVertex(graph: GaiaGraph) (vertex: Vertex): GraphView = {
+  def execute(graph: GaiaGraph): List[Any] = {
+    extractLabel match {
+      case Some(label) => query.interpret(graph.typeQuery(label).traversal).toList.toList
+      case None => query.run(graph.graph)
+    }
+  }
+
+  def executeJson(graph: GaiaGraph): String = {
+    val result = GaiaQuery.resultJson(graph) (execute(graph))
+    compact(render(result))
+  }
+}
+
+object GaiaQuery {
+  implicit val formats = DefaultFormats
+  def parse(raw: String): GaiaQuery = GaiaQuery(Query.fromString(raw))
+
+  def renderJson(result: List[Any]): String = {
+    compact(render(Query.resultJson(result)))
+  }
+
+  def translateVertex(graph: GaiaGraph) (vertex: Vertex): VertexDirect = {
     val view: VertexDirect = GraphView.translateVertex(vertex).asInstanceOf[VertexDirect]
     // val label = view.properties.get("#label").getOrElse("default").asInstanceOf[String]
     val protograph = graph.schema.protograph.transformFor(view.`type`)
@@ -71,25 +92,5 @@ case class GaiaQuery(query: Query) {
     val translation = queryResult(graph) (result)
     val output = Map("result" -> translation)
     Extraction.decompose(output)
-  }
-
-  def execute(graph: GaiaGraph): List[Any] = {
-    extractLabel match {
-      case Some(label) => query.interpret(graph.typeQuery(label).traversal).toList.toList
-      case None => query.run(graph.graph)
-    }
-  }
-
-  def executeJson(graph: GaiaGraph): String = {
-    val result = resultJson(graph) (execute(graph))
-    compact(render(result))
-  }
-}
-
-object GaiaQuery {
-  def parse(raw: String): GaiaQuery = GaiaQuery(Query.fromString(raw))
-
-  def renderJson(result: List[Any]): String = {
-    compact(render(Query.resultJson(result)))
   }
 }

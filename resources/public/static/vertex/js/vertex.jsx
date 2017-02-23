@@ -85,7 +85,7 @@ var VertexEdges = React.createClass({
   render: function() {
     var props = this.props;
     var prefix = props.edges[0].split(':')[0]
-    var header = props.label + " (" + props.direction + " " + prefix + ")";
+    var header = [<span key="edge-label">{props.label}</span>, <span key="vertex-label" className="edge-label">{" (" + props.direction + " " + prefix + ")"}</span>];
 
     var items = props.edges.map(gid => (
       <ExpandoItem key={gid}>
@@ -126,8 +126,8 @@ var PropertiesView = function(props) {
 var EdgesView = function(props) {
   console.log(props)
   var inEdges = Object.keys(props.vertex['in'])
-  // Filter out edges with "hasInstance" in label
-  .filter(key => key != 'hasInstance')
+  // // Filter out edges with "hasInstance" in label
+  // .filter(key => key != 'hasInstance')
   .map(function(key) {
     return <VertexEdges
       key={key}
@@ -138,8 +138,8 @@ var EdgesView = function(props) {
     />
   });
    var outEdges = Object.keys(props.vertex['out'])
-  // Filter out edges with "hasInstance" in label
-  .filter(key => key != 'hasInstance')
+  // // Filter out edges with "hasInstance" in label
+  // .filter(key => key != 'hasInstance')
   .map(function(key) {
     return <VertexEdges
       key={key}
