@@ -18,6 +18,8 @@ class GaiaTitan(config: GaiaGraphConfig) extends GaiaGraph {
     base.setProperty("storage.backend", "cassandra")
     base.setProperty("storage.hostname", config.host.getOrElse("localhost"))
     base.setProperty("storage.cassandra.keyspace", config.keyspace.getOrElse("gaia"))
+    // base.setProperty("query.batch", "true")
+    // base.setProperty("storage.cassandra.frame-size-mb", "400")
 
     TitanFactory.open(base)
   }

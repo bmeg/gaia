@@ -64,7 +64,6 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
           val out = Map[String, JValue](
             "type" -> Extraction.decompose(vertex.label),
             "properties" -> Extraction.decompose(translated.properties),
-            // "properties" -> mapToJson(vertex.valueMap),
             "in" -> Extraction.decompose(inEdges),
             "out" -> Extraction.decompose(outEdges)
           )
