@@ -15,7 +15,8 @@ object StaticFacet extends LazyLogging {
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
 
     case req @ GET -> Root =>
-      val localPath = new File(new File("./resources/public/static"), "main.html")
+      println("in the root!")
+      val localPath = new File(new File("./resources/public/static"), "viewer.html")
       StaticFile.fromFile(localPath, Some(req)).fold(NotFound())(Task.now)
   }
 }
