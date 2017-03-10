@@ -1,21 +1,36 @@
 * Data
-** talk to brian king about kafka/dirac, fill in kafka topics with bioschema messages
-** ETL of existing data (TCGA, signatures)
+** Literome
+** G2P (talk to walsh)
+** support DMS queries (georgia)
+** fill in kafka topics with bioschema messages
+** ETL of existing data (TCGA, signatures): work with DMS
 ** Make edges between samples and mutations (mutation summary)
 ** Import SIF (pathways)
+* Visualization
+** all state of application encoded in window location (redux and router)
+** onco.js add sequence for edges
+** add more visualizations
+*** cohort page: show what are the top 10 mutated genes in this cohort - bar chart
+*** precalculate counts for each type, if there are less than 30 show drop down
+* Protograph
+** Create support for ingesting messages into edges and edge properties
+** create conformance test
+** combine protograph with protobuf schemas to fill out properties and types for describing the full graph schema
 * Ophion
-** add edge label step and write api to ophion
+** sync to Kyle's protobuf - add edge label step and write api to ophion
+** pass and extend Ophion conformance test
+** support indexing
 * Server
+** streaming upload through port 80
+** add titan thread pool
 ** stream results as you get them
 ** add some kind of caching in server for queries
-* Visualization
-** all state of application encoded in window location
-** cohort page: show what are the top 10 mutated genes in this cohort - bar chart
-** precalculate counts for each type, if there are less than 30 show drop down
 * Agents
 ** setup agent interface
 ** run Heskett's clustering agent
 ** make agent for adding edges between samples and genes
 ** align signature code with protograph, make an agent
 ** create tests for protograph
-
+* Support
+** Write docs for everyone! and everything!
+** help Chris
