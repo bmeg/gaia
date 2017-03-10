@@ -1,4 +1,5 @@
 * Data
+** Add in AUC and drug target (edge from compound to gene)
 ** Literome
 ** G2P (talk to walsh)
 ** support DMS queries (georgia)
