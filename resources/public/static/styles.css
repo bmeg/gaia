@@ -345,3 +345,14 @@ a {
   color: #eeaa77;
   font-size: 16px;
 }
+
+.spacing {
+  width: 20px;
+  height: 20px;
+}
+
+.label-block {
+    display: block;
+    color: #bbccdd;
+    padding-bottom: 5px;
+}
