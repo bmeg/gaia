@@ -1,5 +1,4 @@
 * Data
-** + Add in AUC and drug target (edge from compound to gene)
 ** + TCGA clinical attributes, gene expression, CNA segments
 ** + MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
 ** + pubmed - ftp://ftp.ncbi.nlm.nih.gov/pubmed/baseline
