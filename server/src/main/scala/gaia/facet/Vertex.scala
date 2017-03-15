@@ -88,6 +88,10 @@ case class VertexFacet(root: String) extends GaiaFacet with LazyLogging {
 
           Ok(json)
         }
+
+      case GET -> Root / "expire" =>
+        queries.clear
+        Ok("cache expired!")
     }
   }
 }
