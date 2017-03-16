@@ -15,6 +15,7 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
+** +++ add response curves to cohort page
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** add more visualizations
