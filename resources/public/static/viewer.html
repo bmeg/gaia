@@ -24,7 +24,8 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-light_blue.min.css">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.teal-blue.min.css">
+    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-light_blue.min.css"> -->
     <link rel="stylesheet" href="/static/styles.css">
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -45,7 +46,8 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
         <div class="mdl-layout__header-row mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary">
-          <a href="/"><img src="/static/bmeg-logo.png" height="45"/></a>
+          <a href="/"><img src="/static/img/bmeg-flat.png" height="65"/></a>
+          <!-- <a href="/"><img src="/static/bmeg-logo.png" height="45"/></a> -->
           <a href="#graph" id="graph-tab" class="mdl-layout__tab is_active">Evidence Graph</a>
           <a href="#overview" class="mdl-layout__tab">Overview</a>
           <a href="#server" class="mdl-layout__tab">Software</a>
@@ -167,15 +169,14 @@
           </section>
         </div>
       </main>
-      
-      <footer class="mdl-mega-footer">
-          <div class="mdl-mega-footer--bottom-section">
-            <ul class="mdl-mega-footer--link-list">
-              <li><img height="50" src="/static/ohsu-logo.png"/></li>
-              <li><img height="50" src="/static/ucsc-logo.png"/></li>
-            </ul>
-          </div>
-        </footer>        
+      <footer class="mdl-mini-footer">
+        <div class="mdl-mini-footer__middle-section">
+          <ul class="mdl-mini-footer__link-list">
+            <li><img height="40" src="/static/ohsu-logo.png"/></li>
+            <li><img height="40" src="/static/ucsc-logo.png"/></li>
+          </ul>
+        </div>
+      </footer>
     </div>
   </body>
 </html>
