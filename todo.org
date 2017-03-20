@@ -30,8 +30,8 @@
 ** + sync to Kyle's protobuf - add edge label step and write api to ophion
 ** pass and extend Ophion conformance test
 * Server
-** ++ add titan thread pool
-** + add elastic search for vertex types (case insensitve with prefix matching)
+** +++ add titan connection pool
+** +++ add elastic search for vertex types (case insensitve with prefix matching)
 ** + stream results as you get them
 ** add some kind of caching in server for queries
 * Agents
