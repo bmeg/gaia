@@ -65,32 +65,38 @@ object GaiaQuery {
     VertexDirect(view.`type`, properties)
   }
 
-  def queryResult(graph: GaiaGraph) (result: List[Any]): List[Any] = {
-    result.map { item =>
-      item match {
-        case item: Vertex => translateVertex(graph) (item)
-        case item: Edge => GraphView.translateEdge(item)
-        case item: java.util.HashMap[String, Any] => item.toMap
-        case item: java.util.LinkedHashMap[String, Any] => {
-          val map = item.toMap
-          map.mapValues { subitem =>
-            subitem match {
-              case item: Vertex => translateVertex(graph) (item)
-              case item: Edge => GraphView.translateEdge(item)
-              case item: java.util.HashMap[String, Any] => item.toMap
-              case _ => item
-            }
-          }
-        }
+  def convertResult(graph: GaiaGraph) (item: Any): Any = {
+    item match {
+      case item: Vertex => translateVertex(graph) (item)
+      case item: Edge => GraphView.translateEdge(item)
 
-        case _ => item
+      case item: java.util.HashMap[String, Any] => {
+        val map = item.toMap
+        map.mapValues(convertResult(graph))
+      }
+
+      case item: java.util.LinkedHashMap[String, Any] => {
+        val map = item.toMap
+        map.mapValues(convertResult(graph))
+      }
+
+      case _ => {
+        println("unsupported export type in query")
+        println(item.getClass)
+        item
       }
     }
+  }
+
+  def queryResult(graph: GaiaGraph) (result: List[Any]): List[Any] = {
+    result.map(convertResult(graph))
   }
 
   def resultJson(graph: GaiaGraph) (result: List[Any]): JValue = {
     val translation = queryResult(graph) (result)
     val output = Map("result" -> translation)
+    println("strange class")
+    println(translation.map(k => k.toString + ": " + k.getClass).mkString("\n"))
     Extraction.decompose(output)
   }
 }
