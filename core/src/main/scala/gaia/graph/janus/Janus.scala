@@ -10,7 +10,7 @@ import gremlin.scala._
 import org.apache.tinkerpop.gremlin.structure.Graph
 import org.apache.commons.configuration.BaseConfiguration
 import org.janusgraph.core.{JanusGraphFactory, JanusGraph}
-import org.janusgraph.core.util.JanusCleanup
+// import org.janusgraph.core.util.JanusCleanup
 // import com.thinkaurelius.titan.core.{TitanFactory, TitanGraph}
 // import com.thinkaurelius.titan.core.util.TitanCleanup
 

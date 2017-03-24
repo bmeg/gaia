@@ -3,7 +3,7 @@
 
 organization := "io.bmeg"
 name := "gaia-server"
-version := "0.0.7-SNAPSHOT"
+version := "0.0.8-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
@@ -28,7 +28,7 @@ libraryDependencies ++= Seq(
   "org.http4s"                 %% "http4s-blaze-server"    % http4sVersion,
   "org.http4s"                 %% "http4s-dsl"             % http4sVersion,
   "org.http4s"                 %% "http4s-json4s-jackson"  % http4sVersion,
-  // "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
+  "org.http4s"                 %% "http4s-argonaut"        % http4sVersion,
   "com.typesafe.scala-logging" %% "scala-logging"          % "3.1.0",
   "org.scala-debugger"         %% "scala-debugger-api"     % "1.0.0",
   // "com.github.alexarchambault" %% "argonaut-shapeless_6.1" % "1.1.1",

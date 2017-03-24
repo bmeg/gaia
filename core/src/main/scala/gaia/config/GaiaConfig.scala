@@ -1,7 +1,7 @@
 package gaia.config
 
 import gaia.graph._
-import gaia.graph.titan._
+import gaia.graph.janus._
 import gaia.graph.tinkergraph._
 
 import scala.util.Try
@@ -29,8 +29,8 @@ case class GaiaConfig(graph: GaiaGraphConfig, server: GaiaServerConfig) {
       val database = config.database.getOrElse("tinkergraph")
       if (database == "tinkergraph") {
         new GaiaTinkergraph(config)
-      } else if (database == "titan") {
-        new GaiaTitan(config)
+      } else if (database == "janus") {
+        new GaiaJanus(config)
       } else {
         throw new Exception("database not supported")
       }

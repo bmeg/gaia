@@ -1,7 +1,7 @@
 organization  := "io.bmeg"
 name := "gaia-core"
 
-version := "0.0.7-SNAPSHOT"
+version := "0.0.8-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 
@@ -23,7 +23,9 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
   "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
   "com.google.protobuf"          %  "protoc"                   % "3.1.0",
-  "org.janusgraph"               %  "janusgraph"               % "0.1.0-SNAPSHOT"
+  "org.janusgraph"               %  "janusgraph-core"          % "0.1.0-SNAPSHOT",
+  "org.janusgraph"               %  "janusgraph-cassandra"     % "0.1.0-SNAPSHOT",
+  "org.janusgraph"               %  "janusgraph-es"            % "0.1.0-SNAPSHOT"
   // "com.thinkaurelius.titan"      %  "titan-core"               % "1.1.0-SNAPSHOT",
   // "com.thinkaurelius.titan"      %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
   // "com.thinkaurelius.titan"      %  "titan-es"                 % "1.1.0-SNAPSHOT"
