@@ -19,13 +19,14 @@ libraryDependencies ++= Seq(
   "org.scalatest"                %% "scalatest"                % "3.0.0" % "test",
 
   "org.scala-lang"               %  "scala-compiler"           % "2.11.8",
-  "org.apache.tinkerpop"         %  "gremlin-core"             % "3.1.1-incubating",
+  // "org.apache.tinkerpop"         %  "gremlin-core"             % "3.1.1-incubating",
   "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
   "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
   "com.google.protobuf"          %  "protoc"                   % "3.1.0",
-  "com.thinkaurelius.titan"      %  "titan-core"               % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"      %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
-  "com.thinkaurelius.titan"      %  "titan-es"                 % "1.1.0-SNAPSHOT"
+  "org.janusgraph"               %  "janusgraph"               % "0.1.0-SNAPSHOT"
+  // "com.thinkaurelius.titan"      %  "titan-core"               % "1.1.0-SNAPSHOT",
+  // "com.thinkaurelius.titan"      %  "titan-cassandra"          % "1.1.0-SNAPSHOT",
+  // "com.thinkaurelius.titan"      %  "titan-es"                 % "1.1.0-SNAPSHOT"
   // "org.json4s"                   %% "json4s-native"            % "3.3.0",
   // "org.json4s"                   %% "json4s-jackson"           % "3.3.0",
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
