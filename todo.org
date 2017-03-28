@@ -1,13 +1,12 @@
 * Data
-** ++ TCGA clinical attributes, gene expression, CNA segments
-** ++ MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
+** +++ TCGA clinical attributes, gene expression, CNA segments
+** +++ MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
+** ++ G2P (talk to walsh)
 ** + ML signatures
+** + Literome - https://ohsu.app.box.com/files/0/f/21493766712/G2P_Data
 ** pubmed - ftp://ftp.ncbi.nlm.nih.gov/pubmed/baseline
-** Literome - https://ohsu.app.box.com/files/0/f/21493766712/G2P_Data
 ** PDB
-** G2P (talk to walsh)
 ** support DMS queries (georgia)
-** fill in kafka topics with bioschema messages
 ** ETL of existing data (TCGA, signatures): work with DMS
 ** Import SIF (pathways)
 * Machine Learning
@@ -39,6 +38,9 @@
 ** make agent for adding edges between samples and genes
 ** align signature code with protograph, make an agent
 ** create tests for protograph
+* Site
+** institute a site update page with one card per update
+** give some attention to the other tabs
 * Support
 ** Write docs for everyone! and everything!
 ** help Chris
