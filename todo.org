@@ -1,5 +1,5 @@
 * Data
-** +++ TCGA clinical attributes, gene expression, CNA segments
+** ++++ TCGA clinical attributes, gene expression, CNA segments
 ** +++ MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
 ** ++ G2P (talk to walsh)
 ** + ML signatures
@@ -13,6 +13,7 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
+** ++ cohort plots: log y for first, log x for second
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
@@ -39,8 +40,8 @@
 ** align signature code with protograph, make an agent
 ** create tests for protograph
 * Site
-** institute a site update page with one card per update
-** give some attention to the other tabs
+** +++ institute a site update page with one card per update
+** +++ give some attention to the other tabs
 * Support
 ** Write docs for everyone! and everything!
 ** help Chris
