@@ -95,8 +95,6 @@ object GaiaQuery {
   def resultJson(graph: GaiaGraph) (result: List[Any]): JValue = {
     val translation = queryResult(graph) (result)
     val output = Map("result" -> translation)
-    println("strange class")
-    println(translation.map(k => k.toString + ": " + k.getClass).mkString("\n"))
     Extraction.decompose(output)
   }
 }
