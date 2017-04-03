@@ -80,6 +80,11 @@ object GaiaQuery {
         map.mapValues(convertResult(graph))
       }
 
+      case item: String => {
+        item
+        // JsonIO.read[Any](item)
+      }
+
       case _ => {
         println("unsupported export type in query")
         println(item.getClass)
