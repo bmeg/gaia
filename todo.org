@@ -27,6 +27,7 @@
 * Ophion
 ** ++ support indexing
 ** ++ sync to Kyle's protobuf - add edge label step and write api to ophion
+** for results, put gid at top level, change 'type' to 'level'
 ** pass and extend Ophion conformance test
 * Server
 ** +++ add titan connection pool
