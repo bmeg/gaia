@@ -80,6 +80,11 @@ object GaiaQuery {
         map.mapValues(convertResult(graph))
       }
 
+      case item: String => {
+        item
+        // JsonIO.read[Any](item)
+      }
+
       case _ => {
         println("unsupported export type in query")
         println(item.getClass)
@@ -95,8 +100,6 @@ object GaiaQuery {
   def resultJson(graph: GaiaGraph) (result: List[Any]): JValue = {
     val translation = queryResult(graph) (result)
     val output = Map("result" -> translation)
-    println("strange class")
-    println(translation.map(k => k.toString + ": " + k.getClass).mkString("\n"))
     Extraction.decompose(output)
   }
 }
