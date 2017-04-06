@@ -22,9 +22,9 @@ libraryDependencies ++= Seq(
   "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
   "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
   "com.google.protobuf"          %  "protoc"                   % "3.1.0",
-  "org.janusgraph"               %  "janusgraph-core"          % "0.1.0-SNAPSHOT",
-  "org.janusgraph"               %  "janusgraph-cassandra"     % "0.1.0-SNAPSHOT",
-  "org.janusgraph"               %  "janusgraph-es"            % "0.1.0-SNAPSHOT"
+  "org.janusgraph"               %  "janusgraph-core"          % "0.2.0-SNAPSHOT",
+  "org.janusgraph"               %  "janusgraph-cassandra"     % "0.2.0-SNAPSHOT",
+  "org.janusgraph"               %  "janusgraph-es"            % "0.2.0-SNAPSHOT"
   // "org.json4s"                   %% "json4s-native"            % "3.3.0",
   // "org.json4s"                   %% "json4s-jackson"           % "3.3.0",
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
