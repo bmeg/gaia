@@ -1,7 +1,7 @@
 organization  := "io.bmeg"
 name := "gaia-core"
 
-version := "0.0.8-SNAPSHOT"
+version := "0.0.9-SNAPSHOT"
 
 scalaVersion := "2.11.8"
 

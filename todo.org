@@ -43,6 +43,8 @@
 * Site
 ** +++ institute a site update page with one card per update
 ** +++ give some attention to the other tabs
+** google analytics
+** make github site
 * Support
 ** Write docs for everyone! and everything!
 ** help Chris

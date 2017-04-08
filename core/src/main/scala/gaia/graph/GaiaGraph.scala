@@ -65,6 +65,7 @@ trait GaiaGraph {
   }
 
   def associateOut(from: Vertex) (edge: String) (toLabel: String) (toGid: String): Boolean = {
+    println(from, edge, toLabel, toGid)
     if (from.out(edge).has(Gid, toGid).toList.isEmpty) {
       val to = namedVertex(toLabel) (toGid)
       from --- (edge) --> to
