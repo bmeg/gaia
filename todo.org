@@ -13,7 +13,6 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
-** ++ cohort plots: log y for first, log x for second
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
@@ -28,9 +27,9 @@
 * Ophion
 ** ++ support indexing
 ** ++ sync to Kyle's protobuf - add edge label step and write api to ophion
+** provide support for querying multiple graphs
 ** pass and extend Ophion conformance test
 * Server
-** +++ add titan connection pool
 ** +++ stream results as you get them
 ** +++ add elastic search for vertex types (case insensitve with prefix matching)
 ** improve caching in server for queries (proxy to memcache for round-robin expiration)
@@ -48,3 +47,4 @@
 * Support
 ** Write docs for everyone! and everything!
 ** help Chris
+** track issues in jira

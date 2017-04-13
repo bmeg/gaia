@@ -10,8 +10,15 @@ import gremlin.scala._
 
 import scala.collection.JavaConverters._
 
+case class PartialEdge(from: Option[String], label: Option[String], to: Option[String], properties: Map[String, Any]) {
+  def isComplete() {
+    !from.isEmpty && !label.isEmpty && !to.isEmpty
+  }
+}
+
 case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIngestor {
   val keymap = collection.mutable.Map[String, Key[Any]]()
+  val partialEdges = collection.mutable.Map[String, PartialEdge]()
 
   def findKey[T](key: String): Key[T] = {
     val newkey = keymap.get(key).getOrElse {
@@ -49,27 +56,27 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def setProperty(vertex: Vertex) (field: Tuple2[String, Any]): Unit = {
+  def setProperty(element: Element) (field: Tuple2[String, Any]): Unit = {
     val key = camelize(field._1)
     field._2 match {
       case value: String =>
-        vertex.setProperty(findKey[String](key), value)
+        element.setProperty(findKey[String](key), value)
       case value: Double =>
-        vertex.setProperty(findKey[Double](key), value)
+        element.setProperty(findKey[Double](key), value)
       case value: Boolean =>
-        vertex.setProperty(findKey[Boolean](key), value)
+        element.setProperty(findKey[Boolean](key), value)
       case value: Int =>
-        vertex.setProperty(findKey[Long](key), value.toLong)
+        element.setProperty(findKey[Long](key), value.toLong)
       case value: List[Any] =>
-        vertex.setProperty(findKey[String](key), JsonIO.writeList(value))
+        element.setProperty(findKey[String](key), JsonIO.writeList(value))
       case _ =>
         println("unsupported key: " + key, field._2)
     }
   }
 
-  def setProperties(vertex: Vertex) (prefix: String) (fields: List[Tuple2[String, Any]]): Unit = {
+  def setProperties(element: Element) (prefix: String) (fields: List[Tuple2[String, Any]]): Unit = {
     for (field <- fields) {
-      setProperty(vertex) ((prefix + "." + field._1, field._2))
+      setProperty(element) ((prefix + "." + field._1, field._2))
     }
   }
 
@@ -100,28 +107,40 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def renameProperty(vertex: Vertex) (rename: RenameProperty) (data: Map[String, Any]) (field: String): Vertex = {
-    data.get(field).map { value =>
-      setProperty(vertex) ((rename.rename, value))
+  def linkThrough(graph: GaiaGraph) (vertex: Vertex) (link: LinkThrough) (data: Map[String, Any]) (field: String): PartialEdge = {
+    data.get(field).map { through =>
+      
     }
-    vertex
   }
 
-  def serializeField(vertex: Vertex) (map: SerializeField) (data: Map[String, Any]) (field: String): Vertex = {
+  def edgeTerminal(graph: GaiaGraph) (vertex: Vertex) (edge: EdgeTerminal) (data: Map[String, Any]) (field: String): PartialEdge = {
+    data.get(field).map { terminal =>
+
+    }
+  }
+
+  def renameProperty(element: Element) (rename: RenameProperty) (data: Map[String, Any]) (field: String): Element = {
+    data.get(field).map { value =>
+      setProperty(element) ((rename.rename, value))
+    }
+    element
+  }
+
+  def serializeField(element: Element) (map: SerializeField) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { inner =>
       val json = JsonIO.write(inner)
-      setProperty(vertex) ((map.serializedName, json))
+      setProperty(element) ((map.serializedName, json))
     }
-    vertex
+    element
   }
 
-  def spliceMap(vertex: Vertex) (map: SpliceMap) (data: Map[String, Any]) (field: String): Vertex = {
+  def spliceMap(element: Element) (map: SpliceMap) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { inner =>
       inner.asInstanceOf[Map[String, Any]].map { pair =>
-        setProperty(vertex) ((map.prefix + "." + pair._1, pair._2))
+        setProperty(element) ((map.prefix + "." + pair._1, pair._2))
       }
     }
-    vertex
+    element
   }
 
   def innerVertex(graph: GaiaGraph) (vertex: Vertex) (inner: InnerVertex) (data: Map[String, Any]) (field: String): Vertex = {
@@ -141,21 +160,21 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def joinList(vertex: Vertex) (list: JoinList) (data: Map[String, Any]) (field: String): Vertex = {
+  def joinList(element: Element) (list: JoinList) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { inner =>
       val join = inner.asInstanceOf[List[Any]].map(_.toString).mkString(list.delimiter)
-      setProperty(vertex) ((field, join))
+      setProperty(element) ((field, join))
     }
-    vertex
+    element
   }
 
-  def storeField(vertex: Vertex) (store: StoreField) (data: Map[String, Any]) (field: String): Vertex = {
+  def storeField(element: Element) (store: StoreField) (data: Map[String, Any]) (field: String): Element = {
     if (store.store) {
       data.get(field).map { inner =>
-        setProperty(vertex) ((field, inner))
+        setProperty(element) ((field, inner))
       }
     }
-    vertex
+    element
   }
 
   def ingestVertex(label: String) (data: Map[String, Any]): Vertex = {
@@ -176,6 +195,8 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (global) (action.field)
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.EmbeddedEdges(edges) => unembedEdges(graph) (vertex) (edges) (global) (action.field)
+        case Action.LinkThrough(link) => linkThrough(graph) (vertex) (link) (global) (action.field)
+        case Action.EdgeTerminal(edge) => edgeTerminal(graph) (vertex) (edge) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
         case Action.SerializeField(map) => serializeField(vertex) (map) (global) (action.field)
         case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)
