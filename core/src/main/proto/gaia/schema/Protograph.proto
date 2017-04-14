@@ -25,6 +25,11 @@ message LinkThrough {
     string destination_label = 4;
 }
 
+message EdgeSource {
+    string edge_label = 1;
+    string destination_label = 2;
+}
+
 message EdgeTerminal {
     string edge_label = 1;
     string destination_label = 2;
@@ -63,13 +68,14 @@ message FieldAction {
         RepeatedEdges repeated_edges = 4;
         EmbeddedEdges embedded_edges = 5;
         LinkThrough link_through = 6;
-        EdgeTerminal edge_terminal = 7;
-        RenameProperty rename_property = 8;
-        SerializeField serialize_field = 9;
-        SpliceMap splice_map = 10;
-        InnerVertex inner_vertex = 11;
-        JoinList join_list = 12;
-        StoreField store_field = 13;
+        EdgeSource edge_source = 7;
+        EdgeTerminal edge_terminal = 8;
+        RenameProperty rename_property = 9;
+        SerializeField serialize_field = 10;
+        SpliceMap splice_map = 11;
+        InnerVertex inner_vertex = 12;
+        JoinList join_list = 13;
+        StoreField store_field = 14;
     }
 }
 

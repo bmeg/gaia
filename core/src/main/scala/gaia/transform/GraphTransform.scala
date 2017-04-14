@@ -10,6 +10,7 @@ import gremlin.scala._
 
 import scala.collection.JavaConverters._
 
+case class PartialVertex(gid: String, properties: Map[String, Any])
 case class PartialEdge(from: Option[String], label: Option[String], to: Option[String], properties: Map[String, Any]) {
   def isComplete() {
     !from.isEmpty && !label.isEmpty && !to.isEmpty
@@ -80,14 +81,14 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     }
   }
 
-  def associateEdge(graph: GaiaGraph) (vertex: Vertex) (edge: SingleEdge) (data: Map[String, Any]) (field: String): Vertex = {
+  def associateEdge(graph: GaiaGraph) (vertex: Vertex) (edge: SingleEdge) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { gid =>
       graph.associateOut(vertex) (edge.edgeLabel) (edge.destinationLabel) (gid.asInstanceOf[String])
     }
     vertex
   }
 
-  def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Vertex = {
+  def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { gids =>
       gids.asInstanceOf[List[String]].foreach { gid =>
         graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
@@ -96,7 +97,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def unembedEdges(graph: GaiaGraph) (vertex: Vertex) (edges: EmbeddedEdges) (data: Map[String, Any]) (field: String): Vertex = {
+  def unembedEdges(graph: GaiaGraph) (vertex: Vertex) (edges: EmbeddedEdges) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { gids =>
       gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
         gidMap.get(edges.embeddedIn).map { gid =>
@@ -107,15 +108,41 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def linkThrough(graph: GaiaGraph) (vertex: Vertex) (link: LinkThrough) (data: Map[String, Any]) (field: String): PartialEdge = {
+  def linkThrough(graph: GaiaGraph) (gid: String) (vertex: Vertex) (link: LinkThrough) (data: Map[String, Any]) (field: String): Element = {
     data.get(field).map { through =>
-      
+      val existing = partialEdges.get(through)
+      if (existing.isEmpty) {
+        val partial = PartialEdge(from = gid, label = link.edgeLabel)
+        partialEdges += (through, partial)
+        vertex
+      } else {
+        graph.associateOut (vertex) (existing.label) (link.destinationLabel) (existing.to)
+        vertex
+      }
     }
   }
 
-  def edgeTerminal(graph: GaiaGraph) (vertex: Vertex) (edge: EdgeTerminal) (data: Map[String, Any]) (field: String): PartialEdge = {
-    data.get(field).map { terminal =>
+  def edgeSource(graph: GaiaGraph) (gid: String) (edge: EdgeSource) (data: Map[String, Any]) (field: String): Element = {
+    data.get(field).map { source =>
+      val existing = partialEdges.get(gid)
+      if (existing.isEmpty) {
+        partialEdges += (gid, PartialEdge(label = Some(edge.edgeLabel), from = Some(source), properties=data))
+      } else {
+        val from = graph.findVertex(gid)
+        graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (existing.to) (existing.properties)
+      }
+    }
+  }
 
+  def edgeTerminal(graph: GaiaGraph) (gid: String) (edge: EdgeTerminal) (data: Map[String, Any]) (field: String): Element = {
+    data.get(field).map { terminal =>
+      val existing = partialEdges.get(gid)
+      if (existing.isEmpty) {
+        partialEdges += (gid, PartialEdge(label = Some(edge.edgeLabel), to = Some(terminal), properties=data))
+      } else {
+        val from = graph.findVertex(existing.from)
+        graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (gid) (existing.properties)
+      }
     }
   }
 
@@ -196,6 +223,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.EmbeddedEdges(edges) => unembedEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.LinkThrough(link) => linkThrough(graph) (vertex) (link) (global) (action.field)
+        case Action.EdgeSource(edge) => edgeSource(graph) (vertex) (edge) (global) (action.field)
         case Action.EdgeTerminal(edge) => edgeTerminal(graph) (vertex) (edge) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
         case Action.SerializeField(map) => serializeField(vertex) (map) (global) (action.field)
