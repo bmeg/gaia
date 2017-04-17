@@ -11,11 +11,13 @@ import gremlin.scala._
 import scala.collection.JavaConverters._
 
 case class PartialVertex(gid: String, properties: Map[String, Any])
-case class PartialEdge(from: Option[String], label: Option[String], to: Option[String], properties: Map[String, Any]) {
-  def isComplete() {
-    !from.isEmpty && !label.isEmpty && !to.isEmpty
-  }
-}
+case class PartialEdge(
+  fromLabel: Option[String] = None,
+  from: Option[String] = None,
+  edgeLabel: Option[String] = None,
+  to: Option[String] = None,
+  toLabel: Option[String] = None,
+  properties: Map[String, Any] = Map[String, Any]())
 
 case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIngestor {
   val keymap = collection.mutable.Map[String, Key[Any]]()
@@ -57,125 +59,143 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     vertex
   }
 
-  def setProperty(element: Element) (field: Tuple2[String, Any]): Unit = {
+  def setProperty(element: Element) (field: Tuple2[String, Any]): Element = {
     val key = camelize(field._1)
     field._2 match {
       case value: String =>
-        element.setProperty(findKey[String](key), value)
+        element.property(key, value)
       case value: Double =>
-        element.setProperty(findKey[Double](key), value)
+        element.property(key, value)
       case value: Boolean =>
-        element.setProperty(findKey[Boolean](key), value)
+        element.property(key, value)
       case value: Int =>
-        element.setProperty(findKey[Long](key), value.toLong)
+        element.property(key, value.toLong)
       case value: List[Any] =>
-        element.setProperty(findKey[String](key), JsonIO.writeList(value))
+        element.property(key, JsonIO.writeList(value))
+      // case value: String =>
+      //   element.setProperty(findKey[String](key), value)
+      // case value: Double =>
+      //   element.setProperty(findKey[Double](key), value)
+      // case value: Boolean =>
+      //   element.setProperty(findKey[Boolean](key), value)
+      // case value: Int =>
+      //   element.setProperty(findKey[Long](key), value.toLong)
+      // case value: List[Any] =>
+      //   element.setProperty(findKey[String](key), JsonIO.writeList(value))
       case _ =>
         println("unsupported key: " + key, field._2)
     }
-  }
 
-  def setProperties(element: Element) (prefix: String) (fields: List[Tuple2[String, Any]]): Unit = {
-    for (field <- fields) {
-      setProperty(element) ((prefix + "." + field._1, field._2))
-    }
-  }
-
-  def associateEdge(graph: GaiaGraph) (vertex: Vertex) (edge: SingleEdge) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { gid =>
-      graph.associateOut(vertex) (edge.edgeLabel) (edge.destinationLabel) (gid.asInstanceOf[String])
-    }
-    vertex
-  }
-
-  def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { gids =>
-      gids.asInstanceOf[List[String]].foreach { gid =>
-        graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
-      }
-    }
-    vertex
-  }
-
-  def unembedEdges(graph: GaiaGraph) (vertex: Vertex) (edges: EmbeddedEdges) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { gids =>
-      gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
-        gidMap.get(edges.embeddedIn).map { gid =>
-          graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
-        }
-      }
-    }
-    vertex
-  }
-
-  def linkThrough(graph: GaiaGraph) (gid: String) (vertex: Vertex) (link: LinkThrough) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { through =>
-      val existing = partialEdges.get(through)
-      if (existing.isEmpty) {
-        val partial = PartialEdge(from = gid, label = link.edgeLabel)
-        partialEdges += (through, partial)
-        vertex
-      } else {
-        graph.associateOut (vertex) (existing.label) (link.destinationLabel) (existing.to)
-        vertex
-      }
-    }
-  }
-
-  def edgeSource(graph: GaiaGraph) (gid: String) (edge: EdgeSource) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { source =>
-      val existing = partialEdges.get(gid)
-      if (existing.isEmpty) {
-        partialEdges += (gid, PartialEdge(label = Some(edge.edgeLabel), from = Some(source), properties=data))
-      } else {
-        val from = graph.findVertex(gid)
-        graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (existing.to) (existing.properties)
-      }
-    }
-  }
-
-  def edgeTerminal(graph: GaiaGraph) (gid: String) (edge: EdgeTerminal) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { terminal =>
-      val existing = partialEdges.get(gid)
-      if (existing.isEmpty) {
-        partialEdges += (gid, PartialEdge(label = Some(edge.edgeLabel), to = Some(terminal), properties=data))
-      } else {
-        val from = graph.findVertex(existing.from)
-        graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (gid) (existing.properties)
-      }
-    }
-  }
-
-  def renameProperty(element: Element) (rename: RenameProperty) (data: Map[String, Any]) (field: String): Element = {
-    data.get(field).map { value =>
-      setProperty(element) ((rename.rename, value))
-    }
     element
   }
 
-  def serializeField(element: Element) (map: SerializeField) (data: Map[String, Any]) (field: String): Element = {
+  def setProperties(element: Element) (prefix: String) (fields: List[Tuple2[String, Any]]): Element = {
+    for (field <- fields) {
+      setProperty(element) ((prefix + "." + field._1, field._2))
+    }
+
+    element
+  }
+
+  def associateEdge(graph: GaiaGraph) (vertex: Vertex) (edge: SingleEdge) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { gid =>
+      graph.associateOut(vertex, edge.edgeLabel, edge.destinationLabel, gid.asInstanceOf[String])
+      // graph.associateOut(vertex) (edge.edgeLabel) (edge.destinationLabel) (gid.asInstanceOf[String])
+    }
+  }
+
+  def associateEdges(graph: GaiaGraph) (vertex: Vertex) (edges: RepeatedEdges) (data: Map[String, Any]) (field: String): Unit = {    
+    data.get(field).map { gids =>
+      gids.asInstanceOf[List[String]].foreach { gid =>
+        graph.associateOut(vertex, edges.edgeLabel, edges.destinationLabel, gid)
+        // graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+      }
+    }
+  }
+
+  def unembedEdges(graph: GaiaGraph) (vertex: Vertex) (edges: EmbeddedEdges) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { gids =>
+      gids.asInstanceOf[List[Map[String, String]]].foreach { gidMap =>
+        gidMap.get(edges.embeddedIn).map { gid =>
+          graph.associateOut(vertex, edges.edgeLabel, edges.destinationLabel, gid)
+          // graph.associateOut(vertex) (edges.edgeLabel) (edges.destinationLabel) (gid)
+        }
+      }
+    }
+  }
+
+  def linkThrough(graph: GaiaGraph) (gid: String) (vertex: Vertex) (link: LinkThrough) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { through =>
+      val throughAsString: String = through.asInstanceOf[String]
+      val key = link.edgeLabel + throughAsString
+      val existing = partialEdges.get(key)
+      if (existing.isEmpty) {
+        val partial = PartialEdge(from = Some(gid), edgeLabel = Some(link.edgeLabel))
+        partialEdges += (throughAsString -> partial)
+      } else {
+        graph.associateOut(vertex, link.edgeLabel, link.destinationLabel, existing.get.to.get)
+        // graph.associateOut (vertex) (existing.label) (link.destinationLabel) (existing.to)
+      }
+    }
+  }
+
+  def edgeSource(graph: GaiaGraph) (gid: String) (edge: EdgeSource) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { source =>
+      val key = edge.edgeLabel + gid
+      val existing = partialEdges.get(key)
+      if (existing.isEmpty) {
+        partialEdges += (key -> PartialEdge(edgeLabel = Some(edge.edgeLabel), from = Some(source.asInstanceOf[String]), fromLabel = Some(edge.destinationLabel), properties=data))
+      } else {
+        val from = findVertex(graph) (edge.destinationLabel) (gid)
+        graph.associateOut(from, edge.edgeLabel, edge.destinationLabel, existing.get.to.get, existing.get.properties)
+        // graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (existing.to) (existing.properties)
+      }
+    }
+  }
+
+  def edgeTerminal(graph: GaiaGraph) (gid: String) (edge: EdgeTerminal) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { terminal =>
+      val key = edge.edgeLabel + gid
+      val existing = partialEdges.get(key)
+      val terminalAsString = terminal.asInstanceOf[String]
+      if (existing.isEmpty) {
+        partialEdges += (key -> PartialEdge(edgeLabel = Some(edge.edgeLabel), to = Some(terminalAsString), toLabel = Some(edge.destinationLabel), properties=data))
+      } else {
+        val from = findVertex(graph) (existing.get.fromLabel.get) (existing.get.from.get)
+        graph.associateOut(from, edge.edgeLabel, edge.destinationLabel, terminalAsString, existing.get.properties)
+        // graph.associateOut(from) (edge.edgeLabel) (edge.destinationLabel) (gid) (existing.properties)
+      }
+    }
+  }
+
+  def renameProperty(element: Element) (rename: RenameProperty) (data: Map[String, Any]) (field: String): Unit = {
+    data.get(field).map { value =>
+      setProperty(element) ((rename.rename, value))
+    }
+  }
+
+  def serializeField(element: Element) (map: SerializeField) (data: Map[String, Any]) (field: String): Unit = {
     data.get(field).map { inner =>
       val json = JsonIO.write(inner)
       setProperty(element) ((map.serializedName, json))
     }
-    element
   }
 
-  def spliceMap(element: Element) (map: SpliceMap) (data: Map[String, Any]) (field: String): Element = {
+  def spliceMap(element: Element) (map: SpliceMap) (data: Map[String, Any]) (field: String): Unit = {
     data.get(field).map { inner =>
       inner.asInstanceOf[Map[String, Any]].map { pair =>
         setProperty(element) ((map.prefix + "." + pair._1, pair._2))
       }
     }
-    element
   }
 
-  def innerVertex(graph: GaiaGraph) (vertex: Vertex) (inner: InnerVertex) (data: Map[String, Any]) (field: String): Vertex = {
+  def innerVertex(graph: GaiaGraph) (vertex: Vertex) (inner: InnerVertex) (data: Map[String, Any]) (field: String): Unit = {
     def extract(nest: Map[String, Any]) {
       val embedded = nest + (inner.outerId -> data.get("gid").get)
       val in = ingestVertex(inner.destinationLabel) (embedded)
       val innerGid = in.value[String]("gid")
-      graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
+      graph.associateOut(vertex, inner.edgeLabel, inner.destinationLabel, innerGid)
+      // graph.associateOut(vertex) (inner.edgeLabel) (inner.destinationLabel) (innerGid)
     }
 
     data.get(field).map { nested =>
@@ -184,24 +204,21 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
         case inner: Map[String, Any] => extract(inner)
       }
     }
-    vertex
   }
 
-  def joinList(element: Element) (list: JoinList) (data: Map[String, Any]) (field: String): Element = {
+  def joinList(element: Element) (list: JoinList) (data: Map[String, Any]) (field: String): Unit = {
     data.get(field).map { inner =>
       val join = inner.asInstanceOf[List[Any]].map(_.toString).mkString(list.delimiter)
       setProperty(element) ((field, join))
     }
-    element
   }
 
-  def storeField(element: Element) (store: StoreField) (data: Map[String, Any]) (field: String): Element = {
+  def storeField(element: Element) (store: StoreField) (data: Map[String, Any]) (field: String): Unit = {
     if (store.store) {
       data.get(field).map { inner =>
         setProperty(element) ((field, inner))
       }
     }
-    element
   }
 
   def ingestVertex(label: String) (data: Map[String, Any]): Vertex = {
@@ -217,14 +234,14 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     // Start decorating the vertex
     val vertex = findVertex(graph) (label) (gid)
 
-    val protovertex = protograph.transform.actions.foldLeft(vertex) { (vertex, action) =>
+    val protovertex = protograph.transform.actions.foreach { (action) =>
       action.action match {
         case Action.SingleEdge(edge) => associateEdge(graph) (vertex) (edge) (global) (action.field)
         case Action.RepeatedEdges(edges) => associateEdges(graph) (vertex) (edges) (global) (action.field)
         case Action.EmbeddedEdges(edges) => unembedEdges(graph) (vertex) (edges) (global) (action.field)
-        case Action.LinkThrough(link) => linkThrough(graph) (vertex) (link) (global) (action.field)
-        case Action.EdgeSource(edge) => edgeSource(graph) (vertex) (edge) (global) (action.field)
-        case Action.EdgeTerminal(edge) => edgeTerminal(graph) (vertex) (edge) (global) (action.field)
+        case Action.LinkThrough(link) => linkThrough(graph) (gid) (vertex) (link) (global) (action.field)
+        case Action.EdgeSource(edge) => edgeSource(graph) (gid) (edge) (global) (action.field)
+        case Action.EdgeTerminal(edge) => edgeTerminal(graph) (gid) (edge) (global) (action.field)
         case Action.RenameProperty(field) => renameProperty(vertex) (field) (global) (action.field)
         case Action.SerializeField(map) => serializeField(vertex) (map) (global) (action.field)
         case Action.SpliceMap(map) => spliceMap(vertex) (map) (global) (action.field)
@@ -238,13 +255,12 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
       data - field
     )
 
-    val fullVertex = remaining.foldLeft(protovertex) { (vertex, pair) =>
+    remaining.foreach { (pair) =>
       setProperty(vertex) (pair)
-      vertex
     }
 
     graph.commit()
-    fullVertex
+    vertex
   }
 
   def transform(message: Map[String,Any]) {
