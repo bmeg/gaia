@@ -57,12 +57,14 @@ case class Protograph(transforms: Seq[TransformMessage]) {
           val vertex = Vertex(gid=gid, label=transform.label)
           val edges = transform.actions.foldLeft(List[Edge]()) { (edges, action) =>
             action.action match {
-              case Action.SingleEdge(edge) =>
+              case Action.RemoteEdges(edge) =>
                 Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
-              case Action.RepeatedEdges(edge) =>
-                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
-              case Action.EmbeddedEdges(edge) =>
-                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              // case Action.SingleEdge(edge) =>
+              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              // case Action.RepeatedEdges(edge) =>
+              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              // case Action.EmbeddedEdges(edge) =>
+              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
               case Action.InnerVertex(edge) =>
                 Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
               case _ => edges
