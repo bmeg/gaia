@@ -20,6 +20,7 @@
 *** cohort page: show what are the top 10 mutated genes in this cohort - bar chart
 *** precalculate counts for each type, if there are less than 30 show drop down
 * Protograph
+** ++++ test query: 30 most mutated genes in a cohort
 ** +++ break out into its own project
 ** ++ Create support for ingesting messages into edges and edge properties
 ** combine protograph with protobuf schemas to fill out properties and types for describing the full graph schema

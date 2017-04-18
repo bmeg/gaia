@@ -260,13 +260,12 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
 
     val vertex = findVertex(graph) (label) (gid)
 
-    println(label, "actions", protograph.transform.actions.size)
     protograph.transform.actions.foreach { action =>
       println(action.action)
       val field = global.get(action.field)
       action.action match {
-        case Action.RemoteEdges(edges) => associateEdges(graph) (vertex) (edges) (field)
-        case Action.LinkThrough(link) => linkThrough(graph) (gid) (vertex) (link) (field)
+        case Action.RemoteEdges(edge) => associateEdges(graph) (vertex) (edge) (field)
+        case Action.LinkThrough(edge) => linkThrough(graph) (gid) (vertex) (edge) (field)
         case Action.EdgeSource(edge) => edgeSource(graph) (gid) (edge) (field) (global)
         case Action.EdgeTerminal(edge) => edgeTerminal(graph) (gid) (edge) (field) (global)
         case Action.EmbeddedTerminals(edge) => embeddedTerminals(graph) (gid) (edge) (field) (global)
