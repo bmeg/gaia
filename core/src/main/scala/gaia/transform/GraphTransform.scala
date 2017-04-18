@@ -248,6 +248,10 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     }
   }
 
+  // def processMessage(state: TransformState) (label: String) (data: Map[String, Any]): TransformState = {
+    
+  // }
+
   def ingestVertex(label: String) (data: Map[String, Any]): Vertex = {
     // find the transform description for vertexes with this label
     val protograph = graph.schema.protograph.transformFor(label)
