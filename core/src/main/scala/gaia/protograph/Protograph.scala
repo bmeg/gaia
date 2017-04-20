@@ -435,10 +435,10 @@ case class Protograph(transforms: Seq[TransformMessage]) {
       gid = gid
     )
 
-    val properties = transform.transform.actions.map { action =>
+    val properties = transform.transform.actions.foldLeft(Map[String, Any]()) { (outcome, action) =>
       val key = action.field
       val field = data.get(key)
-      action.action match {
+      val properties = action.action match {
         case Action.RemoteEdges(remote) =>
           associateEdges(emit) (remote) (vertex) (field)
         case Action.LinkThrough(link) =>
@@ -458,7 +458,9 @@ case class Protograph(transforms: Seq[TransformMessage]) {
         case _ =>
           Map[String, Any]()
       }
-    }.reduce(_ ++ _) + ("gid" -> gid)
+
+      outcome ++ properties
+    } + ("gid" -> gid)
 
     val remaining = transform.transform.actions.map(_.field).foldLeft(data) ((data, field) =>
       data - field

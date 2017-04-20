@@ -65,11 +65,6 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     element
   }
 
-  def ingestVertex(label: String) (data: Map[String, Any]): Unit = {
-    val emit = graph.schema.protograph.printEmitter
-    graph.schema.protograph.processMessage(emit) (label) (data)
-  }
-
   val graphEmitter = new ProtographEmitter {
     def emitVertex(proto: ProtoVertex) {
       val vertex = findVertex(graph) (proto.label) (proto.gid)
@@ -95,6 +90,12 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
       graph.schema.protograph.printEmitter.emitEdge(proto)
       graphEmitter.emitEdge(proto)
     }
+  }
+
+  def ingestVertex(label: String) (data: Map[String, Any]): Vertex = {
+    val emit = graph.schema.protograph.printEmitter
+    graph.schema.protograph.processMessage(emit) (label) (data)
+    findVertex(graph) (label) ("type:type")
   }
 
   def transform(message: Map[String,Any]) {
