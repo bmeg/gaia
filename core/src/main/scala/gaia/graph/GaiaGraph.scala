@@ -64,45 +64,25 @@ trait GaiaGraph {
     typeQuery(typ).toList
   }
 
-  // def associateOut(from: Vertex) (edgeLabel: String) (toLabel: String) (toGid: String): Edge = {
   def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String): Edge = {
     from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
       val to = namedVertex(toLabel) (toGid)
       from.addEdge(edgeLabel, to)
     }.asInstanceOf[Edge]
-
-    // if (from.out(edge).has(Gid, toGid).toList.isEmpty) {
-    //   val to = namedVertex(toLabel) (toGid)
-    //   from --- (edge) --> to
-    //   true
-    // } else {
-    //   false
-    // }
   }
 
-  // def associateOut(from: Vertex) (edgeLabel: String) (toLabel: String) (toGid: String) (properties: Map[String, Any]): Edge = {
-    
   def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String, properties: Map[String, Any]): Edge = {
     from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
       val to = namedVertex(toLabel) (toGid)
-      from.addEdge(edgeLabel, to, properties)
+      from.addEdge(edgeLabel, to, properties.flatMap(p => List[Object](p._1, p._2.asInstanceOf[Object])).toSeq:_*)
     }.asInstanceOf[Edge]
   }
 
-  // def associateIn(to: Vertex) (edgeLabel: String) (fromLabel: String) (fromGid: String): Edge = {
   def associateIn(to: Vertex, edgeLabel: String, fromLabel: String, fromGid: String): Edge = {
     to.inE(edgeLabel).as("edge").outV.has(Gid, fromGid).select("edge").headOption.getOrElse {
       val from = namedVertex(fromLabel) (fromGid)
       to.addEdge(edgeLabel, from)
     }.asInstanceOf[Edge]
-
-    // if (from.in(edge).has(Gid, toGid).toList.isEmpty) {
-    //   val to = namedVertex(toLabel) (toGid)
-    //   from <-- (edge) --- to
-    //   true
-    // } else {
-    //   false
-    // }
   }
 
   def associateType(instance: Vertex) (typ: String): Unit = {
