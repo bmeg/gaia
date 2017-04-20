@@ -33,15 +33,6 @@ case class ProtoEdge(
   properties: Map[String, Any] = Map[String, Any]()
 )
 
-// case class PartialEdge(
-//   label:  Option[String] = None,
-//   fromLabel:  Option[String] = None,
-//   toLabel:    Option[String] = None,
-//   from:       Option[String] = None,
-//   to:         Option[String] = None,
-//   properties: Map[String, Any] = Map[String, Any]()
-// )
-
 case class Source(
   label:  String,
   fromLabel:  String,
@@ -87,12 +78,6 @@ case class Protograph(transforms: Seq[TransformMessage]) {
   val default = TransformMessage(label = "default", gid = "default:{{gid}}")
   val defaultTransform = ProtographTransform.toProtograph(default)
 
-  // val partialEdges = collection.mutable.Map[String, List[PartialEdge]]()
-  // def addPartialEdge(gid: String) (edge: PartialEdge): Unit = {
-  //   val here = edge +: partialEdges.getOrElse(gid, List[PartialEdge]())
-  //   partialEdges += (gid -> here)
-  // }
-
   val partialSources = collection.mutable.Map[String, List[Source]]()
   val partialTerminals = collection.mutable.Map[String, List[Terminal]]()
 
@@ -122,6 +107,9 @@ case class Protograph(transforms: Seq[TransformMessage]) {
 
   def graphStructure: Graph = {
     val emptyGraph = (List[Vertex](), List[Edge]())
+    val sources = collection.mutable.Map[String, String]()
+    val terminals = collection.mutable.Map[String, String]()
+
     val (vertexes, edges) = transforms.foldLeft(emptyGraph) { (nodes, transform) =>
       nodes match {
         case (vertexes, previousEdges) =>
@@ -131,18 +119,45 @@ case class Protograph(transforms: Seq[TransformMessage]) {
             action.action match {
               case Action.RemoteEdges(edge) =>
                 Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
-              // case Action.SingleEdge(edge) =>
-              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
-              // case Action.RepeatedEdges(edge) =>
-              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
-              // case Action.EmbeddedEdges(edge) =>
-              //   Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case Action.LinkThrough(edge) =>
+                Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
+              case Action.EdgeSource(edge) =>
+                val existing = terminals.get(edge.edgeLabel)
+                if (existing.isEmpty) {
+                  sources += (edge.edgeLabel -> edge.destinationLabel)
+                  edges
+                } else {
+                  Edge(label=edge.edgeLabel, in=edge.destinationLabel, out=existing.get) :: edges
+                }
+              case Action.EdgeTerminal(edge) =>
+                val existing = sources.get(edge.edgeLabel)
+                if (existing.isEmpty) {
+                  terminals += (edge.edgeLabel -> edge.destinationLabel)
+                  edges
+                } else {
+                  Edge(label=edge.edgeLabel, in=existing.get, out=edge.destinationLabel) :: edges
+                }
+              case Action.EmbeddedTerminals(edge) =>
+                val existing = sources.get(edge.edgeLabel)
+                if (existing.isEmpty) {
+                  terminals += (edge.edgeLabel -> edge.destinationLabel)
+                  edges
+                } else {
+                  Edge(label=edge.edgeLabel, in=existing.get, out=edge.destinationLabel) :: edges
+                }
               case Action.InnerVertex(edge) =>
                 Edge(label=edge.edgeLabel, in=gid, out=edge.destinationLabel) :: edges
               case _ => edges
             }
           }
-          (vertex :: vertexes, edges ++ previousEdges)
+
+          val newVertexes = if (transform.role == "Vertex") {
+            vertex :: vertexes
+          } else {
+            vertexes
+          }
+
+          (newVertexes, edges ++ previousEdges)
       }
     }
 
