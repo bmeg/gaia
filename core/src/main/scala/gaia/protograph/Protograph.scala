@@ -33,12 +33,26 @@ case class ProtoEdge(
   properties: Map[String, Any] = Map[String, Any]()
 )
 
-case class PartialEdge(
-  fromLabel:  Option[String] = None,
-  from:       Option[String] = None,
-  label:  Option[String] = None,
-  toLabel:    Option[String] = None,
-  to:         Option[String] = None,
+// case class PartialEdge(
+//   label:  Option[String] = None,
+//   fromLabel:  Option[String] = None,
+//   toLabel:    Option[String] = None,
+//   from:       Option[String] = None,
+//   to:         Option[String] = None,
+//   properties: Map[String, Any] = Map[String, Any]()
+// )
+
+case class Source(
+  label:  String,
+  fromLabel:  String,
+  from:       String,
+  properties: Map[String, Any] = Map[String, Any]()
+)
+
+case class Terminal(
+  label:  String,
+  toLabel:  String,
+  to:       String,
   properties: Map[String, Any] = Map[String, Any]()
 )
 
@@ -73,7 +87,24 @@ case class Protograph(transforms: Seq[TransformMessage]) {
   val default = TransformMessage(label = "default", gid = "default:{{gid}}")
   val defaultTransform = ProtographTransform.toProtograph(default)
 
-  val partialEdges = collection.mutable.Map[String, List[PartialEdge]]()
+  // val partialEdges = collection.mutable.Map[String, List[PartialEdge]]()
+  // def addPartialEdge(gid: String) (edge: PartialEdge): Unit = {
+  //   val here = edge +: partialEdges.getOrElse(gid, List[PartialEdge]())
+  //   partialEdges += (gid -> here)
+  // }
+
+  val partialSources = collection.mutable.Map[String, List[Source]]()
+  val partialTerminals = collection.mutable.Map[String, List[Terminal]]()
+
+  def addPartialSource(gid: String) (edge: Source): Unit = {
+    val here = edge +: partialSources.getOrElse(gid, List[Source]())
+    partialSources += (gid -> here)
+  }
+
+  def addPartialTerminal(gid: String) (edge: Terminal): Unit = {
+    val here = edge +: partialTerminals.getOrElse(gid, List[Terminal]())
+    partialTerminals += (gid -> here)
+  }
 
   val printEmitter = new ProtographEmitter {
     def emitVertex(vertex: ProtoVertex) {
@@ -83,11 +114,6 @@ case class Protograph(transforms: Seq[TransformMessage]) {
     def emitEdge(edge: ProtoEdge) {
       println(edge)
     }
-  }
-
-  def addPartialEdge(gid: String) (edge: PartialEdge): Unit = {
-    val here = edge +: partialEdges.getOrElse(gid, List[PartialEdge]())
-    partialEdges += (gid -> here)
   }
 
   def transformFor(label: String): ProtographTransform = {
@@ -149,7 +175,6 @@ case class Protograph(transforms: Seq[TransformMessage]) {
           )
 
           emit.emitEdge(edge)
-          // graph.associateOut(vertex, proto.edgeLabel, proto.destinationLabel, in)
         }
       }
     }
@@ -162,17 +187,16 @@ case class Protograph(transforms: Seq[TransformMessage]) {
       ensureSeq(through).map { through =>
         unembed(through, proto.embeddedIn).map { through =>
           val key = proto.edgeLabel + through
-          val existing = partialEdges.getOrElse(key, List[PartialEdge]())
+          val existing = partialTerminals.getOrElse(key, List[Terminal]())
           if (existing.isEmpty) {
-            val partial = PartialEdge(
-              label = Some(proto.edgeLabel),
-              fromLabel = Some(vertex.label),
-              toLabel = Some(proto.destinationLabel),
-              from = Some(vertex.gid)
+            val partial = Source(
+              label = proto.edgeLabel,
+              fromLabel = vertex.label,
+              from = vertex.gid
             )
 
             // println("partialEdge", proto.edgeLabel, through, proto.destinationLabel)
-            partialEdges += (key -> List(partial))
+            addPartialSource(key) (partial)
           } else {
             existing.foreach { exist =>
               val edge = ProtoEdge(
@@ -180,7 +204,7 @@ case class Protograph(transforms: Seq[TransformMessage]) {
                 fromLabel = vertex.label,
                 toLabel = proto.destinationLabel,
                 from = vertex.gid,
-                to = exist.to.get,
+                to = exist.to,
                 properties = exist.properties
               )
 
@@ -199,30 +223,30 @@ case class Protograph(transforms: Seq[TransformMessage]) {
   def edgeSource(emit: ProtographEmitter) (proto: EdgeDescription) (gid: String) (field: Option[Any]) (data: Map[String, Any]): Map[String, Any] = {
     field.map { source =>
       val key = proto.edgeLabel + gid // source.asInstanceOf[String]
-      val existing = partialEdges.getOrElse(key, List[PartialEdge]())
+      val existing = partialTerminals.getOrElse(key, List[Terminal]())
       ensureSeq(source).map { source =>
         val sourceString = source.asInstanceOf[String]
         if (existing.isEmpty) {
           // println(proto.edgeLabel, sourceString, proto.destinationLabel)
 
-          val partial = PartialEdge(
-            label = Some(proto.edgeLabel),
-            fromLabel = Some(proto.destinationLabel),
-            from = Some(sourceString),
+          val partial = Source(
+            label = proto.edgeLabel,
+            fromLabel = proto.destinationLabel,
+            from = sourceString,
             properties = data
           )
 
-          addPartialEdge(key) (partial)
+          addPartialSource(key) (partial)
         } else {
           existing.map { exist =>
-            // println("edgeSource", sourceString, proto.edgeLabel, exist.toLabel.get, exist.to.get, exist.properties)
+            // println("edgeSource", sourceString, proto.edgeLabel, exist.toLabel, exist.to, exist.properties)
 
             val edge = ProtoEdge(
               label = proto.edgeLabel,
               fromLabel = proto.destinationLabel,
-              toLabel = exist.toLabel.get,
+              toLabel = exist.toLabel,
               from = sourceString,
-              to = exist.to.get,
+              to = exist.to,
               properties = exist.properties ++ data
             )
 
@@ -238,28 +262,28 @@ case class Protograph(transforms: Seq[TransformMessage]) {
   def edgeTerminal(emit: ProtographEmitter) (proto: EdgeDescription) (gid: String) (field: Option[Any]) (data: Map[String, Any]): Map[String, Any] = {
     field.map { terminal =>
       val key = proto.edgeLabel + gid
-      val existing = partialEdges.getOrElse(key, List[PartialEdge]())
+      val existing = partialSources.getOrElse(key, List[Source]())
       ensureSeq(terminal).map { terminal =>
         if (existing.isEmpty) {
           // println("partialEdge", proto.edgeLabel, key, proto.destinationLabel)
 
-          val partial = PartialEdge(
-            label = Some(proto.edgeLabel),
-            to = Some(terminal.asInstanceOf[String]),
-            toLabel = Some(proto.destinationLabel),
+          val partial = Terminal(
+            label = proto.edgeLabel,
+            to = terminal.asInstanceOf[String],
+            toLabel = proto.destinationLabel,
             properties = data
           )
 
-          addPartialEdge(key) (partial)
+          addPartialTerminal(key) (partial)
         } else {
           existing.map { exist =>
             // println("edgeTerminal", exist.from.get, proto.edgeLabel, proto.destinationLabel, terminal)
 
             val edge = ProtoEdge(
               label = proto.edgeLabel,
-              fromLabel = exist.fromLabel.get,
+              fromLabel = exist.fromLabel,
               toLabel = proto.destinationLabel,
-              from = exist.from.get,
+              from = exist.from,
               to = terminal.asInstanceOf[String],
               properties = exist.properties ++ data
             )
@@ -276,7 +300,7 @@ case class Protograph(transforms: Seq[TransformMessage]) {
   def embeddedTerminals(emit: ProtographEmitter) (proto: EdgeDescription) (gid: String) (field: Option[Any]) (data: Map[String, Any]): Map[String, Any] = {
     field.map { terminal =>
       val key = proto.edgeLabel + gid
-      val existing = partialEdges.getOrElse(key, List[PartialEdge]())
+      val existing = partialSources.getOrElse(key, List[Source]())
       ensureSeq(terminal).map { terminal =>
         val terminalMap = terminal.asInstanceOf[Map[String, Any]]
         val lifted = proto.liftFields.foldLeft(Map[String, Any]()) { (outcome, lift) =>
@@ -291,25 +315,26 @@ case class Protograph(transforms: Seq[TransformMessage]) {
         if (existing.isEmpty) {
           terminalMap.get(proto.embeddedIn).map { id =>
             // println("partialEdge", proto.edgeLabel, key, proto.destinationLabel)
-            val partial = PartialEdge(
-              label = Some(proto.edgeLabel),
-              to = Some(id.asInstanceOf[String]),
-              toLabel = Some(proto.destinationLabel),
+            val partial = Terminal(
+              label = proto.edgeLabel,
+              to = id.asInstanceOf[String],
+              toLabel = proto.destinationLabel,
               properties = (data ++ terminalMap ++ lifted) -- proto.liftFields
             )
 
-            addPartialEdge(key) (partial)
+            addPartialTerminal(key) (partial)
           }
         } else {
           existing.foreach { exist =>
             terminalMap.get(proto.embeddedIn).map { id =>
-              // println("edgeTerminal", exist.from.get, proto.edgeLabel, proto.destinationLabel, id.asInstanceOf[String], exist.properties)
+              // println("exist", exist)
+              // println("edgeTerminal", exist.from, proto.edgeLabel, proto.destinationLabel, id.asInstanceOf[String], exist.properties)
 
               val edge = ProtoEdge(
                 label = proto.edgeLabel,
-                fromLabel = exist.fromLabel.get,
+                fromLabel = exist.fromLabel,
                 toLabel = proto.destinationLabel,
-                from = exist.from.get,
+                from = exist.from,
                 to = id.asInstanceOf[String],
                 properties = (exist.properties ++ data ++ lifted) -- proto.liftFields
               )
