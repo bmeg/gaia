@@ -214,7 +214,7 @@ case class Protograph(transforms: Seq[TransformMessage]) {
 
           addPartialEdge(key) (partial)
         } else {
-          existing.foreach { exist =>
+          existing.map { exist =>
             // println("edgeSource", sourceString, proto.edgeLabel, exist.toLabel.get, exist.to.get, exist.properties)
 
             val edge = ProtoEdge(
@@ -247,7 +247,7 @@ case class Protograph(transforms: Seq[TransformMessage]) {
             label = Some(proto.edgeLabel),
             to = Some(terminal.asInstanceOf[String]),
             toLabel = Some(proto.destinationLabel),
-            properties=data
+            properties = data
           )
 
           addPartialEdge(key) (partial)
@@ -389,13 +389,13 @@ case class Protograph(transforms: Seq[TransformMessage]) {
     }
   }
 
-  def processEdge(emit: ProtographEmitter) (label: String) (data: Map[String, Any]): Unit = {
+  def processEdge(emit: ProtographEmitter) (label: String) (data: Map[String, Any]): Map[String, Any] = {
     val transform = transformFor(label)
     val gid = transform.gid(data)
-    val properties = transform.transform.actions.map { action =>
+    val properties = transform.transform.actions.foldLeft(Map[String, Any]()) { (outcome, action) =>
       val key = action.field
       val field = data.get(key)
-      action.action match {
+      val generated = action.action match {
         case Action.RenameProperty(rename) =>
           renameProperty(rename) (field)
         case Action.SerializeField(map) =>
@@ -409,21 +409,29 @@ case class Protograph(transforms: Seq[TransformMessage]) {
         case _ =>
           Map[String, Any]()
       }
-    }.reduce(_ ++ _) + ("gid" -> gid)
 
-    transform.transform.actions.foreach { action =>
+      outcome ++ generated
+    } + ("gid" -> gid)
+
+    val remaining = transform.transform.actions.map(_.field).foldLeft(data) ((data, field) =>
+      data - field
+    )
+
+    transform.transform.actions.foldLeft(properties ++ remaining) { (all, action) =>
       val key = action.field
       val field = data.get(key)
-      action.action match {
+      val links = action.action match {
         case Action.EdgeSource(edge) =>
-          edgeSource(emit) (edge) (gid) (field) (properties)
+          edgeSource(emit) (edge) (gid) (field) (all)
         case Action.EdgeTerminal(edge) =>
-          edgeTerminal(emit) (edge) (gid) (field) (properties)
+          edgeTerminal(emit) (edge) (gid) (field) (all)
         case Action.EmbeddedTerminals(edge) =>
-          embeddedTerminals(emit) (edge) (gid) (field) (properties)
+          embeddedTerminals(emit) (edge) (gid) (field) (all)
         case _ =>
           Map[String, Any]()
       }
+
+      all ++ links
     }
   }
 
