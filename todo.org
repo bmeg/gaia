@@ -1,5 +1,4 @@
 * Data
-** ++++ TCGA clinical attributes, gene expression, CNA segments
 ** +++ MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
 ** ++ G2P (talk to walsh)
 ** + ML signatures
@@ -22,7 +21,6 @@
 * Protograph
 ** ++++ test query: 30 most mutated genes in a cohort
 ** +++ break out into its own project
-** ++ Create support for ingesting messages into edges and edge properties
 ** combine protograph with protobuf schemas to fill out properties and types for describing the full graph schema
 ** create conformance test
 * Ophion

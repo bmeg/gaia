@@ -77,6 +77,7 @@ case class GraphTransform(graph: GaiaGraph) extends MessageTransform with GaiaIn
     def emitEdge(proto: ProtoEdge) {
       val vertex = findVertex(graph) (proto.fromLabel) (proto.from)
       graph.associateOut(vertex, proto.label, proto.toLabel, proto.to, proto.properties)
+      graph.commit()
     }
   }
 
