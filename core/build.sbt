@@ -9,6 +9,7 @@ conflictManager := ConflictManager.strict.copy(organization = "com.esotericsoftw
 
 libraryDependencies ++= Seq(
   "io.bmeg"                      %% "ophion"                   % "0.0.7-SNAPSHOT",
+  "io.bmeg"                      %% "protograph"               % "0.0.1-SNAPSHOT",
 
   "com.fasterxml.jackson.module" %% "jackson-module-scala"     % "2.8.4",
   "com.michaelpollmeier"         %% "gremlin-scala"            % "3.2.4.1",
@@ -19,9 +20,9 @@ libraryDependencies ++= Seq(
   "org.scalatest"                %% "scalatest"                % "3.0.0" % "test",
 
   "org.scala-lang"               %  "scala-compiler"           % "2.11.8",
-  "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
-  "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
-  "com.google.protobuf"          %  "protoc"                   % "3.1.0",
+  // "com.google.protobuf"          %  "protobuf-java"            % "3.1.0",
+  // "com.google.protobuf"          %  "protobuf-java-util"       % "3.1.0",
+  // "com.google.protobuf"          %  "protoc"                   % "3.1.0",
   "org.janusgraph"               %  "janusgraph-core"          % "0.2.0-SNAPSHOT",
   "org.janusgraph"               %  "janusgraph-cassandra"     % "0.2.0-SNAPSHOT",
   "org.janusgraph"               %  "janusgraph-es"            % "0.2.0-SNAPSHOT"
@@ -29,21 +30,21 @@ libraryDependencies ++= Seq(
   // "org.json4s"                   %% "json4s-jackson"           % "3.3.0",
 ).map(_.exclude("org.slf4j", "slf4j-log4j12"))
 
-libraryDependencies += "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"
-
 resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository"
 resolvers ++= Seq(
   // "Akka Repository" at "http://repo.akka.io/releases/",
   "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases",
+  "Sonatype Releases" at "https://oss.sonatype.org/content/repositories/releases"
   // "Twitter Maven Repo" at "http://maven.twttr.com",
-  "GAEA Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
+  // "Gaia Depends Repo" at "https://github.com/bmeg/gaia-depends/raw/master/"
 )
 
 PB.protoSources in Compile := Seq(new java.io.File("core/src/main/proto"))
 PB.targets in Compile := Seq(
   scalapb.gen() -> (sourceManaged in Compile).value
 )
+
+libraryDependencies += "com.trueaccord.scalapb" %% "scalapb-runtime" % com.trueaccord.scalapb.compiler.Version.scalapbVersion % "protobuf"
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"

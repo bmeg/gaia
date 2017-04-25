@@ -4,7 +4,6 @@ import gaia.config._
 import gaia.graph._
 import gaia.schema._
 import gaia.transform._
-import gaia.protograph._
 
 object TestGraph {
   def read(path: String): GaiaGraph = {

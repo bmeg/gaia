@@ -2,10 +2,13 @@ package gaia.transform
 
 import gaia.graph._
 import gaia.ingest._
-import gaia.protograph._
 import gaia.io.JsonIO
-import gaia.schema.Protograph._
+import protograph.{Protograph, ProtoVertex, ProtoEdge, ProtographEmitter}
+import protograph.schema.Protograph._
+// import gaia.protograph._
+// import gaia.schema.Protograph._
 import FieldAction.Action
+// import gremlin.scala._
 import gremlin.scala._
 
 import scala.collection.JavaConverters._

@@ -1,1 +1,3 @@
-// addSbtPlugin("com.trueaccord.scalapb" % "sbt-scalapb" % "0.5.18")
+addSbtPlugin("com.thesamet" % "sbt-protoc" % "0.99.6")
+
+libraryDependencies += "com.trueaccord.scalapb" %% "compilerplugin" % "0.6.0-pre3"
