@@ -64,21 +64,35 @@ trait GaiaGraph {
     typeQuery(typ).toList
   }
 
-  def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String): Edge = {
-    from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
+  // def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String): Edge = {
+  //   from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
+  //     val to = namedVertex(toLabel) (toGid)
+  //     from.addEdge(edgeLabel, to)
+  //   }.asInstanceOf[Edge]
+  // }
+
+  // def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String, properties: Map[String, Any]): Edge = {
+  //   from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
+  //     val to = namedVertex(toLabel) (toGid)
+  //     from.addEdge(edgeLabel, to, properties.flatMap(p => List[Object](p._1, p._2.asInstanceOf[Object])).toSeq:_*)
+  //   }.asInstanceOf[Edge]
+  // }
+
+  def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String): Unit = {
+    if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
       val to = namedVertex(toLabel) (toGid)
       from.addEdge(edgeLabel, to)
-    }.asInstanceOf[Edge]
+    }
   }
 
-  def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String, properties: Map[String, Any]): Edge = {
-    from.outE(edgeLabel).as("edge").inV.has(Gid, toGid).select("edge").headOption.getOrElse {
+  def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String, properties: Map[String, Any]): Unit = {
+    if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
       val to = namedVertex(toLabel) (toGid)
       from.addEdge(edgeLabel, to, properties.flatMap(p => List[Object](p._1, p._2.asInstanceOf[Object])).toSeq:_*)
     }.asInstanceOf[Edge]
   }
 
-  def associateIn(to: Vertex, edgeLabel: String, fromLabel: String, fromGid: String): Edge = {
+  def associateIn(to: Vertex, edgeLabel: String, fromLabel: String, fromGid: String): Unit = {
     to.inE(edgeLabel).as("edge").outV.has(Gid, fromGid).select("edge").headOption.getOrElse {
       val from = namedVertex(fromLabel) (fromGid)
       to.addEdge(edgeLabel, from)
