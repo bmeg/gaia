@@ -12,6 +12,9 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
+** Gene page
+*** Histogram of copy number values for this gene
+*** G2P, pubmed titles
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
