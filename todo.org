@@ -1,5 +1,7 @@
 * Data
-** +++ MC3 variants - https://www.synapse.org/#!Synapse:syn7214402/files/
+** +++ get mutation type on edge between variants and genes
+** +++ get symbol on the edge between variants and genes
+** +++ create cohorts for TCGA
 ** ++ G2P (talk to walsh)
 ** + ML signatures
 ** + Literome - https://ohsu.app.box.com/files/0/f/21493766712/G2P_Data
@@ -15,6 +17,10 @@
 ** Gene page
 *** Histogram of copy number values for this gene
 *** G2P, pubmed titles
+** Expression page
+*** histogram of expression vector
+** Cohort page
+*** Oncoprint of expression vectors 
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
