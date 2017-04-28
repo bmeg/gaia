@@ -79,17 +79,17 @@ trait GaiaGraph {
   // }
 
   def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String): Unit = {
-    if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
+    // if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
       val to = namedVertex(toLabel) (toGid)
       from.addEdge(edgeLabel, to)
-    }
+    // }
   }
 
   def associateOut(from: Vertex, edgeLabel: String, toLabel: String, toGid: String, properties: Map[String, Any]): Unit = {
-    if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
+    // if (from.out(edgeLabel).has(Gid, toGid).toList.isEmpty) {
       val to = namedVertex(toLabel) (toGid)
       from.addEdge(edgeLabel, to, properties.flatMap(p => List[Object](p._1, p._2.asInstanceOf[Object])).toSeq:_*)
-    }.asInstanceOf[Edge]
+    // }.asInstanceOf[Edge]
   }
 
   def associateIn(to: Vertex, edgeLabel: String, fromLabel: String, fromGid: String): Unit = {
