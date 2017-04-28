@@ -29,10 +29,10 @@
 *** precalculate counts for each type, if there are less than 30 show drop down
 * Protograph
 ** ++++ test query: 30 most mutated genes in a cohort
-** +++ break out into its own project
 ** combine protograph with protobuf schemas to fill out properties and types for describing the full graph schema
 ** create conformance test
 * Ophion
+** +++ add step for getting union of keys
 ** ++ support indexing
 ** ++ sync to Kyle's protobuf - add edge label step and write api to ophion
 ** provide support for querying multiple graphs
@@ -48,6 +48,7 @@
 ** align signature code with protograph, make an agent
 ** create tests for protograph
 * Site
+** ++++ summary of project to number of samples in project
 ** +++ institute a site update page with one card per update
 ** +++ give some attention to the other tabs
 ** google analytics
