@@ -1,4 +1,5 @@
 * Data
+** ++++ add AUC to ccle converter
 ** +++ get mutation type on edge between variants and genes
 ** +++ get symbol on the edge between variants and genes
 ** +++ create cohorts for TCGA
@@ -21,6 +22,8 @@
 *** histogram of expression vector
 ** Cohort page
 *** Oncoprint of expression vectors 
+** Compound page
+*** show some kind of summary of response curve
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
