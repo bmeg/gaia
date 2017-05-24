@@ -1,4 +1,5 @@
 * Data
+** +++++ compound gene target: split and make list
 ** ++++ add AUC to ccle converter
 ** +++ get mutation type on edge between variants and genes
 ** +++ get symbol on the edge between variants and genes
@@ -15,6 +16,7 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
+** ++ Allow searching for multiple genes at once
 ** Gene page
 *** Histogram of copy number values for this gene
 *** G2P, pubmed titles
