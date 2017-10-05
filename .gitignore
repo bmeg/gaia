@@ -9,3 +9,4 @@ genes.json
 
 .DS_Store
 .idea/
+.lein-failures
