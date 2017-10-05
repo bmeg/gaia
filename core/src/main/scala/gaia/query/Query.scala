@@ -2,7 +2,7 @@ package gaia.query
 
 import gaia.graph._
 import gaia.io.JsonIO
-import gaia.schema.Protograph._
+import protograph.schema.Protograph._
 import FieldAction.Action
 
 import ophion.Ophion._

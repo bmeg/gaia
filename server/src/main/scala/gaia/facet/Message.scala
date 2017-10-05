@@ -14,7 +14,6 @@ import org.http4s.server._
 import org.http4s.dsl._
 import org.http4s.json4s.jackson._
 
-import com.thinkaurelius.titan.core.TitanGraph
 import gremlin.scala._
 import org.apache.tinkerpop.gremlin.process.traversal.Order
 import org.apache.tinkerpop.gremlin.process.traversal.P._

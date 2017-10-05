@@ -1,6 +1,6 @@
 package gaia.schema
 
-import gaia.protograph.{Protograph => P}
+import protograph.{Protograph => P}
 
 case class GaiaSchema(types: Graph, protograph: P)
 
