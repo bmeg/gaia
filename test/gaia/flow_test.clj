@@ -74,9 +74,12 @@
    line-commands
    line-processes))
 
+(def starting-data
+  {:one 1 :two 2 :three 3})
+
 (deftest flow-test
   (testing "running flows"
-    (let [{:keys [data]} (flow/run-flow line-flow {:one 1 :two 2 :three 3})
+    (let [{:keys [data]} (flow/run-flow line-flow starting-data)
           next (flow/update-data line-flow data :three 11)
           alternate (flow/run-flow line-flow next)]
       (log/info "flow" line-flow)
