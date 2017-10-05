@@ -1,4 +1,6 @@
 * Data
+** +++++ compound gene target: split and make list
+** ++++ add AUC to ccle converter
 ** +++ get mutation type on edge between variants and genes
 ** +++ get symbol on the edge between variants and genes
 ** +++ create cohorts for TCGA
@@ -14,6 +16,7 @@
 ** + Create schema for SVM
 ** merge all ML libs in bmeg org into ladder
 * Visualization
+** ++ Allow searching for multiple genes at once
 ** Gene page
 *** Histogram of copy number values for this gene
 *** G2P, pubmed titles
@@ -21,6 +24,8 @@
 *** histogram of expression vector
 ** Cohort page
 *** Oncoprint of expression vectors 
+** Compound page
+*** show some kind of summary of response curve
 ** + all state of application encoded in window location (redux and router)
 ** + onco.js add sequence for edges
 ** fix response curves on cohort page to account for inconsistent x-axis points
