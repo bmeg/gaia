@@ -76,7 +76,7 @@
   (let [missing (missing-data flow data)
         able (able-processes flow data)]
     (log/trace "missing" missing)
-    (log/trace "able" able)
+    (log/trace "able" (mapv identity able))
     (filter
      (partial process-produces? flow missing)
      able)))
@@ -119,7 +119,7 @@
   [flow data]
   (let [candidates (find-candidates flow data)
         outcome (mapv (partial run-process flow data) candidates)]
-    (log/trace "candidates" candidates)
+    (log/trace "candidates" (mapv identity candidates))
     (reduce merge data outcome)))
 
 (defn run-flow

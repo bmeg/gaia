@@ -20,13 +20,18 @@
         (* b b)))})})
 
 (def line-nodes
-  [
-   ;; {:key :line-five
-   ;;  :command :line
-   ;;  :inputs {:m :one
-   ;;           :x :two
-   ;;           :b :three}
-   ;;  :outputs {:z :five}}
+  [{:key :line-four
+    :command :line
+    :inputs {:m :one
+             :x :two
+             :b :two}
+    :outputs {:z :four}}
+
+   {:key :triangle-five
+    :command :triangle
+    :inputs {:a :three
+             :b :four}
+    :outputs {:c :five}}
 
    {:key :line-eleven
     :command :line
@@ -49,25 +54,12 @@
              :b :eleven}
     :outputs {:z :twenty-six}}
 
-   {:key :line-four
-    :command :line
-    :inputs {:m :one
-             :x :two
-             :b :two}
-    :outputs {:z :four}}
-
    {:key :line-twelve
     :command :line
     :inputs {:m :two
              :x :five
              :b :two}
     :outputs {:z :twelve}}
-
-   {:key :triangle-five
-    :command :triangle
-    :inputs {:a :three
-             :b :four}
-    :outputs {:c :five}}
 
    {:key :triangle-thirteen
     :command :triangle
