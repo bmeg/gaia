@@ -20,12 +20,13 @@
         (* b b)))})})
 
 (def line-nodes
-  [{:key :line-five
-    :command :line
-    :inputs {:m :one
-             :x :two
-             :b :three}
-    :outputs {:z :five}}
+  [
+   ;; {:key :line-five
+   ;;  :command :line
+   ;;  :inputs {:m :one
+   ;;           :x :two
+   ;;           :b :three}
+   ;;  :outputs {:z :five}}
 
    {:key :line-eleven
     :command :line
@@ -92,5 +93,7 @@
       (log/info "data" data)
       (log/info "next" next)
       (log/info "alternate" (:data alternate))
-      (is (= (:twenty-six data) 26))
-      (is (= (:thirteen data) 13.0)))))
+      (is (= (:twenty-six data) 26.0))
+      (is (= (:thirteen data) 13.0))
+      (is (> (get-in alternate [:data :thirteen]) 25))
+      (is (> (get-in alternate [:data :twenty-six]) 150)))))
