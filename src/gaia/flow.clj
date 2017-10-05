@@ -3,9 +3,6 @@
    [clojure.set :as set]
    [taoensso.timbre :as log]))
 
-(defn make-node
-  [{:keys [key inputs command outputs] :as node}])
-
 (defn in? 
   [coll el]
   (some #(= el %) coll))
@@ -13,6 +10,10 @@
 (defn set-conj
   [coll el]
   (conj (or coll (set nil)) el))
+
+(defn setcat
+  [seqs]
+  (reduce into #{} seqs))
 
 (defn data->process
   [flow data process]
@@ -132,10 +133,6 @@
           {:data data :complete? false}
           (recur next))))))
 
-(defn setcat
-  [seqs]
-  (reduce into #{} seqs))
-
 (defn find-descendants
   [flow key]
   (loop [covered #{}
@@ -146,9 +143,12 @@
             to (setcat (map (fn [p] (get-in flow [:process p :to])) process))]
         (recur (set/union covered found) to)))))
 
+(defn expire-data
+  [flow data key]
+  (let [expiring (find-descendants flow key)]
+    (apply dissoc data expiring)))
+
 (defn update-data
   [flow data key value]
-  (let [expiring (find-descendants flow key)
-        expired (apply dissoc data expiring)
-        next (assoc expired key value)]
-    next))
+  (let [expired (expire-data flow data key)]
+    (assoc expired key value)))

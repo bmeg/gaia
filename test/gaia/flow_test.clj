@@ -6,20 +6,21 @@
 
 (log/set-level! :trace)
 
-(def commands
-  {:line
-   (fn [{:keys [m x b]}]
-     {:z (+ (* m x) b)})
+(def line-commands
+  {:command
+   {:line
+    (fn [{:keys [m x b]}]
+      {:z (+ (* m x) b)})
 
-   :triangle
-   (fn [{:keys [a b]}]
-     {:c
-      (Math/sqrt
-       (+
-        (* a a)
-        (* b b)))})})
+    :triangle
+    (fn [{:keys [a b]}]
+      {:c
+       (Math/sqrt
+        (+
+         (* a a)
+         (* b b)))})}})
 
-(def line-nodes
+(def line-processes
   [{:key :line-four
     :command :line
     :inputs {:m :one
@@ -67,14 +68,11 @@
              :b :twelve}
     :outputs {:c :thirteen}}])
 
-(def initial-flow
-  {:command commands})
-
 (def line-flow
   (reduce
    flow/add-node
-   initial-flow
-   line-nodes))
+   line-commands
+   line-processes))
 
 (deftest flow-test
   (testing "running flows"
