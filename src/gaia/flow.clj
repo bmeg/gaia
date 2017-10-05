@@ -131,3 +131,24 @@
         (if (= next data)
           {:data data :complete? false}
           (recur next))))))
+
+(defn setcat
+  [seqs]
+  (reduce into #{} seqs))
+
+(defn find-descendants
+  [flow key]
+  (loop [covered #{}
+         found #{key}]
+    (if (empty? found)
+      covered
+      (let [process (setcat (map (fn [key] (get-in flow [:data key :to])) found))
+            to (setcat (map (fn [p] (get-in flow [:process p :to])) process))]
+        (recur (set/union covered found) to)))))
+
+(defn update-data
+  [flow data key value]
+  (let [expiring (find-descendants flow key)
+        expired (apply dissoc data expiring)
+        next (assoc expired key value)]
+    next))

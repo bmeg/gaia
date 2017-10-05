@@ -85,8 +85,12 @@
 
 (deftest flow-test
   (testing "running flows"
-    (let [{:keys [data]} (flow/run-flow line-flow {:one 1 :two 2 :three 3})]
+    (let [{:keys [data]} (flow/run-flow line-flow {:one 1 :two 2 :three 3})
+          next (flow/update-data line-flow data :three 11)
+          alternate (flow/run-flow line-flow next)]
       (log/info "flow" line-flow)
       (log/info "data" data)
+      (log/info "next" next)
+      (log/info "alternate" (:data alternate))
       (is (= (:twenty-six data) 26))
       (is (= (:thirteen data) 13.0)))))
