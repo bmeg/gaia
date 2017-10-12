@@ -77,6 +77,14 @@ start_rpc: true
 rpc_address: 0.0.0.0
 broadcast_rpc_address: 10.104.0.5
 
+# OR
+
+rpc_address: 10.40.40.38
+rpc_port: 9160
+rpc_keepalive: true
+
+
+
 
 # SWIFT OBJECT STORE -----------------------------------------
 
@@ -231,14 +239,14 @@ package_upgrade: true
 
 # #cloud-config
 mounts:
-  - [ ephemeral0, /data, auto, "defaults,noexec" ]
+  - [ ephemeral0, /mnt, auto, "defaults,noexec" ]
 
 runcmd:
-  - umount /data
+  - umount /mnt
   - parted -s /dev/vdb mklabel gpt
   - parted -s /dev/vdb mkpart primary 2048s 100%
   - mkfs -t ext4 /dev/vdb1
   - sed -i 's/auto/ext4/' /etc/fstab
   - sed -i 's/vdb/vdb1/' /etc/fstab
-  - mount /data
-  - chmod 1777 /data
+  - mount /mnt
+  - chmod 1777 /mnt
