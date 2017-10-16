@@ -66,7 +66,7 @@
      ;; :description (str key inputs outputs command)
      :inputs (map (partial funnel-io funnel) inputs)
      :outputs (map (partial funnel-io funnel) outputs)
-     :executors execute}
+     :executors [execute]}
     (log/error "no command named" command)))
 
 (defn submit-task
