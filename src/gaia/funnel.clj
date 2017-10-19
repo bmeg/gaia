@@ -75,6 +75,13 @@
     (log/info "funnel task" task)
     ((:create-task funnel) task)))
 
+(defn funnel-events-listener
+  ([listen] (funnel-events-listener listen {}))
+  ([listen config]
+   (let [consumer (kafka/consumer config)]
+     (kafka/subscribe consumer ["funnel-events"])
+     {:future (future (kafka/consume consumer listen))
+      :consumer consumer})))
 
 ;; EXAMPLE FUNNEL DOCUMENT
 ;; -----------------------
