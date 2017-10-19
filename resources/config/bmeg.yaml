@@ -1,0 +1,20 @@
+commands:
+  gdc-extract:
+    image_name: gdc-extract
+    cmd: ["/opt/gdc-scan.py", "cases", "list"]
+
+data:
+  gdc-cases.json:
+    type: multiline-json
+    tags: ["gdc-cases"]
+
+tasks:
+  - key: gdc-extract
+    command: gdc-extract
+    inputs: []
+    outputs:
+      /tmp/out: gdc-cases.json
+
+agents:
+  trigger: ["gdc-cases"]
+  action: split-cases
