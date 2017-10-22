@@ -1,14 +1,14 @@
 commands:
   gdc-extract:
-    image_name: gdc-extract
+    image_name: biostream/gdc-extract
     cmd: ["/opt/gdc-scan.py", "cases", "list"]
 
-data:
+variables:
   gdc-cases.json:
     type: multiline-json
     tags: ["gdc-cases"]
 
-tasks:
+processes:
   - key: gdc-extract
     command: gdc-extract
     inputs: []

@@ -42,6 +42,10 @@
         full (assoc-in data [:flow key] node)]
     full))
 
+(defn add-nodes
+  [flow nodes]
+  (reduce add-node flow nodes))
+
 (defn flow-space
   [flow]
   (set
@@ -152,3 +156,9 @@
   [flow data key value]
   (let [expired (expire-data flow data key)]
     (assoc expired key value)))
+
+(defn generate-flow
+  [commands processes]
+  (add-nodes 
+   {:commands commands}
+   processes))

@@ -13,8 +13,9 @@
     :stdout "/tmp/out"}
 
    :gdc-extract
-   {:image_name "gdc-extract"
-    :cmd ["/opt/gdc-scan.py" "cases" "list"]
+   {:image_name "biostream/gdc-extract"
+    :cmd ["/opt/gdc-scan.py" "cases" "list"
+          "--id" "ceead734-1ce0-4385-b65a-a9c853b7308e"]
     :stdout "/tmp/out"}})
 
 (def echo-hello-world
