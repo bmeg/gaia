@@ -5,8 +5,6 @@
    [clj-http.client :as http]
    [protograph.kafka :as kafka]))
 
-   ;; [gaia.store :as store]
-
 (defn parse-body
   [response]
   (let [body (:body response)
@@ -39,8 +37,8 @@
     s))
 
 (defn render-output
-  [funnel-path task-id {:keys [url path sizeBytes]}]
-  (let [key (snip path funnel-path)]
+  [path task-id {:keys [url path sizeBytes]}]
+  (let [key (snip path path)]
     [key
      {:url url
       :size sizeBytes
@@ -48,46 +46,64 @@
       :source task-id}]))
 
 (defn render-outputs
-  [funnel-path task-id outputs]
+  [path task-id outputs]
   (into
    {}
    (map
-    (partial render-output funnel-path task-id)
+    (partial render-output path task-id)
     outputs)))
 
 (defn apply-outputs!
-  [funnel-path status task-id outputs]
-  (let [rendered (render-outputs funnel-path task-id outputs)]
+  [path status task-id outputs]
+  (let [rendered (render-outputs path task-id outputs)]
     (swap!
      status
      (fn [status]
-       (merge status rendered)))))
+       (merge status rendered)))
+    rendered))
+
+(defn declare-event!
+  [producer message]
+  (kafka/send-message
+   producer
+   "gaia-events"
+   (json/generate-string message)))
 
 (defn funnel-events-listener
-  ([funnel-path status] (funnel-events-listener funnel status {}))
-  ([funnel-path status kafka]
-   (let [consumer (kafka/consumer kafka)
+  ([variables path status] (funnel-events-listener variables path status {}))
+  ([variables path status kafka]
+   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
+         producer (kafka/producer (merge (:base kafka) (:producer kafka)))
+
          listen
          (fn [funnel-event]
            (if-let [event (.value funnel-event)]
              (let [message (json/parse-string event true)]
                (log/info "funnel event" message)
                (if (= (:type message) "TASK_OUTPUTS")
-                 (let [outputs (get-in message [:outputs :value])]
-                   (apply-outputs! funnel-path status (:id message) outputs))))))]
+                 (let [outputs (get-in message [:outputs :value])
+                       applied (apply-outputs! path status (:id message) outputs)]
+                   (doseq [[key output] applied]
+                     (declare-event!
+                      producer
+                      {:key key
+                       :output output
+                       :variable (get variables key)})))))))]
      (kafka/subscribe consumer ["funnel-events"])
-     {:future (future (kafka/consume consumer listen))
+     {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
 
 (defn funnel-connect
-  [{:keys [host path kafka] :as config} commands]
+  [{:keys [host path kafka] :as config}
+   {:keys [commands variables] :as context}]
+  (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
         status (atom {})]
     {:funnel config
      :commands commands
 
      :status status
-     :listener (funnel-events-listener path status kafka)
+     :listener (funnel-events-listener variables path status kafka)
 
      :create-task
      (comp parse-body (partial post-json tasks-url))
@@ -137,7 +153,6 @@
 (defn submit-task
   [funnel process]
   (let [task (funnel-task funnel process)
-
         task-id (:id ((:create-task funnel) task))
         computing (into
                    {}
@@ -151,7 +166,54 @@
        (merge computing status)))
     (log/info "funnel task" task-id task)))
 
+(defn funnel-path
+  [funnel key]
+  (get-in @(:status funnel) [key :url]))
 
+(defn pull-data
+  [funnel inputs]
+  (into
+   {}
+   (map
+    (fn [[arg key]]
+      [arg (funnel-path funnel key)])
+    inputs)))
+
+(defn stuff-data
+  [data outputs]
+  (into
+   {}
+   (map
+    (fn [[out key]]
+      [key (funnel-path data out)])
+    outputs)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;; FUNNEL STORE ???????? simplicity may be better
 
 ;; (deftype FunnelStore [state]
 ;;   store/Store
@@ -174,6 +236,9 @@
 ;;     (if-let [source (get state key)]
 ;;       (let [status ((:get-task funnel) source)]
 ;;         (= (:state status) "COMPLETE")))))
+
+
+
 
 
 

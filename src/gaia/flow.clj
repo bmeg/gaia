@@ -39,7 +39,7 @@
               (fn [flow data]
                 (process->data flow key data))
               process (vals outputs))
-        full (assoc-in data [:flow key] node)]
+        full (assoc-in data [:process key :node] node)]
     full))
 
 (defn add-nodes
@@ -64,7 +64,8 @@
 
 (defn runnable?
   [flow data process]
-  (let [inputs (-> flow :flow process :inputs vals)]
+  (let [key (keyword process)
+        inputs (-> flow :process key :node :inputs vals)]
     (every? data inputs)))
 
 (defn able-processes
@@ -73,7 +74,8 @@
 
 (defn process-produces?
   [flow missing process]
-  (let [out (-> flow :flow process :outputs vals)]
+  (let [key (keyword process)
+        out (-> flow :process key :node :outputs vals)]
     (not (empty? (set/intersection missing (set out))))))
 
 (defn find-candidates
@@ -107,7 +109,7 @@
 (defn run-process
   [flow data process]
   (log/trace "run" process)
-  (let [{:keys [inputs outputs command]} (get-in flow [:flow process])
+  (let [{:keys [inputs outputs command]} (get-in flow [:flow process :node])
         run (get-in flow [:command command])
         args (pull-data data inputs)
         result (run args)
