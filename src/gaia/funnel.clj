@@ -166,7 +166,7 @@
        (merge computing status)))
     (log/info "funnel task" task-id task)))
 
-(defn funnel-path
+(defn funnel-status
   [funnel key]
   (get-in @(:status funnel) [key :url]))
 
@@ -176,7 +176,7 @@
    {}
    (map
     (fn [[arg key]]
-      [arg (funnel-path funnel key)])
+      [arg (funnel-status funnel key)])
     inputs)))
 
 (defn stuff-data
