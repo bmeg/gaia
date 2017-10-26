@@ -9,3 +9,5 @@
 
  :flow
  {:path "../biostream/bmeg-etl/bmeg"}}
+
+;;"/Users/spanglry/Data/funnel"
