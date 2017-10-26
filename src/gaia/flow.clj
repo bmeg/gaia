@@ -38,7 +38,6 @@
 
 (defn external-inputs
   [inputs]
-  (log/info "external-inputs" inputs)
   (filter identity (map external-input inputs)))
 
 (defn process->data
@@ -88,8 +87,6 @@
         ;; inputs (-> flow :process key :node :inputs vals)
         inputs (-> flow :process (get process) :node :inputs vals)
         external (external-inputs inputs)]
-    (log/info "runnable?" process inputs)
-    (log/info "external" external)
     (every? data external)))
 
 (defn able-processes
@@ -98,16 +95,15 @@
 
 (defn process-produces?
   [flow missing process]
-  (let [key (keyword process)
-        out (-> flow :process key :node :outputs vals)]
+  (let [out (-> flow :process (get process) :node :outputs vals)]
     (not (empty? (set/intersection missing (set out))))))
 
 (defn find-candidates
   [flow data]
   (let [missing (missing-data flow data)
         able (able-processes flow data)]
-    (log/trace "missing" missing)
-    (log/trace "able" (mapv identity able))
+    (log/info "missing" missing)
+    (log/info "able" (mapv identity able))
     (filter
      (partial process-produces? flow missing)
      able)))
