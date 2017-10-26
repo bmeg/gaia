@@ -4,6 +4,7 @@
    [yaml.core :as yaml]
    [protograph.kafka :as kafka]
    [ophion.config :as config]
+   [gaia.config :as gaia]
    [gaia.flow :as flow]
    [gaia.funnel :as funnel]
    [gaia.trigger :as trigger]
@@ -17,12 +18,13 @@
         funnel (funnel/funnel-connect funnel-config (:gaia config))
         flow (sync/generate-sync funnel (:gaia config))
         events (sync/events-listener flow kafka)]
-    (sync/engage-sync! flow)))
+    (sync/engage-sync! flow)
+    flow))
 
 (defn start
   []
   (let [config (config/read-config "config/gaia.clj")
-        network (yaml/parse-string (slurp "resources/config/bmeg.yaml"))]
+        network (gaia/load-flow-config (get-in config [:flow :path]))]
     (boot
      (assoc config :gaia network))))
 

@@ -16,7 +16,7 @@
 
 (defn sync-process
   [{:keys [flow funnel]} key]
-  (log/trace "run" key)
+  (log/info "run" key)
   (let [process (get-in flow [:process key :node])
         result (funnel/submit-task process)]
     result))
@@ -25,7 +25,6 @@
   [{:keys [flow funnel] :as state}]
   (let [candidates (flow/find-candidates flow @(:status funnel))
         outcome (mapv (partial sync-process state) candidates)]
-    (log/trace "candidates" (mapv identity candidates))
     outcome))
 
 (defn engage-sync!
@@ -44,4 +43,3 @@
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
-
