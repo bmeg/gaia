@@ -10,14 +10,18 @@
    [gaia.trigger :as trigger]
    [gaia.sync :as sync]))
 
-(defn boot
+(defn boot-funnel
   [config]
   (let [kafka (:kafka config)
-        funnel-config (assoc (:funnel config) :kafka kafka)
-        _ (log/info "funnel config" funnel-config)
-        funnel (funnel/funnel-connect funnel-config (:gaia config))
+        funnel-config (assoc (:funnel config) :kafka kafka)]
+    (log/info "funnel config" funnel-config)
+    (funnel/funnel-connect funnel-config (:gaia config))))
+
+(defn boot
+  [config]
+  (let [funnel (boot-funnel config)
         flow (sync/generate-sync funnel (:gaia config))
-        events (sync/events-listener flow kafka)]
+        events (sync/events-listener flow (:kafka config))]
     (sync/engage-sync! flow)
     flow))
 

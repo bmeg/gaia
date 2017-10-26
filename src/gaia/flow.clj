@@ -21,6 +21,26 @@
       (update-in [:data data :to] set-conj process)
       (update-in [:process process :from] set-conj data)))
 
+(defn decipher-input
+  [flow data process]
+  (if (map? data)
+    (cond
+      (:content data) flow
+      (:file data) (data->process flow (:file data) process)
+      :else flow)
+    (data->process flow data process)))
+
+(defn external-input
+  [input]
+  (cond
+    (map? input) (:file input)
+    :else input))
+
+(defn external-inputs
+  [inputs]
+  (log/info "external-inputs" inputs)
+  (filter identity (map external-input inputs)))
+
 (defn process->data
   [flow process data]
   (-> flow
@@ -33,7 +53,7 @@
     :as node}]
   (let [process (reduce
                  (fn [flow data]
-                   (data->process flow data key))
+                   (decipher-input flow data key))
                  flow (vals inputs))
         data (reduce
               (fn [flow data]
@@ -64,9 +84,13 @@
 
 (defn runnable?
   [flow data process]
-  (let [key (keyword process)
-        inputs (-> flow :process key :node :inputs vals)]
-    (every? data inputs)))
+  (let [;; key (keyword process)
+        ;; inputs (-> flow :process key :node :inputs vals)
+        inputs (-> flow :process (get process) :node :inputs vals)
+        external (external-inputs inputs)]
+    (log/info "runnable?" process inputs)
+    (log/info "external" external)
+    (every? data external)))
 
 (defn able-processes
   [flow data]

@@ -5,7 +5,7 @@
 
  :funnel
  {:host "http://localhost:19191"
-  :path "/Volumes/abyss 2/data/gaia"}
+  :path "/Users/spanglry/Data/funnel"}
 
  :flow
  {:path "../biostream/bmeg-etl/bmeg"}}
