@@ -3,7 +3,8 @@
    [cheshire.core :as json]
    [taoensso.timbre :as log]
    [clj-http.client :as http]
-   [protograph.kafka :as kafka]))
+   [protograph.kafka :as kafka]
+   [protograph.template :as template]))
 
 (defn parse-body
   [response]
@@ -127,12 +128,24 @@
         base (get-in funnel [:funnel :path] "tmp")]
     (str prefix base "/" path)))
 
-(defn funnel-io
+(defn funnel-input
   [funnel [key source]]
   (let [base {:name key
               ;; :description (str key source)
               :type "FILE"
               :path (name key)}]
+    (cond
+      (string? source) (assoc base :url (funnel-path funnel source))
+      (:contents source) (merge base source)
+      (:type source) (merge base source)
+      :else source)))
+
+(defn funnel-output
+  [funnel outputs [key source]]
+  (let [base {:name key
+              ;; :description (str key source)
+              :type "FILE"
+              :path (get outputs (name key))}]
     (cond
       (string? source) (assoc base :url (funnel-path funnel source))
       (:contents source) (merge base source)
@@ -145,9 +158,9 @@
   (if-let [execute (get commands command)]
     {:name key
      ;; :description (str key inputs outputs command)
-     :inputs (map (partial funnel-io funnel) inputs)
-     :outputs (map (partial funnel-io funnel) outputs)
-     :executors [execute]}
+     :inputs (map (partial funnel-input funnel) inputs)
+     :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
+     :executors [(dissoc execute :outputs)]}
     (log/error "no command named" command)))
 
 (defn submit-task
