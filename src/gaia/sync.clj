@@ -14,10 +14,14 @@
      {:funnel funnel
       :flow flow})))
 
+(defn find-process
+  [flow key]
+  (get-in flow [:process (name key) :node]))
+
 (defn sync-process
   [{:keys [flow funnel]} key]
   (log/info "run" key)
-  (let [process (get-in flow [:process key :node])
+  (let [process (find-process flow key)
         result (funnel/submit-task process)]
     result))
 

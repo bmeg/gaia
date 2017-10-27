@@ -129,14 +129,15 @@
     (str prefix base "/" path)))
 
 (defn funnel-input
-  [funnel [key source]]
+  [funnel inputs [key source]]
   (let [base {:name key
               ;; :description (str key source)
               :type "FILE"
-              :path (name key)}]
+              :path (get inputs (keyword key))}]
     (cond
       (string? source) (assoc base :url (funnel-path funnel source))
       (:contents source) (merge base source)
+      (:content source) (assoc base :contents (:content source))
       (:type source) (merge base source)
       :else source)))
 
@@ -145,22 +146,27 @@
   (let [base {:name key
               ;; :description (str key source)
               :type "FILE"
-              :path (get outputs (name key))}]
+              :path (get outputs (keyword key))}]
     (cond
       (string? source) (assoc base :url (funnel-path funnel source))
       (:contents source) (merge base source)
       (:type source) (merge base source)
       :else source)))
 
+(defn splice-vars
+  [command vars]
+  (map #(template/evaluate-template % vars) command))
+
 (defn funnel-task
   [{:keys [commands] :as funnel}
-   {:keys [key inputs outputs command]}]
-  (if-let [execute (get commands command)]
-    {:name key
-     ;; :description (str key inputs outputs command)
-     :inputs (map (partial funnel-input funnel) inputs)
-     :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
-     :executors [(dissoc execute :outputs)]}
+   {:keys [key vars inputs outputs command]}]
+  (if-let [raw (get commands (keyword command))]
+    (let [execute (update raw :cmd splice-vars vars)]
+      {:name key
+       ;; :description (str key inputs outputs command)
+       :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
+       :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
+       :executors [(dissoc execute :outputs :repo)]})
     (log/error "no command named" command)))
 
 (defn submit-task
