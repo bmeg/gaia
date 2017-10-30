@@ -25,10 +25,14 @@
     (sync/engage-sync! flow)
     flow))
 
+(defn load-config
+  [path]
+  (let [config (config/read-config path)
+        network (gaia/load-flow-config (get-in config [:flow :path]))]
+    (assoc config :gaia network)))
+
 (defn start
   []
-  (let [config (config/read-config "config/gaia.clj")
-        network (gaia/load-flow-config (get-in config [:flow :path]))]
-    (boot
-     (assoc config :gaia network))))
+  (let [config (load-config "config/gaia.clj")]
+    (boot config)))
 

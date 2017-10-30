@@ -22,7 +22,7 @@
   [{:keys [flow funnel]} key]
   (log/info "run" key)
   (let [process (find-process flow key)
-        result (funnel/submit-task process)]
+        result (funnel/submit-task funnel process)]
     result))
 
 (defn sync-step

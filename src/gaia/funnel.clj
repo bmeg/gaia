@@ -38,8 +38,8 @@
     s))
 
 (defn render-output
-  [path task-id {:keys [url path sizeBytes]}]
-  (let [key (snip path path)]
+  [root task-id {:keys [url path sizeBytes]}]
+  (let [key (snip path root)]
     [key
      {:url url
       :size sizeBytes
@@ -84,7 +84,9 @@
                (if (= (:type message) "TASK_OUTPUTS")
                  (let [outputs (get-in message [:outputs :value])
                        applied (apply-outputs! path status (:id message) outputs)]
+                   (log/info "funnel event outputs" outputs applied)
                    (doseq [[key output] applied]
+                     (log/info "funnel output" key output applied)
                      (declare-event!
                       producer
                       {:key key
@@ -166,7 +168,7 @@
        ;; :description (str key inputs outputs command)
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
-       :executors [(dissoc execute :outputs :repo)]})
+       :executors [(dissoc execute :inputs :outputs :repo)]})
     (log/error "no command named" command)))
 
 (defn submit-task
