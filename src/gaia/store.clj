@@ -48,7 +48,6 @@
     (let [files (kafka/dir->files root)]
       (mapv (partial file->key root) files))))
 
-
 (defn absent?
   [store key]
   (not (present? store key)))
@@ -72,5 +71,4 @@
   (condp = (keyword (:type config))
     :file (load-file-store config)
     (load-file-store config)))
-
 
