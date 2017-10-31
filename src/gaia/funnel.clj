@@ -4,7 +4,8 @@
    [taoensso.timbre :as log]
    [clj-http.client :as http]
    [protograph.kafka :as kafka]
-   [protograph.template :as template]))
+   [protograph.template :as template]
+   [gaia.store :as store]))
 
 (defn parse-body
   [response]
@@ -31,15 +32,9 @@
           :content-type :json})]
     response))
 
-(defn snip
-  [s prefix]
-  (if (.startsWith s prefix)
-    (.substring s (inc (.length prefix)))
-    s))
-
 (defn render-output
   [root task-id {:keys [url path sizeBytes]}]
-  (let [key (snip path root)]
+  (let [key (store/snip path root)]
     [key
      {:url url
       :size sizeBytes
@@ -97,11 +92,12 @@
       :consumer consumer})))
 
 (defn funnel-connect
-  [{:keys [host path kafka] :as config}
+  [{:keys [host path kafka store] :as config}
    {:keys [commands variables] :as context}]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
-        status (atom {})]
+        existing (store/existing-paths store)
+        status (atom existing)]
     {:funnel config
      :commands commands
 
