@@ -24,9 +24,10 @@
     (if tenant-name (.setTenantName factory tenant-name))
     (if method (.setAuthenticationMethod factory method))
     (let [account (.createAccount factory)
-          container (get-container account container)]
+          contain (get-container account container)]
       {:account account
-       :container container
+       :container contain
+       :container-name container
        :root root})))
 
 (defn get-object
@@ -66,6 +67,7 @@
     [store key]
     (key-exists? swift key))
   (computing? [store key] false)
+  (protocol [store] (str "swift://" (:container-name swift)))
   (url-root [store] (:root swift))
   (existing-keys
     [store]

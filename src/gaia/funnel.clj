@@ -123,9 +123,17 @@
 
 (defn funnel-path
   [funnel path]
-  (let [prefix (get-in funnel [:funnel :prefix] "file://")
-        base (get-in funnel [:funnel :path] "tmp")]
-    (str prefix base "/" path)))
+  (let [store (:store funnel)
+        prefix (store/protocol store)
+        base (get-in funnel [:funnel :path])
+        join (store/join-path [base path])]
+    (str prefix join)))
+
+;; (defn funnel-path
+;;   [funnel path]
+;;   (let [prefix (get-in funnel [:funnel :prefix] "file://")
+;;         base (get-in funnel [:funnel :path] "tmp")]
+;;     (str prefix base "/" path)))
 
 (defn funnel-input
   [funnel inputs [key source]]
@@ -206,51 +214,3 @@
       [key (funnel-path data out)])
     outputs)))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;; FUNNEL STORE ???????? simplicity may be better
-
-;; (deftype FunnelStore [state]
-;;   store/Store
-;;   (absent? [store key]
-;;     (empty? (get state key)))
-;;   (computing? [store key]
-;;     (= (get state key) :computing))
-;;   (present? [store key]
-;;     (= (get state key) :present)))
-
-;; (deftype FunnelStore [state]
-;;   store/Store
-;;   (absent? [store key]
-;;     (empty? (get state key)))
-;;   (computing? [store key]
-;;     (if-let [source (get state key)]
-;;       (let [status ((:get-task funnel) source)]
-;;         (not= (:state status) "COMPLETE"))))
-;;   (present? [store key]
-;;     (if-let [source (get state key)]
-;;       (let [status ((:get-task funnel) source)]
-;;         (= (:state status) "COMPLETE")))))

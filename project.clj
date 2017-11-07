@@ -1,4 +1,4 @@
-(defproject gaia "0.0.2"
+(defproject gaia "0.0.3"
   :description "regenerating computational dependency network"
   :url "http://github.com/bmeg/gaia"
   :license {:name "Eclipse Public License"

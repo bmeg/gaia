@@ -23,6 +23,7 @@
 (defprotocol Store
   (present? [store key])
   (computing? [store key])
+  (protocol [store])
   (url-root [store])
   (existing-keys [store]))
 
@@ -42,6 +43,7 @@
           file (io/file path)]
       (.exists file)))
   (computing? [store key] false)
+  (protocol [store] "file:///")
   (url-root [store] root)
   (existing-keys
     [store]

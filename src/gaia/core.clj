@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as log]
    [yaml.core :as yaml]
+   [aleph.http :as http]
    [protograph.kafka :as kafka]
    [ophion.config :as config]
    [gaia.config :as gaia]
@@ -41,8 +42,22 @@
     (sync/engage-sync! flow)
     (assoc flow :store store)))
 
+(defn app
+  [request]
+  {:status 200
+   :body "yellow"})
+
 (defn start
   []
-  (let [config (load-config "config/gaia.clj")]
+  (let [config (load-config "config/ohsu-swift.clj")]
     (boot config)))
 
+;; (defn start
+;;   []
+;;   (let [config (load-config "config/gaia.clj")]
+;;     (boot config)))
+
+(defn -main
+  []
+  (start)
+  (http/start-server app {:port 24442}))

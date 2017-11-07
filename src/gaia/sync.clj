@@ -49,3 +49,4 @@
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
+
