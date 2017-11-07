@@ -66,9 +66,5 @@
   [config]
   (FileStore. (:root config)))
 
-(defn load-store
-  [config]
-  (condp = (keyword (:type config))
-    :file (load-file-store config)
-    (load-file-store config)))
+
 

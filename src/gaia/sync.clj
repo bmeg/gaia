@@ -2,6 +2,7 @@
   (:require
    [taoensso.timbre :as log]
    [protograph.kafka :as kafka]
+   [gaia.store :as store]
    [gaia.flow :as flow]
    [gaia.funnel :as funnel]))
 
@@ -33,7 +34,8 @@
 
 (defn engage-sync!
   [{:keys [flow funnel] :as state}]
-  (let [status @(:status funnel)]
+  (let [existing (store/existing-paths (:store funnel))
+        status (swap! (:status funnel) merge existing)]
     (if (flow/flow-complete? flow status)
       {:status status :complete? true}
       (sync-step state))))

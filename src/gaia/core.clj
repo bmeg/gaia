@@ -6,10 +6,24 @@
    [ophion.config :as config]
    [gaia.config :as gaia]
    [gaia.store :as store]
+   [gaia.swift :as swift]
    [gaia.flow :as flow]
    [gaia.funnel :as funnel]
    [gaia.trigger :as trigger]
    [gaia.sync :as sync]))
+
+(defn load-config
+  [path]
+  (let [config (config/read-config path)
+        network (gaia/load-flow-config (get-in config [:flow :path]))]
+    (assoc config :gaia network)))
+
+(defn load-store
+  [config]
+  (condp = (keyword (:type config))
+    :file (store/load-file-store config)
+    :swift (swift/load-swift-store config)
+    (store/load-file-store config)))
 
 (defn boot-funnel
   [config store]
@@ -20,18 +34,12 @@
 
 (defn boot
   [config]
-  (let [store (store/load-store (:store config))
+  (let [store (load-store (:store config))
         funnel (boot-funnel config store)
         flow (sync/generate-sync funnel (:gaia config))
         events (sync/events-listener flow (:kafka config))]
     (sync/engage-sync! flow)
     (assoc flow :store store)))
-
-(defn load-config
-  [path]
-  (let [config (config/read-config path)
-        network (gaia/load-flow-config (get-in config [:flow :path]))]
-    (assoc config :gaia network)))
 
 (defn start
   []

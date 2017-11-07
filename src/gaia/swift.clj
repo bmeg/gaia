@@ -1,5 +1,6 @@
 (ns gaia.swift
   (:require
+   [clojure.string :as string]
    [gaia.store :as store])
   (:import
    [org.javaswift.joss.client.factory AccountFactory]))
@@ -67,4 +68,11 @@
   (computing? [store key] false)
   (url-root [store] (:root swift))
   (existing-keys
-    [store]))
+    [store]
+    (all-keys swift)))
+
+(defn load-swift-store
+  [config]
+  (let [swift (swift-connect config)]
+    (SwiftStore. swift)))
+

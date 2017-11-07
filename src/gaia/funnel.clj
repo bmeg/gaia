@@ -100,6 +100,7 @@
         status (atom existing)]
     {:funnel config
      :commands commands
+     :store store
 
      :status status
      :listener (funnel-events-listener variables path status kafka)
