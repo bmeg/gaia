@@ -47,15 +47,15 @@
   {:status 200
    :body "yellow"})
 
-(defn start
-  []
-  (let [config (load-config "config/ohsu-swift.clj")]
-    (boot config)))
-
 ;; (defn start
 ;;   []
-;;   (let [config (load-config "config/gaia.clj")]
+;;   (let [config (load-config "config/ohsu-swift.clj")]
 ;;     (boot config)))
+
+(defn start
+  []
+  (let [config (load-config "config/gaia.clj")]
+    (boot config)))
 
 (defn -main
   []
