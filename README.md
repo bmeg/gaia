@@ -14,7 +14,7 @@ In order to run Gaia, you must have access to a Funnel server and whatever Kafka
 
 ## config
 
-Here is an example of Gaia configuration:
+Here is an example of Gaia configuration (living under `resources/config/gaia.clj`):
 
 ```clj
 {:kafka
