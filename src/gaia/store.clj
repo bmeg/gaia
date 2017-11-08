@@ -43,7 +43,7 @@
           file (io/file path)]
       (.exists file)))
   (computing? [store key] false)
-  (protocol [store] "file:///")
+  (protocol [store] "file://")
   (url-root [store] root)
   (existing-keys
     [store]
