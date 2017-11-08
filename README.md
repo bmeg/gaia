@@ -4,40 +4,112 @@ Focal point for gathering and analyzing biomedical evidence as a graph.
 
 ![GAIA](https://github.com/bmeg/gaia/blob/master/resources/gaia.jpg)
 
-## motivation
+## idea
 
-Gaia is an event, query and analysis engine built on the Tinkerpop graph db interface. It has three primary concepts: Schemas, Facets and Agents.
-
-### schemas
-
-Every Gaia instance has a schema.
-
-### facets
-
-Every Gaia project offers a set of Facets which provide endpoints for API's and visualizations.
-
-### agents
-
-Every Gaia project has a set of Agents that do analysis on the graph and post results back to the graph.
+Gaia tracks a set of keys representing files to be computed, and the network of dependent processes that compute them. At its core is some Data Store that holds these keys, which can begin life seeded with prior information. At each cycle, Gaia calculates which keys are missing and which processes are able to be run given the set of keys available, and matches these up to select a process to run whose inputs are all available and one or more outputs are missing. Once these missing keys are computed, the cycle is run again and again until either all keys are computed or no more processes can be run.
 
 ## prerequisites
 
-For heavy use cases, we use Titan/Cassandra, so if you want to use these you have to have cassandra installed and running.
+In order to run Gaia, you must have access to a Funnel server and whatever Kafka cluster Funnel is using.
 
-Otherwise you can use the basic Tinkergraph implementation for a lightweight in memory DB.
+## config
 
-## usage
+Here is an example of Gaia configuration:
 
-To get Gaia up and running, clone this repo, then run
+```clj
+{:kafka
+ {:base
+  {:host "localhost"        ;; whereever your kafka cluster lives
+   :port "9092"}}
 
-    ./bin/gaia init
+ :funnel
+ {:host "http://localhost:19191"
+  :path ""}
 
-This lays the initial foundation for running the db. Then you can issue a series of `ingest` commands to get data in your graph (hugo contains the gene name and gene synonym graph):
+ :store
+ {:type :swift              ;; can also be :file
+  :root ""                  ;; this will prefix all keys in the store
+  :container "biostream"
+  :username "swiftuser"
+  :password "password"
+  :url "http://10.96.11.20:5000/v2.0/tokens"
+  :tenant-name "CCC"
+  :tenant-id "8897b62d8a8d45f38dfd2530375fbdac"
+  :region "RegionOne"}
 
-    ./bin/gaia ingest --url http://bmeg.io/data/hugo
+ :flow                      ;; path to set of commands, processes, variables and agents files
+ {:path "../biostream/bmeg-etl/bmeg"}}
+```
 
-Once you have ingested everything you need, you can start Gaia with the `start` command:
+Once this is all established, you can start Gaia by typing
 
-    ./bin/gaia start
+    lein run
 
-Then navigate to [http://localhost:11223](http://localhost:11223)!
+in the root level of the project.
+
+## commands.yaml
+
+The format of this file is a set of keys with a description of how to run the command. This description maps onto the Task Execution Schema with some additional information about how to translate inputs and outputs into keys in the data store. Here is an example:
+
+```yaml
+    ensembl-transform:
+      repo: https://github.com/biostream/ensembl-transform
+      image_name: spanglry/ensembl-transform
+      cmd: ["go", "run", "/command/run.go", "/in/gaf.gz"]
+      workdir: /out
+      inputs:
+        GAF_GZ: /in/gaf.gz
+      outputs:
+        TRANSCRIPT: /out/Transcript.json
+        GENE: /out/Gene.json
+        EXON: /out/Exon.json
+```
+
+Under the `inputs` and `outputs` lives a map of keys to locations in the local file system where the computation took place.
+
+## processes.yaml
+
+These are invocations of commands defined in the `commands.yaml` file. Each one refers to a single command and provides the mapping of inputs and outputs to keys in the data store.
+
+Here is an example of an invocation of the previous command:
+
+```
+- key: ensembl-transform
+  command: ensembl-transform
+  inputs:
+    GAF_GZ: source/ensembl.gtf.gz
+  outputs:
+    TRANSCRIPT: biostream/ensembl/ensembl.Transcript.json
+    GENE: biostream/ensembl/ensembl.Gene.json
+    EXON: biostream/ensembl/ensembl.Exon.json
+```
+
+In the `inputs` and `outputs` maps, the keys represent those declared by the command, and the values represent what keys to store the results under in the data store. These keys can then be declared as inputs to other processes.
+
+## vars
+
+There is one additional concept of a `var`: values that do not come from files but are instead directly supplied by the process invocation. Here is an example.
+
+The command is defined like so:
+
+```
+curl-extract:
+  repo: https://github.com/biostream/curl-extract
+  image_name: appropriate/curl
+  cmd: ["curl", "{{URL}}", "-o", "/tmp/out"]
+  outputs:
+    OUT: /tmp/out
+```
+
+Notice the second argument to curl is embedded in curly braces. This signifies that the value will be supplied directly during the invocation. Here is how that happens:
+
+```
+- key: cancerrxgene-cellline-extract
+  command: curl-extract
+  vars:
+    URL: ftp://ftp.sanger.ac.uk/pub/project/cancerrxgene/releases/release-6.0/Cell_Lines_Details.xlsx
+  outputs:
+    OUT: source/crx/cell-lines.xlsx
+```
+
+Here under the `vars` key we specify the `URL` which will be substituted into the command.
