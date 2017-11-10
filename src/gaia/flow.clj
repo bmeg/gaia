@@ -71,11 +71,22 @@
    (keys
     (:data flow))))
 
+(defn complete-keys
+  [data]
+  (set
+   (map
+    first
+    (filter
+     (fn [[k v]]
+       (= :complete (:state v)))
+     data))))
+
 (defn missing-data
   [flow data]
-  (set/difference
-   (flow-space flow)
-   (set (keys data))))
+  (let [complete (complete-keys data)]
+    (set/difference
+     (flow-space flow)
+     complete)))
 
 (defn flow-complete?
   [flow data]
@@ -86,8 +97,10 @@
   (let [;; key (keyword process)
         ;; inputs (-> flow :process key :node :inputs vals)
         inputs (-> flow :process (get process) :node :inputs vals)
-        external (external-inputs inputs)]
-    (every? data external)))
+        external (external-inputs inputs)
+        complete (complete-keys data)]
+    ;; (every? data external)
+    (empty? (set/difference (set external) complete))))
 
 (defn able-processes
   [flow data]
