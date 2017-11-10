@@ -9,6 +9,10 @@
    :processes
    :agents])
 
+(defn parse-yaml
+  [path]
+  (yaml/parse-string (slurp path)))
+
 (defn load-flow-config
   [path]
   (into
@@ -16,7 +20,7 @@
    (map
     (fn [key]
       (try
-        [key (yaml/parse-string (slurp (str path "." (name key) ".yaml")))]
+        [key (parse-yaml (str path "." (name key) ".yaml"))]
         (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
     config-keys)))
 

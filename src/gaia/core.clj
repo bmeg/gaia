@@ -1,7 +1,6 @@
 (ns gaia.core
   (:require
    [taoensso.timbre :as log]
-   [yaml.core :as yaml]
    [aleph.http :as http]
    [protograph.kafka :as kafka]
    [ophion.config :as config]
