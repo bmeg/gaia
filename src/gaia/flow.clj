@@ -94,12 +94,9 @@
 
 (defn runnable?
   [flow data process]
-  (let [;; key (keyword process)
-        ;; inputs (-> flow :process key :node :inputs vals)
-        inputs (-> flow :process (get process) :node :inputs vals)
+  (let [inputs (-> flow :process (get process) :node :inputs vals)
         external (external-inputs inputs)
         complete (complete-keys data)]
-    ;; (every? data external)
     (empty? (set/difference (set external) complete))))
 
 (defn able-processes
