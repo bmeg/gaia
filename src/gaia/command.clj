@@ -37,24 +37,11 @@
    global "-"
    (uuid)))
 
-(defn apply-outputs
-  [process template outputs]
-  (reduce
-   (fn [result [k t]]
-     (assoc result k (get outputs (keyword t))))
-   {} template))
-
-(defn generate-variables
-  "we need some way to find out what the keys of the generated inputs are
-   before we resolve the rest of the steps"
-  [])
-
 (defn apply-step
   [process vars inputs outputs {:keys [key command] :as step}]
   (let [ovars (substitute-values (:vars step) vars)
         oin (substitute-values (:inputs step) inputs)
         oout (substitute-values (:outputs step) outputs)]
-        ;; oout (apply-outputs process (:outputs step) outputs)
     {:key key
      :command command
      :vars ovars
@@ -73,11 +60,13 @@
 (defn apply-composite
   [{:keys [vars inputs outputs steps] :as command} process]
   (validate-apply-composite! command process)
-  (let [pin (:inputs process)
-        pout (:outputs process)
-        pvars (:vars process)
-        pkey (:key process)
-        generated (reduce (partial generate-outputs process) {} steps)
-        asteps (map (partial apply-step process pvars (merge pin generated) (merge pout generated)) steps)]
+  (let [generated (reduce (partial generate-outputs process) {} steps)
+        apply-partial (partial
+                       apply-step
+                       process
+                       (:vars process)
+                       (merge (:inputs process) generated)
+                       (merge (:outputs process) generated))
+        asteps (map apply-partial steps)]
     asteps))
 
