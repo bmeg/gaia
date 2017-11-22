@@ -15,8 +15,9 @@
   (let [pin (:inputs process)
         pout (:outputs process)
         pvars (:vars process)]
-    (if-not (and (empty? (difference (map keyword inputs) (keys pin)))
-                 (empty? (difference (map keyword outputs) (keys pout))))
+    (if-not (and
+             (empty? (difference (map keyword inputs) (keys pin)))
+             (empty? (difference (map keyword outputs) (keys pout))))
       (throw (Exception. (str (:key process) " - all inputs and outputs must be specified: " inputs outputs))))))
 
 (defn substitute-values
@@ -37,17 +38,6 @@
    global "-"
    (uuid)))
 
-(defn apply-step
-  [process vars inputs outputs {:keys [key command] :as step}]
-  (let [ovars (substitute-values (:vars step) vars)
-        oin (substitute-values (:inputs step) inputs)
-        oout (substitute-values (:outputs step) outputs)]
-    {:key key
-     :command command
-     :vars ovars
-     :inputs oin
-     :outputs oout}))
-
 (defn generate-outputs
   [process outputs step]
   (reduce
@@ -57,16 +47,33 @@
        (assoc all (keyword template) (generate-binding (:key process) (name key) template))))
    outputs (:outputs step)))
 
+(declare apply-composite)
+
+(defn apply-step
+  [flow process vars inputs outputs {:keys [key command] :as step}]
+  (let [ovars (substitute-values (:vars step) vars)
+        oin (substitute-values (:inputs step) inputs)
+        oout (substitute-values (:outputs step) outputs)
+        inner {:key key
+               :command command
+               :vars ovars
+               :inputs oin
+               :outputs oout}
+        exec (get-in flow [:commands (keyword command)])]
+    (if (= (:type exec) "composite")
+      (apply-composite flow exec inner)
+      [inner])))
+
 (defn apply-composite
-  [{:keys [vars inputs outputs steps] :as command} process]
+  [flow {:keys [vars inputs outputs steps] :as command} process]
   (validate-apply-composite! command process)
   (let [generated (reduce (partial generate-outputs process) {} steps)
         apply-partial (partial
                        apply-step
+                       flow
                        process
                        (:vars process)
                        (merge (:inputs process) generated)
                        (merge (:outputs process) generated))
-        asteps (map apply-partial steps)]
-    asteps))
-
+        asteps (mapcat apply-partial steps)]
+    (mapv identity asteps)))

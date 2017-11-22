@@ -191,6 +191,7 @@
 
 (defn generate-flow
   [commands processes]
-  (add-nodes 
+  (add-nodes
    {:commands commands}
    processes))
+

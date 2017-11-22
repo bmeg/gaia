@@ -31,7 +31,7 @@
    :outputs {"/tmp/out" "gdc-cases.json"}})
 
 (def echo-hi
-  (funnel-task commands echo-hello-world))
+  (funnel/funnel-task commands echo-hello-world))
 
 (deftest funnel-test
   (testing "running flows"

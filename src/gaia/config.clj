@@ -15,12 +15,20 @@
 
 (defn load-flow-config
   [path]
-  (into
-   {}
-   (map
-    (fn [key]
-      (try
-        [key (parse-yaml (str path "." (name key) ".yaml"))]
-        (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
-    config-keys)))
+  (let [config
+        (into
+         {}
+         (map
+          (fn [key]
+            (try
+              [key (parse-yaml (str path "." (name key) ".yaml"))]
+              (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
+          config-keys))]
+    (update
+     config :commands
+     (fn [commands]
+       (reduce
+        (fn [m command]
+          (assoc m (keyword (:key command)) command))
+        {} commands)))))
 

@@ -129,16 +129,9 @@
         join (store/join-path [base path])]
     (str prefix join)))
 
-;; (defn funnel-path
-;;   [funnel path]
-;;   (let [prefix (get-in funnel [:funnel :prefix] "file://")
-;;         base (get-in funnel [:funnel :path] "tmp")]
-;;     (str prefix base "/" path)))
-
 (defn funnel-input
   [funnel inputs [key source]]
   (let [base {:name key
-              ;; :description (str key source)
               :type "FILE"
               :path (get inputs (keyword key))}]
     (cond
@@ -151,7 +144,6 @@
 (defn funnel-output
   [funnel outputs [key source]]
   (let [base {:name key
-              ;; :description (str key source)
               :type "FILE"
               :path (get outputs (keyword key))}]
     (cond
@@ -168,12 +160,12 @@
   [{:keys [commands] :as funnel}
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
-    (let [execute (update raw :cmd splice-vars vars)]
+    (let [all-vars (merge (:vars raw) vars)
+          execute (update raw :cmd splice-vars all-vars)]
       {:name key
-       ;; :description (str key inputs outputs command)
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
-       :executors [(dissoc execute :inputs :outputs :repo)]})
+       :executors [(dissoc execute :key :vars :inputs :outputs :repo)]})
     (log/error "no command named" command)))
 
 (defn submit-task
