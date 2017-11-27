@@ -43,5 +43,5 @@
           inner (command/apply-composite
                  composite-data
                  (get-in composite-data [:commands :outer-composite])
-                 (get process-index :outer-demo-invoke))]
+                 (get process-index :outer-demo-invoke-grow))]
       (log/info (pp inner)))))

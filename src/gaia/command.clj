@@ -1,7 +1,8 @@
 (ns gaia.command
   (:require
    [clojure.set :as set]
-   [taoensso.timbre :as log]))
+   [taoensso.timbre :as log]
+   [protograph.template :as template]))
 
 (defn uuid
   []
@@ -36,13 +37,16 @@
     template)))
 
 (defn generate-binding
-  [key output global]
+  [process step output global]
   (str
    "generated/"
-   key "-"
-   output "-"
-   global "-"
-   (uuid)))
+   process "/"
+   step "/"
+   output ":"
+   global))
+
+ ;; "-"
+ ;;   (uuid)
 
 (defn generate-outputs
   [process outputs step]
@@ -50,17 +54,17 @@
    (fn [all [key template]]
      (if (get-in process [:outputs (keyword template)])
        all
-       (assoc all (keyword template) (generate-binding (:key process) (name key) template))))
+       (assoc all (keyword template) (generate-binding (:key process) (:key step) (name key) template))))
    outputs (:outputs step)))
 
 (declare apply-composite)
 
 (defn apply-step
   [flow process vars inputs outputs {:keys [key command] :as step}]
-  (let [ovars (substitute-values (:vars step) vars)
+  (let [ovars (template/evaluate-map (:vars step) vars) ;; (substitute-values (:vars step) vars)
         oin (substitute-values (:inputs step) inputs)
         oout (substitute-values (:outputs step) outputs)
-        inner {:key key
+        inner {:key (str (:key process) ":" key)
                :command command
                :vars ovars
                :inputs oin

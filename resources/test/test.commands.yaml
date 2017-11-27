@@ -34,7 +34,7 @@
     - key: diff-step
       command: F
       vars:
-        URL: PROJECT
+        URL: "{{PROJECT}}"
       inputs:
         PRIMARY: A
         SECONDARY: B
@@ -61,7 +61,7 @@
     - key: inner-composite-step
       command: inner-composite
       vars:
-        PROJECT: OUTER
+        PROJECT: "{{OUTER}}"
       inputs:
         A: ZZ
         B: YY
