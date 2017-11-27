@@ -9,24 +9,39 @@
 (log/set-level! :trace)
 
 (def composite-data
-  (let [config (config/parse-yaml "resources/test/bmeg.flows.yaml")
-        commands (reduce (fn [m command] (assoc m (keyword (:key command)) command)) {} (take 4 config))
-        processes (drop 4 config)]
-    {:commands commands
-     :processes processes}))
+  (config/load-flow-config "resources/test/test"))
+  ;; (let [config (config/parse-yaml "resources/test/bmeg.flows.yaml")
+  ;;       index (config/index-seq (comp keyword :key) config)
+  ;;       commands (config/filter-map (fn [k v] (= (keyword (:type v)) :command)) index)
+  ;;       processes (config/filter-map (fn [k v] (= (keyword (:type v)) :process)) index)]
+  ;;   {:commands commands
+  ;;    :processes processes})
+
+
+(defn pp
+  [clj]
+  (with-out-str (clojure.pprint/pprint clj)))
 
 (deftest inner-test
   (testing "inner composite process generation"
-    (let [inner (command/apply-composite
+    (log/info "commands" (pp (:commands composite-data)))
+    (log/info "processes" (pp (:processes composite-data)))
+    (let [process-index (config/index-seq
+                         (comp keyword :key)
+                         (:processes composite-data))
+          inner (command/apply-composite
                  composite-data
                  (get-in composite-data [:commands :inner-composite])
-                 (first (:processes composite-data)))]
+                 (get process-index :inner-demo-invoke-TCGA-LUAD))]
       (log/info (with-out-str (clojure.pprint/pprint inner))))))
 
 (deftest outer-test
   (testing "outer composite process generation"
-    (let [inner (command/apply-composite
+    (let [process-index (config/index-seq
+                         (comp keyword :key)
+                         (:processes composite-data))
+          inner (command/apply-composite
                  composite-data
                  (get-in composite-data [:commands :outer-composite])
-                 (last (:processes composite-data)))]
-      (log/info (with-out-str (clojure.pprint/pprint inner))))))
+                 (get process-index :outer-demo-invoke))]
+      (log/info (pp inner)))))

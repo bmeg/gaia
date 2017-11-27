@@ -58,7 +58,7 @@
   outputs:
     - WW
   steps:
-    - key: inner-step
+    - key: inner-composite-step
       command: inner-composite
       vars:
         PROJECT: OUTER
@@ -68,56 +68,10 @@
         C: CCC
       outputs:
         Y: WW
-    - key: wc-step
+    - key: outer-wc-step
       command: G
       inputs:
         YELLOW: ZZ
         OUTER: YY
       outputs:
         CONCLUSION: CCC
-
-- key: "inner-demo-invoke-{{PROJECT}}"
-  type: process
-  command: inner-composite
-  vars:
-    PROJECT: [TCGA-BRCA, TCGA-LUAD]
-  inputs:
-    A: "data/store/path"
-    B: other/store/path
-    C: yet/another
-  outputs:
-    Y: "final/output/of/workflow"
-
-- key: outer-demo-invoke
-  type: process
-  command: outer-composite
-  vars:
-    OUTER: "grow,divide"
-  inputs:
-    ZZ: data/store/path
-    YY: crazy/data/from/lost
-  outputs:
-    WW: final/output/of/workflow
-
-# - key: "inner-demo-invoke-{{PROJECT}}"
-#   type: process
-#   command: inner-composite
-#   vars:
-#     PROJECT: [TCGA-BRCA, TCGA-LUAD]
-#   inputs:
-#     A: "data/store/path/{{PROJECT}}"
-#     B: other/store/path
-#     C: yet/another
-#   outputs:
-#     Y: "final/output/of/workflow/{{PROJECT}}"
-
-# - key: outer-demo-invoke
-#   type: process
-#   command: outer-composite
-#   vars:
-#     OUTER: "grow,divide"
-#   inputs:
-#     ZZ: data/store/path
-#     YY: crazy/data/from/lost
-#   outputs:
-#     WW: final/output/of/workflow

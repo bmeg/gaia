@@ -1,0 +1,57 @@
+- key: "inner-demo-invoke"
+  type: process
+  command: inner-composite
+  vars:
+    PROJECT: [TCGA-BRCA, TCGA-LUAD]
+  inputs:
+    A: "data/store/path/all"
+    B: other/store/path
+    C: yet/another
+  outputs:
+    Y: "final/output/of/workflow/all"
+
+- key: "inner-demo-invoke-{{PROJECT}}"
+  type: process
+  command: inner-composite
+  vars:
+    PROJECT: [TCGA-BRCA, TCGA-LUAD]
+  inputs:
+    A: "data/store/path/{{PROJECT}}"
+    B: other/store/path
+    C: yet/another
+  outputs:
+    Y: "final/output/of/workflow/{{PROJECT}}"
+
+- key: outer-demo-invoke
+  type: process
+  command: outer-composite
+  vars:
+    OUTER: "grow,divide"
+  inputs:
+    ZZ: data/store/path
+    YY: crazy/data/from/lost
+  outputs:
+    WW: final/output/of/workflow
+
+# - key: "inner-demo-invoke-{{PROJECT}}"
+#   type: process
+#   command: inner-composite
+#   vars:
+#     PROJECT: [TCGA-BRCA, TCGA-LUAD]
+#   inputs:
+#     A: "data/store/path/{{PROJECT}}"
+#     B: other/store/path
+#     C: yet/another
+#   outputs:
+#     Y: "final/output/of/workflow/{{PROJECT}}"
+
+# - key: outer-demo-invoke
+#   type: process
+#   command: outer-composite
+#   vars:
+#     OUTER: "grow,divide"
+#   inputs:
+#     ZZ: data/store/path
+#     YY: crazy/data/from/lost
+#   outputs:
+#     WW: final/output/of/workflow

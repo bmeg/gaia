@@ -1,6 +1,7 @@
 (ns gaia.command
   (:require
-   [clojure.set :as set]))
+   [clojure.set :as set]
+   [taoensso.timbre :as log]))
 
 (defn uuid
   []
@@ -10,15 +11,20 @@
   [a b]
   (set/difference (set a) (set b)))
 
+(defn pp
+  [clj]
+  (with-out-str (clojure.pprint/pprint clj)))
+
 (defn validate-apply-composite!
   [{:keys [inputs outputs]} process]
+  (log/info "VALIDATE" (pp process))
   (let [pin (:inputs process)
         pout (:outputs process)
         pvars (:vars process)]
-    (if-not (and
-             (empty? (difference (map keyword inputs) (keys pin)))
-             (empty? (difference (map keyword outputs) (keys pout))))
-      (throw (Exception. (str (:key process) " - all inputs and outputs must be specified: " inputs outputs))))))
+    (if-not (empty? (difference (map keyword inputs) (keys pin)))
+      (throw (Exception. (str (:key process) " - all inputs must be specified: " inputs (keys pin))))
+    (if-not (empty? (difference (map keyword outputs) (keys pout)))
+      (throw (Exception. (str (:key process) " - all outputs must be specified: " outputs (keys pout))))))))
 
 (defn substitute-values
   [template values]
@@ -60,7 +66,7 @@
                :inputs oin
                :outputs oout}
         exec (get-in flow [:commands (keyword command)])]
-    (if (= (:type exec) "composite")
+    (if (:steps exec)
       (apply-composite flow exec inner)
       [inner])))
 
