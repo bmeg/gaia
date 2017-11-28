@@ -45,9 +45,6 @@
    output ":"
    global))
 
- ;; "-"
- ;;   (uuid)
-
 (defn generate-outputs
   [process outputs step]
   (reduce
@@ -70,20 +67,21 @@
                :inputs oin
                :outputs oout}
         exec (get-in flow [:commands (keyword command)])]
-    (if (:steps exec)
-      (apply-composite flow exec inner)
-      [inner])))
+    (apply-composite flow exec inner)))
 
 (defn apply-composite
   [flow {:keys [vars inputs outputs steps] :as command} process]
-  (validate-apply-composite! command process)
-  (let [generated (reduce (partial generate-outputs process) {} steps)
-        apply-partial (partial
-                       apply-step
-                       flow
-                       process
-                       (:vars process)
-                       (merge (:inputs process) generated)
-                       (merge (:outputs process) generated))
-        asteps (mapcat apply-partial steps)]
-    (mapv identity asteps)))
+  (if steps
+    (do
+      (validate-apply-composite! command process)
+      (let [generated (reduce (partial generate-outputs process) {} steps)
+            apply-partial (partial
+                           apply-step
+                           flow
+                           process
+                           (:vars process)
+                           (merge (:inputs process) generated)
+                           (merge (:outputs process) generated))
+            asteps (mapcat apply-partial steps)]
+        (mapv identity asteps)))
+    [process]))

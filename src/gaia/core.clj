@@ -12,10 +12,15 @@
    [gaia.trigger :as trigger]
    [gaia.sync :as sync]))
 
+(defn pp
+  [clj]
+  (with-out-str (clojure.pprint/pprint clj)))
+
 (defn load-config
   [path]
   (let [config (config/read-config path)
         network (gaia/load-flow-config (get-in config [:flow :path]))]
+    (log/info "config" (pp network))
     (assoc config :gaia network)))
 
 (defn load-store

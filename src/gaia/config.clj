@@ -4,7 +4,8 @@
    [clojure.math.combinatorics :as combinatorics]
    [taoensso.timbre :as log]
    [yaml.core :as yaml]
-   [protograph.template :as template]))
+   [protograph.template :as template]
+   [gaia.command :as command]))
 
 (def config-keys
   [:variables
@@ -67,19 +68,16 @@
             (try
               [key (parse-yaml (str path "." (name key) ".yaml"))]
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
-          config-keys))]
-    (-> config
-        (update
-         :commands
-         (partial index-seq (comp keyword :key)))
-        (update
-         :processes
-         (fn [processes]
-           (template/mapcat template-vars processes))))))
-
-     ;; (fn [commands]
-     ;;   (reduce
-     ;;    (fn [m command]
-     ;;      (assoc m (keyword (:key command)) command))
-     ;;    {} commands))
-
+          config-keys))
+        config (update config :commands (partial index-seq (comp keyword :key)))
+        config (update config :processes (fn [processes] (template/mapcat template-vars processes)))]
+    (update
+     config
+     :processes
+     (fn [processes]
+       (template/mapcat
+        (fn [process]
+          (let [command (get-in config [:commands (keyword (:command process))])]
+            (log/info "applying composite" (:command process) command)
+            (command/apply-composite config command process)))
+        processes)))))
