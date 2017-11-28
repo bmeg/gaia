@@ -58,7 +58,7 @@
 
 (defn apply-step
   [flow process vars inputs outputs {:keys [key command] :as step}]
-  (let [ovars (template/evaluate-map (:vars step) vars) ;; (substitute-values (:vars step) vars)
+  (let [ovars (template/evaluate-map (:vars step) vars)
         oin (substitute-values (:inputs step) inputs)
         oout (substitute-values (:outputs step) outputs)
         inner {:key (str (:key process) ":" key)

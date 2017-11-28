@@ -161,8 +161,10 @@
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
-          execute (update raw :cmd splice-vars all-vars)]
+          execute (update raw :command splice-vars all-vars)]
       {:name key
+       :resources {:cpuCores 1}
+       :volumes ["/in" "/out"]
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
        :executors [(dissoc execute :key :vars :inputs :outputs :repo)]})
