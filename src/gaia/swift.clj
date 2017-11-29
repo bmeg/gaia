@@ -40,11 +40,13 @@
     (.exists object)))
 
 (def encoded-slash #"%2F")
+(def encoded-colon #"%3A")
 
 (defn get-path
   [prefix object]
   (-> (.getPath object)
       (string/replace encoded-slash "/")
+      (string/replace encoded-colon ":")
       (string/replace prefix "")))
 
 (defn all-keys
