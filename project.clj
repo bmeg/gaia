@@ -8,5 +8,5 @@
                  [org.clojure/math.combinatorics "0.1.4"]
                  [com.taoensso/timbre "4.8.0"]
                  [clj-http "3.7.0"]
-                 [ophion "0.0.5"]
+                 [ophion "0.0.6"]
                  [org.javaswift/joss "0.9.17"]])
