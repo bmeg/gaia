@@ -42,24 +42,27 @@
 (def encoded-slash #"%2F")
 
 (defn get-path
-  [object]
-  (string/replace (.getPath object) encoded-slash "/"))
+  [prefix object]
+  (-> (.getPath object)
+      (string/replace encoded-slash "/")
+      (string/replace prefix "")))
 
 (defn all-keys
-  [{:keys [container] :as swift}]
+  [{:keys [container container-name] :as swift}]
   (loop [dirs (.listDirectory container)
          all []]
     (if (empty? dirs)
       all
       (let [head (first dirs)
-            remaining (rest dirs)]
+            remaining (rest dirs)
+            base (re-pattern (str "/" container-name "/"))]
         (if (.isDirectory head)
           (recur
            (concat remaining (.listDirectory container head))
            all)
           (recur
            remaining
-           (conj all (get-path head))))))))
+           (conj all (get-path base head))))))))
 
 (deftype SwiftStore [swift]
   store/Store
