@@ -83,10 +83,11 @@
 
 (defn missing-data
   [flow data]
-  (let [complete (complete-keys data)]
-    (set/difference
-     (flow-space flow)
-     complete)))
+  (let [complete (complete-keys data)
+        space (flow-space flow)]
+    (log/info "complete" complete)
+    (log/info "space" space)
+    (set/difference space complete)))
 
 (defn flow-complete?
   [flow data]
