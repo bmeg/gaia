@@ -165,6 +165,7 @@
       {:name key
        :resources {:cpuCores 1}
        :volumes ["/in" "/out"]
+       :workdir (or (:workdir raw) "/out")
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
        :executors [(dissoc execute :key :vars :inputs :outputs :repo)]})
