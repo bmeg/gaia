@@ -161,14 +161,15 @@
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
-          execute (update raw :command splice-vars all-vars)]
+          execute (update raw :command splice-vars all-vars)
+          fun (dissoc execute :key :vars :inputs :outputs :repo)]
       {:name key
        :resources {:cpuCores 1}
-       ;; :volumes ["/in" "/out"]
-       :workdir "/out"
+       :volumes ["/in" "/out"]
+       ;; :workdir "/out"
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
-       :executors [(dissoc execute :key :vars :inputs :outputs :repo)]})
+       :executors [(assoc fun :workdir "/out")]})
     (log/error "no command named" command)))
 
 (defn submit-task
