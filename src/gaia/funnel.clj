@@ -164,7 +164,7 @@
           execute (update raw :command splice-vars all-vars)]
       {:name key
        :resources {:cpuCores 1}
-       :volumes ["/in" "/out"]
+       ;; :volumes ["/in" "/out"]
        :workdir "/out"
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
