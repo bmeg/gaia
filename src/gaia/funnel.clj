@@ -34,9 +34,10 @@
 
 (defn render-output
   [root task-id {:keys [url path sizeBytes]}]
-  (let [key (store/snip path root)]
+  (let [key (store/snip url root)]
     [key
      {:url url
+      :path path
       :size sizeBytes
       :state :complete
       :source task-id}]))
@@ -92,11 +93,12 @@
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
         existing (store/existing-paths store)
-        status (atom existing)]
+        status (atom existing)
+        prefix (str (store/protocol store) path)]
     {:funnel config
      :commands commands
      :store store
-     :listener (funnel-events-listener variables path status kafka)
+     :listener (funnel-events-listener variables prefix status kafka)
 
      ;; api functions
      :create-task

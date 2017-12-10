@@ -78,7 +78,7 @@
     first
     (filter
      (fn [[k v]]
-       (= :complete (:state v)))
+       (= :complete (keyword (:state v))))
      data))))
 
 (defn missing-data

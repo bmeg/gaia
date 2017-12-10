@@ -1,6 +1,7 @@
 (ns gaia.sync
   (:require
    [taoensso.timbre :as log]
+   [cheshire.core :as json]
    [protograph.kafka :as kafka]
    [gaia.store :as store]
    [gaia.flow :as flow]
@@ -61,10 +62,11 @@
   (swap! status (partial elect-candidates! flow funnel next)))
 
 (defn process-complete!
-  [{:keys [status] :as state} event]
-  (log/info "process complete!" event)
-  (swap! status complete-key event)
-  (trigger-election! state))
+  [{:keys [status] :as state} raw]
+  (let [event (json/parse-string (.value raw) true)]
+    (log/info "process complete!" event)
+    (swap! status complete-key event)
+    (trigger-election! state)))
 
 (defn engage-sync!
   [{:keys [flow funnel status next] :as state}]
