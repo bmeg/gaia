@@ -49,13 +49,13 @@
     (partial render-output path task-id)
     outputs)))
 
-(defn apply-outputs!
+(defn apply-outputs
   [path status task-id outputs]
   (let [rendered (render-outputs path task-id outputs)]
-    (swap!
-     status
-     (fn [status]
-       (merge status rendered)))
+    ;; (swap!
+    ;;  status
+    ;;  (fn [status]
+    ;;    (merge status rendered)))
     rendered))
 
 (defn declare-event!
@@ -78,8 +78,7 @@
                (log/info "funnel event" message)
                (if (= (:type message) "TASK_OUTPUTS")
                  (let [outputs (get-in message [:outputs :value])
-                       applied (apply-outputs! path status (:id message) outputs)]
-                   (log/info "funnel event outputs" outputs applied)
+                       applied (apply-outputs path status (:id message) outputs)]
                    (doseq [[key output] applied]
                      (log/info "funnel output" key output applied)
                      (declare-event!
@@ -101,10 +100,9 @@
     {:funnel config
      :commands commands
      :store store
-
-     :status status
      :listener (funnel-events-listener variables path status kafka)
 
+     ;; api functions
      :create-task
      (comp parse-body (partial post-json tasks-url))
 
@@ -166,47 +164,57 @@
       {:name key
        :resources {:cpuCores 1}
        :volumes ["/in" "/out"]
-       ;; :workdir "/out"
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
        :executors [(assoc fun :workdir "/out")]})
     (log/error "no command named" command)))
 
-(defn submit-task
+(defn submit-task!
   [funnel process]
   (let [task (funnel-task funnel process)
-        task-id (:id ((:create-task funnel) task))
-        computing (into
-                   {}
-                   (map
-                    (fn [k]
-                      [k {:source task-id :state :computing}])
-                    (vals (:outputs process))))]
-    (swap!
-     (:status funnel)
-     (fn [status]
-       (merge computing status)))
-    (log/info "funnel task" task-id task)))
+        task-id (:id ((:create-task funnel) task))]
+    (log/info "funnel task" task-id task)
+    (assoc task :id task-id)))
 
-(defn funnel-status
-  [funnel key]
-  (get-in @(:status funnel) [key :url]))
+;; (defn computing-outputs
+;;   [process task-id]
+;;   (into
+;;    {}
+;;    (map
+;;     (fn [k]
+;;       [k {:source task-id :state :computing}])
+;;     (vals (:outputs process)))))
 
-(defn pull-data
-  [funnel inputs]
-  (into
-   {}
-   (map
-    (fn [[arg key]]
-      [arg (funnel-status funnel key)])
-    inputs)))
+;; (defn submit-task
+;;   [funnel process]
+;;   (let [task (funnel-task funnel process)
+;;         task-id (:id ((:create-task funnel) task))
+;;         computing (computing-outputs process task-id)]
+;;     (swap!
+;;      (:status funnel)
+;;      (fn [status]
+;;        (merge computing status)))
+;;     (log/info "funnel task" task-id task)))
 
-(defn stuff-data
-  [data outputs]
-  (into
-   {}
-   (map
-    (fn [[out key]]
-      [key (funnel-path data out)])
-    outputs)))
+;; (defn funnel-status
+;;   [funnel key]
+;;   (get-in @(:status funnel) [key :url]))
+
+;; (defn pull-data
+;;   [funnel inputs]
+;;   (into
+;;    {}
+;;    (map
+;;     (fn [[arg key]]
+;;       [arg (funnel-status funnel key)])
+;;     inputs)))
+
+;; (defn stuff-data
+;;   [data outputs]
+;;   (into
+;;    {}
+;;    (map
+;;     (fn [[out key]]
+;;       [key (funnel-path data out)])
+;;     outputs)))
 

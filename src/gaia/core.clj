@@ -58,8 +58,13 @@
 
 (defn start
   []
-  (let [config (load-config "config/gaia.clj")]
+  (let [config (load-config "config/home.clj")]
     (boot config)))
+
+;; (defn start
+;;   []
+;;   (let [config (load-config "config/gaia.clj")]
+;;     (boot config)))
 
 (defn -main
   []
