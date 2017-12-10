@@ -52,10 +52,6 @@
 (defn apply-outputs
   [path status task-id outputs]
   (let [rendered (render-outputs path task-id outputs)]
-    ;; (swap!
-    ;;  status
-    ;;  (fn [status]
-    ;;    (merge status rendered)))
     rendered))
 
 (defn declare-event!
@@ -175,46 +171,3 @@
         task-id (:id ((:create-task funnel) task))]
     (log/info "funnel task" task-id task)
     (assoc task :id task-id)))
-
-;; (defn computing-outputs
-;;   [process task-id]
-;;   (into
-;;    {}
-;;    (map
-;;     (fn [k]
-;;       [k {:source task-id :state :computing}])
-;;     (vals (:outputs process)))))
-
-;; (defn submit-task
-;;   [funnel process]
-;;   (let [task (funnel-task funnel process)
-;;         task-id (:id ((:create-task funnel) task))
-;;         computing (computing-outputs process task-id)]
-;;     (swap!
-;;      (:status funnel)
-;;      (fn [status]
-;;        (merge computing status)))
-;;     (log/info "funnel task" task-id task)))
-
-;; (defn funnel-status
-;;   [funnel key]
-;;   (get-in @(:status funnel) [key :url]))
-
-;; (defn pull-data
-;;   [funnel inputs]
-;;   (into
-;;    {}
-;;    (map
-;;     (fn [[arg key]]
-;;       [arg (funnel-status funnel key)])
-;;     inputs)))
-
-;; (defn stuff-data
-;;   [data outputs]
-;;   (into
-;;    {}
-;;    (map
-;;     (fn [[out key]]
-;;       [key (funnel-path data out)])
-;;     outputs)))
-

@@ -30,14 +30,6 @@
       [k {:state :computing}])
     (vals (:outputs process)))))
 
-;; (defn sync-process
-;;   [{:keys [flow funnel]} key]
-;;   (log/info "run" key)
-;;   (let [process (find-process flow key)
-;;         computing (compute-outputs process)
-;;         task (funnel/submit-task! funnel process)]
-;;     result))
-
 (defn process-map
   [flow keys]
   (reduce
@@ -60,12 +52,6 @@
     (send next (partial send-tasks! funnel) elect)
     (merge computing status)))
 
-;; (defn sync-step
-;;   [{:keys [flow funnel status] :as state}]
-;;   (let [candidates (flow/find-candidates flow @status)
-;;         outcome (mapv (partial sync-process state) candidates)]
-;;     outcome))
-
 (defn complete-key
   [status event]
   (assoc status (:key event) (:output event)))
@@ -85,14 +71,6 @@
   (let [existing (store/existing-paths (:store funnel))]
     (swap! status merge existing)
     (trigger-election! state)))
-
-;; (defn engage-sync!
-;;   [{:keys [flow funnel status next] :as state}]
-;;   (let [existing (store/existing-paths (:store funnel))
-;;         status (swap! status update :data merge existing)]
-;;     (if (flow/flow-complete? flow status)
-;;       {:status status :complete? true}
-;;       (sync-step state))))
 
 (defn events-listener
   [state kafka]
