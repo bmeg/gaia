@@ -158,6 +158,7 @@
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
           execute (update raw :command splice-vars all-vars)
+          execute (update execute :command (partial remove empty?))
           fun (dissoc execute :key :vars :inputs :outputs :repo)]
       {:name key
        :resources {:cpuCores 1}
