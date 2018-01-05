@@ -1,5 +1,6 @@
 (ns gaia.core
   (:require
+   [clojure.tools.cli :as cli]
    [taoensso.timbre :as log]
    [aleph.http :as http]
    [ring.middleware.resource :as resource]
@@ -35,7 +36,7 @@
 
 (defn load-config
   [path]
-  (let [config (config/read-config path)
+  (let [config (config/read-path path)
         network (gaia/load-flow-config (get-in config [:flow :path]))]
     (log/info "config" (pp network))
     (assoc config :gaia network)))
@@ -89,11 +90,16 @@
     (sync/engage-sync! flow)
     flow))
 
+(def parse-args
+  [["-c" "--config CONFIG" "path to config file"]
+   ["-i" "--input INPUT" "input file or directory"]])
+
 (defn start
-  []
+  [options]
   (let [;; config (load-config "config/ohsu-swift.clj")
         ;; config (load-config "config/gaia.clj")
-        config (load-config "config/home.clj")
+        path (or (:config options) "resources/config/gaia.clj")
+        config (load-config path)
         flow (boot config)
         routes (polaris/build-routes (gaia-routes flow))
         router (polaris/router routes)
@@ -104,5 +110,6 @@
     (http/start-server app {:port 24442})))
 
 (defn -main
-  []
-  (start))
+  [& args]
+  (let [env (:options (cli/parse-opts args parse-args))]
+    (start env)))

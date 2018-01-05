@@ -1,4 +1,4 @@
-(defproject gaia "0.0.3"
+(defproject gaia "0.0.4"
   :description "regenerating computational dependency network"
   :url "http://github.com/bmeg/gaia"
   :license {:name "Eclipse Public License"
@@ -9,5 +9,5 @@
                  [com.taoensso/timbre "4.8.0"]
                  [aleph "0.4.4"]
                  [clj-http "3.7.0"]
-                 [ophion "0.0.6"]
+                 [ophion "0.0.8"]
                  [org.javaswift/joss "0.9.17"]])
