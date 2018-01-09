@@ -21,6 +21,25 @@
       (update-in [:data data :to] set-conj process)
       (update-in [:process process :from] set-conj data)))
 
+(defn decipher-input
+  [flow data process]
+  (if (map? data)
+    (cond
+      (:content data) flow
+      (:file data) (data->process flow (:file data) process)
+      :else flow)
+    (data->process flow data process)))
+
+(defn external-input
+  [input]
+  (cond
+    (map? input) (:file input)
+    :else input))
+
+(defn external-inputs
+  [inputs]
+  (filter identity (map external-input inputs)))
+
 (defn process->data
   [flow process data]
   (-> flow
@@ -33,7 +52,7 @@
     :as node}]
   (let [process (reduce
                  (fn [flow data]
-                   (data->process flow data key))
+                   (decipher-input flow data key))
                  flow (vals inputs))
         data (reduce
               (fn [flow data]
@@ -52,11 +71,23 @@
    (keys
     (:data flow))))
 
+(defn complete-keys
+  [data]
+  (set
+   (map
+    first
+    (filter
+     (fn [[k v]]
+       (= :complete (keyword (:state v))))
+     data))))
+
 (defn missing-data
   [flow data]
-  (set/difference
-   (flow-space flow)
-   (set (keys data))))
+  (let [complete (complete-keys data)
+        space (flow-space flow)]
+    (log/info "complete" complete)
+    (log/info "space" space)
+    (set/difference space complete)))
 
 (defn flow-complete?
   [flow data]
@@ -64,9 +95,10 @@
 
 (defn runnable?
   [flow data process]
-  (let [key (keyword process)
-        inputs (-> flow :process key :node :inputs vals)]
-    (every? data inputs)))
+  (let [inputs (-> flow :process (get process) :node :inputs vals)
+        external (external-inputs inputs)
+        complete (complete-keys data)]
+    (empty? (set/difference (set external) complete))))
 
 (defn able-processes
   [flow data]
@@ -74,16 +106,15 @@
 
 (defn process-produces?
   [flow missing process]
-  (let [key (keyword process)
-        out (-> flow :process key :node :outputs vals)]
+  (let [out (-> flow :process (get process) :node :outputs vals)]
     (not (empty? (set/intersection missing (set out))))))
 
 (defn find-candidates
   [flow data]
   (let [missing (missing-data flow data)
         able (able-processes flow data)]
-    (log/trace "missing" missing)
-    (log/trace "able" (mapv identity able))
+    (log/info "missing" missing)
+    (log/info "able" (mapv identity able))
     (filter
      (partial process-produces? flow missing)
      able)))
@@ -160,7 +191,9 @@
     (assoc expired key value)))
 
 (defn generate-flow
-  [commands processes]
-  (add-nodes 
-   {:commands commands}
+  [processes]
+  (add-nodes
+   ;; {:commands commands}
+   {}
    processes))
+

@@ -1,28 +1,113 @@
 (ns gaia.core
   (:require
+   [clojure.tools.cli :as cli]
    [taoensso.timbre :as log]
-   [yaml.core :as yaml]
+   [aleph.http :as http]
+   [ring.middleware.resource :as resource]
+   [ring.middleware.params :as params]
+   [ring.middleware.keyword-params :as keyword]
+   [cheshire.core :as json]
+   [polaris.core :as polaris]
    [protograph.kafka :as kafka]
    [ophion.config :as config]
+   [gaia.config :as gaia]
+   [gaia.store :as store]
+   [gaia.swift :as swift]
    [gaia.flow :as flow]
+   [gaia.command :as command]
    [gaia.funnel :as funnel]
    [gaia.trigger :as trigger]
-   [gaia.sync :as sync]))
+   [gaia.sync :as sync])
+  (:import
+   [java.io InputStreamReader]))
+
+(defn read-json
+  [body]
+  (json/parse-stream (InputStreamReader. body) keyword))
+
+(defn response
+  [body]
+  {:status 200
+   :headers {"content-type" "application/json"}
+   :body (json/generate-string body)})
+
+(defn load-config
+  [path]
+  (let [config (config/read-path path)
+        network (gaia/load-flow-config (get-in config [:flow :path]))]
+    (log/info "config" (command/pp network))
+    (assoc config :gaia network)))
+
+(defn load-store
+  [config]
+  (condp = (keyword (:type config))
+    :file (store/load-file-store config)
+    :swift (swift/load-swift-store config)
+    (store/load-file-store config)))
+
+(defn boot-funnel
+  [config store]
+  (let [kafka (:kafka config)
+        funnel-config (assoc (:funnel config) :kafka kafka :store store)]
+    (log/info "funnel config" funnel-config)
+    (funnel/funnel-connect funnel-config (:gaia config))))
 
 (defn boot
   [config]
-  (let [kafka (:kafka config)
-        funnel-config (assoc (:funnel config) :kafka kafka)
-        _ (log/info "funnel config" funnel-config)
-        funnel (funnel/funnel-connect funnel-config (:gaia config))
+  (let [store (load-store (:store config))
+        funnel (boot-funnel config store)
         flow (sync/generate-sync funnel (:gaia config))
-        events (sync/events-listener flow kafka)]
-    (sync/engage-sync! flow)))
+        ;; flow (assoc flow :store store)
+        events (sync/events-listener flow (:kafka config))]
+    (sync/engage-sync! flow)
+    flow))
+
+(defn status-handler
+  [flow]
+  (fn [request]
+    (let [{:keys [key] :as body} (read-json (:body request))]
+      (log/info "status request" body)
+      (response
+       {:key key
+        :status (get @(:status flow) key)}))))
+
+(defn expire-handler
+  [flow]
+  (fn [request]
+    (let [{:keys [key] :as body} (read-json (:body request))
+          implicated (flow/find-descendants (:flow flow) key)]
+      (log/info "expire request" body)
+      (swap! (:status flow) (fn [status] (apply dissoc status implicated)))
+      (sync/trigger-election! flow)
+      (response
+       {:expired implicated}))))
+
+(defn gaia-routes
+  [flow]
+  [["/status" :status (status-handler flow)]
+   ["/expire" :expire (expire-handler flow)]])
+
+(def parse-args
+  [["-c" "--config CONFIG" "path to config file"]
+   ["-i" "--input INPUT" "input file or directory"]])
+
+;; config (load-config "config/ohsu-swift.clj")
+;; config (load-config "config/gaia.clj")
 
 (defn start
-  []
-  (let [config (config/read-config "config/gaia.clj")
-        network (yaml/parse-string (slurp "resources/config/bmeg.yaml"))]
-    (boot
-     (assoc config :gaia network))))
+  [options]
+  (let [path (or (:config options) "resources/config/gaia.clj")
+        config (load-config path)
+        flow (boot config)
+        routes (polaris/build-routes (gaia-routes flow))
+        router (polaris/router routes)
+        app (-> router
+                (resource/wrap-resource "public")
+                (keyword/wrap-keyword-params)
+                (params/wrap-params))]
+    (http/start-server app {:port 24442})))
 
+(defn -main
+  [& args]
+  (let [env (:options (cli/parse-opts args parse-args))]
+    (start env)))

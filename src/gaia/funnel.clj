@@ -3,7 +3,9 @@
    [cheshire.core :as json]
    [taoensso.timbre :as log]
    [clj-http.client :as http]
-   [protograph.kafka :as kafka]))
+   [protograph.kafka :as kafka]
+   [protograph.template :as template]
+   [gaia.store :as store]))
 
 (defn parse-body
   [response]
@@ -30,17 +32,12 @@
           :content-type :json})]
     response))
 
-(defn snip
-  [s prefix]
-  (if (.startsWith s prefix)
-    (.substring s (inc (.length prefix)))
-    s))
-
 (defn render-output
-  [path task-id {:keys [url path sizeBytes]}]
-  (let [key (snip path path)]
+  [root task-id {:keys [url path sizeBytes]}]
+  (let [key (store/snip url root)]
     [key
      {:url url
+      :path path
       :size sizeBytes
       :state :complete
       :source task-id}]))
@@ -53,13 +50,9 @@
     (partial render-output path task-id)
     outputs)))
 
-(defn apply-outputs!
+(defn apply-outputs
   [path status task-id outputs]
   (let [rendered (render-outputs path task-id outputs)]
-    (swap!
-     status
-     (fn [status]
-       (merge status rendered)))
     rendered))
 
 (defn declare-event!
@@ -82,8 +75,9 @@
                (log/info "funnel event" message)
                (if (= (:type message) "TASK_OUTPUTS")
                  (let [outputs (get-in message [:outputs :value])
-                       applied (apply-outputs! path status (:id message) outputs)]
+                       applied (apply-outputs path status (:id message) outputs)]
                    (doseq [[key output] applied]
+                     (log/info "funnel output" key output applied)
                      (declare-event!
                       producer
                       {:key key
@@ -94,17 +88,19 @@
       :consumer consumer})))
 
 (defn funnel-connect
-  [{:keys [host path kafka] :as config}
+  [{:keys [host path kafka store] :as config}
    {:keys [commands variables] :as context}]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
-        status (atom {})]
+        existing (store/existing-paths store)
+        status (atom existing)
+        prefix (str (store/protocol store) path)]
     {:funnel config
      :commands commands
+     :store store
+     :listener (funnel-events-listener variables prefix status kafka)
 
-     :status status
-     :listener (funnel-events-listener variables path status kafka)
-
+     ;; api functions
      :create-task
      (comp parse-body (partial post-json tasks-url))
 
@@ -123,161 +119,58 @@
 
 (defn funnel-path
   [funnel path]
-  (let [prefix (get-in funnel [:funnel :prefix] "file://")
-        base (get-in funnel [:funnel :path] "tmp")]
-    (str prefix base "/" path)))
+  (let [store (:store funnel)
+        prefix (store/protocol store)
+        base (get-in funnel [:funnel :path])
+        join (store/join-path [base path])]
+    (str prefix join)))
 
-(defn funnel-io
-  [funnel [key source]]
+(defn funnel-input
+  [funnel inputs [key source]]
   (let [base {:name key
-              ;; :description (str key source)
               :type "FILE"
-              :path (name key)}]
+              :path (get inputs (keyword key))}]
+    (cond
+      (string? source) (assoc base :url (funnel-path funnel source))
+      (:contents source) (merge base source)
+      (:content source) (assoc base :contents (:content source))
+      (:type source) (merge base source)
+      :else source)))
+
+(defn funnel-output
+  [funnel outputs [key source]]
+  (let [base {:name key
+              :type "FILE"
+              :path (get outputs (keyword key))}]
     (cond
       (string? source) (assoc base :url (funnel-path funnel source))
       (:contents source) (merge base source)
       (:type source) (merge base source)
       :else source)))
 
+(defn splice-vars
+  [command vars]
+  (map #(template/evaluate-template % vars) command))
+
 (defn funnel-task
   [{:keys [commands] :as funnel}
-   {:keys [key inputs outputs command]}]
-  (if-let [execute (get commands command)]
-    {:name key
-     ;; :description (str key inputs outputs command)
-     :inputs (map (partial funnel-io funnel) inputs)
-     :outputs (map (partial funnel-io funnel) outputs)
-     :executors [execute]}
+   {:keys [key vars inputs outputs command]}]
+  (if-let [raw (get commands (keyword command))]
+    (let [all-vars (merge (:vars raw) vars)
+          execute (update raw :command splice-vars all-vars)
+          execute (update execute :command (partial remove empty?))
+          fun (dissoc execute :key :vars :inputs :outputs :repo)]
+      {:name key
+       :resources {:cpuCores 1}
+       :volumes ["/in" "/out"]
+       :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
+       :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
+       :executors [(assoc fun :workdir "/out")]})
     (log/error "no command named" command)))
 
-(defn submit-task
+(defn submit-task!
   [funnel process]
   (let [task (funnel-task funnel process)
-        task-id (:id ((:create-task funnel) task))
-        computing (into
-                   {}
-                   (map
-                    (fn [k]
-                      [k {:source task-id :state :computing}])
-                    (vals (:outputs process))))]
-    (swap!
-     (:status funnel)
-     (fn [status]
-       (merge computing status)))
-    (log/info "funnel task" task-id task)))
-
-(defn funnel-status
-  [funnel key]
-  (get-in @(:status funnel) [key :url]))
-
-(defn pull-data
-  [funnel inputs]
-  (into
-   {}
-   (map
-    (fn [[arg key]]
-      [arg (funnel-status funnel key)])
-    inputs)))
-
-(defn stuff-data
-  [data outputs]
-  (into
-   {}
-   (map
-    (fn [[out key]]
-      [key (funnel-path data out)])
-    outputs)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;; FUNNEL STORE ???????? simplicity may be better
-
-;; (deftype FunnelStore [state]
-;;   store/Store
-;;   (absent? [store key]
-;;     (empty? (get state key)))
-;;   (computing? [store key]
-;;     (= (get state key) :computing))
-;;   (present? [store key]
-;;     (= (get state key) :present)))
-
-;; (deftype FunnelStore [state]
-;;   store/Store
-;;   (absent? [store key]
-;;     (empty? (get state key)))
-;;   (computing? [store key]
-;;     (if-let [source (get state key)]
-;;       (let [status ((:get-task funnel) source)]
-;;         (not= (:state status) "COMPLETE"))))
-;;   (present? [store key]
-;;     (if-let [source (get state key)]
-;;       (let [status ((:get-task funnel) source)]
-;;         (= (:state status) "COMPLETE")))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-;; EXAMPLE FUNNEL DOCUMENT
-;; -----------------------
-;; 
-;; {
-;;   "name": "Input file contents and output file",
-;;   "description": "Demonstrates using the 'contents' field for inputs to create a file on the host system",
-;;   "inputs": [
-;;     {
-;;       "name": "cat input",
-;;       "description": "Input to md5sum. /tmp/in will be created on the host system.",
-;;       "type": "FILE",
-;;       "path": "/tmp/in",
-;;       "contents": "Hello World\n"
-;;     }
-;;   ],
-;;   "outputs": [
-;;     {
-;;       "name": "cat stdout",
-;;       "description": "Stdout of cat is captures to /tmp/test_out on the host system.",
-;;       "url": "file:///tmp/cat_output",
-;;       "type": "FILE",
-;;       "path": "/tmp/out"
-;;     }
-;;   ],
-;;   "executors": [
-;;     {
-;;       "image_name": "alpine",
-;;       "cmd": ["cat", "/tmp/in"],
-;;       "stdout": "/tmp/out"
-;;     }
-;;   ]
-;; }
+        task-id (:id ((:create-task funnel) task))]
+    (log/info "funnel task" task-id task)
+    (assoc task :id task-id)))

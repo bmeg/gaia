@@ -6,7 +6,8 @@
 target
 /log
 genes.json
-
+/resources/config/home.clj
+/resources/config/ohsu-swift.clj
 .DS_Store
 .idea/
 .lein-failures

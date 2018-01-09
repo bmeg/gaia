@@ -7,16 +7,16 @@
 (log/set-level! :trace)
 
 (def commands
-  {:echo
-   {:image_name "alpine"
+  [{:key "echo"
+    :image_name "alpine"
     :cmd ["cat" "/tmp/in"]
     :stdout "/tmp/out"}
 
-   :gdc-extract
-   {:image_name "biostream/gdc-extract"
+   {:key "gdc-extract"
+    :image_name "biostream/gdc-extract"
     :cmd ["/opt/gdc-scan.py" "cases" "list"
           "--id" "ceead734-1ce0-4385-b65a-a9c853b7308e"]
-    :stdout "/tmp/out"}})
+    :stdout "/tmp/out"}])
 
 (def echo-hello-world
   {:key :echo-hello-world
@@ -31,7 +31,7 @@
    :outputs {"/tmp/out" "gdc-cases.json"}})
 
 (def echo-hi
-  (funnel-task commands echo-hello-world))
+  (funnel/funnel-task commands echo-hello-world))
 
 (deftest funnel-test
   (testing "running flows"
