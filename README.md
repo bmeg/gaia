@@ -43,7 +43,7 @@ Here is an example of Gaia configuration (living under `resources/config/gaia.cl
 
 Once this is all established, you can start Gaia by typing
 
-    lein run
+    lein run --config resources/config/gaia.clj
 
 in the root level of the project.
 
@@ -53,10 +53,8 @@ The format of this file is a set of keys with a description of how to run the co
 
 ```yaml
     ensembl-transform:
-      repo: https://github.com/biostream/ensembl-transform
       image_name: spanglry/ensembl-transform
       cmd: ["go", "run", "/command/run.go", "/in/gaf.gz"]
-      workdir: /out
       inputs:
         GAF_GZ: /in/gaf.gz
       outputs:
@@ -113,3 +111,11 @@ Notice the second argument to curl is embedded in curly braces. This signifies t
 ```
 
 Here under the `vars` key we specify the `URL` which will be substituted into the command.
+
+# generating all implied funnel documents
+
+If you don't need to trigger all the funnel tasks but you would like to see what funnel tasks would be run (a dry run, so to speak), you can emit all funnel documents currently implied by the current `processes.yaml` file:
+
+    lein run -m gaia.funnel --config path/to/config.clj --output funnel-tasks.json
+
+The funnel tasks will be emitted in json format, one task message per line.

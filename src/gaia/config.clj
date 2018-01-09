@@ -3,9 +3,12 @@
    [clojure.walk :as walk]
    [clojure.math.combinatorics :as combinatorics]
    [taoensso.timbre :as log]
+   [ophion.config :as config]
    [yaml.core :as yaml]
    [protograph.template :as template]
-   [gaia.command :as command]))
+   [gaia.command :as command]
+   [gaia.store :as store]
+   [gaia.swift :as swift]))
 
 (def config-keys
   [:variables
@@ -78,6 +81,19 @@
        (template/map-cat
         (fn [process]
           (let [command (get-in config [:commands (keyword (:command process))])]
-            (log/info "applying composite" (:command process) command)
             (command/apply-composite config command process)))
         processes)))))
+
+(defn load-config
+  [path]
+  (let [config (config/read-path path)
+        network (load-flow-config (get-in config [:flow :path]))]
+    (assoc config :gaia network)))
+
+(defn load-store
+  [config]
+  (condp = (keyword (:type config))
+    :file (store/load-file-store config)
+    :swift (swift/load-swift-store config)
+    (store/load-file-store config)))
+

@@ -9,8 +9,7 @@
    [cheshire.core :as json]
    [polaris.core :as polaris]
    [protograph.kafka :as kafka]
-   [ophion.config :as config]
-   [gaia.config :as gaia]
+   [gaia.config :as config]
    [gaia.store :as store]
    [gaia.swift :as swift]
    [gaia.flow :as flow]
@@ -31,20 +30,6 @@
    :headers {"content-type" "application/json"}
    :body (json/generate-string body)})
 
-(defn load-config
-  [path]
-  (let [config (config/read-path path)
-        network (gaia/load-flow-config (get-in config [:flow :path]))]
-    (log/info "config" (command/pp network))
-    (assoc config :gaia network)))
-
-(defn load-store
-  [config]
-  (condp = (keyword (:type config))
-    :file (store/load-file-store config)
-    :swift (swift/load-swift-store config)
-    (store/load-file-store config)))
-
 (defn boot-funnel
   [config store]
   (let [kafka (:kafka config)
@@ -54,7 +39,7 @@
 
 (defn boot
   [config]
-  (let [store (load-store (:store config))
+  (let [store (config/load-store (:store config))
         funnel (boot-funnel config store)
         flow (sync/generate-sync funnel (:gaia config))
         ;; flow (assoc flow :store store)
@@ -97,7 +82,7 @@
 (defn start
   [options]
   (let [path (or (:config options) "resources/config/gaia.clj")
-        config (load-config path)
+        config (config/load-config path)
         flow (boot config)
         routes (polaris/build-routes (gaia-routes flow))
         router (polaris/router routes)

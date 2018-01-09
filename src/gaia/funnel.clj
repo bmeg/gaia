@@ -1,11 +1,14 @@
 (ns gaia.funnel
   (:require
+   [clojure.string :as string]
+   [clojure.tools.cli :as cli]
    [cheshire.core :as json]
    [taoensso.timbre :as log]
    [clj-http.client :as http]
    [protograph.kafka :as kafka]
    [protograph.template :as template]
-   [gaia.store :as store]))
+   [gaia.store :as store]
+   [gaia.config :as config]))
 
 (defn parse-body
   [response]
@@ -87,6 +90,13 @@
      {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
 
+(defn funnel-config
+  [{:keys [host path kafka store] :as config}
+   {:keys [commands variables] :as context}]
+  {:funnel config
+   :commands commands
+   :store store})
+
 (defn funnel-connect
   [{:keys [host path kafka store] :as config}
    {:keys [commands variables] :as context}]
@@ -95,27 +105,26 @@
         existing (store/existing-paths store)
         status (atom existing)
         prefix (str (store/protocol store) path)]
-    {:funnel config
-     :commands commands
-     :store store
-     :listener (funnel-events-listener variables prefix status kafka)
+    (merge
+     (funnel-config config context)
+     {:listener (funnel-events-listener variables prefix status kafka)
 
-     ;; api functions
-     :create-task
-     (comp parse-body (partial post-json tasks-url))
+      ;; api functions
+      :create-task
+      (comp parse-body (partial post-json tasks-url))
 
-     :list-tasks
-     (fn []
-       (get-json tasks-url))
+      :list-tasks
+      (fn []
+        (get-json tasks-url))
 
-     :get-task
-     (fn [id]
-       (get-json (str tasks-url "/" id)))
+      :get-task
+      (fn [id]
+        (get-json (str tasks-url "/" id)))
 
-     :cancel-task
-     (fn [id]
-       (http/post
-        (str tasks-url "/" id ":cancel")))}))
+      :cancel-task
+      (fn [id]
+        (http/post
+         (str tasks-url "/" id ":cancel")))})))
 
 (defn funnel-path
   [funnel path]
@@ -174,3 +183,25 @@
         task-id (:id ((:create-task funnel) task))]
     (log/info "funnel task" task-id task)
     (assoc task :id task-id)))
+
+(defn all-tasks
+  [funnel processes]
+  (mapv (partial funnel-task funnel) processes))
+
+(def parse-args
+  [["-c" "--config CONFIG" "path to config file"]
+   ["-o" "--output OUTPUT" "path to output file"]])
+
+(defn -main
+  [& args]
+  (let [env (:options (cli/parse-opts args parse-args))
+        path (or (:config env) "resources/config/gaia.clj")
+        config (config/load-config path)
+        store (config/load-store (:store config))
+        output (or (:output env) "funnel-tasks.json")
+        funnel (assoc (:funnel config) :store store)
+        funnel (funnel-config funnel (:gaia config))
+        tasks (all-tasks funnel (get-in config [:gaia :processes]))
+        json (mapv json/generate-string tasks)
+        out (string/join "\n" json)]
+    (spit output out)))
