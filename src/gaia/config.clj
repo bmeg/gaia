@@ -70,12 +70,12 @@
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
         config (update config :commands (partial index-seq (comp keyword :key)))
-        config (update config :processes (fn [processes] (template/mapcat template-vars processes)))]
+        config (update config :processes (fn [processes] (template/map-cat template-vars processes)))]
     (update
      config
      :processes
      (fn [processes]
-       (template/mapcat
+       (template/map-cat
         (fn [process]
           (let [command (get-in config [:commands (keyword (:command process))])]
             (log/info "applying composite" (:command process) command)

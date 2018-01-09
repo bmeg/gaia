@@ -9,8 +9,7 @@
 
 (defn generate-sync
   [funnel {:keys [commands variables processes agents] :as config}]
-  (let [flow (flow/generate-flow commands processes)
-        listen ()]
+  (let [flow (flow/generate-flow processes)]
     (merge
      config
      {:funnel funnel

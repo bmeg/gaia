@@ -191,8 +191,9 @@
     (assoc expired key value)))
 
 (defn generate-flow
-  [commands processes]
+  [processes]
   (add-nodes
-   {:commands commands}
+   ;; {:commands commands}
+   {}
    processes))
 
