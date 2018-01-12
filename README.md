@@ -45,7 +45,7 @@ Once this is all established, you can start Gaia by typing
 
     lein run --config resources/config/gaia.clj
 
-in the root level of the project.
+in the root level of the project (or a path to whatever config file you want to use).
 
 ## commands.yaml
 

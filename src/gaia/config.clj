@@ -2,6 +2,7 @@
   (:require
    [clojure.walk :as walk]
    [clojure.math.combinatorics :as combinatorics]
+   [clojure.string :as string]
    [taoensso.timbre :as log]
    [ophion.config :as config]
    [yaml.core :as yaml]
@@ -46,16 +47,23 @@
        (into {} (map vector heading product)))
      cartes)))
 
+(defn clean-string
+  [s]
+  (string/replace s #"[^a-zA-Z0-9\-]" ""))
+
 (defn template-vars
   [{:keys [key vars inputs outputs] :as process}]
   (let [arrays (filter-map (fn [k v] (coll? v)) vars)
         series (cartesian-map arrays)]
     (map
      (fn [arrayed]
-       (let [env (merge vars arrayed)]
+       (let [order (sort-by first arrayed)
+             values (map (comp clean-string last) order)
+             unique (string/join "-" (conj values key))
+             env (merge vars arrayed)]
          (merge
           process
-          {:key (template/evaluate-template key env)
+          {:key unique ;; (template/evaluate-template key env)
            :vars env
            :inputs (template/evaluate-map inputs env)
            :outputs (template/evaluate-map outputs env)})))
