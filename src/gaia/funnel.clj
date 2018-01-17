@@ -182,7 +182,7 @@
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel key outputs) (:outputs execute))
        :executors [(assoc fun :workdir "/out")]})
-    (log/error "no command named" command)))
+    (log/error "no command named" command (keys commands))))
 
 (defn submit-task!
   [funnel process]
@@ -210,7 +210,7 @@
   (let [env (:options (cli/parse-opts args parse-args))
         path (or (:config env) "resources/config/gaia.clj")
         config (config/load-config path)
-        funnel (load-funnel-config path)
+        funnel (load-funnel-config config)
         output (or (:output env) "funnel-tasks.json")
         tasks (all-tasks funnel (get-in config [:gaia :processes]))
         json (mapv json/generate-string tasks)
