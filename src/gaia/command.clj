@@ -18,7 +18,7 @@
 
 (defn validate-apply-composite!
   [{:keys [inputs outputs]} process]
-  (log/info "VALIDATE" (pp process))
+  ;; (log/info "VALIDATE" (pp process))
   (let [pin (:inputs process)
         pout (:outputs process)
         pvars (:vars process)]
@@ -39,7 +39,7 @@
 (defn generate-binding
   [process step output global]
   (str
-   "generated/"
+   "composite/"
    process "/"
    step "/"
    output ":"

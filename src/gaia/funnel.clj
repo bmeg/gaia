@@ -146,11 +146,18 @@
       (:type source) (merge base source)
       :else source)))
 
+(defn missing-path
+  [command key]
+  (str "generated/" (name command) "/" (name key)))
+
 (defn funnel-output
-  [funnel outputs [key source]]
-  (let [base {:name key
+  [funnel command outputs [key path]]
+  (let [source (or
+                (get outputs (keyword key))
+                (missing-path command key))
+        base {:name key
               :type "FILE"
-              :path (get outputs (keyword key))}]
+              :path path}]
     (cond
       (string? source) (assoc base :url (funnel-path funnel source))
       (:contents source) (merge base source)
@@ -173,7 +180,7 @@
        :resources {:cpuCores 1}
        :volumes ["/in" "/out"]
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
-       :outputs (map (partial funnel-output funnel (:outputs execute)) outputs)
+       :outputs (map (partial funnel-output funnel key outputs) (:outputs execute))
        :executors [(assoc fun :workdir "/out")]})
     (log/error "no command named" command)))
 
@@ -192,15 +199,19 @@
   [["-c" "--config CONFIG" "path to config file"]
    ["-o" "--output OUTPUT" "path to output file"]])
 
+(defn load-funnel-config
+  [config]
+  (let [store (config/load-store (:store config))
+        funnel (assoc (:funnel config) :store store)]
+    (funnel-config funnel (:gaia config))))
+
 (defn -main
   [& args]
   (let [env (:options (cli/parse-opts args parse-args))
         path (or (:config env) "resources/config/gaia.clj")
         config (config/load-config path)
-        store (config/load-store (:store config))
+        funnel (load-funnel-config path)
         output (or (:output env) "funnel-tasks.json")
-        funnel (assoc (:funnel config) :store store)
-        funnel (funnel-config funnel (:gaia config))
         tasks (all-tasks funnel (get-in config [:gaia :processes]))
         json (mapv json/generate-string tasks)
         out (string/join "\n" json)]
