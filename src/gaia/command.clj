@@ -80,7 +80,7 @@
                            flow
                            process
                            (:vars process)
-                           (merge (:inputs process) generated)
+                           (merge (:inputs process) (:outputs process) generated)
                            (merge (:outputs process) generated))
             asteps (mapcat apply-partial steps)]
         (mapv identity asteps)))
