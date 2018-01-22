@@ -186,10 +186,13 @@
 
 (defn submit-task!
   [funnel process]
-  (let [task (funnel-task funnel process)
-        task-id (:id ((:create-task funnel) task))]
-    (log/info "funnel task" task-id task)
-    (assoc task :id task-id)))
+  (try
+    (let [task (funnel-task funnel process)
+          task-id (:id ((:create-task funnel) task))]
+      (log/info "funnel task" task-id task)
+      (assoc task :id task-id))
+    (catch Exception e
+      (.printStackTrace e))))
 
 (defn all-tasks
   [funnel processes]
