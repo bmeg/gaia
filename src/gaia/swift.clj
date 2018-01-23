@@ -96,6 +96,16 @@
   (let [object (get-object container key)]
     (.delete object)))
 
+(defn delete-path
+  [{:keys [container container-name] :as swift} key]
+  (let [all (all-keys swift)
+        pattern (re-pattern (name key))
+        matches (filter (partial re-find pattern) all)
+        matches (sort-by count > matches)]
+    (doseq [match matches]
+      (delete-key swift match))
+    matches))
+
 (deftype SwiftStore [swift]
   store/Store
   (present?
@@ -112,5 +122,4 @@
   [config]
   (let [swift (swift-connect config)]
     (SwiftStore. swift)))
-
 
