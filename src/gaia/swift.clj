@@ -1,6 +1,7 @@
 (ns gaia.swift
   (:require
    [clojure.string :as string]
+   [clojure.java.io :as io]
    [gaia.store :as store])
   (:import
    [org.javaswift.joss.client.factory AccountFactory]))
@@ -31,12 +32,12 @@
        :root root})))
 
 (defn get-object
-  [{:keys [container]} key]
-  (.getObject container key))
+  [container key]
+  (.getObject container (name key)))
 
 (defn key-exists?
-  [{:keys [container] :as swift} key]
-  (let [object (get-object swift key)]
+  [{:keys [container]} key]
+  (let [object (get-object container key)]
     (.exists object)))
 
 (def encoded-slash #"%2F")
@@ -66,6 +67,35 @@
            remaining
            (conj all (get-path base head))))))))
 
+(defn create-container
+  [account path]
+  (let [container (.getContainer account path)]
+    (.create container)
+    (.makePublic container)
+    container))
+
+(defn list-containers
+  [account]
+  (let [containers (.list account)]
+    (map #(.getName %) containers)))
+
+(defn put-key
+  [{:keys [container]} key path]
+  (let [object (get-object container key)
+        file (io/file path)]
+    (.uploadObject object file)))
+
+(defn get-key
+  [{:keys [container]} key path]
+  (let [object (get-object container key)
+        file (io/file path)]
+    (.downloadObject object file)))
+
+(defn delete-key
+  [{:keys [container]} key]
+  (let [object (get-object container key)]
+    (.delete object)))
+
 (deftype SwiftStore [swift]
   store/Store
   (present?
@@ -82,4 +112,5 @@
   [config]
   (let [swift (swift-connect config)]
     (SwiftStore. swift)))
+
 

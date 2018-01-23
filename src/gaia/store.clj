@@ -25,6 +25,9 @@
   (computing? [store key])
   (protocol [store])
   (url-root [store])
+  ;; (put-key [store key])
+  ;; (get-key [store key])
+  ;; (delete-key [store key])
   (existing-keys [store]))
 
 (defprotocol Bus
