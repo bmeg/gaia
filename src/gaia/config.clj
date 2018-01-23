@@ -60,10 +60,10 @@
        (let [order (sort-by first arrayed)
              values (map (comp clean-string last) order)
              unique (string/join "-" (conj values key))
-             env (merge vars arrayed)]
+             env (walk/stringify-keys (merge vars arrayed))]
          (merge
           process
-          {:key unique ;; (template/evaluate-template key env)
+          {:key unique
            :vars env
            :inputs (template/evaluate-map inputs env)
            :outputs (template/evaluate-map outputs env)})))

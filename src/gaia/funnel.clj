@@ -1,5 +1,6 @@
 (ns gaia.funnel
   (:require
+   [clojure.walk :as walk]
    [clojure.string :as string]
    [clojure.tools.cli :as cli]
    [cheshire.core :as json]
@@ -166,7 +167,8 @@
 
 (defn splice-vars
   [command vars]
-  (map #(template/evaluate-template % vars) command))
+  (let [vars (walk/stringify-keys vars)]
+    (map #(template/evaluate-template % vars) command)))
 
 (defn funnel-task
   [{:keys [commands] :as funnel}
