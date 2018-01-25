@@ -2,6 +2,7 @@
   (:require
    [clojure.string :as string]
    [clojure.java.io :as io]
+   [taoensso.timbre :as log]
    [gaia.store :as store])
   (:import
    [org.javaswift.joss.client.factory AccountFactory]))
@@ -43,7 +44,7 @@
 (def encoded-slash #"%2F")
 (def encoded-colon #"%3A")
 
-(defn get-path
+(defn path-for
   [prefix object]
   (-> (.getPath object)
       (string/replace encoded-slash "/")
@@ -65,7 +66,7 @@
            all)
           (recur
            remaining
-           (conj all (get-path base head))))))))
+           (conj all (path-for base head))))))))
 
 (defn create-container
   [account path]
@@ -89,7 +90,25 @@
   [{:keys [container]} key path]
   (let [object (get-object container key)
         file (io/file path)]
-    (.downloadObject object file)))
+    (store/ensure-path path)
+    (if (.exists file)
+      (log/info "already downloaded" path)
+      (try
+        (.downloadObject object file)
+        (catch Exception e
+          (log/info key "failed to download")
+          (.getMessage e))))))
+
+(defn get-path
+  [{:keys [container container-name] :as swift} key path]
+  (let [all (all-keys swift)
+        pattern (re-pattern (name key))
+        matches (filter (partial re-find pattern) all)
+        matches (sort-by count > matches)]
+    (doseq [match matches]
+      (log/info "downloading" match)
+      (get-key swift match (str path "/" match)))
+    matches))
 
 (defn delete-key
   [{:keys [container]} key]

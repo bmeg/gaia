@@ -20,6 +20,17 @@
   (let [path (.getAbsolutePath file)]
     (snip path root)))
 
+(defn dir-for
+  [path]
+  (.substring
+   path 0
+   (.lastIndexOf path java.io.File/separator)))
+
+(defn ensure-path
+  [path]
+  (let [dir (io/file (dir-for path))]
+    (.mkdirs dir)))
+
 (defprotocol Store
   (present? [store key])
   (computing? [store key])
