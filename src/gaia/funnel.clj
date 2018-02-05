@@ -179,7 +179,8 @@
           execute (update execute :command (partial remove empty?))
           fun (dissoc execute :key :vars :inputs :outputs :repo)]
       {:name key
-       :resources {:cpuCores 1}
+       :resources {:cpuCores 1 :zones ["gaia"]}
+       :tags {"gaia" "true"}
        :volumes ["/in" "/out"]
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
        :outputs (map (partial funnel-output funnel key outputs) (:outputs execute))
