@@ -80,6 +80,13 @@
   (let [containers (.list account)]
     (map #(.getName %) containers)))
 
+(defn change-container
+  [{:keys [account] :as swift} container]
+  (merge
+   swift
+   {:container-name container
+    :container (get-container account container)}))
+
 (defn put-key
   [{:keys [container]} key path]
   (let [object (get-object container key)

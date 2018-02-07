@@ -127,6 +127,11 @@
         (http/post
          (str tasks-url "/" id ":cancel")))})))
 
+(defn running-tasks
+  [{:keys [list-tasks] :as funnel}]
+  (let [tasks (list-tasks)]
+    (log/info (first tasks))))
+
 (defn funnel-path
   [funnel path]
   (let [store (:store funnel)
