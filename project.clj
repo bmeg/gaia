@@ -9,5 +9,5 @@
                  [com.taoensso/timbre "4.8.0"]
                  [aleph "0.4.4"]
                  [clj-http "3.7.0"]
-                 [ophion "0.0.12"]
+                 [ophion "0.0.13"]
                  [org.javaswift/joss "0.9.17"]])
