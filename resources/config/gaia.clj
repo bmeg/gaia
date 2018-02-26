@@ -10,7 +10,8 @@
 
  :funnel
  {:host "http://localhost:19191"
-  :path "/Users/spanglry/Data/funnel"}
+  :path "/Users/spanglry/Data/funnel"
+  :zone "gaia"}
 
  :store
  {:type :file

@@ -99,7 +99,7 @@
    :store store})
 
 (defn funnel-connect
-  [{:keys [host path kafka store] :as config}
+  [{:keys [host path zone kafka store] :as config}
    {:keys [commands variables] :as context}]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
@@ -176,7 +176,7 @@
     (map #(template/evaluate-template % vars) command)))
 
 (defn funnel-task
-  [{:keys [commands] :as funnel}
+  [{:keys [commands zone] :as funnel}
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
@@ -184,7 +184,7 @@
           execute (update execute :command (partial remove empty?))
           fun (dissoc execute :key :vars :inputs :outputs :repo)]
       {:name key
-       :resources {:cpuCores 1 :zones ["gaia"]}
+       :resources {:cpuCores 1 :zones [(or zone "gaia")]}
        :tags {"gaia" "true"}
        :volumes ["/in" "/out"]
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
