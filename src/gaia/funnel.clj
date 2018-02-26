@@ -176,7 +176,7 @@
     (map #(template/evaluate-template % vars) command)))
 
 (defn funnel-task
-  [{:keys [commands zone] :as funnel}
+  [{:keys [commands] :as funnel}
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
@@ -184,7 +184,7 @@
           execute (update execute :command (partial remove empty?))
           fun (dissoc execute :key :vars :inputs :outputs :repo)]
       {:name key
-       :resources {:cpuCores 1 :zones [(or zone "gaia")]}
+       :resources {:cpuCores 1 :zones [(or (get-in funnel [:funnel :zone]) "gaia")]}
        :tags {"gaia" "true"}
        :volumes ["/in" "/out"]
        :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
