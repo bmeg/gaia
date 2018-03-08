@@ -60,12 +60,13 @@
   [flow]
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))
-          implicated (flow/find-descendants (:flow flow) key)]
+          expired (sync/expire-key flow key)]
+          ;; implicated (flow/find-descendants (:flow flow) key)
+      ;; (swap! (:status flow) (fn [status] (apply dissoc status implicated)))
       (log/info "expire request" body)
-      (swap! (:status flow) (fn [status] (apply dissoc status implicated)))
       (sync/trigger-election! flow)
       (response
-       {:expired implicated}))))
+       {:expired expired}))))
 
 (defn gaia-routes
   [flow]

@@ -81,3 +81,12 @@
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
 
+(defn expire-key
+  [{:keys [flow funnel]} key]
+  (let [store (:store funnel)
+        descendants (flow/find-descendants flow key)]
+    (doseq [descendant descendants]
+      (store/delete store descendant))
+    (swap! (:status flow) (fn [status] (apply dissoc status descendants)))
+    (log/info "deleted" descendants)
+    descendants))

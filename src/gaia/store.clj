@@ -38,7 +38,7 @@
   (url-root [store])
   ;; (put-key [store key])
   ;; (get-key [store key])
-  ;; (delete-key [store key])
+  (delete [store key])
   (existing-keys [store]))
 
 (defprotocol Bus
@@ -59,6 +59,8 @@
   (computing? [store key] false)
   (protocol [store] "file://")
   (url-root [store] root)
+  (delete [store key]
+    (io/delete-file (join-path [root (name key)])))
   (existing-keys
     [store]
     (let [files (kafka/dir->files root)]

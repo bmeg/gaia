@@ -140,6 +140,8 @@
   (computing? [store key] false)
   (protocol [store] (str "swift://" (:container-name swift)))
   (url-root [store] (:root swift))
+  (delete [store key]
+    (delete-key swift key))
   (existing-keys
     [store]
     (all-keys swift)))
