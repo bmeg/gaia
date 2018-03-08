@@ -40,9 +40,12 @@
 (defn boot
   [config]
   (let [store (config/load-store (:store config))
-        funnel (boot-funnel config store)
-        flow (sync/generate-sync funnel (:gaia config))
-        ;; flow (assoc flow :store store)
+        funnel (boot-funnel config store)]
+    (sync/generate-sync funnel (:gaia config))))
+
+(defn run
+  [config]
+  (let [flow (boot config)
         events (sync/events-listener flow (:kafka config))]
     (sync/engage-sync! flow)
     flow))
@@ -84,7 +87,7 @@
   [options]
   (let [path (or (:config options) "resources/config/gaia.clj")
         config (config/load-config path)
-        flow (boot config)
+        flow (run config)
         routes (polaris/build-routes (gaia-routes flow))
         router (polaris/router routes)
         app (-> router

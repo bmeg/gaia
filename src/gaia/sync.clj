@@ -82,8 +82,9 @@
      :consumer consumer}))
 
 (defn expire-key
-  [flow store key]
-  (let [descendants (flow/find-descendants flow key)]
+  [flow key]
+  (let [descendants (flow/find-descendants (:flow flow) key)
+        store (get-in flow [:funnel :store])]
     (doseq [descendant descendants]
       (try
         (store/delete store descendant)
