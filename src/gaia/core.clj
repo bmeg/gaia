@@ -60,7 +60,7 @@
   [flow]
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))
-          expired (sync/expire-key flow key)]
+          expired (sync/expire-key (:flow flow) (get-in flow [:funnel :store]) key)]
           ;; implicated (flow/find-descendants (:flow flow) key)
       ;; (swap! (:status flow) (fn [status] (apply dissoc status implicated)))
       (log/info "expire request" body)
