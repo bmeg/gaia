@@ -83,8 +83,7 @@
 
 (defn expire-key
   [flow store key]
-  (let [store (:store funnel)
-        descendants (flow/find-descendants flow key)]
+  (let [descendants (flow/find-descendants flow key)]
     (doseq [descendant descendants]
       (store/delete store descendant))
     (swap! (:status flow) (fn [status] (apply dissoc status descendants)))
