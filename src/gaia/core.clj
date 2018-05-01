@@ -64,8 +64,6 @@
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))
           expired (sync/expire-key flow key)]
-          ;; implicated (flow/find-descendants (:flow flow) key)
-      ;; (swap! (:status flow) (fn [status] (apply dissoc status implicated)))
       (log/info "expire request" body)
       (sync/trigger-election! flow)
       (response
@@ -79,9 +77,6 @@
 (def parse-args
   [["-c" "--config CONFIG" "path to config file"]
    ["-i" "--input INPUT" "input file or directory"]])
-
-;; config (load-config "config/ohsu-swift.clj")
-;; config (load-config "config/gaia.clj")
 
 (defn start
   [options]
