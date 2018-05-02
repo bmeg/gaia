@@ -85,10 +85,10 @@
   [flow key]
   (let [descendants (flow/find-descendants (:flow flow) key)
         store (get-in flow [:funnel :store])]
-    (doseq [descendant descendants]
-      (try
-        (store/delete store descendant)
-        (catch Exception e (log/info (.getMessage e)))))
+    ;; (doseq [descendant descendants]
+    ;;   (try
+    ;;     (store/delete store descendant)
+    ;;     (catch Exception e (log/info (.getMessage e)))))
     (swap! (:status flow) (fn [status] (apply dissoc status descendants)))
     (log/info "deleted" descendants)
     descendants))
