@@ -69,6 +69,15 @@
       (response
        {:expired expired}))))
 
+(defn commands-handler
+  [flow]
+  (fn [request]
+    (let [{:keys [root commands] :as body} (read-json (:body request))]
+      (log/info "commands request" body)
+      (swap! (:commands flow) update (keyword root) merge body)
+      (response
+       {:keys (keys @(:commands flow))}))))
+
 (defn gaia-routes
   [flow]
   [["/status" :status (status-handler flow)]
@@ -77,6 +86,16 @@
 (def parse-args
   [["-c" "--config CONFIG" "path to config file"]
    ["-i" "--input INPUT" "input file or directory"]])
+
+;; top level config
+{:config
+ {:kafka {}
+  :mongo {}
+  :funnel {}
+  :store {}
+  :flow {}}
+ :status (atom {})
+ :commands (atom {})}
 
 (defn start
   [options]

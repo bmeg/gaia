@@ -100,7 +100,7 @@
 
 (defn funnel-connect
   [{:keys [host path zone kafka store] :as config}
-   {:keys [commands variables] :as context}]
+   context]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
         existing (store/existing-paths store)
