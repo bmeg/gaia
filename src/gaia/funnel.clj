@@ -8,8 +8,9 @@
    [clj-http.client :as http]
    [protograph.kafka :as kafka]
    [protograph.template :as template]
+   [gaia.config :as config]
    [gaia.store :as store]
-   [gaia.config :as config]))
+   [gaia.task :as task]))
 
 (defn parse-body
   [response]
@@ -55,7 +56,7 @@
     outputs)))
 
 (defn apply-outputs
-  [path status task-id outputs]
+  [path task-id outputs]
   (let [rendered (render-outputs path task-id outputs)]
     rendered))
 
@@ -67,8 +68,8 @@
    (json/generate-string message)))
 
 (defn funnel-events-listener
-  ([variables path status] (funnel-events-listener variables path status {}))
-  ([variables path status kafka]
+  ([variables path] (funnel-events-listener variables path {}))
+  ([variables path kafka]
    (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
          producer (kafka/producer (merge (:base kafka) (:producer kafka)))
 
@@ -79,7 +80,7 @@
                (log/info "funnel event" message)
                (if (= (:type message) "TASK_OUTPUTS")
                  (let [outputs (get-in message [:outputs :value])
-                       applied (apply-outputs path status (:id message) outputs)]
+                       applied (apply-outputs path (:id message) outputs)]
                    (doseq [[key output] applied]
                      (log/info "funnel output" key output applied)
                      (declare-event!
@@ -103,12 +104,10 @@
    context]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
-        existing (store/existing-paths store)
-        status (atom existing)
         prefix (str (store/protocol store) path)]
     (merge
      (funnel-config config context)
-     {:listener (funnel-events-listener variables prefix status kafka)
+     {:listener (funnel-events-listener variables prefix kafka)
 
       ;; api functions
       :create-task
@@ -201,6 +200,15 @@
       (assoc task :id task-id))
     (catch Exception e
       (.printStackTrace e))))
+
+(deftype FunnelTask [funnel]
+  task/Task
+  (submit!
+    [task process]
+    (submit-task! funnel process)))
+
+(defn load-funnel-task
+  [config])
 
 (defn all-tasks
   [funnel processes]

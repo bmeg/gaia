@@ -9,7 +9,8 @@
    [protograph.template :as template]
    [gaia.command :as command]
    [gaia.store :as store]
-   [gaia.swift :as swift]))
+   [gaia.swift :as swift]
+   [gaia.task :as task]))
 
 (def config-keys
   [:variables
@@ -69,6 +70,8 @@
            :outputs (template/evaluate-map outputs env)})))
      series)))
 
+;; TODO: break this out into separate functions to be applied when commands
+;;   or processes are added to the system
 (defn load-flow-config
   [path]
   (let [config
@@ -81,7 +84,7 @@
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
         config (update config :commands (partial index-seq (comp keyword :key)))
-        config (update config :processes (fn [processes] (template/map-cat template-vars processes)))]
+        config (update config :processes (partial template/map-cat template-vars))]
     (update
      config
      :processes
@@ -105,3 +108,7 @@
     :swift (swift/load-swift-store config)
     (store/load-file-store config)))
 
+(defn load-task
+  [config]
+  (condp = (keyword (:target config))
+    :funnel (funnel/load-funnel-task config)))

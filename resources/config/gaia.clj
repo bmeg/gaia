@@ -8,8 +8,9 @@
   :port 27017
   :database "test"}
 
- :funnel
- {:host "http://localhost:19191"
+ :task
+ {:target "funnel"
+  :host "http://localhost:19191"
   :path "/Users/spanglry/Data/funnel"
   :zone "gaia"}
 

@@ -40,6 +40,7 @@
 (defn boot
   [config]
   (let [store (config/load-store (:store config))
+        task (config/load-task (:task config))
         funnel (boot-funnel config store)]
     (sync/generate-sync funnel (:gaia config))))
 
@@ -72,11 +73,31 @@
 (defn commands-handler
   [flow]
   (fn [request]
-    (let [{:keys [root commands] :as body} (read-json (:body request))]
+    (let [{:keys [commands] :as body} (read-json (:body request))]
       (log/info "commands request" body)
-      (swap! (:commands flow) update (keyword root) merge body)
+      (swap! (:commands flow) merge body)
       (response
-       {:keys (keys @(:commands flow))}))))
+       {:commands (keys @(:commands flow))}))))
+
+(defn processes-handler
+  [flow]
+  (fn [request]
+    (let [{:keys [root processes] :as body} (read-json (:body request))
+          root (keyword root)]
+      (log/info "processes request" body)
+      (swap! (:processes flow) update root merge body)
+      (response
+       {:processes {root (keys (get @(:processes flow) root))}}))))
+
+(defn trigger-handler
+  [flow]
+  (fn [request]
+    (let [{:keys [root] :as body} (read-json (:body request))
+          root (keyword root)]
+      (log/info "trigger request" body)
+      (swap! (:processes flow) update root merge body)
+      (response
+       {:processes {root (keys (get @(:processes flow) root))}}))))
 
 (defn gaia-routes
   [flow]
@@ -87,12 +108,12 @@
   [["-c" "--config CONFIG" "path to config file"]
    ["-i" "--input INPUT" "input file or directory"]])
 
-;; top level config
+;; top level flow state
 {:config
  {:kafka {}
   :mongo {}
-  :funnel {}
   :store {}
+  :task {}
   :flow {}}
  :status (atom {})
  :commands (atom {})}
