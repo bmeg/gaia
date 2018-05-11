@@ -4,13 +4,13 @@
    [clojure.math.combinatorics :as combinatorics]
    [clojure.string :as string]
    [taoensso.timbre :as log]
-   [ophion.config :as config]
    [yaml.core :as yaml]
    [protograph.template :as template]
+   [ophion.config :as config]
    [gaia.command :as command]
    [gaia.store :as store]
    [gaia.swift :as swift]
-   [gaia.executor :as executor]))
+   [gaia.funnel :as funnel]))
 
 (def config-keys
   [:variables
@@ -70,8 +70,21 @@
            :outputs (template/evaluate-map outputs env)})))
      series)))
 
-;; TODO: break this out into separate functions to be applied when commands
-;;   or processes are added to the system
+(defn transform-commands
+  [commands]
+  (index-seq
+   (comp keyword :key)
+   commands))
+
+(defn transform-processes
+  [commands processes]
+  (let [templates (template/map-cat template-vars processes)]
+    (template/map-cat
+     (fn [process]
+       (let [command (get-in commands (keyword (:command process)))]
+         (command/apply-composite commands command process)))
+     processes)))
+
 (defn load-flow-config
   [path]
   (let [config
@@ -83,17 +96,21 @@
               [key (parse-yaml (str path "." (name key) ".yaml"))]
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
-        config (update config :commands (partial index-seq (comp keyword :key)))
-        config (update config :processes (partial template/map-cat template-vars))]
-    (update
-     config
-     :processes
-     (fn [processes]
-       (template/map-cat
-        (fn [process]
-          (let [command (get-in config [:commands (keyword (:command process))])]
-            (command/apply-composite config command process)))
-        processes)))))
+        config (update config :commands transform-commands)
+        config (update config :processes (partial transform-processes commands))]
+    config))
+
+    ;;     config (update config :commands (partial index-seq (comp keyword :key)))
+    ;;     config (update config :processes (partial template/map-cat template-vars))
+    ;; (update
+    ;;  config
+    ;;  :processes
+    ;;  (fn [processes]
+    ;;    (template/map-cat
+    ;;     (fn [process]
+    ;;       (let [command (get-in config [:commands (keyword (:command process))])]
+    ;;         (command/apply-composite config command process)))
+    ;;     processes)))))
 
 (defn load-config
   [path]

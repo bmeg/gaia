@@ -57,7 +57,7 @@
 (declare apply-composite)
 
 (defn apply-step
-  [flow process vars inputs outputs {:keys [key command] :as step}]
+  [commands process vars inputs outputs {:keys [key command] :as step}]
   (let [ovars (template/evaluate-map (:vars step) vars)
         oin (substitute-values (:inputs step) inputs)
         oout (substitute-values (:outputs step) outputs)
@@ -66,18 +66,18 @@
                :vars ovars
                :inputs oin
                :outputs oout}
-        exec (get-in flow [:commands (keyword command)])]
-    (apply-composite flow exec inner)))
+        exec (get commands (keyword command))]
+    (apply-composite commands exec inner)))
 
 (defn apply-composite
-  [flow {:keys [vars inputs outputs steps] :as command} process]
+  [commands {:keys [vars inputs outputs steps] :as command} process]
   (if steps
     (do
       (validate-apply-composite! command process)
       (let [generated (reduce (partial generate-outputs process) {} steps)
             apply-partial (partial
                            apply-step
-                           flow
+                           commands
                            process
                            (:vars process)
                            (merge (:inputs process) (:outputs process) generated)
