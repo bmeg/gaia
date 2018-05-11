@@ -3,9 +3,9 @@
    [taoensso.timbre :as log]
    [cheshire.core :as json]
    [protograph.kafka :as kafka]
+   [gaia.flow :as flow]
    [gaia.store :as store]
-   [gaia.executor :as executor]
-   [gaia.flow :as flow]))
+   [gaia.executor :as executor]))
 
 (defn generate-sync
   [processes]
