@@ -4,18 +4,15 @@
    [cheshire.core :as json]
    [protograph.kafka :as kafka]
    [gaia.store :as store]
-   [gaia.flow :as flow]
-   [gaia.funnel :as funnel]))
+   [gaia.executor :as executor]
+   [gaia.flow :as flow]))
 
 (defn generate-sync
-  [funnel {:keys [commands variables processes agents] :as config}]
+  [processes]
   (let [flow (flow/generate-flow processes)]
-    (merge
-     config
-     {:funnel funnel
-      :flow flow
-      :status (atom {})
-      :next (agent {})})))
+    {:flow flow
+     :status (atom {})
+     :next (agent {})}))
 
 (defn find-process
   [flow key]
@@ -38,18 +35,18 @@
    {} keys))
 
 (defn send-tasks!
-  [funnel prior tasks]
+  [executor prior tasks]
   (doseq [[key task] tasks]
     (if-not (get prior key)
-      (funnel/submit-task! funnel task)))
+      (executor/submit! executor task)))
   (merge tasks prior))
 
 (defn elect-candidates!
-  [flow funnel next status]
+  [flow executor next status]
   (let [candidates (flow/find-candidates flow status)
         elect (process-map flow candidates)
         computing (apply merge (map compute-outputs (vals elect)))]
-    (send next (partial send-tasks! funnel) elect)
+    (send next (partial send-tasks! executor) elect)
     (merge computing status)))
 
 (defn complete-key
@@ -57,38 +54,41 @@
   (assoc status (:key event) (:output event)))
 
 (defn trigger-election!
-  [{:keys [flow funnel next status]}]
-  (swap! status (partial elect-candidates! flow funnel next)))
+  [executor {:keys [flow next status]}]
+  (swap! status (partial elect-candidates! flow executor next)))
 
 (defn process-complete!
-  [{:keys [status] :as state} raw]
+  [executor {:keys [status] :as state} raw]
   (let [event (json/parse-string (.value raw) true)]
     (log/info "process complete!" event)
     (swap! status complete-key event)
-    (trigger-election! state)))
+    (trigger-election! executor state)))
 
 (defn engage-sync!
-  [{:keys [flow funnel status next] :as state}]
-  (let [existing (store/existing-paths (:store funnel))]
+  [store executor {:keys [flow status next] :as state}]
+  (let [existing (store/existing-paths store)]
     (swap! status merge existing)
     (trigger-election! state)))
 
 (defn events-listener
-  [state kafka]
+  [executor state kafka]
   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
-        listen (partial process-complete! state)]
+        listen (partial process-complete! executor state)]
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
 
 (defn expire-key
   [flow key]
-  (let [descendants (flow/find-descendants (:flow flow) key)
-        store (get-in flow [:funnel :store])]
+  (let [descendants (flow/find-descendants (:flow flow) key)]
+        ;; store (get-in flow [:funnel :store])
     ;; (doseq [descendant descendants]
     ;;   (try
     ;;     (store/delete store descendant)
     ;;     (catch Exception e (log/info (.getMessage e)))))
-    (swap! (:status flow) (fn [status] (apply dissoc status descendants)))
-    (log/info "deleted" descendants)
+    (swap!
+     (:status flow)
+     (fn [status]
+       (apply dissoc status descendants)))
+    (log/info "expired" descendants)
     descendants))

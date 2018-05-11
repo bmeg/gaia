@@ -11,10 +11,10 @@
    [protograph.kafka :as kafka]
    [gaia.config :as config]
    [gaia.store :as store]
+   [gaia.executor :as executor]
    [gaia.swift :as swift]
    [gaia.flow :as flow]
    [gaia.command :as command]
-   [gaia.funnel :as funnel]
    [gaia.trigger :as trigger]
    [gaia.sync :as sync])
   (:import
@@ -30,19 +30,22 @@
    :headers {"content-type" "application/json"}
    :body (json/generate-string body)})
 
-(defn boot-funnel
-  [config store]
-  (let [kafka (:kafka config)
-        funnel-config (assoc (:funnel config) :kafka kafka :store store)]
-    (log/info "funnel config" funnel-config)
-    (funnel/funnel-connect funnel-config (:gaia config))))
+;; (defn boot-funnel
+;;   [config store]
+;;   (let [kafka (:kafka config)
+;;         funnel-config (assoc (:funnel config) :kafka kafka :store store)]
+;;     (log/info "funnel config" funnel-config)
+;;     (funnel/funnel-connect funnel-config (:gaia config))))
 
 (defn boot
   [config]
   (let [store (config/load-store (:store config))
-        task (config/load-task (:task config))
-        funnel (boot-funnel config store)]
-    (sync/generate-sync funnel (:gaia config))))
+        exec-config (assoc (:executor config) (:kafka config))
+        executor (config/load-executor exec-config store commands)]
+        ;; funnel (boot-funnel config store)
+    ;; (sync/generate-sync funnel (:gaia config))
+    {:store store
+     :executor executor}))
 
 (defn run
   [config]

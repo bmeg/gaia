@@ -8,7 +8,7 @@
   :port 27017
   :database "test"}
 
- :task
+ :executor
  {:target "funnel"
   :host "http://localhost:19191"
   :path "/Users/spanglry/Data/funnel"

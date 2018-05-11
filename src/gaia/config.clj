@@ -10,7 +10,7 @@
    [gaia.command :as command]
    [gaia.store :as store]
    [gaia.swift :as swift]
-   [gaia.task :as task]))
+   [gaia.executor :as executor]))
 
 (def config-keys
   [:variables
@@ -108,7 +108,7 @@
     :swift (swift/load-swift-store config)
     (store/load-file-store config)))
 
-(defn load-task
-  [config]
+(defn load-executor
+  [config store commands]
   (condp = (keyword (:target config))
-    :funnel (funnel/load-funnel-task config)))
+    :funnel (funnel/load-funnel-executor config store commands)))
