@@ -97,7 +97,7 @@
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
         config (update config :commands transform-commands)
-        config (update config :processes (partial transform-processes commands))]
+        config (update config :processes (partial transform-processes (:commands config)))]
     config))
 
     ;;     config (update config :commands (partial index-seq (comp keyword :key)))
@@ -126,6 +126,6 @@
     (store/load-file-store config)))
 
 (defn load-executor
-  [config store commands]
+  [config store]
   (condp = (keyword (:target config))
-    :funnel (funnel/load-funnel-executor config store commands)))
+    :funnel (funnel/load-funnel-executor config store)))

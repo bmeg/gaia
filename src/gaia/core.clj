@@ -41,7 +41,7 @@
   [config]
   (let [store (config/load-store (:store config))
         exec-config (assoc (:executor config) (:kafka config))
-        executor (config/load-executor exec-config store commands)]
+        executor (config/load-executor exec-config store)]
         ;; funnel (boot-funnel config store)
     ;; (sync/generate-sync funnel (:gaia config))
     {:store store

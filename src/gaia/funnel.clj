@@ -8,7 +8,7 @@
    [clj-http.client :as http]
    [protograph.kafka :as kafka]
    [protograph.template :as template]
-   [gaia.config :as config]
+   ;; [gaia.config :as config]
    [gaia.store :as store]
    [gaia.executor :as executor]))
 
@@ -92,19 +92,17 @@
       :consumer consumer})))
 
 (defn funnel-config
-  [{:keys [host path zone kafka] :as config} store commands]
+  [{:keys [host path zone kafka] :as config} store]
   {:funnel config
-   :commands commands
    :store store})
 
 (defn funnel-connect
-  [{:keys [host path zone kafka] :as config}
-   store commands]
+  [{:keys [host path zone kafka] :as config} store]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")
         prefix (str (store/protocol store) path)]
     (merge
-     (funnel-config config store context)
+     (funnel-config config store)
      {:listener (funnel-events-listener prefix kafka)
 
       ;; api functions
@@ -173,7 +171,7 @@
     (map #(template/evaluate-template % vars) command)))
 
 (defn funnel-task
-  [{:keys [commands] :as funnel}
+  [funnel commands
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
@@ -190,9 +188,9 @@
     (log/error "no command named" command (keys commands))))
 
 (defn submit-task!
-  [funnel process]
+  [funnel commands process]
   (try
-    (let [task (funnel-task funnel process)
+    (let [task (funnel-task funnel commands process)
           task-id (:id ((:create-task funnel) task))]
       (log/info "funnel task" task-id task)
       (assoc task :id task-id))
@@ -202,12 +200,12 @@
 (deftype FunnelExecutor [funnel]
   executor/Executor
   (submit!
-    [executor process]
-    (submit-task! funnel process)))
+    [executor commands process]
+    (submit-task! funnel commands process)))
 
 (defn load-funnel-executor
-  [config store commands]
-  (let [funnel (funnel-connect config store commands)]
+  [config store]
+  (let [funnel (funnel-connect config store)]
     (FunnelExecutor. funnel)))
 
 (defn all-tasks
@@ -218,15 +216,15 @@
   [["-c" "--config CONFIG" "path to config file"]
    ["-o" "--output OUTPUT" "path to output file"]])
 
-(defn -main
-  [& args]
-  (let [env (:options (cli/parse-opts args parse-args))
-        path (or (:config env) "resources/config/gaia.clj")
-        config (config/load-config path)
-        store (config/load-store (:store config))
-        funnel (funnel-config (:funnel config) store (get-in config [:gaia :commands]))
-        output (or (:output env) "funnel-tasks.json")
-        tasks (all-tasks funnel (get-in config [:gaia :processes]))
-        json (mapv json/generate-string tasks)
-        out (string/join "\n" json)]
-    (spit output out)))
+;; (defn -main
+;;   [& args]
+;;   (let [env (:options (cli/parse-opts args parse-args))
+;;         path (or (:config env) "resources/config/gaia.clj")
+;;         config (config/load-config path)
+;;         store (config/load-store (:store config))
+;;         funnel (funnel-config (:funnel config) store (get-in config [:gaia :commands]))
+;;         output (or (:output env) "funnel-tasks.json")
+;;         tasks (all-tasks funnel (get-in config [:gaia :processes]))
+;;         json (mapv json/generate-string tasks)
+;;         out (string/join "\n" json)]
+;;     (spit output out)))

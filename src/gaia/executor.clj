@@ -1,6 +1,6 @@
 (ns gaia.executor)
 
 (defprotocol Executor
-  (submit! [executor process]))
+  (submit! [executor commands process]))
 
 ;; TODO: make local docker execution task type
