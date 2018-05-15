@@ -16,7 +16,7 @@
   (.exists container))
 
 (defn swift-connect
-  [{:keys [username password url method tenant-id tenant-name region container root]}]
+  [{:keys [username password url method tenant-id tenant-name region root]}]
   (let [factory (AccountFactory.)]
     (.setUsername factory username)
     (.setPassword factory password)
@@ -25,11 +25,13 @@
     (if tenant-id (.setTenantId factory tenant-id))
     (if tenant-name (.setTenantName factory tenant-name))
     (if method (.setAuthenticationMethod factory method))
-    (let [account (.createAccount factory)
-          contain (get-container account container)]
+    (let [account (.createAccount factory)]
+      ;;     contain (get-container account container)
+      ;; {:account account
+      ;;  :container contain
+      ;;  :container-name container
+      ;;  :root root}
       {:account account
-       :container contain
-       :container-name container
        :root root})))
 
 (defn get-object
@@ -151,3 +153,9 @@
   (let [swift (swift-connect config)]
     (SwiftStore. swift)))
 
+(defn swift-store-generator
+  [config]
+  (let [swift (swift-connect config)]
+    (fn [container]
+      (let [pointed (change-container swift container)]
+        (SwiftStore. pointed)))))

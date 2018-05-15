@@ -49,22 +49,23 @@
   (execute [executor key inputs outputs command])
   (status [executor task-id]))
 
-(deftype FileStore [root]
+(deftype FileStore [root container]
   Store
   (present?
     [store key]
-    (let [path (join-path [root (name key)])
+    (let [path (join-path [root container (name key)])
           file (io/file path)]
       (.exists file)))
   (computing? [store key] false)
   (protocol [store] "file://")
-  (url-root [store] root)
+  (url-root [store] (join-path [root container]))
   (delete [store key]
-    (io/delete-file (join-path [root (name key)])))
+    (io/delete-file (join-path [root container (name key)])))
   (existing-keys
     [store]
-    (let [files (kafka/dir->files root)]
-      (mapv (partial file->key root) files))))
+    (let [base (url-root store)
+          files (kafka/dir->files base)]
+      (mapv (partial file->key base) files))))
 
 (defn absent?
   [store key]
@@ -81,8 +82,10 @@
       existing))))
 
 (defn load-file-store
+  [config container]
+  (FileStore. (:root config) container))
+
+(defn file-store-generator
   [config]
-  (FileStore. (:root config)))
-
-
-
+  (fn [container]
+    (load-file-store config container)))

@@ -133,9 +133,9 @@
 (defn load-store
   [config]
   (condp = (keyword (:type config))
-    :file (store/load-file-store config)
-    :swift (swift/load-swift-store config)
-    (store/load-file-store config)))
+    :file (store/file-store-generator config)
+    :swift (swift/swift-store-generator config)
+    (store/file-store-generator config)))
 
 (defn load-executor
   [config store]
