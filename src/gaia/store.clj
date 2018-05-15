@@ -32,14 +32,14 @@
     (.mkdirs dir)))
 
 (defprotocol Store
-  (present? [store container key])
-  (computing? [store container key])
+  (present? [store key])
+  (computing? [store key])
   (protocol [store])
-  (url-root [store container])
+  (url-root [store])
   ;; (put-key [store key])
   ;; (get-key [store key])
-  (delete [store container key])
-  (existing-keys [store container]))
+  (delete [store key])
+  (existing-keys [store]))
 
 (defprotocol Bus
   (put [bus topic message])
@@ -52,8 +52,8 @@
 (deftype FileStore [root]
   Store
   (present?
-    [store container key]
-    (let [path (join-path [root (name container) (name key)])
+    [store key]
+    (let [path (join-path [root (name key)])
           file (io/file path)]
       (.exists file)))
   (computing? [store key] false)
