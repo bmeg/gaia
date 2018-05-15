@@ -36,8 +36,9 @@
         processes (atom {})
         flows (atom {})
         store (config/load-store (:store config))
+        grandfather (store "")
         exec-config (assoc (:executor config) (:kafka config))
-        executor (config/load-executor exec-config store)]
+        executor (config/load-executor exec-config (store/protocol grandfather))]
     ;; (sync/generate-sync funnel (:gaia config))
     {:config config
      :commands commands
@@ -51,11 +52,12 @@
   (get @(:processes state) root))
 
 (defn initiate-flow
-  [{:keys [config executor] :as state} root]
+  [{:keys [config executor store] :as state} root]
   (let [processes (state-processes state root)
-        flow (sync/generate-sync processes)
+        pointed (store (name root))
+        flow (sync/generate-sync processes pointed)
         events (sync/events-listener executor flow (:kafka config))]
-    (sync/engage-sync! flow)
+    (sync/engage-sync! executor flow)
     (swap! (:flows state) assoc root flow)
     state))
 
@@ -128,7 +130,7 @@
  :flows
  (atom
   {:$root-a
-   {:processes []
+   {:processes {}
     :status (atom {})}})
  :commands (atom {})}
 

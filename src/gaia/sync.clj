@@ -8,9 +8,10 @@
    [gaia.executor :as executor]))
 
 (defn generate-sync
-  [processes]
+  [processes store]
   (let [flow (flow/generate-flow processes)]
     {:flow flow
+     :store store
      :processes processes
      :status (atom {})
      :next (agent {})}))
@@ -67,10 +68,10 @@
     (trigger-election! executor state)))
 
 (defn engage-sync!
-  [store executor {:keys [flow status next] :as state}]
+  [executor {:keys [flow store status next] :as state}]
   (let [existing (store/existing-paths store)]
     (swap! status merge existing)
-    (trigger-election! state)))
+    (trigger-election! executor state)))
 
 (defn events-listener
   [executor state kafka]

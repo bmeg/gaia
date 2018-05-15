@@ -138,6 +138,6 @@
     (store/file-store-generator config)))
 
 (defn load-executor
-  [config store]
+  [config prefix]
   (condp = (keyword (:target config))
-    :funnel (funnel/load-funnel-executor config store)))
+    :funnel (funnel/load-funnel-executor config prefix)))
