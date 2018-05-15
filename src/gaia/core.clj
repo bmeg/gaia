@@ -30,82 +30,89 @@
    :headers {"content-type" "application/json"}
    :body (json/generate-string body)})
 
-;; (defn boot-funnel
-;;   [config store]
-;;   (let [kafka (:kafka config)
-;;         funnel-config (assoc (:funnel config) :kafka kafka :store store)]
-;;     (log/info "funnel config" funnel-config)
-;;     (funnel/funnel-connect funnel-config (:gaia config))))
-
 (defn boot
   [config]
-  (let [store (config/load-store (:store config))
+  (let [commands (atom (:commands config))
+        processes (atom {})
+        flows (atom {})
+        store (config/load-store (:store config))
         exec-config (assoc (:executor config) (:kafka config))
         executor (config/load-executor exec-config store)]
-        ;; funnel (boot-funnel config store)
     ;; (sync/generate-sync funnel (:gaia config))
-    {:store store
+    {:config config
+     :commands commands
+     :processes processes
+     :flows flows
+     :store store
      :executor executor}))
 
-(defn run
-  [config]
-  (let [flow (boot config)
-        events (sync/events-listener flow (:kafka config))]
+(defn state-processes
+  [state root]
+  (get @(:processes state) root))
+
+(defn initiate-flow
+  [{:keys [config executor] :as state} root]
+  (let [processes (state-processes state root)
+        flow (sync/generate-sync processes)
+        events (sync/events-listener executor flow (:kafka config))]
     (sync/engage-sync! flow)
-    flow))
+    (swap! (:flows state) assoc root flow)
+    state))
+
+(defn commands-handler
+  [state]
+  (fn [request]
+    (let [{:keys [commands] :as body} (read-json (:body request))]
+      (log/info "commands request" body)
+      (swap! (:commands state) merge body)
+      (response
+       {:commands (keys @(:commands state))}))))
+
+(defn processes-handler
+  [state]
+  (fn [request]
+    (let [{:keys [root processes] :as body} (read-json (:body request))
+          root (keyword root)
+          transformed (config/transform-processes (:commands state) processes)]
+      (log/info "processes request" body)
+      (swap! (:processes state) update root merge transformed)
+      ;; TODO - add in code to merge new processes into running flow
+      (response
+       {:processes {root (keys (state-processes state root))}}))))
+
+(defn initiate-handler
+  [state]
+  (fn [request]
+    (let [{:keys [root] :as body} (read-json (:body request))
+          root (keyword root)]
+      (log/info "initiate request" body)
+      (swap! (:processes state) update root merge body)
+      (response
+       {:processes {root (keys (get @(:processes state) root))}}))))
 
 (defn status-handler
-  [flow]
+  [state]
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))]
       (log/info "status request" body)
       (response
        {:key key
-        :status (get @(:status flow) key)}))))
+        :status (get @(:status state) key)}))))
 
 (defn expire-handler
-  [flow]
+  [state]
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))
-          expired (sync/expire-key flow key)]
+          expired (sync/expire-key state key)]
       (log/info "expire request" body)
-      (sync/trigger-election! flow)
+      (sync/trigger-election! state)
       (response
        {:expired expired}))))
 
-(defn commands-handler
-  [flow]
-  (fn [request]
-    (let [{:keys [commands] :as body} (read-json (:body request))]
-      (log/info "commands request" body)
-      (swap! (:commands flow) merge body)
-      (response
-       {:commands (keys @(:commands flow))}))))
-
-(defn processes-handler
-  [flow]
-  (fn [request]
-    (let [{:keys [root processes] :as body} (read-json (:body request))
-          root (keyword root)]
-      (log/info "processes request" body)
-      (swap! (:processes flow) update root merge body)
-      (response
-       {:processes {root (keys (get @(:processes flow) root))}}))))
-
-(defn trigger-handler
-  [flow]
-  (fn [request]
-    (let [{:keys [root] :as body} (read-json (:body request))
-          root (keyword root)]
-      (log/info "trigger request" body)
-      (swap! (:processes flow) update root merge body)
-      (response
-       {:processes {root (keys (get @(:processes flow) root))}}))))
-
 (defn gaia-routes
-  [flow]
-  [["/status" :status (status-handler flow)]
-   ["/expire" :expire (expire-handler flow)]])
+  [state]
+  [["/status" :status (status-handler state)]
+   ["/expire" :expire (expire-handler state)]])
 
 (def parse-args
   [["-c" "--config CONFIG" "path to config file"]
@@ -116,17 +123,22 @@
  {:kafka {}
   :mongo {}
   :store {}
-  :task {}
+  :executor {}
   :flow {}}
- :status (atom {})
+ :flows
+ (atom
+  {:$root-a
+   {:processes []
+    :status (atom {})}})
  :commands (atom {})}
 
 (defn start
   [options]
   (let [path (or (:config options) "resources/config/gaia.clj")
         config (config/load-config path)
-        flow (run config)
-        routes (polaris/build-routes (gaia-routes flow))
+        state (boot config)
+        ;; flow (run config)
+        routes (polaris/build-routes (gaia-routes state))
         router (polaris/router routes)
         app (-> router
                 (resource/wrap-resource "public")

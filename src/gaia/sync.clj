@@ -11,6 +11,7 @@
   [processes]
   (let [flow (flow/generate-flow processes)]
     {:flow flow
+     :processes processes
      :status (atom {})
      :next (agent {})}))
 

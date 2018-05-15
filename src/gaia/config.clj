@@ -24,10 +24,14 @@
 
 (defn index-seq
   [f s]
-  (reduce
-   (fn [m x]
-     (assoc m (f x) x))
-   {} s))
+  (into
+   {}
+   (map (juxt f identity) s)))
+
+;; (reduce
+;;  (fn [m x]
+;;    (assoc m (f x) x))
+;;  {} s)
 
 (defn filter-map
   [f m]
@@ -70,20 +74,21 @@
            :outputs (template/evaluate-map outputs env)})))
      series)))
 
-(defn transform-commands
-  [commands]
+(defn index-key
+  [s]
   (index-seq
    (comp keyword :key)
-   commands))
+   s))
 
 (defn transform-processes
   [commands processes]
   (let [templates (template/map-cat template-vars processes)]
-    (template/map-cat
-     (fn [process]
-       (let [command (get-in commands (keyword (:command process)))]
-         (command/apply-composite commands command process)))
-     processes)))
+    (index-key
+     (template/map-cat
+      (fn [process]
+        (let [command (get-in commands (keyword (:command process)))]
+          (command/apply-composite commands command process)))
+      processes))))
 
 (defn load-flow-config
   [path]
@@ -96,7 +101,7 @@
               [key (parse-yaml (str path "." (name key) ".yaml"))]
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
-        config (update config :commands transform-commands)
+        config (update config :commands index-key)
         config (update config :processes (partial transform-processes (:commands config)))]
     config))
 
@@ -112,11 +117,18 @@
     ;;         (command/apply-composite config command process)))
     ;;     processes)))))
 
+(defn load-commands
+  [path]
+  (index-key
+   (parse-yaml
+    (str path ".commands.yaml"))))
+
 (defn load-config
   [path]
   (let [config (config/read-path path)
-        network (load-flow-config (get-in config [:flow :path]))]
-    (assoc config :gaia network)))
+        commands (load-commands (get-in config [:flow :path]))]
+        ;; network (load-flow-config (get-in config [:flow :path]))
+    (assoc config :commands commands)))
 
 (defn load-store
   [config]
