@@ -61,7 +61,9 @@
   (protocol [store] "file://")
   (url-root [store] (join-path [root container]))
   (key->url [store key]
-    (str (protocol store) (join-path [root container (name key)])))
+    (str
+     (protocol store)
+     (join-path [root container (name key)])))
   (delete [store key]
     (io/delete-file (join-path [root container (name key)])))
   (existing-keys

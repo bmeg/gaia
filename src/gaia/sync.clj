@@ -60,11 +60,12 @@
   (swap! status (partial elect-candidates! state executor commands)))
 
 (defn process-complete!
-  [{:keys [status] :as state} executor commands raw]
+  [{:keys [status] :as state} executor commands root raw]
   (let [event (json/parse-string (.value raw) true)]
-    (log/info "process complete!" event)
-    (swap! status complete-key event)
-    (trigger-election! state executor commands)))
+    (when (= (name root) (:root event))
+      (log/info "process complete!" event)
+      (swap! status complete-key event)
+      (trigger-election! state executor commands))))
 
 (defn engage-sync!
   [{:keys [flow store status next] :as state} executor commands]
@@ -73,9 +74,9 @@
     (trigger-election! state executor commands)))
 
 (defn events-listener
-  [state executor commands kafka]
+  [state executor commands root kafka]
   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
-        listen (partial process-complete! state executor commands)]
+        listen (partial process-complete! state executor commands root)]
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))

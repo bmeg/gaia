@@ -70,8 +70,6 @@
 (defn extract-root
   [outputs prefix]
   (let [output (first outputs)
-        _ (log/info "SAMPLE OUTPUT" output)
-        _ (log/info "PREFIX" prefix)
         base (store/snip (:url output) prefix)
         parts (string/split base #"/")]
     (first parts)))
@@ -81,7 +79,6 @@
   ([prefix kafka]
    (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
          producer (kafka/producer (merge (:base kafka) (:producer kafka)))
-         ;; root (last (string/split path #"/"))
 
          listen
          (fn [funnel-event]
@@ -93,7 +90,6 @@
                    (let [outputs (get-in message [:outputs :value])
                          root (extract-root outputs prefix)
                          full (store/join-path [prefix root])
-                         ;; applied (apply-outputs path (:id message) outputs)
                          applied (apply-outputs full (:id message) outputs)]
                      (doseq [[key output] applied]
                        (log/info "funnel output" key output applied)
@@ -107,16 +103,10 @@
      {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
 
-;; (defn funnel-config
-;;   [{:keys [host path zone kafka] :as config} store]
-;;   {:funnel config
-;;    :store store})
-
 (defn funnel-connect
   [{:keys [host path zone kafka] :as config} prefix]
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")]
-        ;; prefix (str (store/protocol store) path)
     {:funnel config
      :listener (funnel-events-listener prefix kafka)
 
@@ -142,13 +132,6 @@
   (let [tasks (list-tasks)]
     (log/info (first tasks))))
 
-(defn funnel-path
-  [funnel store path]
-  (let [prefix (store/protocol store)
-        base (get-in funnel [:funnel :path])
-        join (store/join-path [base path])]
-    (str prefix join)))
-
 (defn funnel-input
   [funnel store inputs [key source]]
   (let [base {:name key
@@ -156,7 +139,6 @@
               :path (get inputs (keyword key))}]
     (cond
       (string? source) (assoc base :url (store/key->url store source))
-      ;; (string? source) (assoc base :url (funnel-path funnel store source))
       (:contents source) (merge base source)
       (:content source) (assoc base :contents (:content source))
       (:type source) (merge base source)
@@ -176,7 +158,6 @@
               :path path}]
     (cond
       (string? source) (assoc base :url (store/key->url store source))
-      ;; (string? source) (assoc base :url (funnel-path funnel store source))
       (:contents source) (merge base source)
       (:type source) (merge base source)
       :else source)))

@@ -67,7 +67,7 @@
   (let [processes (state-processes state root)
         pointed (store (name root))
         flow (sync/generate-sync processes pointed)
-        events (sync/events-listener flow executor commands (:kafka config))]
+        events (sync/events-listener flow executor commands root (:kafka config))]
     (sync/engage-sync! flow executor commands)
     (swap! (:flows state) assoc root flow)
     state))
