@@ -28,11 +28,6 @@
    {}
    (map (juxt f identity) s)))
 
-;; (reduce
-;;  (fn [m x]
-;;    (assoc m (f x) x))
-;;  {} s)
-
 (defn filter-map
   [f m]
   (into
@@ -105,18 +100,6 @@
         config (update config :processes (partial transform-processes (:commands config)))]
     config))
 
-    ;;     config (update config :commands (partial index-seq (comp keyword :key)))
-    ;;     config (update config :processes (partial template/map-cat template-vars))
-    ;; (update
-    ;;  config
-    ;;  :processes
-    ;;  (fn [processes]
-    ;;    (template/map-cat
-    ;;     (fn [process]
-    ;;       (let [command (get-in config [:commands (keyword (:command process))])]
-    ;;         (command/apply-composite config command process)))
-    ;;     processes)))))
-
 (defn load-commands
   [path]
   (index-key
@@ -127,7 +110,6 @@
   [path]
   (let [config (config/read-path path)
         commands (load-commands (get-in config [:flow :path]))]
-        ;; network (load-flow-config (get-in config [:flow :path]))
     (assoc config :commands commands)))
 
 (defn load-store
