@@ -1,0 +1,28 @@
+- key: md5-rabbit
+  command: md5
+  inputs:
+    INPUT: "animals/rabbit"
+  outputs:
+    OUTPUT: "md5/rabbit"
+
+- key: md5-snake
+  command: md5
+  inputs:
+    INPUT: "animals/snake"
+  outputs:
+    OUTPUT: "md5/snake"
+
+- key: cat-animals
+  command: cat
+  inputs:
+    A: "md5/rabbit"
+    B: "md5/snake"
+  outputs:
+    OUTPUT: "cat/animals"
+
+- key: wc-animals
+  command: wc
+  inputs:
+    INPUT: "cat/animals"
+  outputs:
+    OUTPUT: "wc/animals"

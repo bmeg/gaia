@@ -36,6 +36,7 @@
   (computing? [store key])
   (protocol [store])
   (url-root [store])
+  (key->url [store key])
   ;; (put-key [store key])
   ;; (get-key [store key])
   (delete [store key])
@@ -59,6 +60,8 @@
   (computing? [store key] false)
   (protocol [store] "file://")
   (url-root [store] (join-path [root container]))
+  (key->url [store key]
+    (str (protocol store) (join-path [root container (name key)])))
   (delete [store key]
     (io/delete-file (join-path [root container (name key)])))
   (existing-keys

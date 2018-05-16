@@ -37,8 +37,9 @@
         flows (atom {})
         store (config/load-store (:store config))
         grandfather (store "")
-        exec-config (assoc (:executor config) (:kafka config))
-        executor (config/load-executor exec-config (store/protocol grandfather))]
+        exec-config (assoc (:executor config) :kafka (:kafka config))
+        prefix (str (store/protocol grandfather) (:path exec-config))
+        executor (config/load-executor exec-config prefix)]
     {:config config
      :commands commands
      :processes processes
@@ -46,17 +47,28 @@
      :store store
      :executor executor}))
 
+(defn merge-processes!
+  [state root processes]
+  (let [transformed (config/transform-processes @(:commands state) processes)]
+    (swap! (:processes state) update root merge transformed)
+    state))
+
+(defn load-processes!
+  [state root path]
+  (let [processes (config/parse-yaml path)]
+    (merge-processes! state root processes)))
+
 (defn state-processes
   [state root]
   (get @(:processes state) root))
 
-(defn initiate-flow
-  [{:keys [config executor store] :as state} root]
+(defn initiate-flow!
+  [{:keys [config commands executor store] :as state} root]
   (let [processes (state-processes state root)
         pointed (store (name root))
         flow (sync/generate-sync processes pointed)
-        events (sync/events-listener executor flow (:kafka config))]
-    (sync/engage-sync! executor flow)
+        events (sync/events-listener flow executor commands (:kafka config))]
+    (sync/engage-sync! flow executor commands)
     (swap! (:flows state) assoc root flow)
     state))
 
@@ -121,7 +133,7 @@
 
 ;; top level flow state
 {:config
- {:kafka {}
+{:kafka {}
   :mongo {}
   :store {}
   :executor {}

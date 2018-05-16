@@ -86,7 +86,7 @@
     (index-key
      (template/map-cat
       (fn [process]
-        (let [command (get-in commands (keyword (:command process)))]
+        (let [command (get commands (keyword (:command process)))]
           (command/apply-composite commands command process)))
       processes))))
 

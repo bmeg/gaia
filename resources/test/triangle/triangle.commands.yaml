@@ -1,0 +1,34 @@
+- key: md5
+  image: ubuntu
+  command:
+    - "md5sum"
+    - "/in/in"
+  stdout: "/out/out"
+  inputs:
+    INPUT: "/in/in"
+  outputs:
+    OUTPUT: "/out/out"
+
+- key: cat
+  image: ubuntu
+  command:
+    - "cat"
+    - "/in/A"
+    - "/in/B"
+  stdout: "/out/out"
+  inputs:
+    A: "/in/A"
+    B: "/in/B"
+  outputs:
+    OUTPUT: "/out/out"
+
+- key: wc
+  image: ubuntu
+  command:
+    - "wc"
+    - "/in/in"
+  stdout: "/out/out"
+  inputs:
+    INPUT: "/in/in"
+  outputs:
+    OUTPUT: "/out/out"

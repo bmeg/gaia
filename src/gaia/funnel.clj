@@ -38,8 +38,8 @@
     response))
 
 (defn render-output
-  [root task-id {:keys [url path sizeBytes]}]
-  (let [key (store/snip url root)]
+  [prefix task-id {:keys [url path sizeBytes]}]
+  (let [key (store/snip url prefix)]
     [key
      {:url url
       :path path
@@ -67,12 +67,21 @@
    "gaia-events"
    (json/generate-string message)))
 
+(defn extract-root
+  [outputs prefix]
+  (let [output (first outputs)
+        _ (log/info "SAMPLE OUTPUT" output)
+        _ (log/info "PREFIX" prefix)
+        base (store/snip (:url output) prefix)
+        parts (string/split base #"/")]
+    (first parts)))
+
 (defn funnel-events-listener
-  ([path] (funnel-events-listener path {}))
-  ([path kafka]
+  ([prefix] (funnel-events-listener prefix {}))
+  ([prefix kafka]
    (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
          producer (kafka/producer (merge (:base kafka) (:producer kafka)))
-         root (last (string/split path #"/"))
+         ;; root (last (string/split path #"/"))
 
          listen
          (fn [funnel-event]
@@ -80,16 +89,21 @@
              (let [message (json/parse-string event true)]
                (log/info "funnel event" message)
                (if (= (:type message) "TASK_OUTPUTS")
-                 (let [outputs (get-in message [:outputs :value])
-                       applied (apply-outputs path (:id message) outputs)]
-                   (doseq [[key output] applied]
-                     (log/info "funnel output" key output applied)
-                     (declare-event!
-                      producer
-                      {:key key
-                       :root root
-                       :output output})))))))]
-     (kafka/subscribe consumer ["funnel-events"])
+                 (try
+                   (let [outputs (get-in message [:outputs :value])
+                         root (extract-root outputs prefix)
+                         full (store/join-path [prefix root])
+                         ;; applied (apply-outputs path (:id message) outputs)
+                         applied (apply-outputs full (:id message) outputs)]
+                     (doseq [[key output] applied]
+                       (log/info "funnel output" key output applied)
+                       (declare-event!
+                        producer
+                        {:key key
+                         :root root
+                         :output output})))
+                   (catch Exception e (.printStackTrace e)))))))]
+     (kafka/subscribe consumer ["funnel"])
      {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
 
@@ -141,7 +155,8 @@
               :type "FILE"
               :path (get inputs (keyword key))}]
     (cond
-      (string? source) (assoc base :url (funnel-path funnel store source))
+      (string? source) (assoc base :url (store/key->url store source))
+      ;; (string? source) (assoc base :url (funnel-path funnel store source))
       (:contents source) (merge base source)
       (:content source) (assoc base :contents (:content source))
       (:type source) (merge base source)
@@ -160,7 +175,8 @@
               :type "FILE"
               :path path}]
     (cond
-      (string? source) (assoc base :url (funnel-path funnel store source))
+      (string? source) (assoc base :url (store/key->url store source))
+      ;; (string? source) (assoc base :url (funnel-path funnel store source))
       (:contents source) (merge base source)
       (:type source) (merge base source)
       :else source)))

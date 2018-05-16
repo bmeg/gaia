@@ -9,10 +9,10 @@
 
 (defn generate-sync
   [processes store]
-  (let [flow (flow/generate-flow processes)]
+  (let [flow (flow/generate-flow (vals processes))]
     {:flow flow
      :store store
-     :processes processes
+     :processes (vals processes)
      :status (atom {})
      :next (agent {})}))
 
@@ -44,12 +44,11 @@
   (merge tasks prior))
 
 (defn elect-candidates!
-  [{:keys [store commands] :as flow} executor next status]
-  (let [commands (:commands flow)
-        candidates (flow/find-candidates flow status)
+  [{:keys [flow store next] :as state} executor commands status]
+  (let [candidates (flow/find-candidates flow status)
         elect (process-map flow candidates)
         computing (apply merge (map compute-outputs (vals elect)))]
-    (send next (partial send-tasks! executor store commands) elect)
+    (send next (partial send-tasks! executor store @commands) elect)
     (merge computing status)))
 
 (defn complete-key
@@ -57,26 +56,26 @@
   (assoc status (:key event) (:output event)))
 
 (defn trigger-election!
-  [executor {:keys [flow next status]}]
-  (swap! status (partial elect-candidates! flow executor next)))
+  [{:keys [status] :as state} executor commands]
+  (swap! status (partial elect-candidates! state executor commands)))
 
 (defn process-complete!
-  [executor {:keys [status] :as state} raw]
+  [{:keys [status] :as state} executor commands raw]
   (let [event (json/parse-string (.value raw) true)]
     (log/info "process complete!" event)
     (swap! status complete-key event)
-    (trigger-election! executor state)))
+    (trigger-election! state executor commands)))
 
 (defn engage-sync!
-  [executor {:keys [flow store status next] :as state}]
+  [{:keys [flow store status next] :as state} executor commands]
   (let [existing (store/existing-paths store)]
     (swap! status merge existing)
-    (trigger-election! executor state)))
+    (trigger-election! state executor commands)))
 
 (defn events-listener
-  [executor state kafka]
+  [state executor commands kafka]
   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
-        listen (partial process-complete! executor state)]
+        listen (partial process-complete! state executor commands)]
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
