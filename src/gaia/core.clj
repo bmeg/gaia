@@ -39,7 +39,6 @@
         grandfather (store "")
         exec-config (assoc (:executor config) (:kafka config))
         executor (config/load-executor exec-config (store/protocol grandfather))]
-    ;; (sync/generate-sync funnel (:gaia config))
     {:config config
      :commands commands
      :processes processes

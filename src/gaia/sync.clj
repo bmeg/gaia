@@ -37,19 +37,19 @@
    {} keys))
 
 (defn send-tasks!
-  [executor commands prior tasks]
+  [executor store commands prior tasks]
   (doseq [[key task] tasks]
     (if-not (get prior key)
-      (executor/submit! executor commands task)))
+      (executor/submit! executor store commands task)))
   (merge tasks prior))
 
 (defn elect-candidates!
-  [flow executor next status]
+  [{:keys [store commands] :as flow} executor next status]
   (let [commands (:commands flow)
         candidates (flow/find-candidates flow status)
         elect (process-map flow candidates)
         computing (apply merge (map compute-outputs (vals elect)))]
-    (send next (partial send-tasks! executor commands) elect)
+    (send next (partial send-tasks! executor store commands) elect)
     (merge computing status)))
 
 (defn complete-key
