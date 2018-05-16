@@ -12,7 +12,6 @@
   (let [flow (flow/generate-flow (vals processes))]
     {:flow flow
      :store store
-     :processes (vals processes)
      :status (atom {})
      :next (agent {})}))
 
