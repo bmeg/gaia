@@ -29,7 +29,6 @@
   [url task]
   (log/info "post:" task)
   (let [body (json/generate-string task)
-        _ (log/info "body" body)
         response
         (http/post
          url
