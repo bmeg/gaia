@@ -131,20 +131,6 @@
   [["-c" "--config CONFIG" "path to config file"]
    ["-i" "--input INPUT" "input file or directory"]])
 
-;; top level flow state
-{:config
-{:kafka {}
-  :mongo {}
-  :store {}
-  :executor {}
-  :flow {}}
- :flows
- (atom
-  {:$root-a
-   {:processes {}
-    :status (atom {})}})
- :commands (atom {})}
-
 (defn start
   [options]
   (let [path (or (:config options) "resources/config/gaia.clj")

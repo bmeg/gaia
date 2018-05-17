@@ -69,9 +69,11 @@
 
 (defn extract-root
   [outputs prefix]
+  (log/info "EXTRACT ROOT" (first outputs) prefix)
   (let [output (first outputs)
         base (store/snip (:url output) prefix)
         parts (string/split base #"/")]
+    (log/info "PARTS" parts)
     (first parts)))
 
 (defn funnel-events-listener
@@ -89,7 +91,7 @@
                  (try
                    (let [outputs (get-in message [:outputs :value])
                          root (extract-root outputs prefix)
-                         full (store/join-path [prefix root])
+                         full (str prefix root "/")
                          applied (apply-outputs full (:id message) outputs)]
                      (doseq [[key output] applied]
                        (log/info "funnel output" key output applied)
@@ -202,6 +204,7 @@
 
 (defn load-funnel-executor
   [config prefix]
+  (log/info "PREFIX" prefix)
   (let [funnel (funnel-connect config prefix)]
     (FunnelExecutor. funnel)))
 

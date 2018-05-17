@@ -12,7 +12,7 @@
 (defn snip
   [s prefix]
   (if (.startsWith s prefix)
-    (.substring s (inc (.length prefix)))
+    (.substring s (.length prefix))
     s))
 
 (defn file->key
@@ -59,13 +59,14 @@
       (.exists file)))
   (computing? [store key] false)
   (protocol [store] "file://")
-  (url-root [store] (join-path [root container]))
+  (url-root [store] (str root container "/"))
   (key->url [store key]
     (str
      (protocol store)
-     (join-path [root container (name key)])))
+     (str root (join-path [container (name key)]))))
   (delete [store key]
-    (io/delete-file (join-path [root container (name key)])))
+    (io/delete-file
+     (str root (join-path [container (name key)]))))
   (existing-keys
     [store]
     (let [base (url-root store)

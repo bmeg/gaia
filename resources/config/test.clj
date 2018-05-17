@@ -11,12 +11,12 @@
  :executor
  {:target "funnel"
   :host "http://localhost:19191"
-  :path "/Users/spanglry/Code/gaia/resources/test/data"
+  :path "/Users/spanglry/Code/gaia/resources/test/data/"
   :zone "gaia"}
 
  :store
  {:type :file
-  :root "/Users/spanglry/Code/gaia/resources/test/data"}
+  :root "/Users/spanglry/Code/gaia/resources/test/data/"}
 
  :flow
  {:path "resources/test/triangle/triangle"}}
