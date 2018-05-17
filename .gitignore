@@ -14,3 +14,4 @@ genes.json
 .lein-repl-history
 .nrepl-port
 /funnel-work-dir
+/resources/test/triangle/swift.funnel.yaml
