@@ -9,9 +9,10 @@
    [gaia.executor :as executor]))
 
 (defn generate-sync
-  [{:keys [kafka] :as config} processes store]
+  [{:keys [kafka] :as config} root processes store]
   (let [flow (flow/generate-flow (vals processes))]
-    {:flow (atom flow)
+    {:root root
+     :flow (atom flow)
      :store store
      :events (kafka/producer (merge (:base kafka) (:producer kafka)))
      :status
@@ -36,17 +37,6 @@
   [{:keys [tasks] :as state} status reset]
   (send tasks (partial apply dissoc) reset))
 
-(defn find-process
-  [flow key]
-  (get-in flow [:process (name key) :node]))
-
-(defn process-map
-  [flow keys]
-  (reduce
-   (fn [m key]
-     (assoc m key (find-process flow key)))
-   {} keys))
-
 (defn compute-outputs
   [process]
   (into
@@ -66,7 +56,7 @@
         (if (empty? missing)
           (assoc status :state :complete)
           (assoc status :state :incomplete)))
-      (let [elect (process-map flow candidates)
+      (let [elect (flow/process-map flow candidates)
             computing (apply merge (map compute-outputs (vals elect)))]
         (send tasks (partial send-tasks! executor store commands) elect)
         (-> status
@@ -89,26 +79,29 @@
 
 (defn data-complete!
   [{:keys [flow status events] :as state} executor commands root event]
-  (swap!
-   status
-   (comp
-    (partial elect-candidates! state @flow executor @commands)
-    (partial complete-key event)))
-  (condp = (:state @status)
+  (if (= :halted (:state @status))
+    (swap! status update :data dissoc (:key event))
+    (do
+      (swap!
+       status
+       (comp
+        (partial elect-candidates! state @flow executor @commands)
+        (partial complete-key event)))
+      (condp = (:state @status)
 
-    :complete
-    (executor/declare-event!
-     events
-     {:event "flow-complete"
-      :root root})
+        :complete
+        (executor/declare-event!
+         events
+         {:event "flow-complete"
+          :root root})
 
-    :incomplete
-    (executor/declare-event!
-     events
-     {:event "flow-incomplete"
-      :root root})
+        :incomplete
+        (executor/declare-event!
+         events
+         {:event "flow-incomplete"
+          :root root})
 
-    (log/info "FLOW CONTINUES" root)))
+        (log/info "FLOW CONTINUES" root)))))
 
 (defn executor-events!
   [{:keys [status events] :as state} executor commands root raw]
@@ -167,17 +160,35 @@
     (log/info "expired" down)
     down))
 
+(defn running-task?
+  [{:keys [state] :as task}]
+  (or
+   (= :initializing state)
+   (= :running state)))
+
 (defn executor-cancel!
   [executor tasks outstanding]
-  (let [canceling (select-keys tasks outstanding)]
-    (log/info "canceling tasks" (keys canceling))
-    (doseq [[key cancel] canceling]
+  (let [potential (select-keys tasks outstanding)
+        canceling (filter running-task? (vals potential))
+        expunge (mapv :name canceling)]
+    (log/info "canceling tasks" expunge)
+    (doseq [cancel canceling]
       (executor/cancel! executor (:id cancel)))
-    (apply dissoc tasks outstanding)))
+    (apply dissoc tasks expunge)))
 
 (defn cancel-tasks!
   [tasks executor canceling]
   (send tasks (partial executor-cancel! executor) canceling))
+
+(defn halt-flow!
+  [{:keys [root flow tasks status events] :as state} executor]
+  (let [halting (flow/process-keys @flow)]
+    (swap! status assoc :state :halted)
+    (cancel-tasks! tasks executor halting)
+    (executor/declare-event!
+     events
+     {:event "flow-halted"
+      :root root})))
 
 (defn merge-processes!
   [{:keys [flow status tasks] :as state} executor commands processes]

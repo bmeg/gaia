@@ -65,6 +65,21 @@
   [flow nodes]
   (reduce add-node flow nodes))
 
+(defn find-process
+  [flow key]
+  (get-in flow [:process (name key) :node]))
+
+(defn process-keys
+  [flow]
+  (-> flow :process keys))
+
+(defn process-map
+  [flow keys]
+  (reduce
+   (fn [m key]
+     (assoc m key (find-process flow key)))
+   {} keys))
+
 (defn flow-space
   [flow]
   (set
