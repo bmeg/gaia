@@ -84,7 +84,7 @@
      {}
      (map
       (fn [key]
-        [key {:url (join-path [(url-root store) key]) :state :complete}])
+        [key {:url (str (url-root store) key) :state :complete}])
       existing))))
 
 (defn load-file-store

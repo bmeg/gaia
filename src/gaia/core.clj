@@ -70,10 +70,11 @@
   [{:keys [config commands executor store] :as state} root]
   (let [processes (state-processes state root)
         pointed (store (name root))
-        flow (sync/generate-sync processes pointed)
-        events (sync/events-listener flow executor commands root (:kafka config))]
+        flow (sync/generate-sync (:kafka config) processes pointed)
+        listener (sync/data-listener flow executor commands root (:kafka config))]
     (sync/engage-sync! flow executor commands)
-    (swap! (:flows state) assoc root flow)))
+    (swap! (:flows state) assoc root flow)
+    state))
 
 (defn trigger-flow!
   [{:keys [commands executor flows] :as state} root]
@@ -155,6 +156,13 @@
                 (keyword/wrap-keyword-params)
                 (params/wrap-params))]
     (http/start-server app {:port 24442})))
+
+(defn load
+  [key config-path process-path]
+  (let [config (config/load-config config-path)
+        state (boot config)
+        state (load-processes! state key process-path)]
+    (initiate-flow! state key)))
 
 (defn -main
   [& args]

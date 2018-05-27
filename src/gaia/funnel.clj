@@ -8,7 +8,6 @@
    [clj-http.client :as http]
    [protograph.kafka :as kafka]
    [protograph.template :as template]
-   ;; [gaia.config :as config]
    [gaia.store :as store]
    [gaia.executor :as executor]))
 
@@ -59,13 +58,6 @@
   (let [rendered (render-outputs path task-id outputs)]
     rendered))
 
-(defn declare-event!
-  [producer message]
-  (kafka/send-message
-   producer
-   "gaia-events"
-   (json/generate-string message)))
-
 (defn extract-root
   [outputs prefix]
   (log/info "EXTRACT ROOT" (first outputs) prefix)
@@ -75,8 +67,25 @@
     (log/info "PARTS" parts)
     (first parts)))
 
-(defn funnel-events-listener
-  ([prefix] (funnel-events-listener prefix {}))
+(defn task-outputs!
+  [producer prefix message]
+  (try
+    (let [outputs (get-in message [:outputs :value])
+          root (extract-root outputs prefix)
+          full (str prefix root "/")
+          applied (apply-outputs full (:id message) outputs)]
+      (doseq [[key output] applied]
+        (log/info "funnel output" key output applied)
+        (executor/declare-event!
+         producer
+         {:event "data-complete"
+          :root root
+          :key key
+          :output output})))
+    (catch Exception e (.printStackTrace e))))
+
+(defn funnel-events
+  ([prefix] (funnel-events prefix {}))
   ([prefix kafka]
    (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
          producer (kafka/producer (merge (:base kafka) (:producer kafka)))
@@ -85,21 +94,9 @@
          (fn [funnel-event]
            (if-let [event (.value funnel-event)]
              (let [message (json/parse-string event true)]
-               (log/info "funnel event" message)
-               (if (= (:type message) "TASK_OUTPUTS")
-                 (try
-                   (let [outputs (get-in message [:outputs :value])
-                         root (extract-root outputs prefix)
-                         full (str prefix root "/")
-                         applied (apply-outputs full (:id message) outputs)]
-                     (doseq [[key output] applied]
-                       (log/info "funnel output" key output applied)
-                       (declare-event!
-                        producer
-                        {:key key
-                         :root root
-                         :output output})))
-                   (catch Exception e (.printStackTrace e)))))))]
+               (condp = (:type message)
+                 "TASK_OUTPUTS" (task-outputs! producer prefix message)
+                 (log/info "unused funnel event" message)))))]
      (kafka/subscribe consumer ["funnel"])
      {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
@@ -109,7 +106,7 @@
   (log/info "funnel connect" config)
   (let [tasks-url (str host "/v1/tasks")]
     {:funnel config
-     :listener (funnel-events-listener prefix kafka)
+     :listener (funnel-events prefix kafka)
 
      ;; api functions
      :create-task

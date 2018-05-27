@@ -8,10 +8,11 @@
    [gaia.executor :as executor]))
 
 (defn generate-sync
-  [processes store]
+  [{:keys [kafka] :as config} processes store]
   (let [flow (flow/generate-flow (vals processes))]
     {:flow flow
      :store store
+     :events (kafka/producer (merge (:base kafka) (:producer kafka)))
      :status
      (atom
       {:state :initialized
@@ -50,35 +51,60 @@
                     relevant))]
     (merge triggered prior)))
 
+(defn reset-tasks!
+  [{:keys [tasks] :as state} status reset]
+  (send tasks (partial apply dissoc) reset))
+
 (defn elect-candidates!
   [{:keys [flow store tasks] :as state} executor commands status]
   (let [candidates (flow/find-candidates flow (:data status))]
+    (log/info "candidates" (mapv identity candidates))
     (if (empty? candidates)
-      (if (empty? (flow/missing-data flow status))
-        (assoc status :state :complete)
-        (assoc status :state :incomplete))
+      (let [missing (flow/missing-data flow (:data status))]
+        (if (empty? missing)
+          (assoc status :state :complete)
+          (assoc status :state :incomplete)))
       (let [elect (process-map flow candidates)
             computing (apply merge (map compute-outputs (vals elect)))]
         (send tasks (partial send-tasks! executor store commands) elect)
         (update status :data merge computing)))))
 
 (defn complete-key
-  [status event]
+  [event status]
   (assoc-in status [:data (:key event)] (:output event)))
 
-(defn trigger-election!
-  [{:keys [status] :as state} executor commands]
+(defn process-complete!
+  [state event])
+
+(defn data-complete!
+  [{:keys [status events] :as state} executor commands root event]
   (swap!
    status
-   (partial elect-candidates! state executor @commands)))
+   (comp
+    (partial elect-candidates! state executor @commands)
+    (partial complete-key event)))
+  (condp = (:state @status)
+    :complete
+    (executor/declare-event!
+     events
+     {:event "flow-complete"
+      :root root})
+    :incomplete
+    (executor/declare-event!
+     events
+     {:event "flow-incomplete"
+      :root root})
+    (log/info "FLOW CONTINUES" root)))
 
-(defn process-complete!
-  [{:keys [status] :as state} executor commands root raw]
+(defn executor-events!
+  [{:keys [status events] :as state} executor commands root raw]
   (let [event (json/parse-string (.value raw) true)]
-    (when (= (name root) (:root event))
-      (log/info "process complete!" event)
-      (swap! status complete-key event)
-      (trigger-election! state executor commands))))
+    (log/info "GAIA EVENT" event)
+    (when (= (:root event) (name root))
+      (condp = (:event event)
+        "process-complete" (process-complete! state event)
+        "data-complete" (data-complete! state executor commands root event)
+        (log/info "other executor event" event)))))
 
 (defn initiate-sync
   [existing status]
@@ -89,13 +115,16 @@
 (defn engage-sync!
   [{:keys [flow store status] :as state} executor commands]
   (let [existing (store/existing-paths store)]
-    (swap! status (partial initiate-sync existing))
-    (trigger-election! state executor commands)))
+    (swap!
+     status
+     (comp
+      (partial elect-candidates! state executor @commands)
+      (partial initiate-sync existing)))))
 
-(defn events-listener
+(defn data-listener
   [state executor commands root kafka]
   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
-        listen (partial process-complete! state executor commands root)]
+        listen (partial executor-events! state executor commands root)]
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
@@ -111,9 +140,11 @@
    (update status :data dissoc-seq descendants)))
 
 (defn expire-key!
-  [{:keys [flow status] :as state} executor commands key]
-  (let [descendants (flow/find-descendants flow key)]
-    (swap! status (partial expunge-keys state executor @commands descendants))
-    (log/info "expired" descendants)
-    (trigger-election! state executor commands)
-    descendants))
+  [{:keys [flow status tasks] :as state} executor commands key]
+  (let [{:keys [data process] :as down} (flow/find-descendants flow key)]
+    (send tasks dissoc-seq process)
+    (swap!
+     status
+     (partial expunge-keys state executor @commands data))
+    (log/info "expired" down)
+    down))
