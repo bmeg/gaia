@@ -12,8 +12,11 @@
   (let [flow (flow/generate-flow (vals processes))]
     {:flow flow
      :store store
-     :status (atom {})
-     :next (agent {})}))
+     :status
+     (atom
+      {:state :initialized
+       :data {}})
+     :tasks (agent {})}))
 
 (defn find-process
   [flow key]
@@ -37,26 +40,37 @@
 
 (defn send-tasks!
   [executor store commands prior tasks]
-  (doseq [[key task] tasks]
-    (if-not (get prior key)
-      (executor/submit! executor store commands task)))
-  (merge tasks prior))
+  (let [relevant (remove (comp (partial get prior) first) tasks)
+        submit! (partial executor/submit! executor store commands)
+        triggered (into
+                   {}
+                   (map
+                    (fn [[key task]]
+                      [key (submit! task)])
+                    relevant))]
+    (merge triggered prior)))
 
 (defn elect-candidates!
-  [{:keys [flow store next] :as state} executor commands status]
-  (let [candidates (flow/find-candidates flow status)
-        elect (process-map flow candidates)
-        computing (apply merge (map compute-outputs (vals elect)))]
-    (send next (partial send-tasks! executor store @commands) elect)
-    (merge computing status)))
+  [{:keys [flow store tasks] :as state} executor commands status]
+  (let [candidates (flow/find-candidates flow (:data status))]
+    (if (empty? candidates)
+      (if (empty? (flow/missing-data flow status))
+        (assoc status :state :complete)
+        (assoc status :state :incomplete))
+      (let [elect (process-map flow candidates)
+            computing (apply merge (map compute-outputs (vals elect)))]
+        (send tasks (partial send-tasks! executor store commands) elect)
+        (update status :data merge computing)))))
 
 (defn complete-key
   [status event]
-  (assoc status (:key event) (:output event)))
+  (assoc-in status [:data (:key event)] (:output event)))
 
 (defn trigger-election!
   [{:keys [status] :as state} executor commands]
-  (swap! status (partial elect-candidates! state executor commands)))
+  (swap!
+   status
+   (partial elect-candidates! state executor @commands)))
 
 (defn process-complete!
   [{:keys [status] :as state} executor commands root raw]
@@ -66,10 +80,16 @@
       (swap! status complete-key event)
       (trigger-election! state executor commands))))
 
+(defn initiate-sync
+  [existing status]
+  (-> status
+      (update :data merge existing)
+      (assoc :state :running)))
+
 (defn engage-sync!
-  [{:keys [flow store status next] :as state} executor commands]
+  [{:keys [flow store status] :as state} executor commands]
   (let [existing (store/existing-paths store)]
-    (swap! status merge existing)
+    (swap! status (partial initiate-sync existing))
     (trigger-election! state executor commands)))
 
 (defn events-listener
@@ -80,17 +100,20 @@
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
 
-(defn expire-key
-  [flow key]
-  (let [descendants (flow/find-descendants (:flow flow) key)]
-        ;; store (get-in flow [:funnel :store])
-    ;; (doseq [descendant descendants]
-    ;;   (try
-    ;;     (store/delete store descendant)
-    ;;     (catch Exception e (log/info (.getMessage e)))))
-    (swap!
-     (:status flow)
-     (fn [status]
-       (apply dissoc status descendants)))
+(defn dissoc-seq
+  [m s]
+  (apply dissoc m s))
+
+(defn expunge-keys
+  [state executor commands descendants status]
+  (elect-candidates!
+   state executor commands
+   (update status :data dissoc-seq descendants)))
+
+(defn expire-key!
+  [{:keys [flow status] :as state} executor commands key]
+  (let [descendants (flow/find-descendants flow key)]
+    (swap! status (partial expunge-keys state executor @commands descendants))
     (log/info "expired" descendants)
+    (trigger-election! state executor commands)
     descendants))

@@ -54,7 +54,7 @@
   Store
   (present?
     [store key]
-    (let [path (join-path [root container (name key)])
+    (let [path (str root (join-path [container (name key)]))
           file (io/file path)]
       (.exists file)))
   (computing? [store key] false)

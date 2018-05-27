@@ -62,6 +62,10 @@
   [state root]
   (get @(:processes state) root))
 
+(defn state-flow
+  [{:keys [flows]} flow]
+  (get @flows (keyword flow)))
+
 (defn initiate-flow!
   [{:keys [config commands executor store] :as state} root]
   (let [processes (state-processes state root)
@@ -69,8 +73,17 @@
         flow (sync/generate-sync processes pointed)
         events (sync/events-listener flow executor commands root (:kafka config))]
     (sync/engage-sync! flow executor commands)
-    (swap! (:flows state) assoc root flow)
-    state))
+    (swap! (:flows state) assoc root flow)))
+
+(defn trigger-flow!
+  [{:keys [commands executor flows] :as state} root]
+  (let [flow (get @flows (keyword root))]
+    (sync/engage-sync! flow executor commands)))
+
+(defn expire-key!
+  [{:keys [commands executor flows] :as state} root key]
+  (let [flow (get @flows (keyword root))]
+    (sync/expire-key! flow executor commands key)))
 
 (defn commands-handler
   [state]
@@ -116,9 +129,8 @@
   [state]
   (fn [request]
     (let [{:keys [key] :as body} (read-json (:body request))
-          expired (sync/expire-key state key)]
+          expired (expire-key! state key)]
       (log/info "expire request" body)
-      (sync/trigger-election! state)
       (response
        {:expired expired}))))
 
@@ -136,7 +148,6 @@
   (let [path (or (:config options) "resources/config/gaia.clj")
         config (config/load-config path)
         state (boot config)
-        ;; flow (run config)
         routes (polaris/build-routes (gaia-routes state))
         router (polaris/router routes)
         app (-> router

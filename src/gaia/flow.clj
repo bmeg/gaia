@@ -170,7 +170,7 @@
           {:data data :complete? false}
           (recur next))))))
 
-(defn find-descendants
+(defn data-descendants
   [flow key]
   (loop [covered #{}
          found #{key}]
@@ -179,6 +179,12 @@
       (let [process (setcat (map (fn [key] (get-in flow [:data key :to])) found))
             to (setcat (map (fn [p] (get-in flow [:process p :to])) process))]
         (recur (set/union covered found) to)))))
+
+(defn find-descendants
+  [flow key]
+  (if-let [to (get-in flow [:process key :to])]
+    (apply set/union (map (partial data-descendants flow) to))
+    (data-descendants flow key)))
 
 (defn expire-data
   [flow data key]
