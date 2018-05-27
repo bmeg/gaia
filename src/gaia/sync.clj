@@ -87,16 +87,19 @@
     (partial elect-candidates! state executor @commands)
     (partial complete-key event)))
   (condp = (:state @status)
+
     :complete
     (executor/declare-event!
      events
      {:event "flow-complete"
       :root root})
+
     :incomplete
     (executor/declare-event!
      events
      {:event "flow-incomplete"
       :root root})
+
     (log/info "FLOW CONTINUES" root)))
 
 (defn executor-events!
@@ -135,10 +138,8 @@
   (apply dissoc m s))
 
 (defn expunge-keys
-  [state executor commands descendants status]
-  (elect-candidates!
-   state executor commands
-   (update status :data dissoc-seq descendants)))
+  [descendants status]
+  (update status :data dissoc-seq descendants))
 
 (defn expire-key!
   [{:keys [flow status tasks] :as state} executor commands key]
@@ -146,6 +147,8 @@
     (send tasks dissoc-seq process)
     (swap!
      status
-     (partial expunge-keys state executor @commands data))
+     (comp
+      (partial elect-candidates! state executor @commands)
+      (partial expunge-keys data)))
     (log/info "expired" down)
     down))
