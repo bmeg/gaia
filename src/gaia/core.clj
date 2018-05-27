@@ -33,7 +33,6 @@
 (defn boot
   [config]
   (let [commands (atom (:commands config))
-        processes (atom {})
         flows (atom {})
         store (config/load-store (:store config))
         grandfather (store "")
@@ -42,15 +41,29 @@
         executor (config/load-executor exec-config prefix)]
     {:config config
      :commands commands
-     :processes processes
      :flows flows
      :store store
      :executor executor}))
 
+(defn initialize-flow!
+  [{:keys [config commands executor store] :as state} root]
+  (let [pointed (store (name root))
+        flow (sync/generate-sync (:kafka config) root [] pointed)
+        listener (sync/events-listener! flow executor commands root (:kafka config))]
+    flow))
+
+(defn find-flow!
+  [{:keys [flows] :as state} root]
+  (if-let [flow (get @flows root)]
+    flow
+    (let [flow (initialize-flow! state root)]
+      (swap! flows assoc root flow)
+      flow)))
+
 (defn merge-processes!
-  [state root processes]
-  (let [transformed (config/transform-processes @(:commands state) processes)]
-    (swap! (:processes state) update root merge transformed)
+  [{:keys [commands executor] :as state} root processes]
+  (let [flow (find-flow! state (keyword root))]
+    (sync/merge-processes! flow executor commands processes)
     state))
 
 (defn load-processes!
@@ -58,38 +71,23 @@
   (let [processes (config/parse-yaml path)]
     (merge-processes! state root processes)))
 
-(defn state-processes
-  [state root]
-  (get @(:processes state) root))
-
-(defn state-flow
-  [{:keys [flows]} flow]
-  (get @flows (keyword flow)))
-
-(defn initiate-flow!
-  [{:keys [config commands executor store] :as state} root]
-  (let [processes (state-processes state root)
-        pointed (store (name root))
-        flow (sync/generate-sync (:kafka config) root processes pointed)
-        listener (sync/events-listener! flow executor commands root (:kafka config))]
-    (sync/engage-sync! flow executor commands)
-    (swap! (:flows state) assoc root flow)
-    state))
-
 (defn trigger-flow!
   [{:keys [commands executor flows] :as state} root]
-  (let [flow (get @flows (keyword root))]
-    (sync/engage-sync! flow executor commands)))
+  (let [flow (find-flow! state (keyword root))]
+    (sync/engage-sync! flow executor commands)
+    state))
 
 (defn halt-flow!
-  [{:keys [executor flows tasks] :as state} root]
-  (let [flow (get @flows (keyword root))]
-    (sync/halt-flow! flow executor)))
+  [{:keys [executor tasks] :as state} root]
+  (let [flow (find-flow! state (keyword root))]
+    (sync/halt-flow! flow executor)
+    state))
 
 (defn expire-key!
-  [{:keys [commands executor flows] :as state} root key]
-  (let [flow (get @flows (keyword root))]
-    (sync/expire-keys! flow executor commands [key])))
+  [{:keys [commands executor] :as state} root key]
+  (let [flow (find-flow! state (keyword root))]
+    (sync/expire-keys! flow executor commands [key])
+    state))
 
 (defn commands-handler
   [state]
@@ -104,13 +102,11 @@
   [state]
   (fn [request]
     (let [{:keys [root processes] :as body} (read-json (:body request))
-          root (keyword root)
-          transformed (config/transform-processes (:commands state) processes)]
+          root (keyword root)]
       (log/info "processes request" body)
-      (swap! (:processes state) update root merge transformed)
-      ;; TODO - add in code to merge new processes into running flow
+      (merge-processes! state root processes)
       (response
-       {:processes {root (keys (state-processes state root))}}))))
+       {:processes {root (map :key processes)}}))))
 
 (defn initiate-handler
   [state]
@@ -167,7 +163,7 @@
   (let [config (config/load-config config-path)
         state (boot config)
         state (load-processes! state key process-path)]
-    (initiate-flow! state key)))
+    (trigger-flow! state key)))
 
 (defn -main
   [& args]

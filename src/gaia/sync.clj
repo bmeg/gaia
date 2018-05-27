@@ -5,6 +5,7 @@
    [cheshire.core :as json]
    [protograph.kafka :as kafka]
    [gaia.flow :as flow]
+   [gaia.command :as command]
    [gaia.store :as store]
    [gaia.executor :as executor]))
 
@@ -192,6 +193,7 @@
 
 (defn merge-processes!
   [{:keys [flow status tasks] :as state} executor commands processes]
-  (cancel-tasks! tasks executor (keys processes))
-  (swap! flow #(flow/add-nodes % (vals processes)))
-  (expire-keys! state executor commands (keys processes)))
+  (let [transform (command/transform-processes @commands processes)]
+    (cancel-tasks! tasks executor (keys transform))
+    (swap! flow #(flow/add-nodes % (vals transform)))
+    (expire-keys! state executor commands (keys transform))))

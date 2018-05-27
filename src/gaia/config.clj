@@ -1,7 +1,6 @@
 (ns gaia.config
   (:require
    [clojure.walk :as walk]
-   [clojure.math.combinatorics :as combinatorics]
    [clojure.string :as string]
    [taoensso.timbre :as log]
    [yaml.core :as yaml]
@@ -22,69 +21,6 @@
   [path]
   (yaml/parse-string (slurp path)))
 
-(defn index-seq
-  [f s]
-  (into
-   {}
-   (map (juxt f identity) s)))
-
-(defn filter-map
-  [f m]
-  (into
-   {}
-   (filter
-    (fn [[k v]]
-      (f k v))
-    m)))
-
-(defn cartesian-map
-  [map-of-seqs]
-  (let [order (mapv vec map-of-seqs)
-        heading (map first order)
-        cartes (apply combinatorics/cartesian-product (map last order))]
-    (map
-     (fn [product]
-       (into {} (map vector heading product)))
-     cartes)))
-
-(defn clean-string
-  [s]
-  (string/replace s #"[^a-zA-Z0-9\-]" ""))
-
-(defn template-vars
-  [{:keys [key vars inputs outputs] :as process}]
-  (let [arrays (filter-map (fn [k v] (coll? v)) vars)
-        series (cartesian-map arrays)]
-    (map
-     (fn [arrayed]
-       (let [order (sort-by first arrayed)
-             values (map (comp clean-string last) order)
-             unique (string/join "-" (conj values key))
-             env (walk/stringify-keys (merge vars arrayed))]
-         (merge
-          process
-          {:key unique
-           :vars env
-           :inputs (template/evaluate-map inputs env)
-           :outputs (template/evaluate-map outputs env)})))
-     series)))
-
-(defn index-key
-  [s]
-  (index-seq
-   (comp keyword :key)
-   s))
-
-(defn transform-processes
-  [commands processes]
-  (let [templates (template/map-cat template-vars processes)]
-    (index-key
-     (template/map-cat
-      (fn [process]
-        (let [command (get commands (keyword (:command process)))]
-          (command/apply-composite commands command process)))
-      processes))))
-
 (defn load-flow-config
   [path]
   (let [config
@@ -96,13 +32,13 @@
               [key (parse-yaml (str path "." (name key) ".yaml"))]
               (catch Exception e (do (log/info "bad yaml" path key) [key {}]))))
           config-keys))
-        config (update config :commands index-key)
-        config (update config :processes (partial transform-processes (:commands config)))]
+        config (update config :commands command/index-key)
+        config (update config :processes (partial command/transform-processes (:commands config)))]
     config))
 
 (defn load-commands
   [path]
-  (index-key
+  (command/index-key
    (parse-yaml
     (str path ".commands.yaml"))))
 
