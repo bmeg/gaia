@@ -203,11 +203,18 @@
     (catch Exception e
       (.printStackTrace e))))
 
+(defn cancel-task!
+  [funnel id]
+  ((:cancel-task funnel) id))
+
 (deftype FunnelExecutor [funnel]
   executor/Executor
   (submit!
     [executor store commands process]
-    (submit-task! funnel store commands process)))
+    (submit-task! funnel store commands process))
+  (cancel!
+    [executor id]
+    (cancel-task! funnel id)))
 
 (defn load-funnel-executor
   [config prefix]

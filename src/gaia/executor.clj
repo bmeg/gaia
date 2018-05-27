@@ -5,7 +5,8 @@
    [protograph.kafka :as kafka]))
 
 (defprotocol Executor
-  (submit! [executor store commands process]))
+  (submit! [executor store commands process])
+  (cancel! [executor id]))
 
 (defn declare-event!
   [producer message]

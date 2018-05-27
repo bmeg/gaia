@@ -71,7 +71,7 @@
   (let [processes (state-processes state root)
         pointed (store (name root))
         flow (sync/generate-sync (:kafka config) processes pointed)
-        listener (sync/data-listener flow executor commands root (:kafka config))]
+        listener (sync/events-listener! flow executor commands root (:kafka config))]
     (sync/engage-sync! flow executor commands)
     (swap! (:flows state) assoc root flow)
     state))
@@ -84,7 +84,7 @@
 (defn expire-key!
   [{:keys [commands executor flows] :as state} root key]
   (let [flow (get @flows (keyword root))]
-    (sync/expire-key! flow executor commands key)))
+    (sync/expire-keys! flow executor commands [key])))
 
 (defn commands-handler
   [state]

@@ -11,7 +11,7 @@
 (defn generate-sync
   [{:keys [kafka] :as config} processes store]
   (let [flow (flow/generate-flow (vals processes))]
-    {:flow flow
+    {:flow (atom flow)
      :store store
      :events (kafka/producer (merge (:base kafka) (:producer kafka)))
      :status
@@ -19,26 +19,6 @@
       {:state :initialized
        :data {}})
      :tasks (agent {})}))
-
-(defn find-process
-  [flow key]
-  (get-in flow [:process (name key) :node]))
-
-(defn compute-outputs
-  [process]
-  (into
-   {}
-   (map
-    (fn [k]
-      [k {:state :computing}])
-    (vals (:outputs process)))))
-
-(defn process-map
-  [flow keys]
-  (reduce
-   (fn [m key]
-     (assoc m key (find-process flow key)))
-   {} keys))
 
 (defn send-tasks!
   [executor store commands prior tasks]
@@ -56,13 +36,33 @@
   [{:keys [tasks] :as state} status reset]
   (send tasks (partial apply dissoc) reset))
 
+(defn find-process
+  [flow key]
+  (get-in flow [:process (name key) :node]))
+
+(defn process-map
+  [flow keys]
+  (reduce
+   (fn [m key]
+     (assoc m key (find-process flow key)))
+   {} keys))
+
+(defn compute-outputs
+  [process]
+  (into
+   {}
+   (map
+    (fn [k]
+      [k {:state :computing}])
+    (vals (:outputs process)))))
+
 (defn elect-candidates!
-  [{:keys [flow store tasks] :as state} executor commands status]
+  [{:keys [store tasks] :as state} flow executor commands status]
   (let [candidates (mapv identity (flow/find-candidates flow (:data status)))]
     (log/info "candidates" candidates)
     (if (empty? candidates)
       (let [missing (flow/missing-data flow (:data status))]
-        (log/info "empty candidates, missing" missing)
+        (log/info "empty candidates - missing" missing)
         (if (empty? missing)
           (assoc status :state :complete)
           (assoc status :state :incomplete)))
@@ -88,11 +88,11 @@
    event))
 
 (defn data-complete!
-  [{:keys [status events] :as state} executor commands root event]
+  [{:keys [flow status events] :as state} executor commands root event]
   (swap!
    status
    (comp
-    (partial elect-candidates! state executor @commands)
+    (partial elect-candidates! state @flow executor @commands)
     (partial complete-key event)))
   (condp = (:state @status)
 
@@ -115,7 +115,10 @@
   (let [event (json/parse-string (.value raw) true)]
     (log/info "GAIA EVENT" event)
     (condp = (:event event)
-      "process-state" (process-state! state event)
+
+      "process-state"
+      (process-state! state event)
+
       "data-complete"
       (when (= (:root event) (name root))
         (data-complete! state executor commands root event))
@@ -132,10 +135,10 @@
   (swap!
    status
    (comp
-    (partial elect-candidates! state executor @commands)
+    (partial elect-candidates! state @flow executor @commands)
     (partial initiate-sync store))))
 
-(defn data-listener
+(defn events-listener!
   [state executor commands root kafka]
   (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
         listen (partial executor-events! state executor commands root)]
@@ -151,14 +154,33 @@
   [descendants status]
   (update status :data dissoc-seq descendants))
 
-(defn expire-key!
-  [{:keys [flow status tasks] :as state} executor commands key]
-  (let [{:keys [data process] :as down} (flow/find-descendants flow key)]
+(defn expire-keys!
+  [{:keys [flow status tasks] :as state} executor commands expiring]
+  (let [now (deref flow)
+        {:keys [data process] :as down} (flow/find-descendants now expiring)]
     (send tasks dissoc-seq process)
     (swap!
      status
      (comp
-      (partial elect-candidates! state executor @commands)
+      (partial elect-candidates! state now executor @commands)
       (partial expunge-keys data)))
     (log/info "expired" down)
     down))
+
+(defn executor-cancel!
+  [executor tasks outstanding]
+  (let [canceling (select-keys tasks outstanding)]
+    (log/info "canceling tasks" (keys canceling))
+    (doseq [[key cancel] canceling]
+      (executor/cancel! executor (:id cancel)))
+    (apply dissoc tasks outstanding)))
+
+(defn cancel-tasks!
+  [tasks executor canceling]
+  (send tasks (partial executor-cancel! executor) canceling))
+
+(defn merge-processes!
+  [{:keys [flow status tasks] :as state} executor commands processes]
+  (cancel-tasks! tasks executor (keys processes))
+  (swap! flow #(flow/add-nodes % (vals processes)))
+  (expire-keys! state executor commands (keys processes)))
