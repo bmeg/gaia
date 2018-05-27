@@ -9,7 +9,7 @@
 
 (defn declare-event!
   [producer message]
-  (log/info "event!" message)
+  (log/info "declare event" message)
   (kafka/send-message
    producer
    "gaia-events"

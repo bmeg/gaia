@@ -57,17 +57,20 @@
 
 (defn elect-candidates!
   [{:keys [flow store tasks] :as state} executor commands status]
-  (let [candidates (flow/find-candidates flow (:data status))]
-    (log/info "candidates" (mapv identity candidates))
+  (let [candidates (mapv identity (flow/find-candidates flow (:data status)))]
+    (log/info "candidates" candidates)
     (if (empty? candidates)
       (let [missing (flow/missing-data flow (:data status))]
+        (log/info "empty candidates, missing" missing)
         (if (empty? missing)
           (assoc status :state :complete)
           (assoc status :state :incomplete)))
       (let [elect (process-map flow candidates)
             computing (apply merge (map compute-outputs (vals elect)))]
         (send tasks (partial send-tasks! executor store commands) elect)
-        (update status :data merge computing)))))
+        (-> status
+            (update :data merge computing)
+            (assoc :state :running))))))
 
 (defn complete-key
   [event status]
@@ -107,19 +110,17 @@
         (log/info "other executor event" event)))))
 
 (defn initiate-sync
-  [existing status]
-  (-> status
-      (update :data merge existing)
-      (assoc :state :running)))
+  [store status]
+  (let [existing (store/existing-paths store)]
+    (update status :data merge existing)))
 
 (defn engage-sync!
   [{:keys [flow store status] :as state} executor commands]
-  (let [existing (store/existing-paths store)]
-    (swap!
-     status
-     (comp
-      (partial elect-candidates! state executor @commands)
-      (partial initiate-sync existing)))))
+  (swap!
+   status
+   (comp
+    (partial elect-candidates! state executor @commands)
+    (partial initiate-sync store))))
 
 (defn data-listener
   [state executor commands root kafka]
