@@ -1,5 +1,6 @@
 (ns gaia.sync
   (:require
+   [clojure.string :as string]
    [taoensso.timbre :as log]
    [cheshire.core :as json]
    [protograph.kafka :as kafka]
@@ -76,8 +77,15 @@
   [event status]
   (assoc-in status [:data (:key event)] (:output event)))
 
-(defn process-complete!
-  [state event])
+(defn process-state!
+  [{:keys [tasks]} event]
+  (send
+   tasks
+   (fn [ts {:keys [id state]}]
+     (if-let [found (first (filter #(= id (:id (last %))) ts))]
+       (let [[key task] found]
+         (assoc-in ts [key :state] (keyword (string/lower-case state))))))
+   event))
 
 (defn data-complete!
   [{:keys [status events] :as state} executor commands root event]
@@ -106,11 +114,13 @@
   [{:keys [status events] :as state} executor commands root raw]
   (let [event (json/parse-string (.value raw) true)]
     (log/info "GAIA EVENT" event)
-    (when (= (:root event) (name root))
-      (condp = (:event event)
-        "process-complete" (process-complete! state event)
-        "data-complete" (data-complete! state executor commands root event)
-        (log/info "other executor event" event)))))
+    (condp = (:event event)
+      "process-state" (process-state! state event)
+      "data-complete"
+      (when (= (:root event) (name root))
+        (data-complete! state executor commands root event))
+
+      (log/info "other executor event" event))))
 
 (defn initiate-sync
   [store status]

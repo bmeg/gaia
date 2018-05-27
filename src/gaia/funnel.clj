@@ -67,6 +67,16 @@
     (log/info "PARTS" parts)
     (first parts)))
 
+(defn task-state!
+  [producer prefix message]
+  (try
+    (executor/declare-event!
+     producer
+     {:event "process-state"
+      :id (:id message)
+      :state (:state message)})
+    (catch Exception e (.printStackTrace e))))
+
 (defn task-outputs!
   [producer prefix message]
   (try
@@ -95,6 +105,7 @@
            (if-let [event (.value funnel-event)]
              (let [message (json/parse-string event true)]
                (condp = (:type message)
+                 "TASK_STATE" (task-state! producer prefix message)
                  "TASK_OUTPUTS" (task-outputs! producer prefix message)
                  (log/info "unused funnel event" message)))))]
      (kafka/subscribe consumer ["funnel"])
