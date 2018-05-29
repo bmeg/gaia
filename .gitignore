@@ -16,3 +16,4 @@ genes.json
 /funnel-work-dir
 /resources/test/triangle/swift.funnel.yaml
 /resources/test/data/yellow
+/__pycache__
