@@ -198,6 +198,8 @@
 
 (defn find-descendants
   [flow source]
+  (log/info "FLOW" flow)
+  (log/info "SOURCE" source)
   (let [processes (select-keys (:process flow) source)
         from (keys processes)
         to (apply set/union (map :to (vals processes)))

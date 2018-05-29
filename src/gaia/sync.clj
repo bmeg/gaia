@@ -119,18 +119,10 @@
 
       (log/info "other executor event" event))))
 
-(defn initiate-sync
+(defn find-existing
   [store status]
   (let [existing (store/existing-paths store)]
     (update status :data merge existing)))
-
-(defn engage-sync!
-  [{:keys [flow store status] :as state} executor commands]
-  (swap!
-   status
-   (comp
-    (partial elect-candidates! state @flow executor @commands)
-    (partial initiate-sync store))))
 
 (defn events-listener!
   [state executor commands root kafka]
@@ -139,6 +131,21 @@
     (kafka/subscribe consumer ["gaia-events"])
     {:gaia-events (future (kafka/consume consumer listen))
      :consumer consumer}))
+
+(defn initialize-flow!
+  [root store executor kafka commands]
+  (let [flow (generate-sync kafka root [] store)
+        listener (events-listener! flow executor commands root kafka)]
+    (swap! (:status flow) (partial find-existing store))
+    flow))
+
+(defn trigger-flow!
+  [{:keys [flow store status] :as state} executor commands]
+  (swap!
+   status
+   (comp
+    (partial elect-candidates! state @flow executor @commands)
+    (partial find-existing store))))
 
 (defn dissoc-seq
   [m s]

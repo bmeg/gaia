@@ -47,10 +47,17 @@
 
 (defn initialize-flow!
   [{:keys [config commands executor store] :as state} root]
-  (let [pointed (store (name root))
-        flow (sync/generate-sync (:kafka config) root [] pointed)
-        listener (sync/events-listener! flow executor commands root (:kafka config))]
-    flow))
+  (let [pointed (store (name root))]
+    (sync/initialize-flow! root pointed executor (:kafka config) commands)))
+
+;; (defn initialize-flow!
+;;   [{:keys [config commands executor store] :as state} root]
+;;   (let [pointed (store (name root))
+;;         flow (sync/generate-sync (:kafka config) root [] pointed)
+;;         listener (sync/events-listener! flow executor commands root (:kafka config))]
+;;     (sync/initialize-flow! root pointed executor (:kafka config) commands)
+;;     (sync/find-existing store)
+;;     flow))
 
 (defn find-flow!
   [{:keys [flows] :as state} root]
@@ -60,9 +67,13 @@
       (swap! flows assoc root flow)
       flow)))
 
+(defn merge-commands!
+  [{:keys [commands executor] :as state} root commands]
+  (let [prior (select-keys @commands (keys commands))]))
+
 (defn merge-processes!
   [{:keys [commands executor] :as state} root processes]
-  (let [flow (find-flow! state (keyword root))]
+  (let [flow (find-flow! state root)]
     (sync/merge-processes! flow executor commands processes)
     state))
 
@@ -73,72 +84,99 @@
 
 (defn trigger-flow!
   [{:keys [commands executor flows] :as state} root]
-  (let [flow (find-flow! state (keyword root))]
-    (sync/engage-sync! flow executor commands)
+  (let [flow (find-flow! state root)]
+    (sync/trigger-flow! flow executor commands)
     state))
 
 (defn halt-flow!
   [{:keys [executor tasks] :as state} root]
-  (let [flow (find-flow! state (keyword root))]
+  (let [flow (find-flow! state root)]
     (sync/halt-flow! flow executor)
     state))
 
-(defn expire-key!
-  [{:keys [commands executor] :as state} root key]
-  (let [flow (find-flow! state (keyword root))]
-    (sync/expire-keys! flow executor commands [key])
-    state))
+(defn expire-keys!
+  [{:keys [commands executor] :as state} root expire]
+  (log/info "expiring keys" root expire)
+  (let [flow (find-flow! state root)]
+    (log/info "expiring flow" flow)
+    (sync/expire-keys! flow executor commands expire)))
 
-(defn commands-handler
+(defn flow-status!
+  [state root]
+  (let [flow (find-flow! state root)
+        {:keys [state data]} @(:status flow)]
+    {:state state
+     :flow @(:flow flow)
+     :tasks @(:tasks flow)
+     :data data}))
+
+(defn command-handler
   [state]
   (fn [request]
     (let [{:keys [commands] :as body} (read-json (:body request))]
       (log/info "commands request" body)
       (swap! (:commands state) merge body)
       (response
-       {:commands (keys @(:commands state))}))))
+       {:commands @(:commands state)}))))
 
-(defn processes-handler
+(defn merge-handler
   [state]
   (fn [request]
     (let [{:keys [root processes] :as body} (read-json (:body request))
           root (keyword root)]
-      (log/info "processes request" body)
+      (log/info "merge request" body)
       (merge-processes! state root processes)
       (response
        {:processes {root (map :key processes)}}))))
 
-(defn initiate-handler
+(defn trigger-handler
   [state]
   (fn [request]
     (let [{:keys [root] :as body} (read-json (:body request))
           root (keyword root)]
-      (log/info "initiate request" body)
-      (swap! (:processes state) update root merge body)
+      (log/info "trigger request" body)
+      (trigger-flow! state root)
       (response
-       {:processes {root (keys (get @(:processes state) root))}}))))
+       {:trigger root}))))
+
+(defn halt-handler
+  [state]
+  (fn [request]
+    (let [{:keys [root] :as body} (read-json (:body request))
+          root (keyword root)]
+      (log/info "halt request" body)
+      (halt-flow! state root)
+      (response
+       {:halt root}))))
 
 (defn status-handler
   [state]
   (fn [request]
-    (let [{:keys [key] :as body} (read-json (:body request))]
+    (let [{:keys [root] :as body} (read-json (:body request))
+          root (keyword root)]
       (log/info "status request" body)
       (response
-       {:key key
-        :status (get @(:status state) key)}))))
+       {:root root
+        :status
+        (flow-status! state root)}))))
 
 (defn expire-handler
   [state]
   (fn [request]
-    (let [{:keys [key] :as body} (read-json (:body request))
-          expired (expire-key! state key)]
+    (let [{:keys [root expire] :as body} (read-json (:body request))
+          root (keyword root)]
       (log/info "expire request" body)
       (response
-       {:expired expired}))))
+       {:expire
+        (expire-keys! state root expire)}))))
 
 (defn gaia-routes
   [state]
-  [["/status" :status (status-handler state)]
+  [["/command" :command (command-handler state)]
+   ["/merge" :merge (merge-handler state)]
+   ["/trigger" :trigger (trigger-handler state)]
+   ["/halt" :halt (halt-handler state)]
+   ["/status" :status (status-handler state)]
    ["/expire" :expire (expire-handler state)]])
 
 (def parse-args
@@ -156,9 +194,10 @@
                 (resource/wrap-resource "public")
                 (keyword/wrap-keyword-params)
                 (params/wrap-params))]
-    (http/start-server app {:port 24442})))
+    (http/start-server app {:port 24442})
+    state))
 
-(defn load
+(defn load-yaml
   [key config-path process-path]
   (let [config (config/load-config config-path)
         state (boot config)
