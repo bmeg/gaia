@@ -50,15 +50,6 @@
   (let [pointed (store (name root))]
     (sync/initialize-flow! root pointed executor (:kafka config) commands)))
 
-;; (defn initialize-flow!
-;;   [{:keys [config commands executor store] :as state} root]
-;;   (let [pointed (store (name root))
-;;         flow (sync/generate-sync (:kafka config) root [] pointed)
-;;         listener (sync/events-listener! flow executor commands root (:kafka config))]
-;;     (sync/initialize-flow! root pointed executor (:kafka config) commands)
-;;     (sync/find-existing store)
-;;     flow))
-
 (defn find-flow!
   [{:keys [flows] :as state} root]
   (if-let [flow (get @flows root)]
