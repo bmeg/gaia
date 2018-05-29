@@ -104,9 +104,10 @@
 (defn command-handler
   [state]
   (fn [request]
-    (let [{:keys [commands] :as body} (read-json (:body request))]
+    (let [{:keys [commands] :as body} (read-json (:body request))
+          index (command/index-key commands)]
       (log/info "commands request" body)
-      (swap! (:commands state) merge body)
+      (swap! (:commands state) merge index)
       (response
        {:commands @(:commands state)}))))
 

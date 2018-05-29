@@ -122,7 +122,8 @@
 (defn find-existing
   [store status]
   (let [existing (store/existing-paths store)]
-    (update status :data merge existing)))
+    ;; (update status :data merge existing)
+    (assoc status :data existing)))
 
 (defn events-listener!
   [state executor commands root kafka]
@@ -140,7 +141,8 @@
     flow))
 
 (defn trigger-flow!
-  [{:keys [flow store status] :as state} executor commands]
+  [{:keys [flow store status tasks] :as state} executor commands]
+  (send tasks (fn [prior now] now) {})
   (swap!
    status
    (comp

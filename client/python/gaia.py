@@ -32,7 +32,7 @@ class Gaia:
         data=json.dumps(data)
         return requests.post(url, data=data).json()
 
-    def command(self, commands):
+    def command(self, commands=[]):
         return self.post('command', {
             'commands': commands
         })
