@@ -18,7 +18,6 @@ def process(key, command, inputs, outputs, var={}):
 
     if len(inputs) > 0:
         out['inputs'] = inputs
-
     if len(var) > 0:
         out['vars'] = var
 
@@ -33,9 +32,8 @@ class Gaia:
         data=json.dumps(data)
         return requests.post(url, data=data).json()
 
-    def command(self, root, commands):
+    def command(self, commands):
         return self.post('command', {
-            'root': root,
             'commands': commands
         })
 

@@ -17,3 +17,4 @@ genes.json
 /resources/test/triangle/swift.funnel.yaml
 /resources/test/data/yellow
 /__pycache__
+*.pyc
