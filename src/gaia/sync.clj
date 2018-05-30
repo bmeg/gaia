@@ -4,6 +4,7 @@
    [taoensso.timbre :as log]
    [cheshire.core :as json]
    [protograph.kafka :as kafka]
+   [protograph.template :as template]
    [gaia.flow :as flow]
    [gaia.command :as command]
    [gaia.store :as store]
@@ -206,3 +207,10 @@
     (cancel-tasks! tasks executor (keys transform))
     (swap! flow #(flow/add-nodes % (vals transform)))
     (expire-keys! state executor commands (keys transform))))
+
+(defn expire-commands!
+  [{:keys [flow] :as state} expiring]
+  (let [processes (template/map-cat (partial flow/command-processes @flow) expiring)]
+    (expire-keys! state processes)))
+
+

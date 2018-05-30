@@ -151,3 +151,4 @@
         (let [command (get commands (keyword (:command process)))]
           (apply-composite commands command process)))
       processes))))
+

@@ -208,6 +208,15 @@
     (log/info from to down)
     (data-descendants flow from down)))
 
+(defn command-processes
+  [{:keys [process]} command]
+  (map
+   first
+   (filter
+    (fn [[key {:keys [node]}]]
+      (= command (:command node)))
+    process)))
+
 (defn expire-data
   [flow data key]
   (let [expiring (find-descendants flow key)]

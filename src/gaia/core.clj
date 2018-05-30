@@ -59,8 +59,11 @@
       flow)))
 
 (defn merge-commands!
-  [{:keys [commands executor] :as state} root commands]
-  (let [prior (select-keys @commands (keys commands))]))
+  [{:keys [flows commands] :as state} merging]
+  (let [prior (map name (keys (select-keys @commands (keys merging))))]
+    (doseq [[key flow] @flows]
+      (sync/expire-commands! flow prior))
+    (swap! commands merge merging)))
 
 (defn merge-processes!
   [{:keys [commands executor] :as state} root processes]
@@ -107,7 +110,7 @@
     (let [{:keys [commands] :as body} (read-json (:body request))
           index (command/index-key commands)]
       (log/info "commands request" body)
-      (swap! (:commands state) merge index)
+      (merge-commands! state index)
       (response
        {:commands @(:commands state)}))))
 
