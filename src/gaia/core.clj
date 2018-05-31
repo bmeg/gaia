@@ -61,7 +61,7 @@
 (defn merge-commands!
   [{:keys [flows commands executor] :as state} merging]
   (let [prior (map name (keys (select-keys @commands (keys merging))))]
-    (log/info "prior commands" prior)
+    (log/info "prior commands" (into [] prior))
     (doseq [[key flow] @flows]
       (sync/expire-commands! flow executor commands prior))
     (swap! commands merge merging)))

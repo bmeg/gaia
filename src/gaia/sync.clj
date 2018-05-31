@@ -212,5 +212,5 @@
   [{:keys [flow] :as state} executor commands expiring]
   (let [processes (template/map-cat (partial flow/command-processes @flow) expiring)]
     (log/info "expiring processes" processes)
-    (log/info "from commands" expiring)
+    (log/info "from commands" (into [] expiring))
     (expire-keys! state executor commands processes)))
