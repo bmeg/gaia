@@ -140,6 +140,15 @@ var Gaia = function() {
 
       elements: graph
     })
+
+    var layout = cy.makeLayout({
+      // name: 'preset',
+      // positions: this.calculatePositions(width, height)
+      // animate: true,
+      // padding: 30,
+      // animationThreshold: 250,
+      // refresh: 20
+    })
   }
 
   function load(root) {
