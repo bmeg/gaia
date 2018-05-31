@@ -30,6 +30,13 @@
    :headers {"content-type" "application/json"}
    :body (json/generate-string body)})
 
+(defn index-handler
+  [state]
+  (fn [request]
+    {:status 200
+     :headers {"content-type" "text/html"}
+     :body (slurp "resources/public/index.html")}))
+
 (defn boot
   [config]
   (let [commands (atom (:commands config))
@@ -168,7 +175,8 @@
 
 (defn gaia-routes
   [state]
-  [["/command" :command (command-handler state)]
+  [["/" :index (index-handler state)]
+   ["/command" :command (command-handler state)]
    ["/merge" :merge (merge-handler state)]
    ["/trigger" :trigger (trigger-handler state)]
    ["/halt" :halt (halt-handler state)]

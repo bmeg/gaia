@@ -22,8 +22,9 @@ Here is an example of Gaia configuration (living under `resources/config/gaia.cl
   {:host "localhost"        ;; whereever your kafka cluster lives
    :port "9092"}}
 
- :funnel
- {:host "http://localhost:19191"
+ :executor
+ {:target "funnel"
+  :host "http://localhost:19191"
   :path ""}
 
  :store
