@@ -197,17 +197,56 @@ var Gaia = function() {
 
   }
 
+  function vivagraph(flow) {
+    var graph = Viva.Graph.graph();
+
+    _.each(_.keys(flow.process), function(key) {
+      var node = flow.process[key].node;
+      var to = flow.process[key].to || []
+      graph.addNode(key, {
+        command: node.command,
+        process: true
+      });
+
+      _.each(to, function(target) {
+        graph.addLink(key, target);
+      })
+    })
+
+    _.each(_.keys(flow.data), function(key) {
+      var node = flow.data[key].node;
+      var to = flow.data[key].to || []
+      graph.addNode(key, {
+        data: true
+      });
+
+      _.each(to, function(target) {
+        graph.addLink(key, target);
+      })
+    })
+
+    var renderer = Viva.Graph.View.renderer(graph);
+    renderer.run();
+
+    return {
+      graph: graph,
+      renderer: renderer
+    }
+  }
+
   function load(root) {
     console.log('loading... !')
     fetchStatus(root, function(response) {
       console.log(response);
       var status = response['status'];
-      var graph = cytoscapeFlow(status.flow);
-      console.log(graph)
+      var graph = vivagraph(status.flow);
+
+      // var graph = cytoscapeFlow(status.flow);
+      // state.cytoscape = buildCytoscape('gaia', graph);
+      // console.log(graph)
 
       state.status[root] = status
       state.graphs[root] = graph
-      state.cytoscape = buildCytoscape('gaia', graph);
     });
   }
 
