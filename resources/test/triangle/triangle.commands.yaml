@@ -9,6 +9,27 @@
   outputs:
     OUTPUT: "/out/out"
 
+- key: df
+  image: ubuntu
+  command:
+    - "df"
+  stdout: "/out/out"
+  outputs:
+    OUTPUT: "/out/out"
+
+- key: hello
+  image: ubuntu
+  command:
+    - "echo"
+    - "hello "
+    - "{{BETWEEN}}"
+    - " world!"
+  stdout: "/out/out"
+  vars:
+    BETWEEN: "animal"
+  outputs:
+    OUTPUT: "/out/out"
+
 - key: cat
   image: ubuntu
   command:
@@ -32,3 +53,24 @@
     INPUT: "/in/in"
   outputs:
     OUTPUT: "/out/out"
+
+- key: cat-wc
+  inputs:
+    - A
+    - B
+  outputs:
+    - WC
+  steps:
+    - key: cat-ab
+      command: cat
+      inputs:
+        A: A
+        B: B
+      outputs:
+        OUTPUT: CAT_AB
+    - key: wc-ab
+      command: wc
+      inputs:
+        INPUT: CAT_AB
+      outputs:
+        OUTPUT: WC

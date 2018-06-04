@@ -12,17 +12,42 @@
   outputs:
     OUTPUT: "md5/snake"
 
+- key: hello-animals
+  command: hello
+  vars:
+    BETWEEN:
+      - rabbit
+      - snake
+  outputs:
+    OUTPUT: "hello/{{BETWEEN}}"
+
 - key: cat-animals
   command: cat
+  vars:
+    ANIMAL:
+      - rabbit
+      - snake
   inputs:
-    A: "md5/rabbit"
-    B: "md5/snake"
+    A: "md5/{{ANIMAL}}"
+    B: "hello/{{ANIMAL}}"
   outputs:
-    OUTPUT: "cat/animals"
+    OUTPUT: "cat/{{ANIMAL}}"
 
 - key: wc-animals
   command: wc
+  vars:
+    ANIMAL:
+      - rabbit
+      - snake
   inputs:
-    INPUT: "cat/animals"
+    INPUT: "cat/{{ANIMAL}}"
   outputs:
-    OUTPUT: "wc/animals"
+    OUTPUT: "wc/{{ANIMAL}}"
+
+- key: cat-wc-animals
+  command: cat-wc
+  inputs:
+    A: "cat/rabbit"
+    B: "cat/snake"
+  outputs:
+    WC: "wc/animals"

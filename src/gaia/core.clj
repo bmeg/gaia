@@ -1,5 +1,6 @@
 (ns gaia.core
   (:require
+   [clojure.string :as string]
    [clojure.tools.cli :as cli]
    [taoensso.timbre :as log]
    [aleph.http :as http]
@@ -23,6 +24,12 @@
 (defn read-json
   [body]
   (json/parse-stream (InputStreamReader. body) keyword))
+
+(defn json-seq
+  [path]
+  (map
+   #(json/parse-string % keyword)
+   (string/split (slurp path) #"\n")))
 
 (defn response
   [body]
