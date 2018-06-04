@@ -245,8 +245,8 @@ var Gaia = function() {
       // state.cytoscape = buildCytoscape('gaia', graph);
       // console.log(graph)
 
-      state.status[root] = status
-      state.graphs[root] = graph
+      state.status[root] = status;
+      state.graphs[root] = graph;
     });
   }
 
