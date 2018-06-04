@@ -1,6 +1,9 @@
 var Gaia = function() {
-  var status = {};
-  var graphs = {};
+  var state = {
+    status: {},
+    graphs: {},
+    cytoscape: {}
+  }
 
   function post(url, body) {
     return fetch(url, {
@@ -17,6 +20,10 @@ var Gaia = function() {
     return post('/status', {root: root}).then(after)
   }
 
+  function edge(source, target) {
+    return "(" + source + ")-->(" + target + ")";
+  }
+
   function cytoscapeFlow(flow) {
     var processNodes = Object.keys(flow.process).map(function(key) {
       var node = flow.process[key].node;
@@ -24,7 +31,9 @@ var Gaia = function() {
         data: {
           id: node.key,
           name: key,
-          command: node.command
+          command: node.command,
+          process: true,
+          type: 'process'
         }
       }
     })
@@ -35,6 +44,8 @@ var Gaia = function() {
         data: {
           id: key,
           name: key,
+          data: true,
+          type: 'data'
         }
       }
     })
@@ -44,7 +55,7 @@ var Gaia = function() {
       return pointing.map(function(to) {
         return {
           data: {
-            id: key,
+            id: edge(key, to),
             name: key,
             source: key,
             target: to,
@@ -59,7 +70,7 @@ var Gaia = function() {
       return pointing.map(function(to) {
         return {
           data: {
-            id: key,
+            id: edge(key, to),
             name: key,
             source: key,
             target: to,
@@ -77,20 +88,49 @@ var Gaia = function() {
 
   function buildCytoscape(id, graph) {
     var element = document.getElementById(id);
-    var radius = 20;
+    var radius = 200;
     var nodeColor = '#594346'
     var focusColor = '#7ec950'
     var activeColor = '#105a8c'
+    var processColor = '#105a8c'
+    var dataColor = '#7eb950'
     var nodeText = '#ffffff'
     var edgeText = '#ffffff'
     var edgeColor = '#4286f4'
 
+    console.log(element);
+
+    var layout = {
+      name: 'breadthfirst',
+
+      fit: true, // whether to fit the viewport to the graph
+      directed: true, // whether the tree is directed downwards (or edges can point in any direction if false)
+      padding: 30, // padding on fit
+      circle: false, // put depths in concentric circles if true, put depths top down if false
+      spacingFactor: 1.75, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
+      boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+      nodeDimensionsIncludeLabels: false, // Excludes the label when calculating node bounding boxes for the layout algorithm
+      roots: undefined, // the roots of the trees
+      maximalAdjustments: 0, // how many times to try to position the nodes in a maximal way (i.e. no backtracking)
+      animate: false, // whether to transition the node positions
+      animationDuration: 500, // duration of animation in ms if enabled
+      animationEasing: undefined, // easing of animation if enabled,
+      animateFilter: function ( node, i ){ return true; }, // a function that determines whether the node should be animated.  All nodes animated by default on animate enabled.  Non-animated nodes are positioned immediately when the layout starts
+      ready: undefined, // callback on layoutready
+      stop: undefined, // callback on layoutstop
+      transform: function (node, position ){ return position; } // transform a given node position. Useful for changing flow direction in discrete layouts
+    }
+
+    var elements = graph.nodes.concat(graph.edges);
+    console.log(elements)
+
     var cy = cytoscape({
       container: element,
-      boxSelectionEnabled: false,
-      autounselectify: true,
-      userZoomingEnabled: false,
-      userPanningEnabled: false,
+      // boxSelectionEnabled: false,
+      // autounselectify: true,
+      // userZoomingEnabled: false,
+      // userPanningEnabled: false,
 
       style: cytoscape.stylesheet()
         .selector('node')
@@ -107,7 +147,7 @@ var Gaia = function() {
           // 'shape': 'roundrectangle',
           'color': nodeText,
           'font-family': '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
-          'font-size': radius * 0.24, // 24
+          'font-size': radius * 0.20, // 24
           'text-outline-color': nodeColor,
           'text-outline-width': radius * 0.03, // 3,
           'text-valign': 'center'
@@ -123,9 +163,20 @@ var Gaia = function() {
           'background-color': focusColor,
         })
 
+        .selector('node[?process]')
+        .css({
+          'background-color': processColor,
+          'shape': 'rectangle'
+        })
+
+        .selector('node[?data]')
+        .css({
+          'background-color': dataColor,
+        })
+
         .selector('edge')
         .css({
-          'content': 'data(label)',
+          // 'content': 'data(label)',
           'width': radius * 0.06,
           'edge-text-rotation': 'autorotate',
           'target-arrow-shape': 'triangle',
@@ -138,35 +189,28 @@ var Gaia = function() {
           'text-outline-width': radius * 0.03, // 2
         }),
 
-      elements: graph
+      layout: layout,
+      elements: elements
     })
 
-    var layout = cy.makeLayout({
-      // name: 'preset',
-      // positions: this.calculatePositions(width, height)
-      // animate: true,
-      // padding: 30,
-      // animationThreshold: 250,
-      // refresh: 20
-    })
+    return cy;
+
   }
 
   function load(root) {
     console.log('loading... !')
     fetchStatus(root, function(response) {
       console.log(response);
-      status[root] = response['status'];
-      var graph = cytoscapeFlow(status[root].flow);
+      var status = response['status'];
+      var graph = cytoscapeFlow(status.flow);
       console.log(graph)
-      graphs[root] = buildCytoscape('gaia', graph);
-    })
+
+      state.status[root] = status
+      state.graphs[root] = graph
+      state.cytoscape = buildCytoscape('gaia', graph);
+    });
   }
 
-  return {
-    post: post,
-    fetchStatus: fetchStatus,
-    cytoscapeFlow: cytoscapeFlow,
-    load: load,
-    status: status
-  }
+  state.load = load;
+  return state;
 } ();

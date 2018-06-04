@@ -124,3 +124,8 @@ article .article-info a {
 .small {
     font-size: 0.7em;
 }
+
+#gaia {
+    width: 1600;
+    height: 1000;
+}
