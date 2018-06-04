@@ -17,7 +17,7 @@ var Gaia = function() {
   }
 
   function fetchStatus(root, after) {
-    return post('/status', {root: root}).then(after)
+    return post('status', {root: root}).then(after)
   }
 
   function edge(source, target) {
