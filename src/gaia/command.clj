@@ -1,6 +1,9 @@
 (ns gaia.command
   (:require
    [clojure.set :as set]
+   [clojure.walk :as walk]
+   [clojure.string :as string]
+   [clojure.math.combinatorics :as combinatorics]
    [taoensso.timbre :as log]
    [protograph.template :as template]))
 
@@ -57,7 +60,7 @@
 (declare apply-composite)
 
 (defn apply-step
-  [flow process vars inputs outputs {:keys [key command] :as step}]
+  [commands process vars inputs outputs {:keys [key command] :as step}]
   (let [ovars (template/evaluate-map (:vars step) vars)
         oin (substitute-values (:inputs step) inputs)
         oout (substitute-values (:outputs step) outputs)
@@ -66,18 +69,18 @@
                :vars ovars
                :inputs oin
                :outputs oout}
-        exec (get-in flow [:commands (keyword command)])]
-    (apply-composite flow exec inner)))
+        exec (get commands (keyword command))]
+    (apply-composite commands exec inner)))
 
 (defn apply-composite
-  [flow {:keys [vars inputs outputs steps] :as command} process]
+  [commands {:keys [vars inputs outputs steps] :as command} process]
   (if steps
     (do
       (validate-apply-composite! command process)
       (let [generated (reduce (partial generate-outputs process) {} steps)
             apply-partial (partial
                            apply-step
-                           flow
+                           commands
                            process
                            (:vars process)
                            (merge (:inputs process) (:outputs process) generated)
@@ -86,4 +89,66 @@
         (mapv identity asteps)))
     [process]))
 
+(defn index-seq
+  [f s]
+  (into
+   {}
+   (map (juxt f identity) s)))
+
+(defn filter-map
+  [f m]
+  (into
+   {}
+   (filter
+    (fn [[k v]]
+      (f k v))
+    m)))
+
+(defn cartesian-map
+  [map-of-seqs]
+  (let [order (mapv vec map-of-seqs)
+        heading (map first order)
+        cartes (apply combinatorics/cartesian-product (map last order))]
+    (map
+     (fn [product]
+       (into {} (map vector heading product)))
+     cartes)))
+
+(defn clean-string
+  [s]
+  (string/replace s #"[^a-zA-Z0-9\-]" ""))
+
+(defn template-vars
+  [{:keys [key vars inputs outputs] :as process}]
+  (let [arrays (filter-map (fn [k v] (coll? v)) vars)
+        series (cartesian-map arrays)]
+    (map
+     (fn [arrayed]
+       (let [order (sort-by first arrayed)
+             values (map (comp clean-string last) order)
+             unique (string/join "-" (conj values key))
+             env (walk/stringify-keys (merge vars arrayed))]
+         (merge
+          process
+          {:key unique
+           :vars env
+           :inputs (template/evaluate-map inputs env)
+           :outputs (template/evaluate-map outputs env)})))
+     series)))
+
+(defn index-key
+  [s]
+  (index-seq
+   (comp keyword :key)
+   s))
+
+(defn transform-processes
+  [commands processes]
+  (let [templates (template/map-cat template-vars processes)]
+    (index-key
+     (template/map-cat
+      (fn [process]
+        (let [command (get commands (keyword (:command process)))]
+          (apply-composite commands command process)))
+      templates))))
 

@@ -1,7 +1,0 @@
-graph:
-  database: tinkergraph
-  host: localhost
-  keyspace: gaia
-  protograph: default
-server:
-  port: 11223

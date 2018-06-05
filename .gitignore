@@ -13,3 +13,8 @@ genes.json
 .lein-failures
 .lein-repl-history
 .nrepl-port
+/funnel-work-dir
+/resources/test/triangle/swift.funnel.yaml
+/resources/test/data/yellow
+/__pycache__
+*.pyc

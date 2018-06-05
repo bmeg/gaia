@@ -1,7 +1,0 @@
-
-class: Agent
-
-
-trigger:
-  vertexCreate: 
-    type: GeneExpression

@@ -65,6 +65,21 @@
   [flow nodes]
   (reduce add-node flow nodes))
 
+(defn find-process
+  [flow key]
+  (get-in flow [:process (name key) :node]))
+
+(defn process-keys
+  [flow]
+  (-> flow :process keys))
+
+(defn process-map
+  [flow keys]
+  (reduce
+   (fn [m key]
+     (assoc m key (find-process flow key)))
+   {} keys))
+
 (defn flow-space
   [flow]
   (set
@@ -170,15 +185,37 @@
           {:data data :complete? false}
           (recur next))))))
 
-(defn find-descendants
-  [flow key]
+(defn data-descendants
+  [flow from down]
   (loop [covered #{}
-         found #{key}]
-    (if (empty? found)
-      covered
-      (let [process (setcat (map (fn [key] (get-in flow [:data key :to])) found))
-            to (setcat (map (fn [p] (get-in flow [:process p :to])) process))]
-        (recur (set/union covered found) to)))))
+         data (set down)
+         process (set from)]
+    (if (empty? data)
+      {:data covered :process process}
+      (let [after (setcat (map (fn [key] (get-in flow [:data key :to])) data))
+            to (setcat (map (fn [p] (get-in flow [:process p :to])) after))]
+        (recur (set/union covered data) to (set/union process after))))))
+
+(defn find-descendants
+  [flow source]
+  (log/info "FLOW" flow)
+  (log/info "SOURCE" source)
+  (let [processes (select-keys (:process flow) source)
+        from (keys processes)
+        to (apply set/union (map :to (vals processes)))
+        data (select-keys (:data flow) source)
+        down (concat to (keys data))]
+    (log/info from to down)
+    (data-descendants flow from down)))
+
+(defn command-processes
+  [{:keys [process]} command]
+  (map
+   first
+   (filter
+    (fn [[key {:keys [node]}]]
+      (= command (:command node)))
+    process)))
 
 (defn expire-data
   [flow data key]
@@ -193,7 +230,5 @@
 (defn generate-flow
   [processes]
   (add-nodes
-   ;; {:commands commands}
    {}
    processes))
-

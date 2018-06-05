@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # gaia
 
 Focal point for gathering and analyzing biomedical evidence as a graph.
@@ -22,8 +24,9 @@ Here is an example of Gaia configuration (living under `resources/config/gaia.cl
   {:host "localhost"        ;; whereever your kafka cluster lives
    :port "9092"}}
 
- :funnel
- {:host "http://localhost:19191"
+ :executor
+ {:target "funnel"
+  :host "http://localhost:19191"
   :path ""}
 
  :store

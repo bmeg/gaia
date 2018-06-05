@@ -9,7 +9,7 @@
    [protograph.kafka :as kafka]
    [protograph.template :as template]
    [gaia.store :as store]
-   [gaia.config :as config]))
+   [gaia.executor :as executor]))
 
 (defn parse-body
   [response]
@@ -28,7 +28,6 @@
   [url task]
   (log/info "post:" task)
   (let [body (json/generate-string task)
-        _ (log/info "body" body)
         response
         (http/post
          url
@@ -37,8 +36,8 @@
     response))
 
 (defn render-output
-  [root task-id {:keys [url path sizeBytes]}]
-  (let [key (store/snip url root)]
+  [prefix task-id {:keys [url path sizeBytes]}]
+  (let [key (store/snip url prefix)]
     [key
      {:url url
       :path path
@@ -55,20 +54,49 @@
     outputs)))
 
 (defn apply-outputs
-  [path status task-id outputs]
+  [path task-id outputs]
   (let [rendered (render-outputs path task-id outputs)]
     rendered))
 
-(defn declare-event!
-  [producer message]
-  (kafka/send-message
-   producer
-   "gaia-events"
-   (json/generate-string message)))
+(defn extract-root
+  [outputs prefix]
+  (log/info "EXTRACT ROOT" (first outputs) prefix)
+  (let [output (first outputs)
+        base (store/snip (:url output) prefix)
+        parts (string/split base #"/")]
+    (log/info "PARTS" parts)
+    (first parts)))
 
-(defn funnel-events-listener
-  ([variables path status] (funnel-events-listener variables path status {}))
-  ([variables path status kafka]
+(defn task-state!
+  [producer prefix message]
+  (try
+    (executor/declare-event!
+     producer
+     {:event "process-state"
+      :id (:id message)
+      :state (:state message)})
+    (catch Exception e (.printStackTrace e))))
+
+(defn task-outputs!
+  [producer prefix message]
+  (try
+    (let [outputs (get-in message [:outputs :value])
+          root (extract-root outputs prefix)
+          full (str prefix root "/")
+          applied (apply-outputs full (:id message) outputs)]
+      (doseq [[key output] applied]
+        (log/info "funnel output" key output applied)
+        (executor/declare-event!
+         producer
+         {:event "data-complete"
+          :root root
+          :key key
+          :output output})))
+    (catch Exception e (.printStackTrace e))))
+
+(defn funnel-events
+  ([prefix] (funnel-events prefix {}))
+  ([prefix kafka]
    (let [consumer (kafka/consumer (merge (:base kafka) (:consumer kafka)))
          producer (kafka/producer (merge (:base kafka) (:producer kafka)))
 
@@ -76,77 +104,50 @@
          (fn [funnel-event]
            (if-let [event (.value funnel-event)]
              (let [message (json/parse-string event true)]
-               (log/info "funnel event" message)
-               (if (= (:type message) "TASK_OUTPUTS")
-                 (let [outputs (get-in message [:outputs :value])
-                       applied (apply-outputs path status (:id message) outputs)]
-                   (doseq [[key output] applied]
-                     (log/info "funnel output" key output applied)
-                     (declare-event!
-                      producer
-                      {:key key
-                       :output output
-                       :variable (get variables key)})))))))]
-     (kafka/subscribe consumer ["funnel-events"])
+               (condp = (:type message)
+                 "TASK_STATE" (task-state! producer prefix message)
+                 "TASK_OUTPUTS" (task-outputs! producer prefix message)
+                 (log/info "unused funnel event" message)))))]
+     (kafka/subscribe consumer ["funnel"])
      {:funnel-events (future (kafka/consume consumer listen))
       :consumer consumer})))
 
-(defn funnel-config
-  [{:keys [host path kafka store] :as config}
-   {:keys [commands variables] :as context}]
-  {:funnel config
-   :commands commands
-   :store store})
-
 (defn funnel-connect
-  [{:keys [host path zone kafka store] :as config}
-   {:keys [commands variables] :as context}]
+  [{:keys [host path zone kafka] :as config} prefix]
   (log/info "funnel connect" config)
-  (let [tasks-url (str host "/v1/tasks")
-        existing (store/existing-paths store)
-        status (atom existing)
-        prefix (str (store/protocol store) path)]
-    (merge
-     (funnel-config config context)
-     {:listener (funnel-events-listener variables prefix status kafka)
+  (let [tasks-url (str host "/v1/tasks")]
+    {:funnel config
+     :listener (funnel-events prefix kafka)
 
-      ;; api functions
-      :create-task
-      (comp parse-body (partial post-json tasks-url))
+     ;; api functions
+     :create-task
+     (comp parse-body (partial post-json tasks-url))
 
-      :list-tasks
-      (fn []
-        (get-json tasks-url))
+     :list-tasks
+     (fn []
+       (get-json tasks-url))
 
-      :get-task
-      (fn [id]
-        (get-json (str tasks-url "/" id)))
+     :get-task
+     (fn [id]
+       (get-json (str tasks-url "/" id)))
 
-      :cancel-task
-      (fn [id]
-        (http/post
-         (str tasks-url "/" id ":cancel")))})))
+     :cancel-task
+     (fn [id]
+       (http/post
+        (str tasks-url "/" id ":cancel")))}))
 
 (defn running-tasks
   [{:keys [list-tasks] :as funnel}]
   (let [tasks (list-tasks)]
     (log/info (first tasks))))
 
-(defn funnel-path
-  [funnel path]
-  (let [store (:store funnel)
-        prefix (store/protocol store)
-        base (get-in funnel [:funnel :path])
-        join (store/join-path [base path])]
-    (str prefix join)))
-
 (defn funnel-input
-  [funnel inputs [key source]]
+  [funnel store inputs [key source]]
   (let [base {:name key
               :type "FILE"
               :path (get inputs (keyword key))}]
     (cond
-      (string? source) (assoc base :url (funnel-path funnel source))
+      (string? source) (assoc base :url (store/key->url store source))
       (:contents source) (merge base source)
       (:content source) (assoc base :contents (:content source))
       (:type source) (merge base source)
@@ -157,7 +158,7 @@
   (str "generated/" (name command) "/" (name key)))
 
 (defn funnel-output
-  [funnel command outputs [key path]]
+  [funnel store command outputs [key path]]
   (let [source (or
                 (get outputs (keyword key))
                 (missing-path command key))
@@ -165,7 +166,7 @@
               :type "FILE"
               :path path}]
     (cond
-      (string? source) (assoc base :url (funnel-path funnel source))
+      (string? source) (assoc base :url (store/key->url store source))
       (:contents source) (merge base source)
       (:type source) (merge base source)
       :else source)))
@@ -176,7 +177,7 @@
     (map #(template/evaluate-template % vars) command)))
 
 (defn funnel-task
-  [{:keys [commands] :as funnel}
+  [funnel store commands
    {:keys [key vars inputs outputs command]}]
   (if-let [raw (get commands (keyword command))]
     (let [all-vars (merge (:vars raw) vars)
@@ -187,43 +188,57 @@
        :resources {:cpuCores 1 :zones [(or (get-in funnel [:funnel :zone]) "gaia")]}
        :tags {"gaia" "true"}
        :volumes ["/in" "/out"]
-       :inputs (map (partial funnel-input funnel (:inputs execute)) inputs)
-       :outputs (map (partial funnel-output funnel key outputs) (:outputs execute))
+       :inputs (map (partial funnel-input funnel store (:inputs execute)) inputs)
+       :outputs (map (partial funnel-output funnel store key outputs) (:outputs execute))
        :executors [(assoc fun :workdir "/out")]})
     (log/error "no command named" command (keys commands))))
 
 (defn submit-task!
-  [funnel process]
+  [funnel store commands process]
   (try
-    (let [task (funnel-task funnel process)
+    (let [task (funnel-task funnel store commands process)
           task-id (:id ((:create-task funnel) task))]
       (log/info "funnel task" task-id task)
       (assoc task :id task-id))
     (catch Exception e
       (.printStackTrace e))))
 
+(defn cancel-task!
+  [funnel id]
+  ((:cancel-task funnel) id))
+
+(deftype FunnelExecutor [funnel]
+  executor/Executor
+  (submit!
+    [executor store commands process]
+    (submit-task! funnel store commands process))
+  (cancel!
+    [executor id]
+    (cancel-task! funnel id)))
+
+(defn load-funnel-executor
+  [config prefix]
+  (log/info "PREFIX" prefix)
+  (let [funnel (funnel-connect config prefix)]
+    (FunnelExecutor. funnel)))
+
 (defn all-tasks
-  [funnel processes]
-  (mapv (partial funnel-task funnel) processes))
+  [funnel store commands processes]
+  (mapv (partial funnel-task funnel store commands) processes))
 
 (def parse-args
   [["-c" "--config CONFIG" "path to config file"]
    ["-o" "--output OUTPUT" "path to output file"]])
 
-(defn load-funnel-config
-  [config]
-  (let [store (config/load-store (:store config))
-        funnel (assoc (:funnel config) :store store)]
-    (funnel-config funnel (:gaia config))))
-
-(defn -main
-  [& args]
-  (let [env (:options (cli/parse-opts args parse-args))
-        path (or (:config env) "resources/config/gaia.clj")
-        config (config/load-config path)
-        funnel (load-funnel-config config)
-        output (or (:output env) "funnel-tasks.json")
-        tasks (all-tasks funnel (get-in config [:gaia :processes]))
-        json (mapv json/generate-string tasks)
-        out (string/join "\n" json)]
-    (spit output out)))
+;; (defn -main
+;;   [& args]
+;;   (let [env (:options (cli/parse-opts args parse-args))
+;;         path (or (:config env) "resources/config/gaia.clj")
+;;         config (config/load-config path)
+;;         store (config/load-store (:store config))
+;;         funnel (funnel-config (:funnel config) store (get-in config [:gaia :commands]))
+;;         output (or (:output env) "funnel-tasks.json")
+;;         tasks (all-tasks funnel (get-in config [:gaia :processes]))
+;;         json (mapv json/generate-string tasks)
+;;         out (string/join "\n" json)]
+;;     (spit output out)))
