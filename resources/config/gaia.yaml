@@ -1,7 +1,0 @@
-graph:
-  database: janus
-  host: localhost
-  keyspace: prototest
-  protograph: ../gaia-bmeg/bmeg.protograph.yml
-server:
-  port: 11223

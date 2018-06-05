@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # gaia
 
 Focal point for gathering and analyzing biomedical evidence as a graph.
