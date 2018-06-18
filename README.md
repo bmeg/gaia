@@ -8,13 +8,73 @@ Focal point for gathering and analyzing biomedical evidence as a graph.
 
 ## idea
 
-Gaia tracks a set of keys representing files to be computed, and the network of dependent processes that compute them. At its core is some Data Store that holds these keys, which can begin life seeded with prior information. At each cycle, Gaia calculates which keys are missing and which processes are able to be run given the set of keys available, and matches these up to select a process to run whose inputs are all available and one or more outputs are missing. Once these missing keys are computed, the cycle is run again and again until either all keys are computed or no more processes can be run.
+Gaia tracks a set of keys representing files to be computed, and the network of dependent processes that compute them. Its main focus is some data store that holds these keys, which can begin life seeded with prior information. At each cycle, Gaia calculates which keys are missing and which processes are able to be run given the set of keys available, and matches these up to select a process to run whose inputs are all available and one or more outputs are missing. Once these missing keys are computed, the cycle is run again and again until either all keys are computed or no more processes can be run.
 
-## prerequisites
+Gaia has both a server to launch these computations and a client to interact with the server, trigger new processes or commands, or gather information about the status of each process or data key (initialized/running/error/complete).
 
-In order to run Gaia, you must have access to a Funnel server and whatever Kafka cluster Funnel is using.
+## client
 
-## config
+The python client for Gaia lives at `client/python/gaia.py`. To connect to a running Gaia instance, find the host and do the following:
+
+```
+import gaia
+host = "http://exa.compbio.ohsu.edu/gaia"
+flow = gaia.Gaia(host)
+```
+
+Now that we have a reference to the client, there are several methods we can call.
+
+* command - see what commands are available and add new commands
+* merge - update or add new processes into the given namespace
+* trigger - recompute dependencies and launch outstanding processes in a namespace
+* halt - stop a running namespace
+* status - find out all information about a given namespace
+* expire - recompute a given key (process or data) and all of its dependent processes
+
+All of these methods are relative to a given namespace (root) except for `command`, which operates globally to all namespaces.
+
+### command
+
+Commands are the base level operations that can be run, and generally map on to command line programs invoked from a given docker container. If you call this method with an empty array, it will return all commands currently registered in the system.
+
+```
+flow.command([])
+# [{'key': 'ls', 'image': 'ubuntu', ...}, ...]
+```
+
+All commands are in the Gaia command format and contain the following keys:
+
+* key - name of command
+* image - docker image containing command
+* command - array containing elements of command to be run
+* inputs - map of keys to local paths in the docker image where input files will be placed
+* outputs - map of keys to local paths where output files are expected to appear once the command has been run
+
+They may also have an optional `stdout` key which specifies what path to place stdout output (so that stdout can be used as one of the outputs of the command).
+
+If this method is called with an array populated with command entries it will merge this set of commands into the global set and update any commands that may already be present, triggering the recomputation of any processes that refer to the updated command.
+
+### merge
+
+### trigger
+
+### halt
+
+### status
+
+### expire
+
+
+
+## server
+
+Gaia requires three main components for its operation:
+
+* Executor - This is the service that will be managing the actual execution of all the tasks Gaia triggers. Currently [Funnel](https://github.com/ohsu-comp-bio/funnel) is supported.
+* Bus - In order to determine when a task has finished running, Gaia subscribes to an event bus containing messages from the Executor. So far this is [Kafka](https://kafka.apache.org/), but additional busses could easily be supported.
+* Store - The data store is where the inputs and results from each of the running tasks is stored. Currently Gaia supports filesystem and [Openstack Swift](https://wiki.openstack.org/wiki/Swift) data stores.
+
+### config
 
 Here is an example of Gaia configuration (living under `resources/config/gaia.clj`):
 
@@ -50,14 +110,14 @@ Once this is all established, you can start Gaia by typing
 
 in the root level of the project (or a path to whatever config file you want to use).
 
-## commands.yaml
+### commands.yaml
 
 The format of this file is a set of keys with a description of how to run the command. This description maps onto the Task Execution Schema with some additional information about how to translate inputs and outputs into keys in the data store. Here is an example:
 
 ```yaml
     ensembl-transform:
-      image_name: spanglry/ensembl-transform
-      cmd: ["go", "run", "/command/run.go", "/in/gaf.gz"]
+      image: spanglry/ensembl-transform
+      command: ["go", "run", "/command/run.go", "/in/gaf.gz"]
       inputs:
         GAF_GZ: /in/gaf.gz
       outputs:
@@ -68,7 +128,7 @@ The format of this file is a set of keys with a description of how to run the co
 
 Under the `inputs` and `outputs` lives a map of keys to locations in the local file system where the computation took place.
 
-## processes.yaml
+### processes.yaml
 
 These are invocations of commands defined in the `commands.yaml` file. Each one refers to a single command and provides the mapping of inputs and outputs to keys in the data store.
 
@@ -87,7 +147,7 @@ Here is an example of an invocation of the previous command:
 
 In the `inputs` and `outputs` maps, the keys represent those declared by the command, and the values represent what keys to store the results under in the data store. These keys can then be declared as inputs to other processes.
 
-## vars
+### vars
 
 There is one additional concept of a `var`: values that do not come from files but are instead directly supplied by the process invocation. Here is an example.
 
@@ -115,7 +175,7 @@ Notice the second argument to curl is embedded in curly braces. This signifies t
 
 Here under the `vars` key we specify the `URL` which will be substituted into the command.
 
-# generating all implied funnel documents
+### generating all implied funnel documents
 
 If you don't need to trigger all the funnel tasks but you would like to see what funnel tasks would be run (a dry run, so to speak), you can emit all funnel documents currently implied by the current `processes.yaml` file:
 
