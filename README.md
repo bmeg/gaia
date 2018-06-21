@@ -104,6 +104,10 @@ The `status` method provides information about a given namespace. There is a lot
 * data - contains a map of data keys to their current status (either missing or complete)
 * tasks - contains information about each task run through the configured executor. This will largely be executor dependent
 
+```
+flow.status('biostream')
+```
+
 ### expire
 
 The `expire` method accepts a namespace and a list of keys of either processes or data, and recomputes each key and every process that depends on any of the given keys.

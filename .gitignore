@@ -18,3 +18,4 @@ genes.json
 /resources/test/data/yellow
 /__pycache__
 *.pyc
+/resources/test/data/funnel-work-dir

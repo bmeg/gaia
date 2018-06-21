@@ -2,6 +2,7 @@
   (:require
    [clojure.test :refer :all]
    [taoensso.timbre :as log]
+   [gaia.store :as store]
    [gaia.funnel :as funnel]))
 
 (log/set-level! :trace)
@@ -30,10 +31,16 @@
    :inputs {}
    :outputs {"/tmp/out" "gdc-cases.json"}})
 
-(def echo-hi
-  (funnel/funnel-task commands echo-hello-world))
+(defn funnel-task
+  [store commands process]
+  (funnel/funnel-task
+   {:funnel {:zone "test"}}
+   store
+   commands
+   process))
 
 (deftest funnel-test
   (testing "running flows"
-    (let [data {:twenty-six 26.0}]
-      (is (= (:twenty-six data) 26.0)))))
+    (let [store (store/load-file-store {:root "test"} "test")
+          task (funnel-task store commands echo-hello-world)]
+      (println "funnel task:" task))))

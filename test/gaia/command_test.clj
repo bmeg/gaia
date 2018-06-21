@@ -26,7 +26,7 @@
   (testing "inner composite process generation"
     (log/info "commands" (pp (:commands composite-data)))
     (log/info "processes" (pp (:processes composite-data)))
-    (let [process-index (config/index-seq
+    (let [process-index (command/index-seq
                          (comp keyword :key)
                          (:processes composite-data))
           inner (command/apply-composite
@@ -37,7 +37,7 @@
 
 (deftest outer-test
   (testing "outer composite process generation"
-    (let [process-index (config/index-seq
+    (let [process-index (command/index-seq
                          (comp keyword :key)
                          (:processes composite-data))
           inner (command/apply-composite
