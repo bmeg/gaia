@@ -1,5 +1,4 @@
-- key: "inner-demo-invoke-{{PROJECT}}"
-  type: process
+- key: inner-demo-invoke
   command: inner-composite
   vars:
     PROJECT: [TCGA-BRCA, TCGA-LUAD]
@@ -10,8 +9,7 @@
   outputs:
     Y: "final/output/of/workflow/{{PROJECT}}"
 
-- key: "outer-demo-invoke-{{OUTER}}"
-  type: process
+- key: outer-demo-invoke
   command: outer-composite
   vars:
     OUTER: ["grow", "divide"]

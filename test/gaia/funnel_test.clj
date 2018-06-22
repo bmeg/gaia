@@ -2,6 +2,7 @@
   (:require
    [clojure.test :refer :all]
    [taoensso.timbre :as log]
+   [gaia.command :as command]
    [gaia.store :as store]
    [gaia.funnel :as funnel]))
 
@@ -42,5 +43,5 @@
 (deftest funnel-test
   (testing "running flows"
     (let [store (store/load-file-store {:root "test"} "test")
-          task (funnel-task store commands echo-hello-world)]
+          task (funnel-task store (command/index-key commands) echo-hello-world)]
       (println "funnel task:" task))))
